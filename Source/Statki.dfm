@@ -1,4 +1,4 @@
-﻿object Statki_Form: TStatki_Form
+object Statki_Form: TStatki_Form
   Left = 0
   Top = 0
   Caption = 'Statki z Eris Kallisti Dyskordia'
@@ -251,7 +251,7 @@
     Top = 0
     Width = 350
     Height = 862
-    ActivePage = Pozostałe_TabSheet
+    ActivePage = Gra_TabSheet
     Align = alRight
     TabOrder = 1
     OnChange = PageControl1Change
@@ -868,11 +868,10 @@
           object Wieloosobowe_Identyfikator_Etykieta_Label: TLabel
             Left = 2
             Top = 179
-            Width = 334
+            Width = 98
             Height = 13
             Align = alBottom
             Caption = 'Identyfikator gracza'
-            ExplicitWidth = 98
           end
           object Wieloosobowe__Odłącz_BitBtn: TBitBtn
             Left = 95
@@ -1271,8 +1270,14 @@
             Top = 148
             Width = 334
             Height = 50
+            Hint = 'Przytrzymaj i przeci'#261'gnij aby zmieni'#263' rozmiar.'
             Align = alBottom
+            ParentShowHint = False
+            ShowHint = True
             TabOrder = 1
+            OnMouseDown = Pokój_Rozmów_Przyciski_PanelMouseDown
+            OnMouseMove = Pokój_Rozmów_Przyciski_PanelMouseMove
+            OnMouseUp = Pokój_Rozmów_Przyciski_PanelMouseUp
             object Pokój_Rozmów_Wiadomość_Edit: TEdit
               Left = 1
               Top = 1
@@ -1286,7 +1291,7 @@
               OnKeyDown = Pokój_Rozmów_Wiadomość_EditKeyDown
             end
             object Pokój_Rozmów__Wyślij_Wiadomość_Button: TButton
-              Left = 5
+              Left = 20
               Top = 25
               Width = 75
               Height = 25
@@ -1298,7 +1303,7 @@
               OnClick = Pokój_Rozmów__Wyślij_Wiadomość_ButtonClick
             end
             object Pokój_Rozmów__Ukryj_Button: TButton
-              Left = 275
+              Left = 280
               Top = 25
               Width = 25
               Height = 25
@@ -1310,7 +1315,7 @@
               OnClick = Pokój_Rozmów__Ukryj_ButtonClick
             end
             object Pokój_Rozmów__Wyślij_Do__Odbiorca_Rodzaj_ComboBox: TComboBox
-              Left = 105
+              Left = 115
               Top = 25
               Width = 145
               Height = 22
@@ -1345,6 +1350,10 @@
     object Ustawienia_TabSheet: TTabSheet
       Caption = 'Ustawienia'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Ustawienia_Panel: TPanel
         Left = 0
         Top = 0
@@ -1387,7 +1396,7 @@
         OnMouseWheel = ScrollBoxMouseWheel
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Etykieta_Label: TLabel
           Left = 10
-          Top = 725
+          Top = 790
           Width = 162
           Height = 13
           Hint = 
@@ -1400,7 +1409,7 @@
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Label: TLabel
           Left = 280
-          Top = 725
+          Top = 790
           Width = 21
           Height = 13
           Hint = 
@@ -1413,7 +1422,7 @@
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Etykieta_Label: TLabel
           Left = 10
-          Top = 695
+          Top = 760
           Width = 129
           Height = 13
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
@@ -1423,7 +1432,7 @@
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Label: TLabel
           Left = 245
-          Top = 695
+          Top = 760
           Width = 21
           Height = 13
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
@@ -1433,7 +1442,7 @@
         end
         object Gra_Współczynnik_Prędkości_Etykieta_Label: TLabel
           Left = 10
-          Top = 430
+          Top = 460
           Width = 86
           Height = 13
           Caption = 'Pr'#281'dko'#347#263' gry <?>'
@@ -1575,7 +1584,7 @@
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Edit: TEdit
           Left = 185
-          Top = 725
+          Top = 790
           Width = 80
           Height = 21
           Hint = 
@@ -1584,31 +1593,31 @@
             'y spos'#243'b.'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 21
+          TabOrder = 23
           Text = '0'
           OnChange = Amunicja__Zanurzenie_Głębokość_Zadana_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Edit: TEdit
           Left = 150
-          Top = 695
+          Top = 760
           Width = 80
           Height = 21
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 20
+          TabOrder = 22
           Text = '-0.3'
           OnChange = Amunicja__Zanurzenie_Głębokość_Zadana_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Amunicja_Rodzaj_GroupBox: TGroupBox
           Left = 10
-          Top = 580
+          Top = 645
           Width = 120
           Height = 105
           Caption = 'Strzelaj z'
-          TabOrder = 19
+          TabOrder = 21
           object ar_Artyleria_CheckBox: TCheckBox
             Left = 10
             Top = 20
@@ -1676,13 +1685,13 @@
         end
         object Gra_Współczynnik_Prędkości_SpinEdit: TSpinEdit
           Left = 115
-          Top = 430
+          Top = 460
           Width = 121
           Height = 22
           Increment = 10
           MaxValue = 999999
           MinValue = 1
-          TabOrder = 13
+          TabOrder = 14
           Value = 100
           OnChange = Gra_Współczynnik_Prędkości_SpinEditChange
         end
@@ -1747,8 +1756,8 @@
           Top = 400
           Width = 220
           Height = 17
-          Hint = 'Wy'#347'wietlaj wska'#378'nik zablokowanego k'#261'ta obrotu dzia'#322'.'
-          Caption = 'Obr'#243't k'#261't zablokowany dzia'#322' wska'#378'nik'
+          Hint = 'Wy'#347'wietlaj wska'#378'nik zablokowanego k'#261'ta obrotu broni.'
+          Caption = 'Obr'#243't k'#261't zablokowany broni wska'#378'nik'
           ParentShowHint = False
           ShowHint = True
           TabOrder = 12
@@ -1756,61 +1765,61 @@
         end
         object Pokój_Rozmów__Informacja_Dodatkowa_CheckBox: TCheckBox
           Left = 10
-          Top = 485
+          Top = 515
           Width = 200
           Height = 17
           Hint = 'Wy'#347'wietlaj dialogi z pokoju rozm'#243'w na ekranie gry.'
           Caption = 'Pok'#243'j rozm'#243'w informuj na ekranie'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 15
+          TabOrder = 16
         end
         object Punkty_Życia_Wskaźnik__Gracz_CheckBox: TCheckBox
           Left = 10
-          Top = 515
+          Top = 545
           Width = 160
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkiem gracza.'
           Caption = 'Punkty '#380'ycia wska'#378'nik gracz'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 16
+          TabOrder = 17
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Punkty_Życia_Wskaźnik__Przeciwnik_CheckBox: TCheckBox
           Left = 10
-          Top = 535
+          Top = 565
           Width = 180
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkami przeciwnik'#243'w.'
           Caption = 'Punkty '#380'ycia wska'#378'nik przeciwnik'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 17
+          TabOrder = 18
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Punkty_Życia_Wskaźnik__Sojusznik_CheckBox: TCheckBox
           Left = 10
-          Top = 555
+          Top = 585
           Width = 180
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkami sojusznik'#243'w.'
           Caption = 'Punkty '#380'ycia wska'#378'nik sojusznik'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 18
+          TabOrder = 19
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Pokój_Rozmów__Na_Ekranie_CheckBox: TCheckBox
           Left = 10
-          Top = 460
+          Top = 490
           Width = 150
           Height = 17
           Hint = 'Wy'#347'wietlaj pok'#243'j rozm'#243'w na ekranie gry.'
           Caption = 'Pok'#243'j rozm'#243'w na ekranie'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 14
+          TabOrder = 15
           OnClick = Pokój_Rozmów__Na_Ekranie_CheckBoxClick
         end
         object Celowanie_Precyzja_Obrót_SpinEdit: TSpinEdit
@@ -1883,11 +1892,43 @@
           State = cbChecked
           TabOrder = 5
         end
+        object Radar_Widoczność_CheckBox: TCheckBox
+          Left = 10
+          Top = 615
+          Width = 110
+          Height = 17
+          Hint = 'Wy'#347'wietlaj radar na ekranie.'
+          Caption = 'Radar wy'#347'wietlaj'
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 20
+          OnClick = Radar_Widoczność_CheckBoxClick
+        end
+        object Obrót_Kąt_Zablokowany_Strzał_Wskaźnik_CheckBox: TCheckBox
+          Left = 10
+          Top = 430
+          Width = 260
+          Height = 17
+          Hint = 
+            'Wy'#347'wietlaj wska'#378'nik zablokowanego k'#261'ta obrotu strza'#322'u broni (w z' +
+            'akresie tego k'#261'ta bro'#324' mo'#380'e si'#281' obraca'#263' ale nie mo'#380'e strzela'#263').'
+          Caption = 'Obr'#243't k'#261't zablokowany broni strza'#322' wska'#378'nik'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 13
+          OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
+        end
       end
     end
     object Pozostałe_TabSheet: TTabSheet
       Caption = 'Pozosta'#322'e'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Projektowy_Tryb_CheckBox: TCheckBox
         Left = 5
         Top = 5
@@ -2077,6 +2118,10 @@
     object Klawiatura_Konfiguracja_TabSheet: TTabSheet
       Caption = 'Konfiguracja klawiatury'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Klawiatura_Konfiguracja__Przyciski_Panel: TPanel
         Left = 0
         Top = 0
@@ -2173,6 +2218,10 @@
     object O_Programie_TabSheet: TTabSheet
       Caption = 'O programie'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object O_Programie_Label: TLabel
         Left = 0
         Top = 0
