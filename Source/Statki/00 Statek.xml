@@ -1,0 +1,295 @@
+<statek>
+    <!-- Wymiar wynosi 1 we wszystkich głównych kierunkach. -->
+
+  <nazwa>Statek przykład opisy</nazwa>
+  <opis><![CDATA[Statek przykładowy zawiera opisy, komentarze i zakresy zmiennych, wygląd nie jest istotny.#13#10Nowa linia.]]></opis>
+
+  <kolor_definicja nazwa="kolor nazwa abc">
+    <r>0,0</r>
+    <g>0,5</g>
+    <b>0,0</b>
+    <a>0</a>
+  </kolor_definicja>
+
+  <falowanie_bok_skręt_zakres>20,4</falowanie_bok_skręt_zakres>
+  <falowanie_bok_zakres>2,4</falowanie_bok_zakres>
+  <falowanie_góra_dół_zakres>0,025</falowanie_góra_dół_zakres>
+  <falowanie_przód_zakres>1,1</falowanie_przód_zakres>
+
+  <kamera_odległość_maksymalna>5</kamera_odległość_maksymalna>
+
+  <kamera_na_statek_pozycja>
+    <x>0</x>
+    <y>4</y>
+    <z>-5</z>
+  </kamera_na_statek_pozycja>
+
+  <kamera_za_statkiem_pozycja>
+    <x>0</x>
+    <y>6</y>
+    <z>-10</z>
+  </kamera_za_statkiem_pozycja>
+
+  <luneta_zasięg>600</luneta_zasięg>
+
+  <punkty_życia_maksymalne>10</punkty_życia_maksymalne>
+  <punkty_życia_wskaźnik_wysokość>2,5</punkty_życia_wskaźnik_wysokość>
+
+  <prędkość__kolizja_zwalnianie>0,0</prędkość__kolizja_zwalnianie>
+  <prędkość_maksymalna>2,01</prędkość_maksymalna>
+  <prędkość_ograniczenie>100,01</prędkość_ograniczenie>
+  <prędkość_przyspieszanie>1,05</prędkość_przyspieszanie>
+  <prędkość_zwalnianie>0,3</prędkość_zwalnianie>
+
+  <radar_zasięg>100</radar_zasięg>
+  <radio_zasięg>100</radio_zasięg>
+
+  <skręt_kąt_maksymalny>75,0</skręt_kąt_maksymalny>
+  <skręt_prędkość>20,0</skręt_prędkość>
+  <skręt_szybkość_wychylania_steru>0,4</skręt_szybkość_wychylania_steru>
+  <skręt_współczynnik_do_prędkości>25,0</skręt_współczynnik_do_prędkości>
+
+
+  <obiekt typ="prostopadłościan"><!-- Kadłub. -->
+    <kolor>
+      <r>0</r>
+      <g>1</g>
+      <b>0,5</b>
+      <a>0</a>
+    </kolor>
+      <!-- Od 0 (czarny) do 1 (biały), ujemne działają jakoś odwrotnie, a - nie wiem. -->
+    <kolor nazwa="kolor nazwa abc"/>
+    <kolor_nazwa>clrGreen</kolor_nazwa> <!-- Robi wyciek pamięci. -->
+
+    <skala>
+      <x>1,1</x>
+      <y>1,1</y>
+      <z>1,1</z>
+    </skala>
+      <!-- 0 - w danym wymiarze jest jak płaszczyzna, ujemne działają jak dodatnie. -->
+
+    <skala_proporcjonalna>1,1</skala_proporcjonalna>
+      <!-- 0, ujemne działają jak dodatnie. -->
+
+    <współrzędne>
+      <x>0,1</x>
+      <y>0,1</y>
+      <z>0,1</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>1,1</wychylenie__lewo_prawo>
+    <obrót__lewo_prawo>1,1</obrót__lewo_prawo>
+      <!-- Dodatnie w lewo (lewa burta). -->
+    <wychylenie__przód_tył>1,1</wychylenie__przód_tył>
+      <!-- -(minus) w górę, +(plus) w dół. -->
+      <!-- 0, ujemne działają, większe wartości obniżane są poprzez wielokrotność 180. -->
+
+    <dziób>Tak</dziób>
+
+    <tekstura>K1\P_1.png</tekstura>
+      <!-- Pliki 'png'. Domyślnie ścieżka w katalogu 'Tekstury' w folderze z grą. -->
+
+    <wartość_dodatkowa_01>123,456 abc</wartość_dodatkowa_01>
+      <!-- Dla wybranych prymitywów (brył) dodatkowe parametry, których wartość i typ wartości zależy od danego prymitywu. -->
+        <!-- Dla prymitywu: ostrosłup - Height - 123,456 - w zakresie od 0 do 1 - ( 0, 1 >. -->
+
+  </obiekt>
+
+  <śruba>
+    <kolor>
+      <r>0</r>
+      <g>1</g>
+      <b>0,5</b>
+      <a>0</a>
+    </kolor>
+      <!-- Od 0 (czarny) do 1 (biały), ujemne działają jakoś odwrotnie, a - nie wiem. -->
+    <kolor nazwa="kolor nazwa abc"/>
+    <kolor_nazwa>clrGreen</kolor_nazwa> <!-- Robi wyciek pamięci. -->
+
+    <skala>
+      <x>1,1</x>
+      <y>1,1</y>
+      <z>1,1</z>
+    </skala>
+      <!-- 0 - w danym wymiarze jest jak płaszczyzna, ujemne działają jak dodatnie. -->
+
+    <skala_proporcjonalna>1,</skala_proporcjonalna>
+      <!-- 0, ujemne działają jak dodatnie. -->
+
+    <współrzędne>
+      <x>0,5</x>
+      <y>-0,8</y>
+      <z>0,75</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>1,1</wychylenie__lewo_prawo>
+    <obrót__lewo_prawo>1,1</obrót__lewo_prawo>
+      <!-- Dodatnie w lewo (lewa burta). -->
+    <wychylenie__przód_tył>1,1</wychylenie__przód_tył>
+      <!-- -(minus) w górę, +(plus) w dół. -->
+      <!-- 0, ujemne działają, większe wartości obniżane są poprzez wielokrotność 180. -->
+
+    <czy_obrót_lewo>Tak</czy_obrót_lewo>
+    <prędkość_obrotowa_maksymalna>8</prędkość_obrotowa_maksymalna>
+    <prędkość_obrotowa_przyspieszanie>0,1</prędkość_obrotowa_przyspieszanie>
+        <!-- Całkiem dobrze wychodzi gdy [śruba] prędkość_obrotowa_maksymalna / prędkość_obrotowa_przyspieszanie = [statek] prędkość_maksymalna / prędkość_przyspieszanie -->
+  </śruba>
+
+  <ster>
+    <kolor>
+      <r>0</r>
+      <g>1</g>
+      <b>0,5</b>
+      <a>0</a>
+    </kolor>
+      <!-- Od 0 (czarny) do 1 (biały), ujemne działają jakoś odwrotnie, a - nie wiem. -->
+    <kolor nazwa="kolor nazwa abc"/>
+    <kolor_nazwa>clrGreen</kolor_nazwa> <!-- Robi wyciek pamięci. -->
+
+    <skala>
+      <x>1,1</x>
+      <y>1,1</y>
+      <z>1,1</z>
+    </skala>
+      <!-- 0 - w danym wymiarze jest jak płaszczyzna, ujemne działają jak dodatnie. -->
+
+    <skala_proporcjonalna>1,1</skala_proporcjonalna>
+      <!-- 0, ujemne działają jak dodatnie. -->
+
+    <współrzędne>
+      <x>0,0</x>
+      <y>-0,3</y>
+      <z>-0,5</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>1,1</wychylenie__lewo_prawo>
+    <obrót__lewo_prawo>1,1</obrót__lewo_prawo>
+      <!-- Dodatnie w lewo (lewa burta). -->
+    <wychylenie__przód_tył>1,1</wychylenie__przód_tył>
+      <!-- -(minus) w górę, +(plus) w dół. -->
+      <!-- 0, ujemne działają, większe wartości obniżane są poprzez wielokrotność 180. -->
+  </ster>
+
+  <torpedy_wyrzutnia lufy_ilość="1">
+    <kolor>
+      <r>0</r>
+      <g>1</g>
+      <b>0,5</b>
+      <a>0</a>
+    </kolor>
+
+    <skala_proporcjonalna>1</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>-0,1</x>
+      <y>1,6</y>
+      <z>-0,2</z>
+    </współrzędne>
+
+    <obrót__lewo_prawo>123,456</obrót__lewo_prawo>
+      <!-- Dodatnie w lewo (lewa burta). -->
+
+    <obrót_kąt_zablokowany_do>1,1</obrót_kąt_zablokowany_do>
+    <obrót_kąt_zablokowany_od>2,2</obrót_kąt_zablokowany_od>
+
+    <obrót_szybkość>1,1</obrót_szybkość>
+
+    <obrażenia_zadawane>11,3</obrażenia_zadawane>
+    <zasięg>10,5</zasięg>
+
+    <amunicja_ilość>12</amunicja_ilość>
+    <przeładowanie_czas_milisekundy>3</przeładowanie_czas_milisekundy>
+    <strzał_od_blokada_milisekundy>100</strzał_od_blokada_milisekundy>
+
+    <obrót_kąt_zablokowany_strzał_do>1,1</obrót_kąt_zablokowany_strzał_do>
+    <obrót_kąt_zablokowany_strzał_od>2,2</obrót_kąt_zablokowany_strzał_od>
+  </torpedy_wyrzutnia>
+
+  <działo lufy_ilość="2">
+    <kolor>
+      <r>0</r>
+      <g>1</g>
+      <b>0,5</b>
+      <a>0</a>
+    </kolor>
+
+    <skala_proporcjonalna>0,5</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>-0,1</x>
+      <y>1,9</y>
+      <z>-0,2</z>
+    </współrzędne>
+
+    <obrót__lewo_prawo>123,456</obrót__lewo_prawo>
+      <!-- Dodatnie w lewo (lewa burta). -->
+    <wychylenie__przód_tył>123,456</wychylenie__przód_tył>
+      <!-- -(minus) w dół, +(plus) w górę. -->
+
+    <obrót_kąt_zablokowany_do>1,1</obrót_kąt_zablokowany_do>
+    <obrót_kąt_zablokowany_od>2,2</obrót_kąt_zablokowany_od>
+
+    <obrót_szybkość>1,1</obrót_szybkość>
+
+    <obrażenia_zadawane>11,3</obrażenia_zadawane>
+    <zasięg>10,5</zasięg>
+
+    <amunicja_ilość>12</amunicja_ilość>
+    <przeładowanie_czas_milisekundy>3</przeładowanie_czas_milisekundy>
+    <strzał_od_blokada_milisekundy>100</strzał_od_blokada_milisekundy>
+
+    <obrót_kąt_zablokowany_strzał_do>1,1</obrót_kąt_zablokowany_strzał_do>
+    <obrót_kąt_zablokowany_strzał_od>2,2</obrót_kąt_zablokowany_strzał_od>
+
+    <podniesienie_kąt_maksymalny>45,5</podniesienie_kąt_maksymalny>
+      <!-- -(minus) w dół, +(plus) w górę. -->
+    <podniesienie_kąt_minimalny>5,5</podniesienie_kąt_minimalny>
+      <!-- -(minus) w dół, +(plus) w górę. -->
+    <podniesienie_szybkość>1,1</podniesienie_szybkość>
+  </działo>
+
+  <artyleria lufy_ilość="3">
+    <kolor>
+      <r>0</r>
+      <g>1</g>
+      <b>0,5</b>
+      <a>0</a>
+    </kolor>
+
+    <skala_proporcjonalna>2,5</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>-0,1</x>
+      <y>0,7</y>
+      <z>-0,2</z>
+    </współrzędne>
+
+    <obrót__lewo_prawo>123,456</obrót__lewo_prawo>
+      <!-- Dodatnie w lewo (lewa burta). -->
+    <wychylenie__przód_tył>123,456</wychylenie__przód_tył>
+      <!-- -(minus) w dół, +(plus) w górę. -->
+
+    <obrót_kąt_zablokowany_do>1,1</obrót_kąt_zablokowany_do>
+    <obrót_kąt_zablokowany_od>2,2</obrót_kąt_zablokowany_od>
+
+    <obrót_szybkość>1,1</obrót_szybkość>
+
+    <obrażenia_zadawane>11,3</obrażenia_zadawane>
+    <zasięg>10,5</zasięg>
+
+    <amunicja_ilość>12</amunicja_ilość>
+    <przeładowanie_czas_milisekundy>3</przeładowanie_czas_milisekundy>
+    <strzał_od_blokada_milisekundy>100</strzał_od_blokada_milisekundy>
+
+    <obrót_kąt_zablokowany_strzał_do>1,1</obrót_kąt_zablokowany_strzał_do>
+    <obrót_kąt_zablokowany_strzał_od>2,2</obrót_kąt_zablokowany_strzał_od>
+
+    <podniesienie_kąt_maksymalny>60,5</podniesienie_kąt_maksymalny><!--- Dla kąta innego niż 60 maksymalny zasięg pocisk osiąga na dnie -->
+      <!-- -(minus) w dół, +(plus) w górę. -->
+    <podniesienie_kąt_minimalny>5,5</podniesienie_kąt_minimalny>
+      <!-- -(minus) w dół, +(plus) w górę. -->
+    <podniesienie_szybkość>1,1</podniesienie_szybkość>
+
+    <zasięg_od_parabola>10,5</zasięg_od_parabola>
+  </artyleria>
+</statek>
