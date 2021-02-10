@@ -1,0 +1,76 @@
+<ląd>
+  <!-- Wymiar wynosi 1 we wszystkich głównych kierunkach. -->
+
+  <nazwa>Ląd przykład opisy</nazwa>
+  <opis><![CDATA[Ląd przykładowy zawiera opisy, komentarze i zakresy zmiennych, wygląd nie jest istotny.#13#10Nowa linia.]]></opis>
+
+  <statki_pozycja_początkowa> <!-- Rozmieszczenie statków może być zdefiniowane w definicji lądu. -->
+    <grupa_1>
+      <korekta_obrót>123</korekta_obrót> <!-- Początkowy obrót statku (+) lewo (-) prawo. -->
+      <korekta_x>123</korekta_x> <!-- Przesunięcie pozycji wszystkich statków w grupie (-) lewo (+) prawo. -->
+      <korekta_z>123</korekta_z> <!-- Przesunięcie pozycji każdego statku w grupie osobno o wielokrotność wartości (-) przód (+) tył. -->
+      <odstęp_x>123</odstęp_x> <!-- Odstęp między statkami po bokach. -->
+      <z>123</z> <!-- Odstęp od środka planszy (-) przód (+) tył. -->
+    </grupa_1>
+
+    <grupa_2>
+      <korekta_obrót>123</korekta_obrót>
+      <korekta_x>123</korekta_x>
+      <korekta_z>-123</korekta_z>
+      <odstęp_x>123</odstęp_x>
+      <z>-123</z>
+    </grupa_2>
+  </statki_pozycja_początkowa>
+
+  <kolor_definicja nazwa="kolor nazwa abc">
+    <r>0,0</r>
+    <g>0,5</g>
+    <b>0,0</b>
+    <a>0</a>
+  </kolor_definicja>
+
+  <obiekt typ="kula">
+    <!-- Wymiar wynosi 1 we wszystkich głównych kierunkach. -->
+
+    <kolor>
+      <r>0</r>
+      <g>1</g>
+      <b>0,5</b>
+      <a>0</a>
+    </kolor>
+      <!-- Od 0 (czarny) do 1 (biały), ujemne działają jakoś odwrotnie, a - nie wiem. -->
+    <kolor nazwa="kolor nazwa abc"/>
+    <kolor_nazwa>clrGreen</kolor_nazwa> <!-- Robi wyciek pamięci. -->
+
+    <skala>
+      <x>1</x>
+      <y>123,456</y>
+      <z>123,456</z>
+    </skala>
+      <!-- 0 - w danym wymiarze jest jak płaszczyzna, ujemne działają jak dodatnie. -->
+
+    <skala_proporcjonalna>2</skala_proporcjonalna>
+      <!-- 0, ujemne działają jak dodatnie. -->
+
+    <siła_wpływu_kolizji>1</siła_wpływu_kolizji>
+      <!-- 1 - domyślna wartość, 0 - 1 spowalnia 1 - 3 odbija (im większa wartość tym mocniej odbija). -->
+
+    <współrzędne>
+      <x>123,456</x>
+      <y>123,456</y>
+      <z>123,456</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>123,456</wychylenie__lewo_prawo>
+    <obrót__lewo_prawo>123,456</obrót__lewo_prawo>
+    <wychylenie__przód_tył>123,456</wychylenie__przód_tył>
+      <!-- 0, ujemne działają, większe wartości obniżane są poprzez wielokrotność 180. -->
+
+    <tekstura>K1\P_1.png</tekstura>
+      <!-- Pliki 'png'. Domyślnie ścieżka w katalogu 'Tekstury' w folderze z grą. -->
+
+    <wartość_dodatkowa_01>123,456 abc</wartość_dodatkowa_01>
+      <!-- Dla wybranych prymitywów (brył) dodatkowe parametry, których wartość i typ wartości zależy od danego prymitywu. -->
+        <!-- Dla prymitywu: ostrosłup - Height - 123,456 - w zakresie od 0 do 1 - ( 0, 1 >. -->
+  </obiekt>
+</ląd>
