@@ -1,0 +1,722 @@
+<statek>
+
+  <nazwa>Kuter torpedowy</nazwa>
+  <opis><![CDATA[Kuter torpedowy#13#102 x wyrzutnia torped#13#101 x działo.]]></opis>
+
+
+  <kolor_definicja nazwa="kadłub">
+    <r>0,3</r>
+    <g>0,4</g>
+    <b>0,6</b>
+    <a>0</a>
+  </kolor_definicja>
+
+  <kolor_definicja nazwa="śruba">
+    <r>0,4</r>
+    <g>0,0</g>
+    <b>0,0</b>
+    <a>0</a>
+  </kolor_definicja>
+
+  <kolor_definicja nazwa="szyba">
+    <r>0,1</r>
+    <g>0,1</g>
+    <b>0,9</b>
+    <a>0</a>
+  </kolor_definicja>
+
+
+  <falowanie_bok_skręt_zakres>10,0</falowanie_bok_skręt_zakres>
+  <falowanie_bok_zakres>4</falowanie_bok_zakres>
+  <falowanie_góra_dół_zakres>0,025</falowanie_góra_dół_zakres>
+  <falowanie_przód_zakres>2</falowanie_przód_zakres>
+
+  <kamera_odległość_maksymalna>8</kamera_odległość_maksymalna>
+
+  <kamera_na_statek_pozycja>
+    <x>0</x>
+    <y>3</y>
+    <z>1</z>
+  </kamera_na_statek_pozycja>
+
+  <kamera_za_statkiem_pozycja>
+    <x>0</x>
+    <y>4</y>
+    <z>0</z>
+  </kamera_za_statkiem_pozycja>
+
+  <luneta_zasięg>603</luneta_zasięg>
+
+  <punkty_życia_maksymalne>500</punkty_życia_maksymalne>
+  <punkty_życia_wskaźnik_wysokość>3,0</punkty_życia_wskaźnik_wysokość>
+
+  <prędkość__kolizja_zwalnianie>0</prędkość__kolizja_zwalnianie>
+  <prędkość_maksymalna>5,0</prędkość_maksymalna>
+  <prędkość_ograniczenie>100</prędkość_ograniczenie>
+  <prędkość_przyspieszanie>0,5</prędkość_przyspieszanie>
+  <prędkość_zwalnianie>0,2</prędkość_zwalnianie>
+
+  <radar_zasięg>110</radar_zasięg>
+  <radio_zasięg>10</radio_zasięg>
+
+  <skręt_kąt_maksymalny>60</skręt_kąt_maksymalny>
+  <skręt_prędkość>40</skręt_prędkość>
+  <skręt_szybkość_wychylania_steru>0,45</skręt_szybkość_wychylania_steru>
+  <skręt_współczynnik_do_prędkości>25</skręt_współczynnik_do_prędkości>
+
+
+  <obiekt typ="prostopadłościan"><!-- Kadłub. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>2,0</x>
+      <y>0,5</y>
+      <z>5</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </współrzędne>
+  </obiekt>
+
+  <obiekt typ="ostrosłup"><!-- Dziób. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>2,0</x>
+      <y>2,5</y>
+      <z>0,5</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0,15</y>
+      <z>3,3</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>80</wychylenie__przód_tył>
+
+    <dziób>Tak</dziób>
+
+    <wartość_dodatkowa_01>0,7</wartość_dodatkowa_01>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Łączenie między dziobem a kadłubem. -->
+    <kolor>
+      <r>0,6</r>
+      <g>0,0</g>
+      <b>0,0</b>
+      <a>0</a>
+    </kolor>
+
+    <skala>
+      <x>1,415</x>
+      <y>0,499</y>
+      <z>1,415</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0</y>
+      <z>2,5</z>
+    </współrzędne>
+
+    <obrót__lewo_prawo>45</obrót__lewo_prawo>
+
+    <dziób>Tak</dziób>
+  </obiekt>
+
+  <obiekt typ="walec"><!-- Rufa. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>2,0</x>
+      <y>0,5</y>
+      <z>2,0</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0</y>
+      <z>-2,5</z>
+    </współrzędne>
+  </obiekt>
+
+
+  <obiekt typ="ostrosłup"><!-- Domek. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>1,5</x>
+      <y>2,6</y>
+      <z>3</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0,5</y>
+      <z>-0,2</z>
+    </współrzędne>
+
+    <wartość_dodatkowa_01>0,2</wartość_dodatkowa_01>
+  </obiekt>
+
+  <obiekt typ="ostrosłup"><!-- Domek góra. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>0,82</x>
+      <y>0,8</y>
+      <z>1,0</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>1,0</y>
+      <z>0,4</z>
+    </współrzędne>
+
+    <wartość_dodatkowa_01>0,65</wartość_dodatkowa_01>
+  </obiekt>
+
+  <obiekt typ="walec"><!-- Podstawa działa. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>0,28</x>
+      <y>0,25</y>
+      <z>0,28</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>1,38</y>
+      <z>0,4</z>
+    </współrzędne>
+  </obiekt>
+
+  <obiekt typ="walec"><!-- Podstawa radaru. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>0,12</x>
+      <y>0,4</y>
+      <z>0,12</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>1,87</y>
+      <z>0,4</z>
+    </współrzędne>
+  </obiekt>
+
+  <obiekt typ="kula"><!-- Radar kula. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>0,4</x>
+      <y>0,4</y>
+      <z>0,4</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>2,25</y>
+      <z>0,4</z>
+    </współrzędne>
+  </obiekt>
+
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek przód lewa. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,3</x>
+      <y>0,02</y>
+      <z>0,15</z>
+    </skala>
+
+    <współrzędne>
+      <x>0,42</x>
+      <y>0,60</y>
+      <z>1,09</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>60</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek przód środek. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,4</x>
+      <y>0,02</y>
+      <z>0,15</z>
+    </skala>
+
+    <współrzędne>
+      <x>0,0</x>
+      <y>0,60</y>
+      <z>1,09</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>60</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek przód prawa. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,3</x>
+      <y>0,02</y>
+      <z>0,15</z>
+    </skala>
+
+    <współrzędne>
+      <x>-0,42</x>
+      <y>0,60</y>
+      <z>1,09</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>60</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="kula"><!-- Szybka domek tył prawa. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,3</x>
+      <y>0,02</y>
+      <z>0,15</z>
+    </skala>
+
+    <współrzędne>
+      <x>-0,42</x>
+      <y>0,60</y>
+      <z>-1,5</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>-60</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="kula"><!-- Szybka domek tył lewa. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,3</x>
+      <y>0,02</y>
+      <z>0,15</z>
+    </skala>
+
+    <współrzędne>
+      <x>0,42</x>
+      <y>0,60</y>
+      <z>-1,5</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>-60</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek lewo przód. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,15</x>
+      <y>0,02</y>
+      <z>0,3</z>
+    </skala>
+
+    <współrzędne>
+      <x>0,64</x>
+      <y>0,6</y>
+      <z>0,825</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>-74</wychylenie__lewo_prawo>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek lewo środek przód. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,15</x>
+      <y>0,02</y>
+      <z>0,3</z>
+    </skala>
+
+    <współrzędne>
+      <x>0,64</x>
+      <y>0,6</y>
+      <z>0,25</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>-74</wychylenie__lewo_prawo>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek lewo środek tył. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,15</x>
+      <y>0,02</y>
+      <z>0,3</z>
+    </skala>
+
+    <współrzędne>
+      <x>0,64</x>
+      <y>0,6</y>
+      <z>-0,45</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>-74</wychylenie__lewo_prawo>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek lewo tył. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,15</x>
+      <y>0,02</y>
+      <z>0,3</z>
+    </skala>
+
+    <współrzędne>
+      <x>0,64</x>
+      <y>0,6</y>
+      <z>-1,15</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>-74</wychylenie__lewo_prawo>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek prawo przód. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,15</x>
+      <y>0,02</y>
+      <z>0,3</z>
+    </skala>
+
+    <współrzędne>
+      <x>-0,64</x>
+      <y>0,6</y>
+      <z>0,825</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>74</wychylenie__lewo_prawo>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek prawo środek przód. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,15</x>
+      <y>0,02</y>
+      <z>0,3</z>
+    </skala>
+
+    <współrzędne>
+      <x>-0,64</x>
+      <y>0,6</y>
+      <z>0,25</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>74</wychylenie__lewo_prawo>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek prawo środek tył. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,15</x>
+      <y>0,02</y>
+      <z>0,3</z>
+    </skala>
+
+    <współrzędne>
+      <x>-0,64</x>
+      <y>0,6</y>
+      <z>-0,45</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>74</wychylenie__lewo_prawo>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka domek prawo tył. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,15</x>
+      <y>0,02</y>
+      <z>0,3</z>
+    </skala>
+
+    <współrzędne>
+      <x>-0,64</x>
+      <y>0,6</y>
+      <z>-1,15</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>74</wychylenie__lewo_prawo>
+  </obiekt>
+
+
+  <obiekt typ="walec"><!-- Szybka domek góra przód. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,22</x>
+      <y>0,02</y>
+      <z>0,22</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>1,05</y>
+      <z>0,7</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>58</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="walec"><!-- Szybka domek góra tył. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,22</x>
+      <y>0,02</y>
+      <z>0,22</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>1,05</y>
+      <z>0,1</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>-58</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="walec"><!-- Szybka domek góra lewo. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,22</x>
+      <y>0,02</y>
+      <z>0,22</z>
+    </skala>
+
+    <współrzędne>
+      <x>0,25</x>
+      <y>1,05</y>
+      <z>0,4</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>-62</wychylenie__lewo_prawo>
+  </obiekt>
+
+  <obiekt typ="walec"><!-- Szybka domek góra prawo. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,22</x>
+      <y>0,02</y>
+      <z>0,22</z>
+    </skala>
+
+    <współrzędne>
+      <x>-0,25</x>
+      <y>1,05</y>
+      <z>0,4</z>
+    </współrzędne>
+
+    <wychylenie__lewo_prawo>62</wychylenie__lewo_prawo>
+  </obiekt>
+
+
+  <obiekt typ="walec"><!-- Drzwi góra. -->
+    <kolor nazwa="śruba"/>
+
+    <skala>
+      <x>0,35</x>
+      <y>0,04</y>
+      <z>0,44</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0,5</y>
+      <z>-1,55</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>-60</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Drzwi dół. -->
+    <kolor nazwa="śruba"/>
+
+    <skala>
+      <x>0,35</x>
+      <y>0,04</y>
+      <z>0,26</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0,38</y>
+      <z>-1,619</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>-60</wychylenie__przód_tył>
+  </obiekt>
+
+  <obiekt typ="walec"><!-- Szybka drzwi. -->
+    <kolor nazwa="szyba"/>
+
+    <skala>
+      <x>0,12</x>
+      <y>0,02</y>
+      <z>0,12</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0,57</y>
+      <z>-1,53</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>-60</wychylenie__przód_tył>
+  </obiekt>
+
+
+  <śruba><!-- Lewa. -->
+    <kolor nazwa="śruba"/>
+
+    <skala_proporcjonalna>0,6</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>0,5</x>
+      <y>-0,55</y>
+      <z>-1,3</z>
+    </współrzędne>
+
+    <czy_obrót_lewo>Nie</czy_obrót_lewo>
+    <prędkość_obrotowa_maksymalna>18</prędkość_obrotowa_maksymalna>
+    <prędkość_obrotowa_przyspieszanie>1,8</prędkość_obrotowa_przyspieszanie>
+  </śruba>
+
+  <śruba><!-- Prawa. -->
+    <kolor nazwa="śruba"/>
+
+    <skala_proporcjonalna>0,6</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>-0,5</x>
+      <y>-0,55</y>
+      <z>-1,3</z>
+    </współrzędne>
+
+    <czy_obrót_lewo>Tak</czy_obrót_lewo>
+    <prędkość_obrotowa_maksymalna>16</prędkość_obrotowa_maksymalna>
+    <prędkość_obrotowa_przyspieszanie>1,8</prędkość_obrotowa_przyspieszanie>
+  </śruba>
+
+
+  <ster>
+    <kolor nazwa="śruba"/>
+
+    <skala_proporcjonalna>0,7</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>0,0</x>
+      <y>-0,25</y>
+      <z>-2,15</z>
+    </współrzędne>
+  </ster>
+
+
+  <torpedy_wyrzutnia lufy_ilość="1"><!-- Lewa. -->
+    <kolor nazwa="śruba"/>
+
+    <współrzędne>
+      <x>0,5</x>
+      <y>0,25</y>
+      <z>2,0</z>
+    </współrzędne>
+
+    <obrót_szybkość>0,1</obrót_szybkość>
+
+    <obrażenia_zadawane>11,3</obrażenia_zadawane>
+    <zasięg>100,0</zasięg>
+
+    <amunicja_ilość>1200</amunicja_ilość>
+    <przeładowanie_czas_milisekundy>500</przeładowanie_czas_milisekundy>
+
+
+    <obrót__lewo_prawo>0</obrót__lewo_prawo>
+    <obrót_kąt_zablokowany_do>40</obrót_kąt_zablokowany_do>
+    <obrót_kąt_zablokowany_od>20</obrót_kąt_zablokowany_od>
+
+    <wychylenie__przód_tył>10</wychylenie__przód_tył>
+
+  </torpedy_wyrzutnia>
+
+  <torpedy_wyrzutnia lufy_ilość="1"><!-- Prawa. -->
+    <kolor nazwa="śruba"/>
+
+    <współrzędne>
+      <x>-0,5</x>
+      <y>0,25</y>
+      <z>2,0</z>
+    </współrzędne>
+
+    <obrót_szybkość>0,1</obrót_szybkość>
+
+    <obrażenia_zadawane>11,3</obrażenia_zadawane>
+    <zasięg>100,0</zasięg>
+
+    <amunicja_ilość>1200</amunicja_ilość>
+    <przeładowanie_czas_milisekundy>500</przeładowanie_czas_milisekundy>
+
+
+    <obrót__lewo_prawo>0</obrót__lewo_prawo>
+    <obrót_kąt_zablokowany_do>-20</obrót_kąt_zablokowany_do>
+    <obrót_kąt_zablokowany_od>-40</obrót_kąt_zablokowany_od>
+
+    <wychylenie__przód_tył>10</wychylenie__przód_tył>
+
+  </torpedy_wyrzutnia>
+
+
+  <działo lufy_ilość="1">
+    <kolor nazwa="śruba"/>
+
+    <skala_proporcjonalna>0,5</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>0,0</x>
+      <y>1,5</y>
+      <z>0,4</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>10</wychylenie__przód_tył>
+
+
+    <obrót_szybkość>0,39</obrót_szybkość>
+    <obrót_współczynnik>2,2</obrót_współczynnik>
+
+    <obrażenia_zadawane>50,0</obrażenia_zadawane>
+    <zasięg>150</zasięg>
+
+    <amunicja_ilość>120</amunicja_ilość>
+    <przeładowanie_czas_milisekundy>300</przeładowanie_czas_milisekundy>
+
+    <podniesienie_kąt_maksymalny>45</podniesienie_kąt_maksymalny>
+    <podniesienie_kąt_minimalny>-15</podniesienie_kąt_minimalny>
+    <podniesienie_szybkość>0,1</podniesienie_szybkość>
+  </działo>
+</statek>
