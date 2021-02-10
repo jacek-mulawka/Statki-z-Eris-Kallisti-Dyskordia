@@ -27,9 +27,9 @@
 
 
   <falowanie_bok_skręt_zakres>10,0</falowanie_bok_skręt_zakres>
-  <falowanie_bok_zakres>4</falowanie_bok_zakres>
-  <falowanie_góra_dół_zakres>0,025</falowanie_góra_dół_zakres>
-  <falowanie_przód_zakres>2</falowanie_przód_zakres>
+  <falowanie_bok_zakres>2</falowanie_bok_zakres>
+  <falowanie_góra_dół_zakres>0,05</falowanie_góra_dół_zakres>
+  <falowanie_przód_zakres>0,4</falowanie_przód_zakres>
 
   <kamera_odległość_maksymalna>8</kamera_odległość_maksymalna>
 
@@ -45,7 +45,7 @@
     <z>0</z>
   </kamera_za_statkiem_pozycja>
 
-  <luneta_zasięg>603</luneta_zasięg>
+  <luneta_zasięg>1603</luneta_zasięg>
 
   <punkty_życia_maksymalne>500</punkty_życia_maksymalne>
   <punkty_życia_wskaźnik_wysokość>3,0</punkty_życia_wskaźnik_wysokość>
@@ -56,8 +56,8 @@
   <prędkość_przyspieszanie>0,5</prędkość_przyspieszanie>
   <prędkość_zwalnianie>0,2</prędkość_zwalnianie>
 
-  <radar_zasięg>110</radar_zasięg>
-  <radio_zasięg>10</radio_zasięg>
+  <radar_zasięg>1500</radar_zasięg>
+  <radio_zasięg>3000</radio_zasięg>
 
   <skręt_kąt_maksymalny>60</skręt_kąt_maksymalny>
   <skręt_prędkość>40</skręt_prędkość>
@@ -650,12 +650,11 @@
 
     <obrót_szybkość>0,1</obrót_szybkość>
 
-    <obrażenia_zadawane>11,3</obrażenia_zadawane>
-    <zasięg>100,0</zasięg>
+    <obrażenia_zadawane>1100</obrażenia_zadawane>
+    <zasięg>2000,0</zasięg>
 
     <amunicja_ilość>1200</amunicja_ilość>
     <przeładowanie_czas_milisekundy>500</przeładowanie_czas_milisekundy>
-
 
     <obrót__lewo_prawo>0</obrót__lewo_prawo>
     <obrót_kąt_zablokowany_do>40</obrót_kąt_zablokowany_do>
@@ -676,12 +675,11 @@
 
     <obrót_szybkość>0,1</obrót_szybkość>
 
-    <obrażenia_zadawane>11,3</obrażenia_zadawane>
-    <zasięg>100,0</zasięg>
+    <obrażenia_zadawane>1100</obrażenia_zadawane>
+    <zasięg>2000,0</zasięg>
 
     <amunicja_ilość>1200</amunicja_ilość>
     <przeładowanie_czas_milisekundy>500</przeładowanie_czas_milisekundy>
-
 
     <obrót__lewo_prawo>0</obrót__lewo_prawo>
     <obrót_kąt_zablokowany_do>-20</obrót_kąt_zablokowany_do>
@@ -705,14 +703,13 @@
 
     <wychylenie__przód_tył>10</wychylenie__przód_tył>
 
-
     <obrót_szybkość>0,39</obrót_szybkość>
     <obrót_współczynnik>2,2</obrót_współczynnik>
 
     <obrażenia_zadawane>50,0</obrażenia_zadawane>
-    <zasięg>150</zasięg>
+    <zasięg>1500</zasięg>
 
-    <amunicja_ilość>120</amunicja_ilość>
+    <amunicja_ilość>1200</amunicja_ilość>
     <przeładowanie_czas_milisekundy>300</przeładowanie_czas_milisekundy>
 
     <podniesienie_kąt_maksymalny>45</podniesienie_kąt_maksymalny>
