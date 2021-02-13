@@ -1,4 +1,4 @@
-object Statki_Form: TStatki_Form
+﻿object Statki_Form: TStatki_Form
   Left = 0
   Top = 0
   Caption = 'Statki z Eris Kallisti Dyskordia'
@@ -20,7 +20,7 @@ object Statki_Form: TStatki_Form
     862)
   PixelsPerInch = 96
   TextHeight = 13
-  object Splitter1: TSplitter
+  object Opcje_Pionowy_Splitter: TSplitter
     Left = 428
     Top = 0
     Width = 6
@@ -29,28 +29,28 @@ object Statki_Form: TStatki_Form
     ExplicitLeft = 381
     ExplicitHeight = 462
   end
-  object GLSceneViewer1: TGLSceneViewer
+  object Gra_GLSceneViewer: TGLSceneViewer
     Left = 8
     Top = 8
     Width = 300
     Height = 300
-    Camera = GLCamera1
+    Camera = Gra_GLCamera
     FieldOfView = 143.130096435546900000
-    OnClick = GLSceneViewer1Click
-    OnMouseDown = GLSceneViewer1MouseDown
-    OnMouseMove = GLSceneViewer1MouseMove
-    OnMouseWheel = GLSceneViewer1MouseWheel
-    OnKeyDown = GLSceneViewer1KeyDown
+    OnClick = Gra_GLSceneViewerClick
+    OnMouseDown = Gra_GLSceneViewerMouseDown
+    OnMouseMove = Gra_GLSceneViewerMouseMove
+    OnMouseWheel = Gra_GLSceneViewerMouseWheel
+    OnKeyDown = Gra_GLSceneViewerKeyDown
     TabStop = True
     TabOrder = 0
-    OnExit = GLSceneViewer1Exit
+    OnExit = Gra_GLSceneViewerExit
   end
   object Radar_Panel: TPanel
     Tag = 25
     Left = 0
-    Top = 720
+    Top = 705
     Width = 370
-    Height = 130
+    Height = 150
     Anchors = [akLeft, akBottom]
     TabOrder = 2
     object Radar_Przyciski_Panel: TPanel
@@ -60,34 +60,30 @@ object Statki_Form: TStatki_Form
       Height = 30
       Align = alTop
       TabOrder = 0
-      object Radar_Zasięg_Etykieta_Label: TLabel
+      object Radar_Skala_Etykieta_Label: TLabel
         Left = 30
         Top = 0
-        Width = 34
+        Width = 32
         Height = 26
-        Caption = 'Zasi'#281'g radaru'
+        Caption = 'Skala radaru'
         WordWrap = True
       end
-      object Radar_Odwróć_CheckBox: TCheckBox
+      object Radar_Czułość_Etykieta_Label: TLabel
         Left = 125
         Top = 0
-        Width = 97
-        Height = 17
-        Hint = 'Odbija widok radaru w poziomie.'
-        Caption = 'Radar odwr'#243#263
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 3
-        OnClick = Radar_Odwróć_CheckBoxClick
+        Width = 37
+        Height = 26
+        Caption = 'Czu'#322'o'#347#263' radaru'
+        WordWrap = True
       end
-      object Radar_Zasięg_SpinEdit: TSpinEdit
+      object Radar_Skala_SpinEdit: TSpinEdit
         Left = 70
         Top = 4
         Width = 50
         Height = 22
         Increment = 10
         MaxValue = 999999
-        MinValue = 1
+        MinValue = 2
         ParentShowHint = False
         ShowHint = True
         TabOrder = 2
@@ -118,8 +114,8 @@ object Statki_Form: TStatki_Form
         OnClick = Radar_Wielkość_ButtonClick
       end
       object Radar_Dane_Z_Radia_CheckBox: TCheckBox
-        Left = 125
-        Top = 14
+        Left = 220
+        Top = -2
         Width = 97
         Height = 17
         Hint = 'Prezentuj na radarze dane z radia.'
@@ -130,120 +126,42 @@ object Statki_Form: TStatki_Form
         State = cbChecked
         TabOrder = 4
       end
+      object Radar_Czułość_SpinEdit: TSpinEdit
+        Tag = 100
+        Left = 165
+        Top = 4
+        Width = 50
+        Height = 22
+        Increment = 10
+        MaxValue = 999999
+        MinValue = 1
+        ParentShowHint = False
+        ShowHint = False
+        TabOrder = 3
+        Value = 100
+      end
+      object Radar_Zmieniaj_Czułość_Wraz_Ze_Skalą_CheckBox: TCheckBox
+        Left = 220
+        Top = 13
+        Width = 97
+        Height = 17
+        Hint = 'Zmieniaj czu'#322'o'#347#263' radaru wraz ze zmian'#261' skali.'
+        Caption = 'Zmieniaj czu'#322'o'#347#263
+        Checked = True
+        ParentShowHint = False
+        ShowHint = True
+        State = cbChecked
+        TabOrder = 5
+      end
     end
-    object Radar_Chart: TChart
-      Left = 1
-      Top = 31
-      Width = 368
-      Height = 98
-      Legend.Symbol.Shadow.HorizSize = 3
-      Legend.Symbol.Shadow.VertSize = 3
-      Legend.Visible = False
-      Title.Text.Strings = (
-        'TChart')
-      Title.Visible = False
-      BottomAxis.LabelsFormat.TextAlignment = taCenter
-      DepthAxis.LabelsFormat.TextAlignment = taCenter
-      DepthTopAxis.LabelsFormat.TextAlignment = taCenter
-      LeftAxis.LabelsFormat.TextAlignment = taCenter
-      Panning.MouseWheel = pmwNone
-      RightAxis.LabelsFormat.TextAlignment = taCenter
-      TopAxis.LabelsFormat.TextAlignment = taCenter
-      View3D = False
-      Zoom.Pen.Mode = pmNotXor
-      ZoomWheel = pmwNormal
-      Align = alClient
+    object Radar_GLSceneViewer: TGLSceneViewer
+      Left = 8
+      Top = 37
+      Width = 100
+      Height = 100
+      Camera = Radar_GLCamera
+      FieldOfView = 90.000000000000000000
       TabOrder = 1
-      DefaultCanvas = 'TGDIPlusCanvas'
-      ColorPaletteIndex = 13
-      object Series3: TPointSeries
-        Marks.Visible = False
-        SeriesColor = clWhite
-        Title = 'Statek margines'
-        ClickableLine = False
-        Pointer.Brush.Gradient.EndColor = clWhite
-        Pointer.Gradient.EndColor = clWhite
-        Pointer.InflateMargins = True
-        Pointer.Style = psCross
-        Pointer.Visible = True
-        XValues.Name = 'X'
-        XValues.Order = loAscending
-        YValues.Name = 'Y'
-        YValues.Order = loNone
-      end
-      object Series4: TPointSeries
-        Marks.Visible = False
-        SeriesColor = clGray
-        Title = 'Statki '#347'lady'
-        ClickableLine = False
-        Pointer.Brush.Gradient.EndColor = clGray
-        Pointer.Gradient.EndColor = clGray
-        Pointer.InflateMargins = True
-        Pointer.Style = psStar
-        Pointer.Visible = True
-        XValues.Name = 'X'
-        XValues.Order = loAscending
-        YValues.Name = 'Y'
-        YValues.Order = loNone
-      end
-      object Series1: TPointSeries
-        Marks.Visible = False
-        SeriesColor = 16512
-        Title = 'L'#261'd'
-        ClickableLine = False
-        Pointer.Brush.Gradient.EndColor = 16512
-        Pointer.Gradient.EndColor = 16512
-        Pointer.InflateMargins = True
-        Pointer.Style = psRectangle
-        Pointer.Visible = True
-        XValues.Name = 'X'
-        XValues.Order = loAscending
-        YValues.Name = 'Y'
-        YValues.Order = loNone
-      end
-      object Series6: TPointSeries
-        Marks.Visible = False
-        SeriesColor = 16711808
-        Title = 'Statki kierunek'
-        ClickableLine = False
-        Pointer.Brush.Gradient.EndColor = 16711808
-        Pointer.Gradient.EndColor = 16711808
-        Pointer.InflateMargins = True
-        Pointer.Style = psCircle
-        Pointer.Visible = True
-        XValues.Name = 'X'
-        XValues.Order = loAscending
-        YValues.Name = 'Y'
-        YValues.Order = loNone
-      end
-      object Series2: TPointSeries
-        Marks.Visible = False
-        SeriesColor = clBlack
-        Title = 'Statki'
-        ClickableLine = False
-        Pointer.Brush.Gradient.EndColor = clBlack
-        Pointer.Gradient.EndColor = clBlack
-        Pointer.InflateMargins = True
-        Pointer.Style = psRectangle
-        Pointer.Visible = True
-        XValues.Name = 'X'
-        XValues.Order = loAscending
-        YValues.Name = 'Y'
-        YValues.Order = loNone
-      end
-      object Series5: TPointSeries
-        Marks.Visible = False
-        SeriesColor = clYellow
-        Title = 'Celownik'
-        ClickableLine = False
-        Pointer.InflateMargins = True
-        Pointer.Style = psCircle
-        Pointer.Visible = True
-        XValues.Name = 'X'
-        XValues.Order = loAscending
-        YValues.Name = 'Y'
-        YValues.Order = loNone
-      end
     end
   end
   object PageControl1: TPageControl
@@ -251,7 +169,7 @@ object Statki_Form: TStatki_Form
     Top = 0
     Width = 350
     Height = 862
-    ActivePage = Gra_TabSheet
+    ActivePage = Klawiatura_Konfiguracja_TabSheet
     Align = alRight
     TabOrder = 1
     OnChange = PageControl1Change
@@ -387,11 +305,10 @@ object Statki_Form: TStatki_Form
           object Gracz_Nazwa_Etykieta_Label: TLabel
             Left = 2
             Top = 15
-            Width = 334
+            Width = 67
             Height = 13
             Align = alTop
             Caption = 'Nazwa gracza'
-            ExplicitWidth = 67
           end
           object Gracz_Gotowość_Nie_BitBtn: TBitBtn
             Left = 185
@@ -712,20 +629,18 @@ object Statki_Form: TStatki_Form
           object Mapa_Label: TLabel
             Left = 2
             Top = 15
-            Width = 334
+            Width = 58
             Height = 13
             Align = alTop
             Caption = 'Mapa: <?>.'
-            ExplicitWidth = 58
           end
           object Statki_Pozycje_Początkowe_Label: TLabel
             Left = 2
             Top = 28
-            Width = 334
+            Width = 170
             Height = 13
             Align = alTop
             Caption = 'Pozycje pocz'#261'tkowe statk'#243'w: <?>.'
-            ExplicitWidth = 170
           end
           object Gracze_Lista_StringGrid: TStringGrid
             Left = 2
@@ -1350,10 +1265,6 @@ object Statki_Form: TStatki_Form
     object Ustawienia_TabSheet: TTabSheet
       Caption = 'Ustawienia'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Ustawienia_Panel: TPanel
         Left = 0
         Top = 0
@@ -1396,7 +1307,7 @@ object Statki_Form: TStatki_Form
         OnMouseWheel = ScrollBoxMouseWheel
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Etykieta_Label: TLabel
           Left = 10
-          Top = 790
+          Top = 860
           Width = 162
           Height = 13
           Hint = 
@@ -1409,7 +1320,7 @@ object Statki_Form: TStatki_Form
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Label: TLabel
           Left = 280
-          Top = 790
+          Top = 860
           Width = 21
           Height = 13
           Hint = 
@@ -1422,7 +1333,7 @@ object Statki_Form: TStatki_Form
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Etykieta_Label: TLabel
           Left = 10
-          Top = 760
+          Top = 830
           Width = 129
           Height = 13
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
@@ -1432,7 +1343,7 @@ object Statki_Form: TStatki_Form
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Label: TLabel
           Left = 245
-          Top = 760
+          Top = 830
           Width = 21
           Height = 13
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
@@ -1442,7 +1353,7 @@ object Statki_Form: TStatki_Form
         end
         object Gra_Współczynnik_Prędkości_Etykieta_Label: TLabel
           Left = 10
-          Top = 460
+          Top = 530
           Width = 86
           Height = 13
           Caption = 'Pr'#281'dko'#347#263' gry <?>'
@@ -1481,7 +1392,7 @@ object Statki_Form: TStatki_Form
         end
         object Mysz_Czułość_Etykieta_Label: TLabel
           Left = 10
-          Top = 340
+          Top = 380
           Width = 62
           Height = 13
           Hint = 'Czu'#322'o'#347#263' myszy (pr'#281'dko'#347#263' ruchu myszy).'
@@ -1491,7 +1402,7 @@ object Statki_Form: TStatki_Form
         end
         object Mysz_Czułość_Label: TLabel
           Left = 180
-          Top = 340
+          Top = 380
           Width = 21
           Height = 13
           Hint = 'Czu'#322'o'#347#263' myszy (pr'#281'dko'#347#263' ruchu myszy) warto'#347#263' ustawiona.'
@@ -1501,7 +1412,7 @@ object Statki_Form: TStatki_Form
         end
         object Mysz_Czułość_Luneta_Etykieta_Label: TLabel
           Left = 10
-          Top = 370
+          Top = 410
           Width = 95
           Height = 13
           Hint = 
@@ -1513,7 +1424,7 @@ object Statki_Form: TStatki_Form
         end
         object Mysz_Czułość_Luneta_Label: TLabel
           Left = 210
-          Top = 370
+          Top = 410
           Width = 21
           Height = 13
           Hint = 
@@ -1567,6 +1478,18 @@ object Statki_Form: TStatki_Form
           ParentShowHint = False
           ShowHint = False
         end
+        object Morze_Wzburzenie_Etykieta_Label: TLabel
+          Left = 10
+          Top = 345
+          Width = 108
+          Height = 13
+          Hint = 
+            'Wzburzenie morza wp'#322'ywa na falowanie statku (100% jest warto'#347'ci'#261 +
+            ' domy'#347'ln'#261').'
+          Caption = 'Morze wzburzenie [%]'
+          ParentShowHint = False
+          ShowHint = True
+        end
         object Amunicja__Cel_Pozycja_Dla_Lotu_Parabolą_Wyświetl_CheckBox: TCheckBox
           Left = 10
           Top = 5
@@ -1584,7 +1507,7 @@ object Statki_Form: TStatki_Form
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Edit: TEdit
           Left = 185
-          Top = 790
+          Top = 860
           Width = 80
           Height = 21
           Hint = 
@@ -1593,31 +1516,31 @@ object Statki_Form: TStatki_Form
             'y spos'#243'b.'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 23
+          TabOrder = 25
           Text = '0'
           OnChange = Amunicja__Zanurzenie_Głębokość_Zadana_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Edit: TEdit
           Left = 150
-          Top = 760
+          Top = 830
           Width = 80
           Height = 21
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 22
+          TabOrder = 24
           Text = '-0.3'
           OnChange = Amunicja__Zanurzenie_Głębokość_Zadana_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Amunicja_Rodzaj_GroupBox: TGroupBox
           Left = 10
-          Top = 645
+          Top = 715
           Width = 120
           Height = 105
           Caption = 'Strzelaj z'
-          TabOrder = 21
+          TabOrder = 23
           object ar_Artyleria_CheckBox: TCheckBox
             Left = 10
             Top = 20
@@ -1648,8 +1571,6 @@ object Statki_Form: TStatki_Form
             Width = 97
             Height = 17
             Caption = '<wszystko>'
-            Checked = True
-            State = cbChecked
             TabOrder = 3
           end
         end
@@ -1685,13 +1606,13 @@ object Statki_Form: TStatki_Form
         end
         object Gra_Współczynnik_Prędkości_SpinEdit: TSpinEdit
           Left = 115
-          Top = 460
+          Top = 530
           Width = 121
           Height = 22
           Increment = 10
           MaxValue = 999999
           MinValue = 1
-          TabOrder = 14
+          TabOrder = 16
           Value = 100
           OnChange = Gra_Współczynnik_Prędkości_SpinEditChange
         end
@@ -1725,20 +1646,20 @@ object Statki_Form: TStatki_Form
         end
         object Mysz_Czułość_Edit: TEdit
           Left = 90
-          Top = 340
+          Top = 380
           Width = 80
           Height = 21
           Hint = 'Czu'#322'o'#347#263' myszy (pr'#281'dko'#347#263' ruchu myszy).'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 10
+          TabOrder = 11
           Text = '10.00'
           OnChange = Mysz_Czułość_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Mysz_Czułość_Luneta_Edit: TEdit
           Left = 120
-          Top = 370
+          Top = 410
           Width = 80
           Height = 21
           Hint = 
@@ -1746,80 +1667,80 @@ object Statki_Form: TStatki_Form
             'iu lunety.'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 11
+          TabOrder = 12
           Text = '0.1'
           OnChange = Mysz_Czułość_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Obrót_Kąt_Zablokowany_Wskaźnik_CheckBox: TCheckBox
           Left = 10
-          Top = 400
+          Top = 440
           Width = 220
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik zablokowanego k'#261'ta obrotu broni.'
           Caption = 'Obr'#243't k'#261't zablokowany broni wska'#378'nik'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 12
+          TabOrder = 13
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Pokój_Rozmów__Informacja_Dodatkowa_CheckBox: TCheckBox
           Left = 10
-          Top = 515
+          Top = 585
           Width = 200
           Height = 17
           Hint = 'Wy'#347'wietlaj dialogi z pokoju rozm'#243'w na ekranie gry.'
           Caption = 'Pok'#243'j rozm'#243'w informuj na ekranie'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 16
+          TabOrder = 18
         end
         object Punkty_Życia_Wskaźnik__Gracz_CheckBox: TCheckBox
           Left = 10
-          Top = 545
+          Top = 615
           Width = 160
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkiem gracza.'
           Caption = 'Punkty '#380'ycia wska'#378'nik gracz'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 17
+          TabOrder = 19
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Punkty_Życia_Wskaźnik__Przeciwnik_CheckBox: TCheckBox
           Left = 10
-          Top = 565
+          Top = 635
           Width = 180
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkami przeciwnik'#243'w.'
           Caption = 'Punkty '#380'ycia wska'#378'nik przeciwnik'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 18
+          TabOrder = 20
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Punkty_Życia_Wskaźnik__Sojusznik_CheckBox: TCheckBox
           Left = 10
-          Top = 585
+          Top = 655
           Width = 180
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkami sojusznik'#243'w.'
           Caption = 'Punkty '#380'ycia wska'#378'nik sojusznik'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 19
+          TabOrder = 21
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Pokój_Rozmów__Na_Ekranie_CheckBox: TCheckBox
           Left = 10
-          Top = 490
+          Top = 560
           Width = 150
           Height = 17
           Hint = 'Wy'#347'wietlaj pok'#243'j rozm'#243'w na ekranie gry.'
           Caption = 'Pok'#243'j rozm'#243'w na ekranie'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 15
+          TabOrder = 17
           OnClick = Pokój_Rozmów__Na_Ekranie_CheckBoxClick
         end
         object Celowanie_Precyzja_Obrót_SpinEdit: TSpinEdit
@@ -1894,7 +1815,7 @@ object Statki_Form: TStatki_Form
         end
         object Radar_Widoczność_CheckBox: TCheckBox
           Left = 10
-          Top = 615
+          Top = 685
           Width = 110
           Height = 17
           Hint = 'Wy'#347'wietlaj radar na ekranie.'
@@ -1903,12 +1824,12 @@ object Statki_Form: TStatki_Form
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 20
+          TabOrder = 22
           OnClick = Radar_Widoczność_CheckBoxClick
         end
         object Obrót_Kąt_Zablokowany_Strzał_Wskaźnik_CheckBox: TCheckBox
           Left = 10
-          Top = 430
+          Top = 470
           Width = 260
           Height = 17
           Hint = 
@@ -1917,8 +1838,36 @@ object Statki_Form: TStatki_Form
           Caption = 'Obr'#243't k'#261't zablokowany broni strza'#322' wska'#378'nik'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 13
+          TabOrder = 14
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
+        end
+        object Pełny_Ekran_CheckBox: TCheckBox
+          Left = 10
+          Top = 499
+          Width = 90
+          Height = 17
+          Caption = 'Pe'#322'ny ekran'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 15
+          OnClick = Pełny_Ekran_CheckBoxClick
+        end
+        object Morze_Wzburzenie_SpinEdit: TSpinEdit
+          Left = 130
+          Top = 345
+          Width = 121
+          Height = 22
+          Hint = 
+            'Wzburzenie morza wp'#322'ywa na falowanie statku (100% jest warto'#347'ci'#261 +
+            ' domy'#347'ln'#261').'
+          Increment = 10
+          MaxValue = 999999
+          MinValue = 0
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 10
+          Value = 100
+          OnChange = Morze_Wzburzenie_SpinEditChange
         end
       end
     end
@@ -1931,11 +1880,11 @@ object Statki_Form: TStatki_Form
       ExplicitHeight = 0
       object Projektowy_Tryb_CheckBox: TCheckBox
         Left = 5
-        Top = 5
+        Top = 50
         Width = 97
         Height = 17
         Caption = 'Projektowy tryb'
-        TabOrder = 0
+        TabOrder = 1
         OnClick = Projektowy_Tryb_CheckBoxClick
       end
       object Button1: TButton
@@ -1944,12 +1893,12 @@ object Statki_Form: TStatki_Form
         Width = 75
         Height = 25
         Caption = 'Button1'
-        TabOrder = 1
+        TabOrder = 3
         OnClick = Button1Click
       end
       object Statki_Zaprezentuj_GroupBox: TGroupBox
         Left = 5
-        Top = 30
+        Top = 85
         Width = 260
         Height = 135
         Caption = 'Zaprezentuj statki'
@@ -2114,14 +2063,22 @@ object Statki_Form: TStatki_Form
           OnClick = Statki_Zaprezentuj__Zwolnij_BitBtnClick
         end
       end
+      object Statystyki_Wypisz_Button: TButton
+        Left = 10
+        Top = 10
+        Width = 75
+        Height = 25
+        Hint = 'Wypisz statystyki (je'#380'eli dost'#281'pne).'
+        Caption = 'Statystyki'
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        OnClick = Statystyki_Wypisz_ButtonClick
+      end
     end
     object Klawiatura_Konfiguracja_TabSheet: TTabSheet
       Caption = 'Konfiguracja klawiatury'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Klawiatura_Konfiguracja__Przyciski_Panel: TPanel
         Left = 0
         Top = 0
@@ -2218,10 +2175,6 @@ object Statki_Form: TStatki_Form
     object O_Programie_TabSheet: TTabSheet
       Caption = 'O programie'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object O_Programie_Label: TLabel
         Left = 0
         Top = 0
@@ -2229,7 +2182,7 @@ object Statki_Form: TStatki_Form
         Height = 234
         Align = alTop
         Caption = 
-          'Statki z Eris Kallisti Dyskordia'#13#10'wersja 2021.02.08.'#13#10'W produkcj' +
+          'Statki z Eris Kallisti Dyskordia'#13#10'wersja 2021.02.13.'#13#10'W produkcj' +
           'i.'#13#10#13#10'MIT License'#13#10#13#10'Copyright (c) 2017 Jacek Mulawka'#13#10#13#10'j.mulaw' +
           'ka@interia.pl'#13#10#13#10'https://github.com/jacek-mulawka'#13#10#13#10#13#10'Program j' +
           'est darmowy, udost'#281'pniony w postaci takiej jakiej jest wraz ze w' +
@@ -2241,7 +2194,7 @@ object Statki_Form: TStatki_Form
       end
     end
   end
-  object GLScene1: TGLScene
+  object Gra_GLScene: TGLScene
     Left = 40
     Top = 25
     object GLSkyDome1: TGLSkyDome
@@ -2263,14 +2216,14 @@ object Statki_Form: TStatki_Form
         end>
       Stars = <>
     end
-    object GLLightSource1: TGLLightSource
+    object Gra_GLLightSource: TGLLightSource
       ConstAttenuation = 1.000000000000000000
       Position.Coordinates = {0000000000007A44000000000000803F}
       LightStyle = lsOmni
       SpotCutOff = 180.000000000000000000
     end
-    object GLCamera1: TGLCamera
-      DepthOfView = 1000.000000000000000000
+    object Gra_GLCamera: TGLCamera
+      DepthOfView = 10000.000000000000000000
       FocalLength = 50.000000000000000000
       Position.Coordinates = {0000000000000040000020410000803F}
     end
@@ -2302,7 +2255,7 @@ object Statki_Form: TStatki_Form
       Width = 1000.000000000000000000
       BehavioursData = {
         0458434F4C02010201060D54474C42436F6C6C6973696F6E0202020012000000
-        0002000613474C436F6C6C6973696F6E4D616E616765723102030200}
+        00020006164772615F474C436F6C6C6973696F6E4D616E6167657202030200}
     end
     object Dno_GLPlane: TGLPlane
       Material.FrontProperties.Diffuse.Color = {8FC2353F6666263FB81E853E0000803F}
@@ -2331,7 +2284,7 @@ object Statki_Form: TStatki_Form
       Pickable = False
       BehavioursData = {
         0458434F4C02010201060D54474C42436F6C6C6973696F6E0202020012000000
-        0002000613474C436F6C6C6973696F6E4D616E616765723102030200}
+        00020006164772615F474C436F6C6C6973696F6E4D616E6167657202030200}
       CubeSize = {0000803F0AD7233C0000803F}
     end
     object Dno_Kolizje_GLCube: TGLCube
@@ -2339,7 +2292,7 @@ object Statki_Form: TStatki_Form
       Pickable = False
       BehavioursData = {
         0458434F4C02010201060D54474C42436F6C6C6973696F6E0202020012000000
-        0002000613474C436F6C6C6973696F6E4D616E616765723102030200}
+        00020006164772615F474C436F6C6C6973696F6E4D616E6167657202030200}
       CubeSize = {0000803F0AD7233C0000803F}
     end
     object GLLines1: TGLLines
@@ -2424,22 +2377,22 @@ object Statki_Form: TStatki_Form
       BottomArrowHeadRadius = 0.200000002980232200
     end
   end
-  object GLCadencer1: TGLCadencer
-    Scene = GLScene1
+  object Gra_GLCadencer: TGLCadencer
+    Scene = Gra_GLScene
     SleepLength = -10
-    OnProgress = GLCadencer1Progress
+    OnProgress = Gra_GLCadencerProgress
     Left = 40
     Top = 80
   end
-  object GLUserInterface1: TGLUserInterface
+  object Gra_GLUserInterface: TGLUserInterface
     MouseSpeed = 10.000000000000000000
-    GLNavigator = GLNavigator1
+    GLNavigator = Gra_GLNavigator
     Left = 40
     Top = 190
   end
-  object GLNavigator1: TGLNavigator
+  object Gra_GLNavigator: TGLNavigator
     VirtualUp.Coordinates = {000000000000803F0000000000000000}
-    MovingObject = GLCamera1
+    MovingObject = Gra_GLCamera
     UseVirtualUp = True
     Left = 40
     Top = 135
@@ -2490,8 +2443,8 @@ object Statki_Form: TStatki_Form
     Left = 420
     Top = 195
   end
-  object GLCollisionManager1: TGLCollisionManager
-    OnCollision = GLCollisionManager1Collision
+  object Gra_GLCollisionManager: TGLCollisionManager
+    OnCollision = Gra_GLCollisionManagerCollision
     Left = 40
     Top = 250
   end
@@ -2503,7 +2456,7 @@ object Statki_Form: TStatki_Form
   object Efekt__Wpadnięcie_Do_Wody_0_GLFireFXManager: TGLFireFXManager
     FireDir.Coordinates = {000000009A99993E0000000000000000}
     InitialDir.Coordinates = {00000000CDCC4C3E0000000000000000}
-    Cadencer = GLCadencer1
+    Cadencer = Gra_GLCadencer
     MaxParticles = 128
     ParticleSize = 0.150000005960464500
     InnerColor.Color = {00000000F8FEFE3E0000803F0000803F}
@@ -2521,7 +2474,7 @@ object Statki_Form: TStatki_Form
     Top = 411
   end
   object Efekt__Wpadnięcie_Do_Wody_GLPolygonPFXManager: TGLPolygonPFXManager
-    Cadencer = GLCadencer1
+    Cadencer = Gra_GLCadencer
     Renderer = GLParticleFXRenderer1
     Friction = 1.000000000000000000
     NbSides = 9
@@ -2541,7 +2494,7 @@ object Statki_Form: TStatki_Form
     Top = 391
   end
   object Efekt__Ogień_GLFireFXManager: TGLFireFXManager
-    Cadencer = GLCadencer1
+    Cadencer = Gra_GLCadencer
     ParticleSize = 0.100000001490116100
     FireDensity = 0.500000000000000000
     FireEvaporation = 0.860000014305114700
@@ -2556,7 +2509,7 @@ object Statki_Form: TStatki_Form
     Top = 336
   end
   object Efekt__Dym_GLPerlinPFXManager: TGLPerlinPFXManager
-    Cadencer = GLCadencer1
+    Cadencer = Gra_GLCadencer
     Renderer = GLParticleFXRenderer1
     Acceleration.Coordinates = {000000000000803F0000000000000000}
     Friction = 1.000000000000000000
@@ -2583,7 +2536,7 @@ object Statki_Form: TStatki_Form
     Top = 336
   end
   object Efekt__Mgła_GLPerlinPFXManager: TGLPerlinPFXManager
-    Cadencer = GLCadencer1
+    Cadencer = Gra_GLCadencer
     Renderer = GLParticleFXRenderer1
     Friction = 1.000000000000000000
     Smoothness = 1.000000000000000000
@@ -2628,7 +2581,7 @@ object Statki_Form: TStatki_Form
     Top = 316
   end
   object Efekt__Smuga_GLPerlinPFXManager: TGLPerlinPFXManager
-    Cadencer = GLCadencer1
+    Cadencer = Gra_GLCadencer
     Renderer = GLParticleFXRenderer1
     Friction = 1.000000000000000000
     Smoothness = 20.000000000000000000
@@ -2697,5 +2650,81 @@ object Statki_Form: TStatki_Form
     OnTimer = Informacje_Dodatkowe_TimerTimer
     Left = 558
     Top = 445
+  end
+  object Radar_GLScene: TGLScene
+    Left = 140
+    Top = 745
+    object Radar_GLLightSource: TGLLightSource
+      ConstAttenuation = 1.000000000000000000
+      Position.Coordinates = {0000000000007A44000000000000803F}
+      SpotCutOff = 180.000000000000000000
+    end
+    object Radar_0_GLSphere: TGLSphere
+      Material.FrontProperties.Ambient.Color = {00000000000000000000000000000000}
+      Material.FrontProperties.Diffuse.Color = {6666663FC3F5683F48E17A3F0000803F}
+      Material.FrontProperties.Emission.Color = {00000000000000000000000000000000}
+      Position.Coordinates = {0000000000000000000080BF0000803F}
+      Radius = 0.500000000000000000
+    end
+    object Radar_Tło_GLPlane: TGLPlane
+      Material.FrontProperties.Ambient.Color = {00000000000000000000000000000000}
+      Material.FrontProperties.Diffuse.Color = {938C0C3EDCD6D63E938E0E3F0000803F}
+      Material.FrontProperties.Emission.Color = {00000000000000000000000000000000}
+      Direction.Coordinates = {000000000000803F0000000000000000}
+      Up.Coordinates = {0000000000000000000080BF00000000}
+      Height = 100.000000000000000000
+      Width = 100.000000000000000000
+    end
+    object Radar_Ślady_GLDummyCube: TGLDummyCube
+      CubeSize = 1.000000000000000000
+    end
+    object Radar_Obiekty_GLDummyCube: TGLDummyCube
+      CubeSize = 1.000000000000000000
+    end
+    object Radar_Statek_GLDummyCube: TGLDummyCube
+      CubeSize = 1.000000000000000000
+      object Radar_GLCamera: TGLCamera
+        DepthOfView = 10000.000000000000000000
+        FocalLength = 50.000000000000000000
+        CameraStyle = csInfinitePerspective
+        Position.Coordinates = {0000000000002041000000000000803F}
+        Direction.Coordinates = {00000000000080BF0000000000000000}
+        Up.Coordinates = {00000000000000000000803F00000000}
+      end
+      object Radar_Statek_GLFrustrum: TGLFrustrum
+        Material.FrontProperties.Ambient.Color = {00000000000000000000000000000000}
+        Material.FrontProperties.Diffuse.Color = {00000000000000000000000000000000}
+        Material.FrontProperties.Emission.Color = {A7AD2D3FEAEA6A3FEAEA6A3F0000803F}
+        Direction.Coordinates = {004474180000803F2EBD3BB300000000}
+        PitchAngle = 90.000000000000000000
+        RollAngle = 180.000000000000000000
+        Scale.Coordinates = {0000003F0000803F0000803F00000000}
+        Up.Coordinates = {2EBDBB332EBD3B330000803F00000000}
+        FrustrumSize = {0000803F0000803F0000803F0000803F}
+      end
+      object Radio_Zasięg_GLDisk: TGLDisk
+        Material.FrontProperties.Ambient.Color = {00000000000000000000000000000000}
+        Material.FrontProperties.Diffuse.Color = {00000000000000000000000000000000}
+        Material.FrontProperties.Emission.Color = {D9D8D83ED9D8D83EE1E0E03D0000803F}
+        Material.PolygonMode = pmLines
+        Direction.Coordinates = {000000000000803F0000000000000000}
+        Up.Coordinates = {0000000000000000000080BF00000000}
+        Loops = 1
+        OuterRadius = 1.000000000000000000
+        Slices = 9
+        SweepAngle = 360.000000000000000000
+      end
+      object Radar_Zasięg_GLDisk: TGLDisk
+        Material.FrontProperties.Ambient.Color = {00000000000000000000000000000000}
+        Material.FrontProperties.Diffuse.Color = {938C0C3EDCD6D63E938E0E3F0000803F}
+        Material.FrontProperties.Emission.Color = {00000000000000000000000000000000}
+        Material.PolygonMode = pmLines
+        Direction.Coordinates = {000000000000803F0000000000000000}
+        Up.Coordinates = {0000000000000000000080BF00000000}
+        Loops = 1
+        OuterRadius = 1.000000000000000000
+        SweepAngle = 360.000000000000000000
+      end
+    end
   end
 end
