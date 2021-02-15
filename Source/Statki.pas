@@ -68,6 +68,8 @@ unit Statki;{18.Sty.2017}
   //
   // GLParticleFXRenderer1 - umieszczony na koñcu aby elementy gry nie przes³ania³y efektów.
   // Informacje_G³ówne_GLHUDText - umieszczony za GLParticleFXRenderer1 aby efekty nie przes³ania³y napisów na ekranie.
+  //
+  // Radar_GLWindowsBitmapFont - bez osobnego TGLWindowsBitmapFont dla radaru zawiesza siê IDE i gra.
 
   //  Wieloosobowoœæ bêdzie siê opiera³a chyba na tym, ¿e serwer bêdzie przelicza³ pociski, a klient tylko kopiowa³ obraz.
   //  Serwer otrzyma informacjê o strzale gracza i j¹ przetworzy (cel, konfiguracja strza³u)
@@ -82,8 +84,9 @@ unit Statki;{18.Sty.2017}
   // SI, SI - ka¿de dzia³o osobno celuje
   // tryb obrony twierdzy
   // Je¿e g³êbinowe.
-  // ³ódŸ podwodna
+  // ³ódŸ podwodna // £ódŸ_podwodna.
   // lotniskowiec
+  //   samoloty na radarze
 
   // falga, symbol statku
   // lot pocisków sprawdziæ; kilwater, woda
@@ -100,7 +103,7 @@ unit Statki;{18.Sty.2017}
 
   // opis do klawiszy (P Alt to jak A + C, czego nie wykrywa)
 
-  // torpedy na radarze
+  // kamera, wspó³rzêdne na radarze, pudelko t³a
   // mg³a
   // kilawter
   // zbioracza funkcja dla aktywacji i dezaktywacji elementów lient, gra start
@@ -568,7 +571,8 @@ type
     kamera_odleg³oœæ_maksymalna, // Maksymalna odleg³oœæ kamery od statku.
     luneta_zasiêg, // Maksymalny zasiêg przybli¿enia.
     radar_zasiêg, // Maksymalny zasiêg radaru.
-    radio_zasiêg // Maksymalny zasiêg radia.
+    radio_zasiêg, // Maksymalny zasiêg radia.
+    sonar_zasiêg // Maksymalny zasiêg sonaru (0 - nieaktywny).
       : integer;
 
     toniêcie__czas_i // Czas, w którym rozpoczê³o siê toniêcie.
@@ -1019,7 +1023,7 @@ type
     Z_Ty³_GLCone1: TGLCone;
     Woda_GLPlane: TGLPlane;
     Informacje_G³ówne_GLHUDText: TGLHUDText;
-    GLWindowsBitmapFont1: TGLWindowsBitmapFont;
+    Gra_GLWindowsBitmapFont: TGLWindowsBitmapFont;
     GLSkyDome1: TGLSkyDome;
     GLLines1: TGLLines;
     GLLines2: TGLLines;
@@ -1231,6 +1235,21 @@ type
     Radar_Czu³oœæ_Etykieta_Label: TLabel;
     Radar_Czu³oœæ_SpinEdit: TSpinEdit;
     Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox: TCheckBox;
+    Sonar_Zasiêg_GLDisk: TGLDisk;
+    Radar_Dane_Z_Sonaru_CheckBox: TCheckBox;
+    Radar_L_GLCapsule: TGLCapsule;
+    Radar_Rysowanie_Œladów__Statków_Sekundy_Etykieta_Label: TLabel;
+    Radar_Rysowanie_Œladów__Statków_Sekundy_SpinEdit: TSpinEdit;
+    Radar_Rysowanie_Œladów__Amunicji_Sekundy_Etykieta_Label: TLabel;
+    Radar_Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit: TSpinEdit;
+    Radar_GLHUDText: TGLHUDText;
+    Radar_GLWindowsBitmapFont: TGLWindowsBitmapFont;
+    Radar_Wspó³rzêdne_Kursora_CheckBox: TCheckBox;
+    Radar_Kamera_Kierunek_GLDisk: TGLDisk;
+    Radar_Kamera_Kierunek_GLDummyCube: TGLDummyCube;
+    Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox: TCheckBox;
+    Radar_Wspó³rzêdna_Y_CheckBox: TCheckBox;
+    Radar_PN_Linia_GLLines: TGLLines;
     procedure FormShow( Sender: TObject );
     procedure FormClose( Sender: TObject; var Action: TCloseAction );
     procedure FormResize( Sender: TObject );
@@ -1321,6 +1340,7 @@ type
     procedure Radar_Widocznoœæ_CheckBoxClick( Sender: TObject );
     procedure Informacje_Dodatkowe_TimerTimer( Sender: TObject );
 
+    procedure Radar_GLSceneViewerMouseMove( Sender: TObject; Shift: TShiftState; X, Y: Integer );
     procedure Radar_Wielkoœæ_ButtonClick( Sender: TObject );
     procedure Radar_TimerTimer( Sender: TObject );
 
@@ -1401,6 +1421,8 @@ type
     udp_klienci_lista_g : TUDP_Klienci_Lista;
 
     wieloosobowe__efekt_r : TObiekty_Wieloosobowe__Efekt_r;
+
+    wspó³rzêdne_œwiata_z_radaru_affine_vector_g : TAffineVector;
 
     gra_statystyki_r_t : array of TGra_Statystyki_r;
 
@@ -2419,6 +2441,9 @@ var
             if zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = 'radio_zasiêg' then
               Self.radio_zasiêg := Round(  Statki_Form.Odczytaj_Liczbê_Z_Napisu( zt_xml_document.DocumentElement.ChildNodes[ i ].Text, 0, not Statki_Form.Statek__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )  )
             else
+            if zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = 'sonar_zasiêg' then
+              Self.sonar_zasiêg := Round(  Statki_Form.Odczytaj_Liczbê_Z_Napisu( zt_xml_document.DocumentElement.ChildNodes[ i ].Text, 0, not Statki_Form.Statek__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )  )
+            else
             if zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = 'skrêt_k¹t_maksymalny' then
               Self.skrêt_k¹t_maksymalny := Statki_Form.Odczytaj_Liczbê_Z_Napisu( zt_xml_document.DocumentElement.ChildNodes[ i ].Text, 0.0001, not Statki_Form.Statek__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )
             else
@@ -2494,6 +2519,8 @@ var
 
     <radar_zasiêg>100</radar_zasiêg>
     <radio_zasiêg>100</radio_zasiêg>
+    <sonar_zasiêg>100</sonar_zasiêg>
+        <!-- 0 - nieaktywny. -->
 
     <skrêt_k¹t_maksymalny>75</skrêt_k¹t_maksymalny>
     <skrêt_prêdkoœæ>20</skrêt_prêdkoœæ>
@@ -2807,6 +2834,7 @@ begin//Konstruktor klasy TStatek.
 
   Self.radar_zasiêg := 100;
   Self.radio_zasiêg := 100;
+  Self.sonar_zasiêg := 0;
 
   Self.radar_id_statki_w_zasiêgu := '-99, -99';
   Self.radio_id_statki_w_zasiêgu := '-99, -99';
@@ -4511,7 +4539,8 @@ begin
     #13 + #10 + 'skrêt_wspó³czynnik_do_prêdkoœci: ' + Trim(  FormatFloat( '### ### ##0.0000', Self.skrêt_wspó³czynnik_do_prêdkoœci )  ) +
     #13 + #10 + 'luneta_zasiêg: ' + Trim(  FormatFloat( '### ### ##0', Self.luneta_zasiêg )  ) +
     #13 + #10 + 'radar_zasiêg: ' + Trim(  FormatFloat( '### ### ##0', Self.radar_zasiêg )  ) +
-    #13 + #10 + 'radio_zasiêg: ' + Trim(  FormatFloat( '### ### ##0', Self.radio_zasiêg )  );
+    #13 + #10 + 'radio_zasiêg: ' + Trim(  FormatFloat( '### ### ##0', Self.radio_zasiêg )  ) +
+    #13 + #10 + 'sonar_zasiêg: ' + Trim(  FormatFloat( '### ### ##0', Self.sonar_zasiêg )  );
 
   if dane_wszystkie_f then
     begin
@@ -14065,6 +14094,8 @@ var
   i,
   j
     : integer;
+  ztr : real;
+  ró¿a_wiatrów,
   uzbrojenie,
   skrêt_kierunek,
   skrêt_kierunek_zadany
@@ -14217,9 +14248,69 @@ begin
       {$endregion 'Opis uzbrojenia.'}
 
 
+
+      {$region 'Ró¿a wiatrów.'}
+      ztr := RadToDeg( // uses Math.
+                 AngleBetweenVectors( // uses GLVectorGeometry.
+                    GLVectorGeometry.VectorMake(  statek_gracza.AbsoluteDirection.X, 0, statek_gracza.AbsoluteDirection.Z  ),
+                    GLVectorGeometry.VectorMake( 0, 0, -1 ),
+                    GLVectorGeometry.VectorMake( 0, 0, 0 )
+                  )
+               );
+
+      if statek_gracza.AbsoluteDirection.X < 0 then
+        ztr := 360 - ztr;
+
+      ró¿a_wiatrów := Trim(  FormatFloat( '### ### ##0.00', ztr )  );
+
+      if ró¿a_wiatrów = '360,00' then
+        ró¿a_wiatrów := '0,00';
+
+      ró¿a_wiatrów := ró¿a_wiatrów + '* ';
+
+      // PN W PD Z PNW PDW PDZ PZ
+
+      if    ( ztr >= 0 )
+        and ( ztr < 22.5) then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'PN'
+      else
+      if    ( ztr >= 22.5 )
+        and ( ztr < 67.5) then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'PNW'
+      else
+      if    ( ztr >= 67.5 )
+        and ( ztr < 112.5) then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'W'
+      else
+      if    ( ztr >= 112.5 )
+        and ( ztr < 157.5) then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'PDW'
+      else
+      if    ( ztr >= 157.5 )
+        and ( ztr < 202.5) then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'PD'
+      else
+      if    ( ztr >= 202.5 )
+        and ( ztr < 247.5) then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'PDZ'
+      else
+      if    ( ztr >= 247.5 )
+        and ( ztr < 292.5) then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'Z'
+      else
+      if    ( ztr >= 292.5 )
+        and ( ztr < 337.5) then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'PNZ'
+      else
+      if ztr >= 337.5 then
+        ró¿a_wiatrów := ró¿a_wiatrów + 'PN';
+      {$endregion 'Ró¿a wiatrów.'}
+
+
       Informacje_G³ówne_GLHUDText.Text := Informacje_G³ówne_GLHUDText.Text +
         ' ¿ycie: ' + Trim(  FormatFloat( '### ### ##0', zt_statek.punkty_¿ycia )  ) + ' (' + Trim(  FormatFloat( '### ### ##0', zt_statek.punkty_¿ycia_procent_zosta³o )  ) + '%)' + #13#10 +
-        ' prêdkoœæ %: ' + Trim(  FormatFloat( '### ### ##0', zt_statek.prêdkoœæ_zadana_procent )  ) + ' (' + Trim(  FormatFloat( '### ### ##0', zt_statek.prêdkoœæ_procent )  ) + ')' +  #13#10 +
+        ' prêdkoœæ %: ' + Trim(  FormatFloat( '### ### ##0', zt_statek.prêdkoœæ_zadana_procent )  ) + ' (' + Trim(  FormatFloat( '### ### ##0', zt_statek.prêdkoœæ_procent )  ) + ')' +
+        ', busola: ' + ró¿a_wiatrów + #13#10 +
         ' ster %: ' + skrêt_kierunek_zadany + ' ' + Trim(   FormatFloat(  '### ### ##0', Abs( zt_statek.skrêt_zadany_procent )  )   ) + ' (' +  skrêt_kierunek + ' ' + Trim(   FormatFloat(  '### ### ##0', Abs( zt_statek.skrêt_procent )  )   ) + ')' + #13#10 +
         ' lf ';
 
@@ -14263,8 +14354,44 @@ begin
           #13#10 + 'dalmierz: ' + Trim(   FormatFloat(  '### ### ##0.000', Gra_GLCamera.DistanceTo( Celowniczy_GLDummyCube.AbsolutePosition )  )   ) + '.';
 
 
+
+      Radar_GLHUDText.Text :=
+        'S x: ' + Trim(  FormatFloat( '### ### ##0', zt_statek.AbsolutePosition.X )  ) +
+        ', z: ' + Trim(  FormatFloat( '### ### ##0', zt_statek.AbsolutePosition.Z )  );
+
+      if Radar_Wspó³rzêdna_Y_CheckBox.Checked then
+        Radar_GLHUDText.Text := Radar_GLHUDText.Text +
+          ', y: ' + Trim(  FormatFloat( '### ### ##0', zt_statek.AbsolutePosition.Y )  );
+
+      Radar_GLHUDText.Text := Radar_GLHUDText.Text +
+        ', b: ' + ró¿a_wiatrów;
+
+      if Radar_Wspó³rzêdne_Kursora_CheckBox.Checked then
+        begin
+
+          Radar_GLHUDText.Text := Radar_GLHUDText.Text + #13#10 +
+            'C x: ' + Trim(  FormatFloat( '### ### ##0', wspó³rzêdne_œwiata_z_radaru_affine_vector_g.X )  ) +
+            ', z: ' + Trim(  FormatFloat( '### ### ##0', wspó³rzêdne_œwiata_z_radaru_affine_vector_g.Z )  );
+
+          if Radar_Wspó³rzêdna_Y_CheckBox.Checked then
+            Radar_GLHUDText.Text := Radar_GLHUDText.Text +
+              ', y: ' + Trim(  FormatFloat( '### ### ##0', wspó³rzêdne_œwiata_z_radaru_affine_vector_g.Y )  );
+
+        end;
+      //---//if Radar_Wspó³rzêdne_Kursora_CheckBox.Checked then
+
+
+      if Dalmierz_CheckBox.Checked then
+        Radar_GLHUDText.Text := Radar_GLHUDText.Text + #13#10 +
+          'd: ' + Trim(   FormatFloat(  '### ### ##0.000', zt_statek.DistanceTo( wspó³rzêdne_œwiata_z_radaru_affine_vector_g )  )   );
+
+
+
       Informacje_G³ówne_GLHUDText.Text := Informacje_G³ówne_GLHUDText.Text +
            #13#10 +
+//        'zt_statek.AbsoluteDirection.X ' + Trim(  FormatFloat( '### ### ##0.00', zt_statek.AbsoluteDirection.X )  ) + #13#10 +
+//        'zt_statek.AbsoluteDirection.Y ' + Trim(  FormatFloat( '### ### ##0.00', zt_statek.AbsoluteDirection.Y )  ) + #13#10 +
+//        'zt_statek.AbsoluteDirection.Z ' + Trim(  FormatFloat( '### ### ##0.00', zt_statek.AbsoluteDirection.Z )  ) + #13#10 +
 //        'punkty ¿ycia ' + Trim(  FormatFloat( '### ### ##0.000000', zt_statek.punkty_¿ycia )  ) + #13#10 +
 //        'punkty ¿ycia 1 ' + Trim(  FormatFloat( '### ### ##0.000000', statki_t[ 1 ].punkty_¿ycia )  ) + #13#10 +
 //        'prêdkoœæ procent ' + Trim(  FormatFloat( '### ### ##0.000000', zt_statek.prêdkoœæ_procent )  ) + #13#10 +
@@ -14533,8 +14660,10 @@ begin
   Informacje_Dodatkowe_GLHUDText.Position.Y := Gra_GLSceneViewer.Height;
 
 
-  GLWindowsBitmapFont1.EnsureString( Informacje_G³ówne_GLHUDText.Text );
-  GLWindowsBitmapFont1.EnsureString( Informacje_Dodatkowe_GLHUDText.Text );
+  Gra_GLWindowsBitmapFont.EnsureString( Informacje_G³ówne_GLHUDText.Text );
+  Gra_GLWindowsBitmapFont.EnsureString( Informacje_Dodatkowe_GLHUDText.Text );
+
+  Radar_GLWindowsBitmapFont.EnsureString( Radar_GLHUDText.Text );
 
 end;//---//Funkcja Napis_Odœwie¿().
 
@@ -14803,22 +14932,6 @@ begin
 
   SetLength( wieloosobowe__amunicja_t, 0 );
   SetLength( wieloosobowe__efekt_t, 0 );
-
-
-  ar_Artyleria_CheckBox.Enabled := true;
-  ar_Pocisk_CheckBox.Enabled := true;
-  ar_Torpeda_CheckBox.Enabled := true;
-
-  ar_Artyleria_CheckBox.Tag := integer(ar_Artyleria_CheckBox.Checked);
-  ar_Pocisk_CheckBox.Tag := integer(ar_Pocisk_CheckBox.Checked);
-  ar_Torpeda_CheckBox.Tag := integer(ar_Torpeda_CheckBox.Checked);
-  //ar_Wszystkie_CheckBox.Tag := integer(ar_Wszystkie_CheckBox.Checked);
-
-  ar_Artyleria_CheckBox.Checked := false;
-  ar_Pocisk_CheckBox.Checked := false;
-  ar_Torpeda_CheckBox.Checked := false;
-
-  //ar_Wszystkie_CheckBox.Checked := true;
 
 end;//---//Funkcja Elementy_Gry_Zwolnij().
 
@@ -15718,6 +15831,70 @@ begin//Funkcja Ustawienia_Plik().
     zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_widocznoœæ', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
   Radar_Widocznoœæ_CheckBox.Checked := zts = 'tak';
+
+
+  if Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked then
+    zts := 'tak'
+  else//if Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked then
+    zts := 'nie';
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_kamera_kierunek_wyœwietlaj' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar_kamera_kierunek_wyœwietlaj', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_kamera_kierunek_wyœwietlaj', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked := zts = 'tak';
+
+
+  zti := Radar_Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value;
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_rysowanie_œladów__statków_sekundy' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'radar_rysowanie_œladów__statków_sekundy', zti )
+  else
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar_rysowanie_œladów__statków_sekundy', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Radar_Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value := zti;
+
+
+  zti := Radar_Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value;
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_rysowanie_œladów__amunicji_sekundy' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'radar_rysowanie_œladów__amunicji_sekundy', zti )
+  else
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar_rysowanie_œladów__amunicji_sekundy', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Radar_Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value := zti;
+
+
+  if Radar_Wspó³rzêdna_Y_CheckBox.Checked then
+    zts := 'tak'
+  else//if Radar_Wspó³rzêdna_Y_CheckBox.Checked then
+    zts := 'nie';
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_wspó³rzêdna_y' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar_wspó³rzêdna_y', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_wspó³rzêdna_y', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Radar_Wspó³rzêdna_Y_CheckBox.Checked := zts = 'tak';
+
+
+  if Radar_Wspó³rzêdne_Kursora_CheckBox.Checked then
+    zts := 'tak'
+  else//if Radar_Wspó³rzêdne_Kursora_CheckBox.Checked then
+    zts := 'nie';
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_wspó³rzêdne_kursora' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar_wspó³rzêdne_kursora', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_wspó³rzêdne_kursora', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Radar_Wspó³rzêdne_Kursora_CheckBox.Checked := zts = 'tak';
   {$endregion 'USTAWIENIA.'}
 
   {$region 'POZOSTA£E.'}
@@ -18348,6 +18525,9 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
                   Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__udp__klient_po³¹czony_nadal_c, -99, '', true );
 
+
+                  Radar_Wyczyœæ( true );
+
                 end;
               //---//if czy_klient_g then
 
@@ -20088,12 +20268,17 @@ begin
 
   Radar_Zasiêg_GLDisk.OuterRadius := statek_gracza.radar_zasiêg;
   Radio_Zasiêg_GLDisk.OuterRadius := statek_gracza.radio_zasiêg;
+  Sonar_Zasiêg_GLDisk.OuterRadius := statek_gracza.sonar_zasiêg;
+
+  Radar_Dane_Z_Sonaru_CheckBox.Enabled := statek_gracza.sonar_zasiêg > 0;
+  Radar_Dane_Z_Sonaru_CheckBox.Checked := Radar_Dane_Z_Sonaru_CheckBox.Enabled;
 
   if statek_gracza.radar_zasiêg > statek_gracza.radio_zasiêg then
     Radar_GLCamera.TagFloat := statek_gracza.radar_zasiêg
   else//if statek_gracza.radar_zasiêg > statek_gracza.radio_zasiêg then
     Radar_GLCamera.TagFloat := statek_gracza.radio_zasiêg;
 
+  Radar_PN_Linia_GLLines.Nodes[ 1 ].Z := -Radar_GLCamera.TagFloat * 2;
 
   Radar_GLCamera.TagFloat := Radar_GLCamera.TagFloat + Radar_GLCamera.TagFloat * 2;
 
@@ -20106,7 +20291,11 @@ begin
   Kamera_Odleg³oœæ_Maksymalna_SpinEdit.MaxValue := statek_gracza.kamera_odleg³oœæ_maksymalna;
   Kamera_Odleg³oœæ_Maksymalna_SpinEdit.Value := Kamera_Odleg³oœæ_Maksymalna_SpinEdit.MaxValue;
 
-  Radar_Skala_SpinEdit.Hint := 'Zasiêg radaru: ' + Trim(  FormatFloat( '### ### ##0', statek_gracza.radar_zasiêg )  ) + ', radia: ' + Trim(  FormatFloat( '### ### ##0', statek_gracza.radio_zasiêg )  ) + '.';
+  Radar_Skala_SpinEdit.Hint :=
+    'Skala radaru. ' + #13 +
+    'Zasiêg radaru: ' + Trim(  FormatFloat( '### ### ##0', statek_gracza.radar_zasiêg )  ) +
+    ', radia: ' + Trim(  FormatFloat( '### ### ##0', statek_gracza.radio_zasiêg )  ) +
+    ', sonaru: ' + Trim(  FormatFloat( '### ### ##0', statek_gracza.sonar_zasiêg )  ) + '.';
 
 
   ar_Artyleria_CheckBox.Tag := integer(ar_Artyleria_CheckBox.Checked);
@@ -20225,6 +20414,7 @@ begin
 
           zt_gl_sphere := TGLSphere.Create( Self );
           zt_gl_sphere.Parent := Radar_Obiekty_GLDummyCube;
+          zt_gl_sphere.Pickable := false;
           zt_gl_sphere.AbsolutePosition := VectorMake( TGLCustomSceneObject(l¹d_list[ i ]).AbsolutePosition.X, TGLCustomSceneObject(l¹d_list[ i ]).AbsolutePosition.Y, TGLCustomSceneObject(l¹d_list[ i ]).AbsolutePosition.Z );
           zt_gl_sphere.Radius := Radar_Koryguj_Wielkoœæ_Obiektów();
           zt_gl_sphere.Material.FrontProperties.Ambient.Color := clrDarkBrown;
@@ -20244,9 +20434,11 @@ procedure TStatki_Form.Radar_Statki_Rysuj();
 var
   i : integer;
   œlad_rysuj : boolean;
+  zt_gl_capsule : TGLCapsule;
   zt_gl_dummy_cube : TGLDummyCube;
   zt_gl_frustrum : TGLFrustrum;
   zt_gl_sphere : TGLSphere;
+  zt_amunicja_wystrzelona_list : TList;
 begin//Funkcja Statki_Ruch().
 
   Radar_Timer.Tag := Radar_Timer.Tag + 1;
@@ -20262,6 +20454,7 @@ begin//Funkcja Statki_Ruch().
     œlad_rysuj := false;
 
 
+  // Rysuje statki.
   for i := 0 to Length( statki_t ) - 1 do
     begin
 
@@ -20273,7 +20466,16 @@ begin//Funkcja Statki_Ruch().
                      ( statek_gracza <> nil )
                  and (
                           ( statek_gracza.id_statek = statki_t[ i ].id_statek )
-                       or ( statek_gracza.DistanceTo( statki_t[ i ] ) <= statek_gracza.radar_zasiêg )
+                       or (
+                                ( statek_gracza.DistanceTo( statki_t[ i ] ) <= statek_gracza.radar_zasiêg )
+                            //and (
+                            //         ( statki_t[ i ] <> £ódŸ podwodna ) // £ódŸ_podwodna.
+                            //      or (
+                            //               ( statki_t[ i ] = £ódŸ podwodna )
+                            //           and ( statki_t[ i ] not pod wod¹ )
+                            //         )
+                            //    )
+                          )
                        or (  Radio_Dane_Wymieñ( statek_gracza, statki_t[ i ].id_statek )  )
                      )
                ) then
@@ -20284,12 +20486,14 @@ begin//Funkcja Statki_Ruch().
 
                   zt_gl_dummy_cube := TGLDummyCube.Create( Self );
                   zt_gl_dummy_cube.Parent := Radar_Obiekty_GLDummyCube;
+                  zt_gl_dummy_cube.Pickable := false;
                   zt_gl_dummy_cube.AbsolutePosition := VectorMake( statki_t[ i ].AbsolutePosition.X, statki_t[ i ].AbsolutePosition.Y, statki_t[ i ].AbsolutePosition.Z );
                   zt_gl_dummy_cube.AbsoluteDirection := statki_t[ i ].AbsoluteDirection;
 
 
                   zt_gl_frustrum := TGLFrustrum.Create( Self );
                   zt_gl_frustrum.Parent := zt_gl_dummy_cube;
+                  zt_gl_frustrum.Pickable := false;
                   zt_gl_frustrum.PitchAngle := Radar_Statek_GLFrustrum.PitchAngle;
                   zt_gl_frustrum.RollAngle := Radar_Statek_GLFrustrum.RollAngle;
                   zt_gl_frustrum.Height := Radar_Statek_GLFrustrum.Height;
@@ -20310,6 +20514,7 @@ begin//Funkcja Statki_Ruch().
 
                   zt_gl_sphere := TGLSphere.Create( Self );
                   zt_gl_sphere.Parent := Radar_Œlady_GLDummyCube;
+                  zt_gl_sphere.Pickable := false;
                   zt_gl_sphere.AbsolutePosition := VectorMake( statki_t[ i ].AbsolutePosition.X, 0, statki_t[ i ].AbsolutePosition.Z );
                   zt_gl_sphere.Radius := Radar_Koryguj_Wielkoœæ_Obiektów();
                   zt_gl_sphere.Material.FrontProperties.Ambient.Color := clrTransparent;
@@ -20320,6 +20525,8 @@ begin//Funkcja Statki_Ruch().
                   zt_gl_sphere.Slices := 4;
                   zt_gl_sphere.Stacks := 4;
                   zt_gl_sphere.Tag := Czas_Teraz();
+                  zt_gl_sphere.TagFloat := integer(ar_Brak);
+                  zt_gl_sphere.MoveLast();
 
                 end;
               //---//if œlad_rysuj then
@@ -20332,6 +20539,7 @@ begin//Funkcja Statki_Ruch().
 
     end;
   //---//for i := 0 to Length( statki_t ) - 1 do
+  //---// Rysuje statki
 
 
   // Rysuje celownik gracza.
@@ -20341,6 +20549,7 @@ begin//Funkcja Statki_Ruch().
 
       zt_gl_sphere := TGLSphere.Create( Self );
       zt_gl_sphere.Parent := Radar_Obiekty_GLDummyCube;
+      zt_gl_sphere.Pickable := false;
       zt_gl_sphere.AbsolutePosition := VectorMake( Celowniczy_GLDummyCube.AbsolutePosition.X, Celowniczy_GLDummyCube.AbsolutePosition.Y, Celowniczy_GLDummyCube.AbsolutePosition.Z );
       zt_gl_sphere.Radius := Radar_Koryguj_Wielkoœæ_Obiektów();
       zt_gl_sphere.Material.FrontProperties.Ambient.Color := clrYellowGreen;
@@ -20349,6 +20558,123 @@ begin//Funkcja Statki_Ruch().
 
     end;
   //---//if   ( statek_gracza = nil ) (...)
+
+
+  // Rysuje amunicjê.
+  if    ( Radar_Dane_Z_Sonaru_CheckBox.Enabled )
+    and ( Radar_Dane_Z_Sonaru_CheckBox.Checked ) then
+    begin
+
+      if czy_klient_g then
+        zt_amunicja_wystrzelona_list := wieloosobowe_amunicja_wystrzelona_list
+      else//if czy_klient_g then
+        zt_amunicja_wystrzelona_list := amunicja_wystrzelona_list;
+
+
+      for i := 0 to zt_amunicja_wystrzelona_list.Count - 1 do
+        begin
+
+          if    ( zt_amunicja_wystrzelona_list[ i ] <> nil )
+            and ( TAmunicja(zt_amunicja_wystrzelona_list[ i ]).amunicja_rodzaj = ar_Torpeda ) then
+            begin
+
+              if   ( statek_gracza = nil )
+                or (
+                         ( statek_gracza <> nil )
+                     and (
+                              (
+                                    ( czy_klient_g )
+                                and (  ( statek_gracza.DistanceTo( TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy ) <= statek_gracza.sonar_zasiêg )  )
+                              )
+                           or (
+                                    ( not czy_klient_g )
+                                and (  ( statek_gracza.DistanceTo( TAmunicja(zt_amunicja_wystrzelona_list[ i ]) ) <= statek_gracza.sonar_zasiêg )  )
+                              )
+                           //or (  Radio_Dane_Wymieñ( statek_gracza, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).id_statek )  )
+                         )
+                   ) then
+                begin
+
+                  zt_gl_dummy_cube := TGLDummyCube.Create( Self );
+                  zt_gl_dummy_cube.Parent := Radar_Obiekty_GLDummyCube;
+                  zt_gl_dummy_cube.Pickable := false;
+
+                  if czy_klient_g then
+                    begin
+
+                      //zt_gl_dummy_cube.AbsolutePosition := VectorMake( TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsolutePosition.X, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsolutePosition.Y, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsolutePosition.Z );
+                      zt_gl_dummy_cube.AbsolutePosition := VectorMake( TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsolutePosition.X, 0, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsolutePosition.Z );
+                      zt_gl_dummy_cube.AbsoluteDirection := TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsoluteDirection;
+
+                    end
+                  else//if czy_klient_g then
+                    begin
+
+                      //zt_gl_dummy_cube.AbsolutePosition := VectorMake( TAmunicja(zt_amunicja_wystrzelona_list[ i ]).AbsolutePosition.X, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).AbsolutePosition.Y, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).AbsolutePosition.Z );
+                      zt_gl_dummy_cube.AbsolutePosition := VectorMake( TAmunicja(zt_amunicja_wystrzelona_list[ i ]).AbsolutePosition.X, 0, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).AbsolutePosition.Z );
+                      zt_gl_dummy_cube.AbsoluteDirection := TAmunicja(zt_amunicja_wystrzelona_list[ i ]).AbsoluteDirection;
+
+                    end;
+                  //---//if czy_klient_g then
+
+
+                  zt_gl_capsule := TGLCapsule.Create( Self );
+                  zt_gl_capsule.Parent := zt_gl_dummy_cube;
+                  zt_gl_capsule.Pickable := false;
+                  zt_gl_capsule.PitchAngle := Radar_Statek_GLFrustrum.PitchAngle;
+                  zt_gl_capsule.RollAngle := Radar_Statek_GLFrustrum.RollAngle;
+                  zt_gl_capsule.Radius := Radar_Koryguj_Wielkoœæ_Obiektów();
+                  zt_gl_capsule.Material.FrontProperties.Diffuse.Color := clrPlum;
+
+
+                  if œlad_rysuj then
+                    begin
+
+                      zt_gl_sphere := TGLSphere.Create( Self );
+                      zt_gl_sphere.Parent := Radar_Œlady_GLDummyCube;
+                      zt_gl_sphere.Pickable := false;
+
+                      if czy_klient_g then
+                        begin
+
+                          zt_gl_sphere.AbsolutePosition := VectorMake( TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsolutePosition.X, 0, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsolutePosition.Z );
+
+                        end
+                      else//if czy_klient_g then
+                        begin
+
+                          zt_gl_sphere.AbsolutePosition := VectorMake( TAmunicja(zt_amunicja_wystrzelona_list[ i ]).AbsolutePosition.X, 0, TAmunicja(zt_amunicja_wystrzelona_list[ i ]).AbsolutePosition.Z );
+
+                        end;
+                      //---//if czy_klient_g then
+
+                      zt_gl_sphere.Radius := Radar_Koryguj_Wielkoœæ_Obiektów();
+                      zt_gl_sphere.Material.FrontProperties.Ambient.Color := clrTransparent;
+                      zt_gl_sphere.Material.FrontProperties.Diffuse.Color := clrWhite;
+                      zt_gl_sphere.Material.FrontProperties.Emission.Color := clrTransparent;
+                      //zt_gl_sphere.Material.BlendingMode := bmModulate;
+                      zt_gl_sphere.Material.PolygonMode := GLState.pmPoints;
+                      zt_gl_sphere.Slices := 4;
+                      zt_gl_sphere.Stacks := 4;
+                      zt_gl_sphere.Tag := Czas_Teraz();
+                      zt_gl_sphere.TagFloat := integer(ar_Torpeda);
+                      zt_gl_sphere.MoveLast();
+
+                    end;
+                  //---//if œlad_rysuj then
+
+                end;
+              //---//if   ( statek_gracza = nil ) (...)
+
+            end;
+          //---//if    ( zt_amunicja_wystrzelona_list[ i ] <> nil ) (...)
+
+        end;
+      //---//for i := 0 to zt_amunicja_wystrzelona_list.Count - 1 do
+
+    end;
+  //---//if    ( Radar_Dane_Z_Sonaru_CheckBox.Enabled ) (...)
+  //---// Rysuje amunicjê.
 
 end;//---//Funkcja Radar_Statki_Rysuj().
 
@@ -20370,7 +20696,14 @@ begin
 
   for i := Radar_Œlady_GLDummyCube.Count - 1 downto 0 do
     if   ( czyœæ_wszystko_f )
-      or (  Czas_Miêdzy_W_Sekundach( Radar_Œlady_GLDummyCube.Children[ i ].Tag ) * gra_wspó³czynnik_prêdkoœci_g > 180  ) then
+      or (
+               ( Radar_Œlady_GLDummyCube.Children[ i ].TagFloat <> integer(ar_Torpeda) ) // Œlady statków.
+           and (  Czas_Miêdzy_W_Sekundach( Radar_Œlady_GLDummyCube.Children[ i ].Tag ) * gra_wspó³czynnik_prêdkoœci_g > Radar_Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value  )
+         )
+      or (
+               ( Radar_Œlady_GLDummyCube.Children[ i ].TagFloat = integer(ar_Torpeda) ) // Œlady torped.
+           and (  Czas_Miêdzy_W_Sekundach( Radar_Œlady_GLDummyCube.Children[ i ].Tag ) * gra_wspó³czynnik_prêdkoœci_g > Radar_Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value  )
+         ) then
       Radar_Œlady_GLDummyCube.Children[ i ].Free()
     else//if   ( czyœæ_wszystko_f ) (...)
       TGLSphere(Radar_Œlady_GLDummyCube.Children[ i ]).Radius := Radar_Koryguj_Wielkoœæ_Obiektów(); // Aktualizuje rozmiar gdy zmieni siê skalê radaru.
@@ -20402,9 +20735,26 @@ begin
     Exit;
 
 
-  if    ( czy_gra_lokalna_g )
-    and ( not Radar_Dane_Z_Radia_CheckBox.Checked ) then
-    Exit;
+  //if    ( czy_gra_lokalna_g )
+  //  and ( not Radar_Dane_Z_Radia_CheckBox.Checked ) then
+  if not Radar_Dane_Z_Radia_CheckBox.Checked then // Gdy radio wy³¹czone to nie wysy³a danych do innych statków.
+    begin
+
+      if statek_gracza <> nil then
+        begin
+
+          statek_gracza.radar_id_statki_w_zasiêgu := '-99, -99';
+          statek_gracza.radio_id_statki_w_zasiêgu := '-99, -99';
+
+        end;
+      //---//if statek_gracza <> nil then
+
+
+      Exit;
+
+    end;
+  //---//if not Radar_Dane_Z_Radia_CheckBox.Checked then
+
 
 
   for i := 0 to Length( statki_t ) - 1 do
@@ -20425,7 +20775,14 @@ begin
 
                   // Jakie statki ma w zasiêgu radaru statek.
                   //if    ( statki_t[ i ].id_statek <> statki_t[ j ].id_statek ) // Siebie te¿ ma na liœcie aby potem ³atwiej by³o wyœwietlaæ.
-                  if    ( statki_t[ i ].DistanceTo( statki_t[ j ] ) <= statki_t[ i ].radar_zasiêg ) then
+                  if      ( statki_t[ i ].DistanceTo( statki_t[ j ] ) <= statki_t[ i ].radar_zasiêg ) then
+                    //and (
+                    //         ( statki_t[ i ] <> £ódŸ podwodna ) // £ódŸ_podwodna.
+                    //      or (
+                    //               ( statki_t[ i ] = £ódŸ podwodna )
+                    //           and ( statki_t[ i ] not pod wod¹ )
+                    //         )
+                    //    )
                     begin
 
                       statki_t[ i ].radar_id_statki_w_zasiêgu := statki_t[ i ].radar_id_statki_w_zasiêgu +
@@ -20621,9 +20978,13 @@ begin
 
   //mouse_look_active_przed_pauz¹ := Gra_GLUserInterface.MouseLookActive;
 
+  {$IFDEF DEBUG}
   PageControl1.ActivePage := Pozosta³e_TabSheet; //Gra_TabSheet Wieloosobowe_TabSheet Ustawienia_TabSheet Pozosta³e_TabSheet Klawiatura_Konfiguracja_TabSheet
-  PageControl1.ActivePage := Wieloosobowe_TabSheet; //???
-  Button1.Visible := false;//???
+  {$ELSE DEBUG}
+  //???
+  PageControl1.ActivePage := Wieloosobowe_TabSheet;
+  Button1.Visible := false;
+  {$ENDIF}
 
   // Nie wykrywa mi kolizji z Plane wiêc ta bry³a s³u¿y do wykrywania trafieñ w wodê.
   Woda_Kolizje_GLCube.Position.Y := Woda_GLPlane.Position.Y - Woda_Kolizje_GLCube.CubeHeight * 0.5;
@@ -20705,6 +21066,8 @@ begin
 
 
   Radar_0_GLSphere.Visible := false;
+  Radar_L_GLCapsule.Visible := false;
+
 
   //tcp_klienci_lista_g.Dodaj_Aktualizuj( serwer_peer_port_c, -99 ); // Serwer ma peer_port_f i identyfikator_f = -1.
   //Elementy_Gry_Przygotuj();
@@ -20771,10 +21134,10 @@ begin
 //  Gra_GLCamera.Direction.SetVector( -1, 0, 0 );
 
   // Z lewej strony w prawo.
-  Gra_GLCamera.Position.X := -3;
-  Gra_GLCamera.Position.Y := 2;
-  Gra_GLCamera.Position.Z := 0;
-  Gra_GLCamera.Direction.SetVector( 1, 0, 0 );
+//  Gra_GLCamera.Position.X := -3;
+//  Gra_GLCamera.Position.Y := 2;
+//  Gra_GLCamera.Position.Z := 0;
+//  Gra_GLCamera.Direction.SetVector( 1, 0, 0 );
 
   // Z ty³u w przód.
 //  Gra_GLCamera.Position.X := 4;
@@ -22372,17 +22735,6 @@ begin
   statek_gracza := statki_t[ 0 ];
 
 
-  if Sender = nil then
-    begin
-
-      ar_Artyleria_CheckBox.Checked := true;
-      ar_Pocisk_CheckBox.Checked := true;
-      ar_Torpeda_CheckBox.Checked := true;
-
-    end;
-  //---//if Sender = nil then
-
-
   Interfejs_Parametry_Wed³ug_Statku_Ustaw();
 
   if    (  not ( Gra_GLCamera.Parent is TStatek )  )
@@ -22391,6 +22743,11 @@ begin
 
 
   Elementy_Gracza_Dostosuj_CheckBoxClick( Sender );
+
+
+  if    ( czy_klient_g )
+    and ( statek_gracza <> nil ) then
+    statek_gracza.Elementy_Gracza_Widocznoœæ( Gracz_Grupa_SpinEdit.Value, false ); // Aby po zakoñczeniu gry u klienta nie by³o widaæ linii celowniczych.
 
 end;//---//Statek__Utwórz_BitBtnClick().
 
@@ -22682,6 +23039,9 @@ begin
 
         end;
       //---//for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
+
+
+      Radar_Wyczyœæ( true );
 
 
       if czy_serwer_g then
@@ -23397,7 +23757,7 @@ begin
       Self.Width := Screen.Width;
 
       Self.BringToFront();
-      Radar_Panel.BringToFront();
+      //Radar_Panel.BringToFront();
 
 
       if PageControl1.Width = 1 then
@@ -23426,7 +23786,7 @@ begin
         end;
       //---//if PageControl1.Width = 0 then
 
-    end
+    end;
   //---//if Pe³ny_Ekran_CheckBox.Checked then
 
 end;//---//Pe³ny_Ekran_CheckBoxClick().
@@ -24363,6 +24723,15 @@ begin
 
 end;//---//Informacje_Dodatkowe_TimerTimer().
 
+//Radar_GLSceneViewerMouseMove().
+procedure TStatki_Form.Radar_GLSceneViewerMouseMove( Sender: TObject; Shift: TShiftState; X, Y: Integer );
+begin
+
+  wspó³rzêdne_œwiata_z_radaru_affine_vector_g := Radar_GLSceneViewer.Buffer.PixelRayToWorld( x, y );
+  wspó³rzêdne_œwiata_z_radaru_affine_vector_g.Y := 0;
+
+end;//---//Radar_GLSceneViewerMouseMove().
+
 //Radar_Wielkoœæ_ButtonClick().
 procedure TStatki_Form.Radar_Wielkoœæ_ButtonClick( Sender: TObject );
 begin
@@ -24421,9 +24790,22 @@ begin
 
 
       Radio_Zasiêg_GLDisk.Visible := Radar_Dane_Z_Radia_CheckBox.Checked;
+      Sonar_Zasiêg_GLDisk.Visible := Radar_Dane_Z_Sonaru_CheckBox.Checked;
 
       Radar_Statek_GLDummyCube.AbsoluteDirection := statek_gracza.AbsoluteDirection;
       Radar_Statek_GLDummyCube.AbsolutePosition := statek_gracza.AbsolutePosition;
+
+      Radar_PN_Linia_GLLines.AbsolutePosition := Radar_Statek_GLDummyCube.AbsolutePosition;
+
+
+      Radar_Kamera_Kierunek_GLDisk.Visible := Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked;
+
+      Radar_Kamera_Kierunek_GLDummyCube.AbsoluteDirection := Gra_GLCamera.AbsoluteDirection;
+      Radar_Kamera_Kierunek_GLDummyCube.Direction.Y := 0;
+      Radar_Kamera_Kierunek_GLDummyCube.AbsoluteUp := VectorMake( 0, 1, 0 );
+
+      Radar_Kamera_Kierunek_GLDisk.OuterRadius := 20.0 * Radar_Koryguj_Wielkoœæ_Obiektów();
+      Radar_PN_Linia_GLLines.Scale.X := 40.0 * Radar_Koryguj_Wielkoœæ_Obiektów();
 
     end;
   //---//if statek_gracza <> nil then
