@@ -1,0 +1,177 @@
+﻿<statek>
+
+  <nazwa>Motorówka</nazwa>
+  <opis><![CDATA[Motorówka cywilna (szybka).]]></opis>
+
+
+  <kolor_definicja nazwa="kadłub">
+    <r>0,9</r>
+    <g>0,9</g>
+    <b>0,9</b>
+    <a>0</a>
+  </kolor_definicja>
+
+  <kolor_definicja nazwa="śruba">
+    <r>0</r>
+    <g>0,5</g>
+    <b>0,1</b>
+    <a>0</a>
+  </kolor_definicja>
+
+
+  <falowanie_bok_skręt_zakres>20,0</falowanie_bok_skręt_zakres>
+  <falowanie_bok_zakres>6</falowanie_bok_zakres>
+  <falowanie_góra_dół_zakres>0,025</falowanie_góra_dół_zakres>
+  <falowanie_przód_zakres>3</falowanie_przód_zakres>
+
+  <kamera_odległość_maksymalna>8</kamera_odległość_maksymalna>
+
+  <kamera_na_statek_pozycja>
+    <x>0</x>
+    <y>1</y>
+    <z>0</z>
+  </kamera_na_statek_pozycja>
+
+  <kamera_za_statkiem_pozycja>
+    <x>0</x>
+    <y>2</y>
+    <z>0,5</z>
+  </kamera_za_statkiem_pozycja>
+
+  <luneta_zasięg>603</luneta_zasięg>
+
+  <punkty_życia_maksymalne>10</punkty_życia_maksymalne>
+  <punkty_życia_wskaźnik_wysokość>1,0</punkty_życia_wskaźnik_wysokość>
+
+  <prędkość__kolizja_zwalnianie>0</prędkość__kolizja_zwalnianie>
+  <prędkość_maksymalna>10,0</prędkość_maksymalna>
+  <prędkość_ograniczenie>100</prędkość_ograniczenie>
+  <prędkość_przyspieszanie>1,0</prędkość_przyspieszanie>
+  <prędkość_zwalnianie>0,15</prędkość_zwalnianie>
+
+  <radar_zasięg>110</radar_zasięg>
+  <radio_zasięg>10</radio_zasięg>
+
+  <skręt_kąt_maksymalny>85</skręt_kąt_maksymalny>
+  <skręt_prędkość>60</skręt_prędkość>
+  <skręt_szybkość_wychylania_steru>1,9</skręt_szybkość_wychylania_steru>
+  <skręt_współczynnik_do_prędkości>25</skręt_współczynnik_do_prędkości>
+
+
+  <obiekt typ="prostopadłościan"><!-- Kadłub. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>0,5</x>
+      <y>0,25</y>
+      <z>1</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </współrzędne>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Dziób. -->
+    <kolor nazwa="kadłub"/>
+
+    <skala>
+      <x>0,35</x>
+      <y>0,25</y>
+      <z>0,35</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0</y>
+      <z>0,5</z>
+    </współrzędne>
+
+    <obrót__lewo_prawo>45</obrót__lewo_prawo>
+
+    <dziób>Tak</dziób>
+  </obiekt>
+
+  <obiekt typ="prostopadłościan"><!-- Szybka. -->
+    <kolor>
+      <r>0,1</r>
+      <g>0,1</g>
+      <b>0,9</b>
+      <a>0</a>
+    </kolor>
+
+    <skala>
+      <x>0,4</x>
+      <y>0,15</y>
+      <z>0,15</z>
+    </skala>
+
+    <współrzędne>
+      <x>0</x>
+      <y>0,13</y>
+      <z>0,3</z>
+    </współrzędne>
+
+    <wychylenie__przód_tył>45</wychylenie__przód_tył>
+  </obiekt>
+
+
+  <śruba><!-- Lewa. -->
+    <kolor nazwa="śruba"/>
+
+    <skala_proporcjonalna>0,2</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>0,15</x>
+      <y>-0,22</y>
+      <z>-0,15</z>
+    </współrzędne>
+
+    <czy_obrót_lewo>Nie</czy_obrót_lewo>
+    <prędkość_obrotowa_maksymalna>18</prędkość_obrotowa_maksymalna>
+    <prędkość_obrotowa_przyspieszanie>1,8</prędkość_obrotowa_przyspieszanie>
+  </śruba>
+
+  <śruba><!-- Prawa. -->
+    <kolor nazwa="śruba"/>
+
+    <skala_proporcjonalna>0,2</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>-0,15</x>
+      <y>-0,22</y>
+      <z>-0,15</z>
+    </współrzędne>
+
+    <czy_obrót_lewo>Tak</czy_obrót_lewo>
+    <prędkość_obrotowa_maksymalna>16</prędkość_obrotowa_maksymalna>
+    <prędkość_obrotowa_przyspieszanie>1,8</prędkość_obrotowa_przyspieszanie>
+  </śruba>
+
+
+  <ster><!-- Lewy. -->
+    <kolor nazwa="śruba"/>
+
+    <skala_proporcjonalna>0,2</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>0,15</x>
+      <y>-0,1</y>
+      <z>-0,505</z>
+    </współrzędne>
+  </ster>
+
+  <ster><!-- Prawy. -->
+    <kolor nazwa="śruba"/>
+
+    <skala_proporcjonalna>0,2</skala_proporcjonalna>
+
+    <współrzędne>
+      <x>-0,15</x>
+      <y>-0,1</y>
+      <z>-0,505</z>
+    </współrzędne>
+  </ster>
+</statek>
