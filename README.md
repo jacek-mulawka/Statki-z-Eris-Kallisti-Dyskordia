@@ -307,6 +307,22 @@ Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't
 </a>
 
 
+#
+Wersja 2021 02 08.
+
+Version 2021 02 08.
+
+
+<img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%202021%2002%2008%2001.jpg">
+
+<img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%202021%2002%2008%2002.jpg">
+
+<img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%202021%2002%2008%2003.jpg">
+
+
+#
+
+
 Powered by
 
 [GLScene](http://glscene.sourceforge.net),
