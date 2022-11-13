@@ -134,6 +134,179 @@ In addition to the possibility of sailing a ship, the game offers:
 Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't really know how to improve it.
 
 
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%201%20gra.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%201%20gra%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%202%20wieloosobowe.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%202%20wieloosobowe%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%203.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%203%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%204%20statystyki%201.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%204%20statystyki%201%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%204%20statystyki%202.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%204%20statystyki%202%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20SI%20zagaduje.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20SI%20zagaduje%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%201%20bombardowanie.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%201%20bombardowanie%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%202%20torpedowanie.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%202%20torpedowanie%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%203%20bomba%20g%C5%82%C4%99binowa.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%203%20bomba%20g%C5%82%C4%99binowa%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%204%20%C5%82%C3%B3d%C5%BA%20podwodna.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%204%20%C5%82%C3%B3d%C5%BA%20podwodna%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%205%20je%C5%BC%20g%C5%82%C4%99binowy.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%205%20je%C5%BC%20g%C5%82%C4%99binowy%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%206%20motor%C3%B3wka.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%206%20motor%C3%B3wka%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%207%20samolot%20i%20s%C5%82o%C5%84ce.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%207%20samolot%20i%20s%C5%82o%C5%84ce%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%208%20trafienie%201.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2002%208%20trafienie%201%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%201%20statki.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%201%20statki%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%202%20statki%20noc.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%202%20statki%20noc%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%203%20samoloty.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%203%20samoloty%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%204%20samoloty%20noc.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%204%20samoloty%20noc%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2001.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2001%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2002.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2002%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2003.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2003%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2004.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2004%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2005.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2005%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2006.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2006%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2007.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2007%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2008.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2008%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2009.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2009%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2010.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2010%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2011.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2011%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2012.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2012%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2013.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2013%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2014.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2014%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2015.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2015%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2016.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2016%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2017.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2017%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20SOS%201.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20SOS%201%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20SOS%202.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20SOS%202%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20H%20S%201.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20H%20S%201%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20H%20S%202.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20H%20S%202%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20H%20S%203.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20H%20S%203%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%201.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%201%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%202.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%202%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%203.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%203%20m.jpg">
+</a>
+
+
 Powered by
 
 [GLScene](http://glscene.sourceforge.net),
