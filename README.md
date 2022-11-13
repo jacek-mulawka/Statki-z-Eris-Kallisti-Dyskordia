@@ -1,9 +1,137 @@
 # Statki-z-Eris-Kallisti-Dyskordia
 
-Gra jest w trakcie produkcji. Wieloosobowa gra o statkach (strzelanka), wspiera modyfikowanie i tworzenie nowych statków i map w edytorach tekstu.
+Gra jest w trakcie produkcji.
+
+Wieloosobowa gra o statkach (strzelanka z elementami 'symulacji'), wspiera modyfikowanie i tworzenie nowych statków i map w edytorach tekstu (schematy oparte o xml).
+
+Oprócz możliwości pływania statkiem gra oferuje:
+* gra pojedyncza (lokalna) i sieciowa;
+* granie wraz z SI (opartej na algorytmie);
+* zmiana stopnia trudności SI;
+* uszkodzeniu mogą ulec różne elementy statku (poszczególne bronie, napęd, ster, ster głębokości, radar, sonar, radio);
+* różne rodzaje broni (artyleria, bomby głębinowe, działa, jeże głębinowe, torpedy);
+* ustawianie głębokości, na której płyną torpedy;
+* graficzny wskaźnik zakresu obrotu broni i kątów, w których obrębie broń nie może strzelać;
+* efekty trafień, uszkodzeń, smugi pocisków, dym, rozchlapania wody;
+* odrzut luf po wystrzale oraz efekt ognia z luf wraz z dymem;
+* statystyki rozgrywki dostępne na bieżąco (w formie tabeli i tekstowej);
+* wyświetlanie na radarze zasięgu broni, kierunku obrotu kamery, nadpływających torped (gdy sonar jest na wyposażeniu);
+* pokój rozmów (chat) zarówno w trakcie gry jak i poza grą;
+* wyświetlanie wiadomości pokoju rozmów na ekranie gry;
+* ignorowanie wiadomości od wskazanych graczy, grup, SI;
+* możliwość wydawania poleceń dla SI (poprzez pokój rozmów);
+* wśród poleceń dla SI są np. zapytania o stan statku, zmiany trybu strzelania i pływania, prośby o zgodę na lądowanie, rezygnowanie z lądowania, wskazanie punktu, w który SI ma płynąć;
+* SI zagaduje (przesyła komunikaty) zależnie od sytuacji w grze;
+* SI może wspomagać gracza w pływaniu statkiem, lataniu samolotem, lądowaniu;
+* SI może strzelać za gracza z jego statku;
+* pełny cykl dnia i nocy;
+* zmiana intensywności falowania (wzburzenia) morza;
+* efekt mgły;
+* automatyczne zmienianie pory dnia, intensywności mgły i fal;
+* ślad torowy za statkami;
+* słońce, księżyc, gwiazdy;
+* gwiazdy o stałym położeniu wskazujące kierunki świata;
+* dwa tryby oświetlenia statków i obiektów na lądzie;
+* dalmierz, luneta;
+* wysyłanie sygnału SOS;
+* podążanie kamery za pociskami;
+* kamera 'trzymająca się' statku;
+* kamera swobodna bez jakichkolwiek ograniczeń - prędkość ruchu kamery wedle uznania;
+* kamera artyleryjska;
+* wskazywanie punktu, w który oddano strzał z artylerii;
+* kilka trybów wyświetlania punktów życia;
+* łodzie podwodne z możliwością zanurzenia;
+* przekraczanie zanurzenia maksymalnego dla łodzi podwodnej (może skutkować powstawaniem uszkodzeń);
+* wpływ prędkości na promień skrętu;
+* samoloty i lotniskowce, na których można wylądować i naprawić samolot;
+* możliwość gry jednocześnie lotniskowcem i samolotem;
+* wśród samolotów jest między innymi bombowiec i torpedowiec;
+* uproszczony i normalny tryb lądowania na lotniskowcach;
+* kilka trybów wskazywania drogi do wybranego punktu;
+* wskazywanie dla samolotów drogi do lotniskowca, który wyraził zgodę na lądowanie;
+* zdefiniowanie pozycji początkowych grup na mapie w definicjach lądu i jako oddzielne definicje pozycji początkowych;
+* możliwość zapisania ustawień gry;
+* możliwość zapisania konfiguracji statków SI, które mają wziąć udział w rozgrywce;
+* możliwość zapisania wielu ustawień klawiszy;
+* wyszukiwanie i filtrowanie w ustawieniach klawiszy;
+* sprawdzanie poprawności ustawień klawiszy;
+* tryb projektowy ułatwiający tworzenie statków, map oraz zmienianie przebiegu rozgrywki;
+* obiekty lądu mogą być neutralne, uszkadzać, leczyć, spowalniać, odbijać;
+* tryb fotograficzny ukrywający informacje ekranowe;
+* podczas tworzenia statków i map można korzystać z przygotowanych wcześniej obiektów (nazywanych tutaj prymitywami), wszystkie dostępne obiekty można umieszczać w pętlach aby łatwo tworzyć ich większe grupy;
+* zmienna prędkość gry;
+* wiele opcji możliwych do dopasowania wedle własnych preferencji;
+* oraz inne funkcjonalności, do których poznania zapraszam.
+
+Tryb wieloosobowy nie jest do końca stabilny i nie jest zbyt wydajny. Aktualnie za bardzo nie wiem jak go ulepszyć.
 
 
-The game is in production. The game is a multiplayer battleships shooter which allows to change and to create maps and ships models in text editors.
+## English
+
+The game is in production.
+
+Multiplayer ship game (shooter with 'simulation' elements), supports modifying and creating new ships and maps in text editors (xml based scheme).
+
+In addition to the possibility of sailing a ship, the game offers:
+* single (local) and online play;
+* playing along with the AI (based on the algorithm);
+* AI difficulty change;
+* various elements of the ship can be damaged (individual weapons, propulsion, rudder, depth rudder, radar, sonar, radio);
+* various types of weapons (artillery, depth charges, cannons, depth hedgehogs, torpedoes);
+* setting the depth at which torpedoes sail;
+* a graphical indicator of the range of rotation of the weapon and the angles within which the weapon cannot fire;
+* effects of hits, damage, bullet tracers, smoke, water splashes;
+* the recoil of the barrels after firing and the effect of barrel fire with smoke;
+* game statistics available on an ongoing basis (in the form of a table and text);
+* displaying on the radar the range of weapons, the direction of rotation of the camera, incoming torpedoes (when sonar is equipped);
+* a chat room both in-game and out-of-game;
+* displaying chat room messages on the game screen;
+* ignoring messages from selected players, groups, AI;
+* the ability to issue commands to the AI (via the chat room);
+* among the commands for the AI there are, for example, inquiries about the state of the ship, changes in firing and swimming modes, requests for permission to land, abandoning landing, indicating the point where the AI is to sail;
+* the AI talks (sends messages) depending on the situation in the game;
+* the AI can assist the player in sailing a ship, flying a plane, landing;
+* the AI can control the guns on the player's ship (as a relief);
+* full day and night cycle;
+* change in the intensity of waves (turbulence) of the sea;
+* fog effect;
+* automatic change of time of day, fog and wave intensity;
+* a wake (Kielwasser) behind ships;
+* sun, moon, stars;
+* stars with a fixed position indicating the directions of the world;
+* two lighting modes for ships and land objects;
+* rangefinder, telescope;
+* sending an SOS signal;
+* camera tracking of projectiles;
+* camera 'holding' to (following) the ship;
+* free camera without any restrictions - camera movement speed at your discretion;
+* artillery camera;
+* indicating the point where the artillery shot was fired;
+* several modes of displaying hit points;
+* submarines with the possibility of immersion;
+* exceeding the maximum immersion for a submarine (may result in damage);
+* influence of speed on turning radius;
+* planes and aircraft carriers where you can land and repair the plane;
+* the ability to play both an aircraft carrier and an airplane at the same time;
+* planes include a bomber and a torpedo bomber;
+* simplified and normal landing mode on aircraft carriers;
+* several modes of indicating the way to the selected point;
+* showing the way for aircraft to the aircraft carrier that has agreed to land;
+* defining group start positions on the map in land definitions and as separate start position definitions;
+* the ability to save game settings;
+* the ability to save the configuration of AI ships that are to take part in the game;
+* the ability to save multiple key settings;
+* search and filtering in key settings;
+* checking the correctness of key settings;
+* a design mode that makes it easier to create ships, maps and change the course of the game;
+* land objects can be neutral, damage, heal, slow, bounce;
+* photo mode hiding on-screen informations;
+* when creating ships and maps, you can use previously prepared objects (here called primitives), all available objects can be placed in loops to easily create larger groups of them;
+* variable game speed;
+* many options that can be adjusted according to your preferences;
+* and other functionalities, which I invite you to get to know.
+
+Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't really know how to improve it.
 
 
 Powered by
@@ -11,3 +139,9 @@ Powered by
 [GLScene](http://glscene.sourceforge.net),
 
 [Delphi](https://www.embarcadero.com/products/delphi).
+
+
+## Tag
+darmowa gra PC Windows statki okręty
+
+free game PC Windows ships warships
