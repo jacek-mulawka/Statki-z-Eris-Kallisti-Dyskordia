@@ -2,7 +2,10 @@ program Statki_pr;
 
 uses
   Vcl.Forms,
-  Statki in 'Statki.pas' {Statki_Form};
+  Statki in 'Statki.pas' {Statki_Form},
+  Klasy_Dodatkowe in 'Klasy_Dodatkowe.pas',
+  Typy_Wspolne in 'Typy_Wspolne.pas',
+  Wyglad_Elementy in 'Wyglad_Elementy.pas';
 
 {$R *.res}
 
@@ -15,7 +18,6 @@ begin
   Application.HintHidePause := 30000;
 
   Application.CreateForm( TStatki_Form, Statki_Form );
-
   Application.Run();
 
 end.
