@@ -11,6 +11,7 @@ Oprócz możliwości pływania statkiem gra oferuje:
 * uszkodzeniu mogą ulec różne elementy statku (poszczególne bronie, napęd, ster, ster głębokości, radar, sonar, radio);
 * różne rodzaje broni (artyleria, bomby głębinowe, działa, jeże głębinowe, torpedy);
 * ustawianie głębokości, na której płyną torpedy;
+* wystrzeloną amunicję można zniszczyć trafiając w nią;
 * graficzny wskaźnik zakresu obrotu broni i kątów, w których obrębie broń nie może strzelać;
 * efekty trafień, uszkodzeń, smugi pocisków, dym, rozchlapania wody;
 * odrzut luf po wystrzale oraz efekt ognia z luf wraz z dymem;
@@ -57,6 +58,7 @@ Oprócz możliwości pływania statkiem gra oferuje:
 * sprawdzanie poprawności ustawień klawiszy;
 * tryb projektowy ułatwiający tworzenie statków, map oraz zmienianie przebiegu rozgrywki;
 * obiekty lądu mogą być neutralne, uszkadzać, leczyć, spowalniać, odbijać;
+* obiektom lądu można określić wytrzymałość i niszczyć je w trakcie rozgrywki;
 * tryb fotograficzny ukrywający informacje ekranowe;
 * podczas tworzenia statków i map można korzystać z przygotowanych wcześniej obiektów (nazywanych tutaj prymitywami), wszystkie dostępne obiekty można umieszczać w pętlach aby łatwo tworzyć ich większe grupy;
 * zmienna prędkość gry;
@@ -79,6 +81,7 @@ In addition to the possibility of sailing a ship, the game offers:
 * various elements of the ship can be damaged (individual weapons, propulsion, rudder, depth rudder, radar, sonar, radio);
 * various types of weapons (artillery, depth charges, cannons, depth hedgehogs, torpedoes);
 * setting the depth at which torpedoes sail;
+* fired ammunition can be destroyed by hitting it;
 * a graphical indicator of the range of rotation of the weapon and the angles within which the weapon cannot fire;
 * effects of hits, damage, bullet tracers, smoke, water splashes;
 * the recoil of the barrels after firing and the effect of barrel fire with smoke;
@@ -125,6 +128,7 @@ In addition to the possibility of sailing a ship, the game offers:
 * checking the correctness of key settings;
 * a design mode that makes it easier to create ships, maps and change the course of the game;
 * land objects can be neutral, damage, heal, slow, bounce;
+* land objects can be given durability and destroyed during the game;
 * photo mode hiding on-screen informations;
 * when creating ships and maps, you can use previously prepared objects (here called primitives), all available objects can be placed in loops to easily create larger groups of them;
 * variable game speed;
