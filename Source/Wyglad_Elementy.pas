@@ -18,14 +18,16 @@ type
   public
     dziób,
     radar,
+    radar_ignoruje, // Obiekt nie bêdzie rysowany na radarze (zbyt wiele 'ma³ych' elementów l¹du spowalnia odœwie¿anie radaru).
     œwiat³o,
     œwiat³o_dodatkowe
       : boolean;
 
     identyfikator_elementu : Int64;
 
-    kolizja_wp³yw_obra¿enia,
-    kolizja_wp³yw_prêdkoœæ,
+    kolizja_wp³yw__amunicja_uzupe³nianie,
+    kolizja_wp³yw__obra¿enia,
+    kolizja_wp³yw__prêdkoœæ,
     punkty_¿ycia
       : real;
 
@@ -38,14 +40,16 @@ type
   public
     dziób,
     radar,
+    radar_ignoruje, // Obiekt nie bêdzie rysowany na radarze (zbyt wiele 'ma³ych' elementów l¹du spowalnia odœwie¿anie radaru).,
     œwiat³o,
     œwiat³o_dodatkowe
       : boolean;
 
     identyfikator_elementu : Int64;
 
-    kolizja_wp³yw_obra¿enia,
-    kolizja_wp³yw_prêdkoœæ,
+    kolizja_wp³yw__amunicja_uzupe³nianie,
+    kolizja_wp³yw__obra¿enia,
+    kolizja_wp³yw__prêdkoœæ,
     punkty_¿ycia
       : real;
 
@@ -58,14 +62,16 @@ type
   public
     dziób,
     radar,
+    radar_ignoruje, // Obiekt nie bêdzie rysowany na radarze (zbyt wiele 'ma³ych' elementów l¹du spowalnia odœwie¿anie radaru).,
     œwiat³o,
     œwiat³o_dodatkowe
       : boolean;
 
     identyfikator_elementu : Int64;
 
-    kolizja_wp³yw_obra¿enia,
-    kolizja_wp³yw_prêdkoœæ,
+    kolizja_wp³yw__amunicja_uzupe³nianie,
+    kolizja_wp³yw__obra¿enia,
+    kolizja_wp³yw__prêdkoœæ,
     punkty_¿ycia
       : real;
 
@@ -78,14 +84,16 @@ type
   public
     dziób,
     radar,
+    radar_ignoruje, // Obiekt nie bêdzie rysowany na radarze (zbyt wiele 'ma³ych' elementów l¹du spowalnia odœwie¿anie radaru).,
     œwiat³o,
     œwiat³o_dodatkowe
       : boolean;
 
     identyfikator_elementu : Int64;
 
-    kolizja_wp³yw_obra¿enia,
-    kolizja_wp³yw_prêdkoœæ,
+    kolizja_wp³yw__amunicja_uzupe³nianie,
+    kolizja_wp³yw__obra¿enia,
+    kolizja_wp³yw__prêdkoœæ,
     punkty_¿ycia
       : real;
 
@@ -98,14 +106,17 @@ type
   public
     dziób,
     radar,
+    radar_ignoruje, // Obiekt nie bêdzie rysowany na radarze (zbyt wiele 'ma³ych' elementów l¹du spowalnia odœwie¿anie radaru).,
+    radar_ignoruje__przeka¿_potomkom, // Czy wartoœæ ustawiona dla rodzica ma zostaæ ustawiona potomkom (domyœlnie potomkowie s¹ zarz¹dzani wed³ug ich w³asnych definicji).
     œwiat³o,
     œwiat³o_dodatkowe
       : boolean;
 
     identyfikator_elementu : Int64;
 
-    kolizja_wp³yw_obra¿enia,
-    kolizja_wp³yw_prêdkoœæ,
+    kolizja_wp³yw__amunicja_uzupe³nianie,
+    kolizja_wp³yw__obra¿enia,
+    kolizja_wp³yw__prêdkoœæ,
     punkty_¿ycia
       : real;
 
@@ -118,14 +129,16 @@ type
   public
     dziób,
     radar,
+    radar_ignoruje, // Obiekt nie bêdzie rysowany na radarze (zbyt wiele 'ma³ych' elementów l¹du spowalnia odœwie¿anie radaru).,
     œwiat³o,
     œwiat³o_dodatkowe
       : boolean;
 
     identyfikator_elementu : Int64;
 
-    kolizja_wp³yw_obra¿enia,
-    kolizja_wp³yw_prêdkoœæ,
+    kolizja_wp³yw__amunicja_uzupe³nianie,
+    kolizja_wp³yw__obra¿enia,
+    kolizja_wp³yw__prêdkoœæ,
     punkty_¿ycia
       : real;
 
@@ -138,14 +151,16 @@ type
   public
     dziób,
     radar,
+    radar_ignoruje, // Obiekt nie bêdzie rysowany na radarze (zbyt wiele 'ma³ych' elementów l¹du spowalnia odœwie¿anie radaru).,
     œwiat³o,
     œwiat³o_dodatkowe
       : boolean;
 
     identyfikator_elementu : Int64;
 
-    kolizja_wp³yw_obra¿enia,
-    kolizja_wp³yw_prêdkoœæ,
+    kolizja_wp³yw__amunicja_uzupe³nianie,
+    kolizja_wp³yw__obra¿enia,
+    kolizja_wp³yw__prêdkoœæ,
     punkty_¿ycia
       : real;
 
@@ -158,14 +173,16 @@ type
   public
     dziób,
     radar,
+    radar_ignoruje, // Obiekt nie bêdzie rysowany na radarze (zbyt wiele 'ma³ych' elementów l¹du spowalnia odœwie¿anie radaru).,
     œwiat³o,
     œwiat³o_dodatkowe
       : boolean;
 
     identyfikator_elementu : Int64;
 
-    kolizja_wp³yw_obra¿enia,
-    kolizja_wp³yw_prêdkoœæ,
+    kolizja_wp³yw__amunicja_uzupe³nianie,
+    kolizja_wp³yw__obra¿enia,
+    kolizja_wp³yw__prêdkoœæ,
     punkty_¿ycia
       : real;
 
@@ -180,21 +197,27 @@ type
 function Dziób( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
 function Punkty_¯ycia( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
 function Radar( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
+function Radar_Ignoruje( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
+function Radar_Ignoruje__Przeka¿_Potomkom( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
 function Œwiat³o( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
 function Œwiat³o_Dodatkowe( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
 function Identyfikator_Elementu( const gl_custom_scene_object_f : TGLCustomSceneObject ) : Int64; overload;
-function Kolizja_Wp³yw_Obra¿enia( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
-function Kolizja_Wp³yw_Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
+function Kolizja_Wp³yw__Amunicja_Uzupe³nianie( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
+function Kolizja_Wp³yw__Obra¿enia( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
+function Kolizja_Wp³yw__Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
 function Obiekt_Rodzaj( const gl_custom_scene_object_f : TGLCustomSceneObject ) : TObiekt_Rodzaj; overload;
 
 procedure Dziób( const gl_custom_scene_object_f : TGLCustomSceneObject; const dziób_f : boolean ); overload;
 procedure Punkty_¯ycia( const gl_custom_scene_object_f : TGLCustomSceneObject; const punkty_¿ycia_f : real ); overload;
 procedure Radar( const gl_custom_scene_object_f : TGLCustomSceneObject; const radar_f : boolean ); overload;
+procedure Radar_Ignoruje( const gl_custom_scene_object_f : TGLCustomSceneObject; const radar_ignoruje_f : boolean ); overload;
+procedure Radar_Ignoruje__Przeka¿_Potomkom( const gl_custom_scene_object_f : TGLCustomSceneObject; const radar_ignoruje__przeka¿_potomkom_f : boolean ); overload;
 procedure Œwiat³o( const gl_custom_scene_object_f : TGLCustomSceneObject; const œwiat³o_f : boolean ); overload;
 procedure Œwiat³o_Dodatkowe( const gl_custom_scene_object_f : TGLCustomSceneObject; const œwiat³o_dodatkowe_f : boolean ); overload;
 procedure Identyfikator_Elementu( const gl_custom_scene_object_f : TGLCustomSceneObject; const identyfikator_elementu_f : Int64 ); overload;
-procedure Kolizja_Wp³yw_Obra¿enia( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw_obra¿enia_f : real ); overload;
-procedure Kolizja_Wp³yw_Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw_prêdkoœæ_f : real ); overload;
+procedure Kolizja_Wp³yw__Amunicja_Uzupe³nianie( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw__amunicja_uzupe³nianie_f : real ); overload;
+procedure Kolizja_Wp³yw__Obra¿enia( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw__obra¿enia_f : real ); overload;
+procedure Kolizja_Wp³yw__Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw__prêdkoœæ_f : real ); overload;
 procedure Obiekt_Rodzaj( const gl_custom_scene_object_f : TGLCustomSceneObject; const obiekt_rodzaj_f : TObiekt_Rodzaj ); overload;
 
 implementation
@@ -208,13 +231,15 @@ begin
 
   Self.dziób := false;
   Self.radar := false;
+  Self.radar_ignoruje := false;
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
   Self.identyfikator_elementu := 0;
 
-  Self.kolizja_wp³yw_obra¿enia := 100;
-  Self.kolizja_wp³yw_prêdkoœæ := 100;
+  Self.kolizja_wp³yw__amunicja_uzupe³nianie := 0;
+  Self.kolizja_wp³yw__obra¿enia := 100;
+  Self.kolizja_wp³yw__prêdkoœæ := 100;
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
@@ -229,13 +254,15 @@ begin
 
   Self.dziób := false;
   Self.radar := false;
+  Self.radar_ignoruje := false;
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
   Self.identyfikator_elementu := 0;
 
-  Self.kolizja_wp³yw_obra¿enia := 100;
-  Self.kolizja_wp³yw_prêdkoœæ := 100;
+  Self.kolizja_wp³yw__amunicja_uzupe³nianie := 0;
+  Self.kolizja_wp³yw__obra¿enia := 100;
+  Self.kolizja_wp³yw__prêdkoœæ := 100;
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
@@ -250,13 +277,15 @@ begin
 
   Self.dziób := false;
   Self.radar := false;
+  Self.radar_ignoruje := false;
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
   Self.identyfikator_elementu := 0;
 
-  Self.kolizja_wp³yw_obra¿enia := 100;
-  Self.kolizja_wp³yw_prêdkoœæ := 100;
+  Self.kolizja_wp³yw__amunicja_uzupe³nianie := 0;
+  Self.kolizja_wp³yw__obra¿enia := 100;
+  Self.kolizja_wp³yw__prêdkoœæ := 100;
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
@@ -271,13 +300,15 @@ begin
 
   Self.dziób := false;
   Self.radar := false;
+  Self.radar_ignoruje := false;
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
   Self.identyfikator_elementu := 0;
 
-  Self.kolizja_wp³yw_obra¿enia := 100;
-  Self.kolizja_wp³yw_prêdkoœæ := 100;
+  Self.kolizja_wp³yw__amunicja_uzupe³nianie := 0;
+  Self.kolizja_wp³yw__obra¿enia := 100;
+  Self.kolizja_wp³yw__prêdkoœæ := 100;
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
@@ -292,13 +323,16 @@ begin
 
   Self.dziób := false;
   Self.radar := false;
+  Self.radar_ignoruje := false;
+  Self.radar_ignoruje__przeka¿_potomkom := false;
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
   Self.identyfikator_elementu := 0;
 
-  Self.kolizja_wp³yw_obra¿enia := 100;
-  Self.kolizja_wp³yw_prêdkoœæ := 100;
+  Self.kolizja_wp³yw__amunicja_uzupe³nianie := 0;
+  Self.kolizja_wp³yw__obra¿enia := 100;
+  Self.kolizja_wp³yw__prêdkoœæ := 100;
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
@@ -313,13 +347,15 @@ begin
 
   Self.dziób := false;
   Self.radar := false;
+  Self.radar_ignoruje := false;
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
   Self.identyfikator_elementu := 0;
 
-  Self.kolizja_wp³yw_obra¿enia := 100;
-  Self.kolizja_wp³yw_prêdkoœæ := 100;
+  Self.kolizja_wp³yw__amunicja_uzupe³nianie := 0;
+  Self.kolizja_wp³yw__obra¿enia := 100;
+  Self.kolizja_wp³yw__prêdkoœæ := 100;
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
@@ -334,13 +370,15 @@ begin
 
   Self.dziób := false;
   Self.radar := false;
+  Self.radar_ignoruje := false;
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
   Self.identyfikator_elementu := 0;
 
-  Self.kolizja_wp³yw_obra¿enia := 100;
-  Self.kolizja_wp³yw_prêdkoœæ := 100;
+  Self.kolizja_wp³yw__amunicja_uzupe³nianie := 0;
+  Self.kolizja_wp³yw__obra¿enia := 100;
+  Self.kolizja_wp³yw__prêdkoœæ := 100;
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
@@ -355,13 +393,15 @@ begin
 
   Self.dziób := false;
   Self.radar := false;
+  Self.radar_ignoruje := false;
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
   Self.identyfikator_elementu := 0;
 
-  Self.kolizja_wp³yw_obra¿enia := 100;
-  Self.kolizja_wp³yw_prêdkoœæ := 100;
+  Self.kolizja_wp³yw__amunicja_uzupe³nianie := 0;
+  Self.kolizja_wp³yw__obra¿enia := 100;
+  Self.kolizja_wp³yw__prêdkoœæ := 100;
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
@@ -476,6 +516,57 @@ begin
 
 end;//---//Funkcja Radar().
 
+//Funkcja Radar_Ignoruje().
+function Radar_Ignoruje( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean;
+begin
+
+  Result := false;
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    Result := TSt_GLCapsule(gl_custom_scene_object_f).radar_ignoruje
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    Result := TSt_GLCone(gl_custom_scene_object_f).radar_ignoruje
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    Result := TSt_GLCube(gl_custom_scene_object_f).radar_ignoruje
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    Result := TSt_GLCylinder(gl_custom_scene_object_f).radar_ignoruje
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).radar_ignoruje
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    Result := TSt_GLFrustrum(gl_custom_scene_object_f).radar_ignoruje
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    Result := TSt_GLSphere(gl_custom_scene_object_f).radar_ignoruje
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    Result := TSt_GLTorus(gl_custom_scene_object_f).radar_ignoruje;
+
+end;//---//Funkcja Radar_Ignoruje().
+
+//Funkcja Radar_Ignoruje__Przeka¿_Potomkom().
+function Radar_Ignoruje__Przeka¿_Potomkom( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean;
+begin
+
+  Result := false;
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).radar_ignoruje__przeka¿_potomkom;
+
+end;//---//Funkcja Radar_Ignoruje__Przeka¿_Potomkom().
+
 //Funkcja Œwiat³o().
 function Œwiat³o( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean;
 begin
@@ -548,7 +639,7 @@ begin
 
 end;//---//Funkcja Œwiat³o_Dodatkowe().
 
-//Funkcja Kolizja_Wp³yw_Obra¿enia().
+//Funkcja Identyfikator_Elementu().
 function Identyfikator_Elementu( const gl_custom_scene_object_f : TGLCustomSceneObject ) : Int64;
 begin
 
@@ -582,10 +673,10 @@ begin
   if gl_custom_scene_object_f is TSt_GLTorus then
     Result := TSt_GLTorus(gl_custom_scene_object_f).identyfikator_elementu;
 
-end;//---//Funkcja Kolizja_Wp³yw_Obra¿enia().
+end;//---//Funkcja Identyfikator_Elementu().
 
-//Funkcja Kolizja_Wp³yw_Obra¿enia().
-function Kolizja_Wp³yw_Obra¿enia( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real;
+//Funkcja Kolizja_Wp³yw__Amunicja_Uzupe³nianie().
+function Kolizja_Wp³yw__Amunicja_Uzupe³nianie( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real;
 begin
 
   Result := 0;
@@ -595,33 +686,33 @@ begin
     Exit;
 
   if gl_custom_scene_object_f is TSt_GLCapsule then
-    Result := TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia
+    Result := TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie
   else
   if gl_custom_scene_object_f is TSt_GLCone then
-    Result := TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia
+    Result := TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie
   else
   if gl_custom_scene_object_f is TSt_GLCube then
-    Result := TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia
+    Result := TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie
   else
   if gl_custom_scene_object_f is TSt_GLCylinder then
-    Result := TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia
+    Result := TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie
   else
   if gl_custom_scene_object_f is TSt_GLDummyCube then
-    Result := TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie
   else
   if gl_custom_scene_object_f is TSt_GLFrustrum then
-    Result := TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia
+    Result := TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie
   else
   if gl_custom_scene_object_f is TSt_GLSphere then
-    Result := TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia
+    Result := TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie
   else
   if gl_custom_scene_object_f is TSt_GLTorus then
-    Result := TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia;
+    Result := TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie;
 
-end;//---//Funkcja Kolizja_Wp³yw_Obra¿enia().
+end;//---//Funkcja Kolizja_Wp³yw__Amunicja_Uzupe³nianie().
 
-//Funkcja Kolizja_Wp³yw_Prêdkoœæ().
-function Kolizja_Wp³yw_Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real;
+//Funkcja Kolizja_Wp³yw__Obra¿enia().
+function Kolizja_Wp³yw__Obra¿enia( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real;
 begin
 
   Result := 0;
@@ -631,30 +722,66 @@ begin
     Exit;
 
   if gl_custom_scene_object_f is TSt_GLCapsule then
-    Result := TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ
+    Result := TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia
   else
   if gl_custom_scene_object_f is TSt_GLCone then
-    Result := TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ
+    Result := TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia
   else
   if gl_custom_scene_object_f is TSt_GLCube then
-    Result := TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ
+    Result := TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia
   else
   if gl_custom_scene_object_f is TSt_GLCylinder then
-    Result := TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ
+    Result := TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia
   else
   if gl_custom_scene_object_f is TSt_GLDummyCube then
-    Result := TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia
   else
   if gl_custom_scene_object_f is TSt_GLFrustrum then
-    Result := TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ
+    Result := TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia
   else
   if gl_custom_scene_object_f is TSt_GLSphere then
-    Result := TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ
+    Result := TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia
   else
   if gl_custom_scene_object_f is TSt_GLTorus then
-    Result := TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ;
+    Result := TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia;
 
-end;//---//Funkcja Kolizja_Wp³yw_Prêdkoœæ().
+end;//---//Funkcja Kolizja_Wp³yw__Obra¿enia().
+
+//Funkcja Kolizja_Wp³yw__Prêdkoœæ().
+function Kolizja_Wp³yw__Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real;
+begin
+
+  Result := 0;
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    Result := TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    Result := TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    Result := TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    Result := TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    Result := TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    Result := TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    Result := TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ;
+
+end;//---//Funkcja Kolizja_Wp³yw__Prêdkoœæ().
 
 //Funkcja Obiekt_Rodzaj().
 function Obiekt_Rodzaj( const gl_custom_scene_object_f : TGLCustomSceneObject ) : TObiekt_Rodzaj;
@@ -794,6 +921,53 @@ begin
 
 end;//---//Funkcja Radar().
 
+//Funkcja Radar_Ignoruje().
+procedure Radar_Ignoruje( const gl_custom_scene_object_f : TGLCustomSceneObject; const radar_ignoruje_f : boolean );
+begin
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    TSt_GLCapsule(gl_custom_scene_object_f).radar_ignoruje := radar_ignoruje_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    TSt_GLCone(gl_custom_scene_object_f).radar_ignoruje := radar_ignoruje_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    TSt_GLCube(gl_custom_scene_object_f).radar_ignoruje := radar_ignoruje_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    TSt_GLCylinder(gl_custom_scene_object_f).radar_ignoruje := radar_ignoruje_f
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    TSt_GLDummyCube(gl_custom_scene_object_f).radar_ignoruje := radar_ignoruje_f
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    TSt_GLFrustrum(gl_custom_scene_object_f).radar_ignoruje := radar_ignoruje_f
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    TSt_GLSphere(gl_custom_scene_object_f).radar_ignoruje := radar_ignoruje_f
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    TSt_GLTorus(gl_custom_scene_object_f).radar_ignoruje := radar_ignoruje_f;
+
+end;//---//Funkcja Radar_Ignoruje().
+
+//Funkcja Radar_Ignoruje__Przeka¿_Potomkom().
+procedure Radar_Ignoruje__Przeka¿_Potomkom( const gl_custom_scene_object_f : TGLCustomSceneObject; const radar_ignoruje__przeka¿_potomkom_f : boolean );
+begin
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    TSt_GLDummyCube(gl_custom_scene_object_f).radar_ignoruje__przeka¿_potomkom := radar_ignoruje__przeka¿_potomkom_f;
+
+end;//---//Funkcja Radar_Ignoruje__Przeka¿_Potomkom().
+
 //Funkcja Œwiat³o().
 procedure Œwiat³o( const gl_custom_scene_object_f : TGLCustomSceneObject; const œwiat³o_f : boolean );
 begin
@@ -862,7 +1036,7 @@ begin
 
 end;//---//Funkcja Œwiat³o_Dodatkowe().
 
-//Funkcja Kolizja_Wp³yw_Obra¿enia().
+//Funkcja Identyfikator_Elementu().
 procedure Identyfikator_Elementu( const gl_custom_scene_object_f : TGLCustomSceneObject; const identyfikator_elementu_f : Int64 );
 begin
 
@@ -894,10 +1068,10 @@ begin
   if gl_custom_scene_object_f is TSt_GLTorus then
     TSt_GLTorus(gl_custom_scene_object_f).identyfikator_elementu := identyfikator_elementu_f;
 
-end;//---//Funkcja Kolizja_Wp³yw_Obra¿enia().
+end;//---//Funkcja Identyfikator_Elementu().
 
-//Funkcja Kolizja_Wp³yw_Obra¿enia().
-procedure Kolizja_Wp³yw_Obra¿enia( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw_obra¿enia_f : real );
+//Funkcja Kolizja_Wp³yw__Amunicja_Uzupe³nianie().
+procedure Kolizja_Wp³yw__Amunicja_Uzupe³nianie( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw__amunicja_uzupe³nianie_f : real ); overload;
 begin
 
   if   ( gl_custom_scene_object_f = nil )
@@ -905,33 +1079,33 @@ begin
     Exit;
 
   if gl_custom_scene_object_f is TSt_GLCapsule then
-    TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia := kolizja_wp³yw_obra¿enia_f
+    TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie := kolizja_wp³yw__amunicja_uzupe³nianie_f
   else
   if gl_custom_scene_object_f is TSt_GLCone then
-    TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia := kolizja_wp³yw_obra¿enia_f
+    TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie := kolizja_wp³yw__amunicja_uzupe³nianie_f
   else
   if gl_custom_scene_object_f is TSt_GLCube then
-    TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia := kolizja_wp³yw_obra¿enia_f
+    TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie := kolizja_wp³yw__amunicja_uzupe³nianie_f
   else
   if gl_custom_scene_object_f is TSt_GLCylinder then
-    TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia := kolizja_wp³yw_obra¿enia_f
+    TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie := kolizja_wp³yw__amunicja_uzupe³nianie_f
   else
   if gl_custom_scene_object_f is TSt_GLDummyCube then
-    TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia := kolizja_wp³yw_obra¿enia_f
+    TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie := kolizja_wp³yw__amunicja_uzupe³nianie_f
   else
   if gl_custom_scene_object_f is TSt_GLFrustrum then
-    TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia := kolizja_wp³yw_obra¿enia_f
+    TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie := kolizja_wp³yw__amunicja_uzupe³nianie_f
   else
   if gl_custom_scene_object_f is TSt_GLSphere then
-    TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia := kolizja_wp³yw_obra¿enia_f
+    TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie := kolizja_wp³yw__amunicja_uzupe³nianie_f
   else
   if gl_custom_scene_object_f is TSt_GLTorus then
-    TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw_obra¿enia := kolizja_wp³yw_obra¿enia_f;
+    TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw__amunicja_uzupe³nianie := kolizja_wp³yw__amunicja_uzupe³nianie_f;
 
-end;//---//Funkcja Kolizja_Wp³yw_Obra¿enia().
+end;//---//Funkcja Kolizja_Wp³yw__Amunicja_Uzupe³nianie().
 
-//Funkcja Kolizja_Wp³yw_Prêdkoœæ().
-procedure Kolizja_Wp³yw_Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw_prêdkoœæ_f : real );
+//Funkcja Kolizja_Wp³yw__Obra¿enia().
+procedure Kolizja_Wp³yw__Obra¿enia( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw__obra¿enia_f : real );
 begin
 
   if   ( gl_custom_scene_object_f = nil )
@@ -939,30 +1113,64 @@ begin
     Exit;
 
   if gl_custom_scene_object_f is TSt_GLCapsule then
-    TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ := kolizja_wp³yw_prêdkoœæ_f
+    TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia := kolizja_wp³yw__obra¿enia_f
   else
   if gl_custom_scene_object_f is TSt_GLCone then
-    TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ := kolizja_wp³yw_prêdkoœæ_f
+    TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia := kolizja_wp³yw__obra¿enia_f
   else
   if gl_custom_scene_object_f is TSt_GLCube then
-    TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ := kolizja_wp³yw_prêdkoœæ_f
+    TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia := kolizja_wp³yw__obra¿enia_f
   else
   if gl_custom_scene_object_f is TSt_GLCylinder then
-    TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ := kolizja_wp³yw_prêdkoœæ_f
+    TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia := kolizja_wp³yw__obra¿enia_f
   else
   if gl_custom_scene_object_f is TSt_GLDummyCube then
-    TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ := kolizja_wp³yw_prêdkoœæ_f
+    TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia := kolizja_wp³yw__obra¿enia_f
   else
   if gl_custom_scene_object_f is TSt_GLFrustrum then
-    TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ := kolizja_wp³yw_prêdkoœæ_f
+    TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia := kolizja_wp³yw__obra¿enia_f
   else
   if gl_custom_scene_object_f is TSt_GLSphere then
-    TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ := kolizja_wp³yw_prêdkoœæ_f
+    TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia := kolizja_wp³yw__obra¿enia_f
   else
   if gl_custom_scene_object_f is TSt_GLTorus then
-    TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw_prêdkoœæ := kolizja_wp³yw_prêdkoœæ_f;
+    TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw__obra¿enia := kolizja_wp³yw__obra¿enia_f;
 
-end;//---//Funkcja Kolizja_Wp³yw_Prêdkoœæ().
+end;//---//Funkcja Kolizja_Wp³yw__Obra¿enia().
+
+//Funkcja Kolizja_Wp³yw__Prêdkoœæ().
+procedure Kolizja_Wp³yw__Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject; const kolizja_wp³yw__prêdkoœæ_f : real );
+begin
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    TSt_GLCapsule(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ := kolizja_wp³yw__prêdkoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    TSt_GLCone(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ := kolizja_wp³yw__prêdkoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    TSt_GLCube(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ := kolizja_wp³yw__prêdkoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    TSt_GLCylinder(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ := kolizja_wp³yw__prêdkoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    TSt_GLDummyCube(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ := kolizja_wp³yw__prêdkoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    TSt_GLFrustrum(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ := kolizja_wp³yw__prêdkoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    TSt_GLSphere(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ := kolizja_wp³yw__prêdkoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    TSt_GLTorus(gl_custom_scene_object_f).kolizja_wp³yw__prêdkoœæ := kolizja_wp³yw__prêdkoœæ_f;
+
+end;//---//Funkcja Kolizja_Wp³yw__Prêdkoœæ().
 
 //Funkcja Obiekt_Rodzaj().
 procedure Obiekt_Rodzaj( const gl_custom_scene_object_f : TGLCustomSceneObject; const obiekt_rodzaj_f : TObiekt_Rodzaj );

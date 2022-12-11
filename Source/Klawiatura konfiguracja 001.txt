@@ -15,8 +15,9 @@
 76;klawisz;;ctrl;;Broñ podnoœ lufy;
 76;klawisz;;;;Broñ podnoœ lufy na k¹t wyznaczony;
 109;klawisz;;;;Gra prêdkoœci minus;
-106;klawisz;;;;Gra prêdkoœci normalna;
+106;klawisz;;;;Gra prêdkoœæ normalna;
 107;klawisz;;;;Gra prêdkoœci plus;
+77;klawisz;;;;Gra prêdkoœæ x 10;
 32;klawisz;;;;Kamera obracanie mysz¹ prze³¹cz;
 90;klawisz;;;;Kamera obrót w dó³;
 67;klawisz;;;;Kamera obrót w górê;
@@ -84,7 +85,7 @@
 105;klawisz;;;;Strza³ z wszystkich luf wskazanej broni (alternatywna kombinacja klawiszy);
 2;mysz;;;;Strza³ z wszystkich broni wybranych typów;
 111;klawisz;;;;Strza³ z wszystkich broni wybranych typów (alternatywna kombinacja klawiszy);
-77;klawisz;;;;Strza³ przechodŸ na kolejn¹ broñ (tego samego rodzaju) po strzale;
+78;klawisz;;;;Strza³ przechodŸ na kolejn¹ broñ (tego samego rodzaju) po strzale;
 190;klawisz;;;;Strza³ przejdŸ na nastêpn¹ broñ (tego samego rodzaju);
 188;klawisz;;;;Strza³ przejdŸ na poprzedni¹ broñ (tego samego rodzaju);
 118;klawisz;;;;Strzelaj z artylerii ustaw;

@@ -62,6 +62,11 @@ unit Statki;{18.Sty.2017}
   //                     .statek = TStatek
   //                     .elementy_wizualne_dummy.Owner = TTorpedy_Wyrzutnia
   //                     .elementy_wizualne_dummy.Parent = TTorpedy_Wyrzutnia;
+  //                     .cel_linia.Parent := TStatek;
+  //                     .celownik_linia.Parent := TTorpedy_Wyrzutnia;
+  //                     .celownik_linia_bez_falowania.Parent := TStatek;
+  //                     .celownik_linia__do_punktu_uzbrajania.Parent := celownik_linia;
+  //                     .celownik_linia_bez_falowania__do_punktu_uzbrajania.Parent := celownik_linia_bez_falowania;
   //     TLufa.Owner = TTorpedy_Wyrzutnia
   //          .Parent = TTorpedy_Wyrzutnia.elementy_wizualne_dummy
   //          .dzia³o = TTorpedy_Wyrzutnia
@@ -84,11 +89,108 @@ unit Statki;{18.Sty.2017}
   //
   // Typ obiektu 'podwozie' nie dzia³a zbyt dobrze, gdy¿ wykrywanie kolizji nie jest zawsze wystarczaj¹co precyzyjne (w kontekœcie dotykania 'pasa startowego' przez samolot).
   //
-
+  // Dzia³anie pokoju rozmów nie uwzglêdnia uszkodzenia radia aby gracze mogli rozmawiaæ niezale¿nie od stanu swoich statków. Uszkodzenie radia nie wp³ywa na mo¿liwoœæ zak³ócania statków.
+  //
   // Statystyki dla gracza maj¹cego lotniskowiec i samolot s¹ ³¹czone.
   //
 
+  //  Wieloosobowoœæ bêdzie siê opiera³a chyba na tym, ¿e serwer bêdzie przelicza³ pociski, a klient tylko kopiowa³ obraz.
+  //  Serwer otrzyma informacjê o strzale gracza i j¹ przetworzy (cel, konfiguracja strza³u)
+  //  Informacje o ruchu gracza (klawisze ruchu) //???
+
   // xNx__Funkcja_Nieu¿ywana
+  //   1_ComboBox.ItemIndex := 1; // Nie wywo³a 1_ComboBoxChange().
+
+  // 'Granie' jako obserwator.
+  // kolory efektów
+  // tryb obrony twierdzy
+
+  // pararel for, Tthread.run dla przeliczania ruchu statków, œladu torowego - w nowszym delphi
+
+  // flaga, symbol statku
+  // ping klientów udp
+
+  // prêdkoœæ amunicji z pliku ini
+  // pocz¹tkowe ustawienia radaru
+  // dzia³o maszynowe
+
+  // szybkoœæ falowania
+  // p³yniêcie torped
+  // b³êdy tekstur gdy domyœlnie ustawiony niszczyciel
+  // kolor strza³ki naprowadzania
+  // ograniczaæ d³ugoœæ linii celowniczych
+  // domyœlnie l¹dy nie widoczne na radarze?
+  // dane dla radaru (tekstowe) wysy³ac do klientów odobno i rzadziej
+  // Korekta_O_Wielkoœæ_Statku - uwzglêdniæ wielkoœæ prymitywów
+  // polecenia dla SI tylko gdy dzia³a radio (?)
+  // obrót broni ustawianie na zero
+  // miganie œwiate³ (podstawowych) w samolocie
+  // rêczne wskazanie celu broni dla si
+  // ¿aglowiec obra¿enia i punkty ¿ycia zbalansowaæ
+  // do funkcji przekazaæ rekord z wartoœciami zamiast odwo³ywaæ siê do TStatki_Form.obiekt
+  // wskaŸnik celowania (na lufie) po utworzeniu statku ma inny kolor ni¿ wynika z pory dnia
+  // gdy samolot sie wznosi to predkoœæ spada, gdy opada to prêdkoœæ roœnie
+  // fale
+  // pozycje pocz¹tkowe statków (te¿ w mapach) sprawdziæ
+  // zrezygnowaæ z u¿ywania .Tag.
+  // zrezygnowaæ z u¿ywania Statki_Form.
+  // szybsze opadanie amiunicji
+  // chmury
+  // opóŸnienia w przeliczaniu statków np. co 100 ms
+  // wszystke funkcje Element_Uszkodzenie_Przeliczaj( const czy_klient_f : boolean = false ) zamieniæ na jedn¹
+  // zbioracza funkcja dla aktywacji i dezaktywacji elementów klient, gra start
+  // po starcie gry odczekaæ na od wszystkich graczy Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__udp__klient_po³¹czony_nadal_c, -99, '', true );
+  // wysy³anie danych o l¹dzie i prymitywach przy gotowoœci serwera (do³¹czaniu klientów)
+  // syrena okrêtowa, szperacz(? oœwietlenie wybranych elementów chyba nie zadziala), latarnia morska
+  // przywracaæ statki w w¹tku bo przycina grê
+  // dŸwiêki
+  // dzwonek (dŸwiêk) podczas zmiany prêdkoœci
+  // t³umaczenie - bez o programie
+  // po od³¹czeniu (wyrzuceniu) gracza usun¹æ jego statek ?
+  // zdarzenia losowe (meteory)
+  // gdy klient straci po³¹czenie z serwerem (w trakcie gdy) to czasami wyœwietla nieobs³ugiwane komunikaty Socket Error #10054 Connection reset by peer.
+  // informacja na serwerze (u klientów), ¿e siê klient od³¹czy³
+  // detekcja kolizji z zamkami daleko dzia³a
+
+  // gdy samolot wpadnie do wody z prêdkoœci¹ 25 % to obra¿enia nalicza z czasem jak dla ³odzi podwodnej, mo¿e jakoœ naliczaæ podczas wpadania
+
+  // ? czasami podczas uruchamiania gry torus (np. w pancerniku, ¿aglowcu) ma jakiœ d³ugi szpic w praw¹ stronê (po ponownym wybraniu statku jest dobrze)
+  // ? samolot krótsze uszkodzdenia silnika (do 10 s)
+  // ? create nil - dzia³a szybciej - nie widaæ ró¿nicy
+  // ? nie zakrywaæ ekranu wod¹ gdy statek zanurzony a kamera na amunicji
+  // ? linie celownicze na radarze rysowaæ
+  // ? bomby wykrywaj¹ obiekty w pobli¿u dla wybuchu i obra¿enia zalezne od dleg³oœci
+  // ? blokowaæ wysy³anie sygna³u SOS przed rozpoczêciem gry.
+  // ? statkom nie zanurzaj¹cym siê bardziej spowalniaæ ruch pod wod¹
+  // ? projektowy tryb - przejêcie kontroli nad dowolnym statkiem (sterowanie nim)
+  // ? ³atwe l¹dowanie na lotniskowcu ustawiane oddzielnie dla graczy/przez serwer
+  // ? w¹tek dla zmian automatycznych
+  // ? wspó³czynnik masy
+  // ? podmuchy wiatru wp³ywaj¹ na lot amuncji i lekko na statki
+  // ? usuwanie elementów z listy efektów wieloosobowych
+  // ? pochylenie elementu œrub
+  // ? skasowaæ z listy graczy tcp roz³¹czonych wiêcej ni¿ od danego czasu
+  // ? t³o radaru.Y na dno.Y -10%
+  // ? tylko jeden samolot na raz z lotniskowca
+  // ? ³apacz samolotów (dummy) widoczny tylko dla gracza
+  // ? statystyki dla samolotu z lotniskowca (na liœcie graczy jest jeden gracz ze statkiem i samolotem wiêc trudno bêdzie)
+  // ? po prze³¹czaniu pokoju rozmów z ekranu i z powrotem suwak pionowy siê resetuje
+  // ? gdy mysz obraca kamerê to po wyœwietleniu pokoju rozmów na ekranie i 'schowaniu' go mo¿e przeskoczyæ widok.
+  // ? obrona przeciwlotnicza
+  // ? inaczej rysowac linie celowanicze
+
+  // ? SI - TSi_Aktywnoœæ Pomoc - kieruje sie aby komuœ pomóc.
+  // ? SI - sprawdziæ czy punkt na l¹dzie aby tam nie p³yn¹³ w Patrol_Punkt_Wyznacz()
+
+  // kamerê odwraca w ty³ po zmianie statków
+
+  //x szyk 3x za lub po bokach
+
+  // pod dodaniu id_gracz (chyba) zacz¹³ pojawiaæ siê b³¹d 'socket error 10040 message too long'
+
+
+  // Je¿eli dno miga przez wodê z du¿ej wysokoœci to ukrywaæ dno gdy kamera jest wysoko
+  // Gdyby nie wysy³a³o upc na sieæ to ponoæ zamiast Send u¿yæ Brodcast (?).
 
 interface
 
@@ -101,14 +203,15 @@ uses
   GLGeomObjects,
   GLKeyboard, GLHUDObjects, GLBitmapFont, GLWindowsFont, GLSkydome, GLVectorGeometry, GLColor, IdContext,
   GLState,
+  GLTerrainRenderer, GLHeightData, GLHeightTileFileHDS,
 
-  GLCollision, GLFireFX, GLParticleFX, GLPerlinPFX, GLThorFX, GLMaterial, GLSpaceText, GLTexture,
+  GLCollision, GLFireFX, GLParticleFX, GLPerlinPFX, GLThorFX, GLMaterial, GLSpaceText, GLTexture, GLRenderContextInfo,
 
   IdTCPConnection, IdTCPClient, IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer,
   IdSocketHandle, IdUDPClient, IdUDPBase, IdUDPServer,
 
-  System.DateUtils, Math, GLWaterPlane, Vcl.ExtCtrls, IdIOHandler, IdGlobal, Vcl.StdCtrls, Xml.XMLDoc, Xml.XMLIntf,
-  pngimage, IdSync, IniFiles, System.IOUtils, StrUtils, Vcl.Menus, System.TypInfo,
+  System.DateUtils, Math, Vcl.ExtCtrls, IdIOHandler, IdGlobal, Vcl.StdCtrls, Xml.XMLDoc, Xml.XMLIntf,
+  pngimage, IdSync, IniFiles, System.IOUtils, StrUtils, Vcl.Menus, System.TypInfo, Winapi.OpenGL,
 
   Typy_Wspolne, Wyglad_Elementy;
 
@@ -119,19 +222,20 @@ type
   TEfekt_Rodzaj = ( er_Brak, er_SOS, er_Trafienie_L¹d__Bez_Obra¿eñ, er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek, er_Trafienie_Statek_Zatopienie, er_Trafienie_Woda, er_Wystrza³ );
   TGracz_Tryb = ( gt_Brak, gt_Samolot, gt_Statek, gt_Widz );
   TKamera_Tryb = ( kt_Brak, kt_Amunicja, kt_Artyleria, kt_Statek, kt_Statek__Projektowy_Tryb, kt_Statek__Swobodna, kt_Swobodna, kt_Za_Statkiem ); // kt_Statek__Swobodna - je¿eli nie ma statku gracza ustawi kamerê swobodn¹.
-    // sia_P³ywanie_Do_Punktu__Patrol - dop³ynie do punktu i rozpocznie patrol.
-    // sia_P³ywanie_Do_Punktu__Postój - dop³ynie do punktu i siê zatrzyma (samolot pozostanie w tym trybie, gdy¿ nie mo¿e siê zatrzymaæ w powietrzu i bêdzie kr¹¿y³). Aby wy³¹czyæ ten tryb nale¿y wydaæ polecenie inne ni¿ sia_Postój, np. sia_Brak (nie dotyczy samolotu), sia_Patrol.
-    // sia_Odnawianie_Zasobów - gdy samolot jest na lotniskowcu czeka na odnowienie zasobów.
+    // sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów - dop³ynie do punktu w celu odnowienia zasobów i rozpocznie patrol, w tym trybie mo¿e przejœæ w tryby walki.
+    // sia_P³ywanie_Do_Punktu__Patrol - dop³ynie do punktu i rozpocznie patrol, w tym trybie mo¿e przejœæ w tryby walki je¿eli otrzyma obra¿enia (ignoruje obecnoœæ wrogów).
+    // sia_P³ywanie_Do_Punktu__Postój - dop³ynie do punktu i siê zatrzyma, w tym trybie mo¿e przejœæ w tryby walki je¿eli otrzyma obra¿enia (ignoruje obecnoœæ wrogów) (samolot pozostanie w tym trybie, gdy¿ nie mo¿e siê zatrzymaæ w powietrzu i bêdzie kr¹¿y³). Aby wy³¹czyæ ten tryb nale¿y wydaæ polecenie inne ni¿ sia_Postój, np. sia_Brak (nie dotyczy samolotu), sia_Patrol.
+    // sia_Odnawianie_Zasobów__Lotniskowiec - gdy samolot jest na lotniskowcu czeka na odnowienie zasobów.
     // sia_Samolot__L¹dowanie__Podchodzenie - zmierza do punktu, z którego rozpocznie podejœcie do l¹dowania.
+  TPunkty_¯ycia_WskaŸnik__Efekty_Tryb = ( p¿wet_Brak, p¿wet_Nie_Podlega_Efektom_Sceny, p¿wet_Nie_Podlega_Efektom_Sceny__Tylko_Ponad_Powierzchni¹_Wody, p¿wet_Podlega_Efektom_Sceny );
   TRadar_Czyszczenie_Zakres = ( rcz_Brak, rcz_L¹dy, rcz_Statki, rcz_Wszystko );
-  TSi_Aktywnoœæ = ( sia_Brak, sia_Odnawianie_Zasobów, sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie, sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka );
+  TSi_Aktywnoœæ = ( sia_Brak, sia_Odnawianie_Zasobów__Lotniskowiec, sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie, sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka );
     // Te tryby s¹ prawie równowa¿ne:
     // sist_Brak, sist_Nie_Celuj_Nie_Strzelaj;
     // sist_Celuj_Tylko, sist_Odpowiedz_Ogniem.
   TSi_Strzelanie_Tryb = ( sist_Brak, sist_Nie_Celuj_Nie_Strzelaj, sist_Celuj_Tylko, sist_Odpowiedz_Ogniem, sist_Strzelaj_Jak_Chcesz );
   TSi__Statek_Gracza__Strzela = ( sisgs_Brak, sisgs_Nie, sisgs_Tak, sisgs_Wszystkim ); // sisgs_Tak - SI strzela wszystkimi broniami, których nie wybra³ gracz, sisgs_Wszystkim - SI strzela wszystkimi broniami.
   TStatki_Rozstawianie_Status = ( srs_Brak, srs_Rozstawianie_Kolizja_SprawdŸ, srs_Rozstawianie_Kolizja_Wykryta );
-
   TPokój_Rozmów__Odbiorca_Rodzaj = ( pror_Brak, pror_Gracz_Jeden, pror_Grupa_Jedna, pror_Wszyscy );
 
   TArtyleria = class;
@@ -148,6 +252,10 @@ type
   TTCP_Klient_Dane = class
     // Serwer ma peer_port i identyfikator = -1.
     // Gracze maj¹ identyfikator od 0 narastaj¹co.
+    gotowy__kd,
+    od³¹czony__kd,
+    w_grze__kd
+      : boolean;
     identyfikator__kd, // Nadawany przez serwer gry, rozpoznaje czy to ten sam gracz siê pod³¹czy³ po od³¹czeniu. Serwer = -1, SI = -2, gracze >= 1.
     id_grupa__kd,
     id_statek_schemat__kd,
@@ -160,9 +268,6 @@ type
     data_czas__pod³¹czenia_ostatniego__kd, // Je¿eli po roz³¹czeniu znów siê po³¹czy.
     data_czas__udp_kontakt__kd
       : TDateTime;
-    gotowy__kd,
-    od³¹czony__kd
-      : boolean;
     nazwa__kd : TWieloosobowe_String;
   end;//---//TTCP_Klient_Dane
 
@@ -344,6 +449,7 @@ type
     przeliczone__owo, // Czy dane o tym statku zosta³y ju¿ przeliczone.
     œwiat³a_w³¹czone__owo,
     œwiat³a_dodatkowe_w³¹czone__owo,
+    zanurzenie_peryskopowe__przekroczone__owo,
     zanurzenie_zadane_przekraczaj_100_procent__owo
       : boolean; // SizeOf( boolean ) = 1.
 
@@ -394,7 +500,7 @@ type
     zanurzenie_pu³ap__zadane_procent__owo // Informacje do wyœwietlania dla gracza o jego statku.
       : real; // SizeOf( real ) = 8.
 
-    gracz__nazwa__owo : TWieloosobowe_String;
+    //gracz__nazwa__owo : TWieloosobowe_String;
 
     cel_wspó³rzêdne_st__owo : TAffineVector;
 
@@ -419,7 +525,9 @@ type
     torpedy_wyrzutnie_t__owo
       : array of TObiekty_Wieloosobowe__Dzia³o_r; // SizeOf( Pointer ) = 4.
 
+    radar_id_l¹dy_w_zasiêgu__owo,
     radar_id_statki_w_zasiêgu__owo,
+    radio_id_l¹dy_w_zasiêgu__owo,
     radio_id_statki_w_zasiêgu__owo,
     sonar_id_statki_w_zasiêgu__owo
       : TWieloosobowe_String;
@@ -461,6 +569,7 @@ type
       : integer;
 
     amunicja_zanurzenie_g³êbokoœæ_zadana__owo,
+    //celowanie_precyzja__falowanie_niwelowanie__owo,
     celowanie_precyzja__obrót__owo,
     celowanie_precyzja__podniesienie__owo
       : real;
@@ -472,23 +581,32 @@ type
   TGra_Statystyki_r = record
     id_grupa__gs,
     identyfikator__gs,
-    amunicja_wystrzelona_iloœæ,
+    amunicja_wystrzelona_iloœæ__gs,
     // amunicja trafia w amunicjê iloœæ //???
-    taranowania_iloœæ, // W tym taranowania sojuszników.
-    taranowania_iloœæ_sojuszników,
-    trafienia,
-    zatoniêcia,
-    zatopienia, // W tym zatopienia sojuszników.
-    zatopienia_sojuszników
+    czas_do_zatoniêcia__najd³u¿szy_sekund__gs,
+    czas_do_zatoniêcia__najkrótszy_sekund__gs,
+    czas_do_zatoniêcia__suma_sekund__gs,
+    odnawianie_zasobów_iloœæ_razy__gs, // Ile razy skorzystano z odnawiania zasobów (nie suma odnowionych wartoœci) (wywo³ano t¹ funkcjonalnoœæ).
+    taranowania_iloœæ__gs, // W tym taranowania sojuszników.
+    taranowania_iloœæ_sojuszników__gs,
+    trafienia__gs,
+    zak³ócenia__nieudane__gs,
+    zak³ócenia__odbite__cudze__gs, // Iloœæ udanych odbiæ wrogich prób zak³ócenia.
+    zak³ócenia__odbite__w³asne__gs, // Iloœæ w³asnych prób zak³ócenia, które zosta³y odbite.
+    zak³ócenia__udane__gs,
+    zatoniêcia__gs,
+    zatopienia__gs, // W tym zatopienia sojuszników.
+    zatopienia_sojuszników__gs
       : integer;
-    amunicja_wystrzelona_obra¿enia_zadawane, // Jakie maksymalne obra¿enia mog³a zadaæ wystrzelona amunicja.
-    obra¿enia_otrzymane,
-    obra¿enia_otrzymane__od_sojuszników,
-    obra¿enia_otrzymane__z_kolizji,
-    obra¿enia_zadane__amunicja, // W tym obra¿enia zadane sojusznikom.
-    obra¿enia_zadane__amunicja_sojusznikom,
-    obra¿enia_zadane__taranowanie, // W tym obra¿enia zadane sojusznikom.
-    obra¿enia_zadane__taranowanie_sojusznikom
+    amunicja_wystrzelona_obra¿enia_zadawane__gs, // Jakie maksymalne obra¿enia mog³a zadaæ wystrzelona amunicja.
+    obra¿enia_otrzymane__gs,
+    obra¿enia_otrzymane__od_sojuszników__gs,
+    obra¿enia_otrzymane__z_kolizji__gs,
+    obra¿enia_otrzymane__z_zak³óceñ__gs,
+    obra¿enia_zadane__amunicja__gs, // W tym obra¿enia zadane sojusznikom.
+    obra¿enia_zadane__amunicja_sojusznikom__gs,
+    obra¿enia_zadane__taranowanie__gs, // W tym obra¿enia zadane sojusznikom.
+    obra¿enia_zadane__taranowanie_sojusznikom__gs
       : real;
   end;//---//TGra_Statystyki_r
 
@@ -617,6 +735,7 @@ type
     broñ_indeks_zmieniaj, // Po strzale nie przechodzi na kolejn¹ broñ z danej kategorii (rodzaju) tylko ci¹gle próbuje strzelaæ t¹ sama broni¹ (tym samym dzia³em).
     celowanie__bronie_osobno, // Broñ korzysta z w³asnego punktu celowania a nie z punktu celowania dla statku.
     celownicze_linie_unoœ,
+    celownik_linia_bez_falowania__pozycja_y_dostosuj__kamera_pod_wod¹, // Aby przeliczenie by³o wykonywane tylko gdy zmieni¹ siê odpowiednie parametry.
     grawitacja_opadanie_obra¿enia_naliczono, // Aby podczas jednego upadku naliczy³ obra¿enia tylko jeden raz.
     lotniskowiec__gotowy_na_przyjêcie_samolotu, // Lotniskowiec przyj¹³ kurs i prêdkoœæ dogodne dla l¹dowania samolotu.
     obracaj_dzia³a,
@@ -629,6 +748,7 @@ type
     si_decyduje, // Statkiem kieruje SI. Ma celowanie__bronie_osobno = true.
     si__kolizja, // Czy podczas p³ywanie statkiem sterowanego przez SI nast¹pi³a kolizja.
     si__kolizja__prêdkoœæ_ujemna, // Czy podczas kolizji prêdkoœæ by³a ujemna.
+    si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów, // Czy dla samolotu sterownego przez SI nast¹pi³a kolizja z obiektem odnawiaj¹cym zasoby (samolot kr¹¿y nad wskazanym obiektem i najczêœciej nie mo¿e do niego dolecieæ wiêc aby siê oddali³ i powróci³).
     // Gdy lotniskowiec przyjmuje l¹duj¹cy samolot ustawia kurs (p³ynie):
     //   false - standardowy (p³ynie w kierunku ty³ów bazy (oddala siê od punktu pocz¹tkowego przeciwnej grupy));
     //   true - aktualny (zachowuje aktualny kurs (p³ynie w kierunku, w którym p³yn¹³ gdy otrzyma³ zg³oszenie l¹dowania)).
@@ -643,12 +763,13 @@ type
     czy_samolot__na_lotniskowcu, // Samolot jest na lotniskowcu.
     czy_zanurzanie, // Statek mo¿e siê zanurzaæ (samolot nie ma zanurzania na true).
     zanurzenie_zadane_przekraczaj_100_procent, // Czy zezwalaæ na ustawienie zanurzenia zadanego na wiêcej ni¿ 100%.
-    czy_usun¹æ_statek
+    czy_usun¹æ_statek,
+    punkty_¿ycia_wskaŸnik__zanurzenie_peryskopowe__przekroczone__przeliczenie_poprzednie // Aby sprawdziæ czy nast¹pi³a zmiana zanurzenia peryskopowego i nie ustawiaæ wartoœæ za czêsto.
       : boolean;
 
     id_grupa,
-    id_gracz, // Serwer = -1 (serwer_peer_port_c), SI = -2 (si_peer_port_c), gracze >= 1.
-    id_statek, // Indeksowane od 0; gdy nie ma gry to gracz ma 0, samolot gracza ma 100; prezentowane s¹ od 2 rosn¹co; w trakcie gry od 0 (dla serwer: 0 gracz, 1 samolot gracza) rosn¹co.
+    id_gracz, // Serwer = -1 (serwer_peer_port_c), SI <= -2 (si_peer_port_c), gracze >= 1. Gdy nie ma gry to 0.
+    id_statek, // Indeksowane od 0; gdy nie ma gry to gracz ma 0, samolot gracza ma 100; prezentowane s¹ od 2 rosn¹co; w trakcie gry od 0 (dla serwera: 0 gracz, 1 samolot gracza) rosn¹co.
     id_statek_schemat, // Indeks schematu wygl¹du statku.
     id_statek_schemat__samolot_zmieñ_na, // Indeks schematu wygl¹du statku (samolotu) na jaki zmieniæ (-1 - brak zmiany).
     id_statek__lotniskowiec_dla_samolotu__samolot_zmieñ_na, // Na jakim statku nastêpuje zmiana samolotu gracza (np. na lotniskowcu sojusznika).
@@ -676,6 +797,7 @@ type
     radio_zasiêg, // Maksymalny zasiêg radia.
     samolot__kolizja_bufor, // Aby samolotem nie trzês³o podczas l¹dowania / startu 'buforuje' detekcjê kolizji.
     samolot__l¹dowanie__podchodzenie_krok, // Krok naprowadzania samolotu na miejsce l¹dowania (im mniejszy tym bli¿ej miejsca l¹dowania).
+    si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie_modyfikator_losowy__czas_sekundy_i, // Losowa modyfikacja czasu trwania trybu odnawiania zasobów (sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów).
     si__p³ywanie_losowe__zmiana_sekundy, // Po jakim czasie nast¹pi zmiana p³ywania losowego przez SI.
     si__p³ywanie_losowe__skrêt__zmiana_sekundy, // Po jakim czasie nast¹pi zmiana skrêtu p³ywania losowego przez SI.
     si__p³ywanie_losowe__zanurzenie_pu³ap__zmiana_sekundy, // Po jakim czasie nast¹pi zmiana zanurzenia pu³apu p³ywania losowego przez SI.
@@ -683,6 +805,8 @@ type
     si__p³ywanie_losowe__skrêt__k¹t_zakres, // K¹t po skrêcaniu, o który przerwaæ skrêcanie.
     si__walka__p³ywanie_do_punktu__cel__id_statek, // Id celu wybranego przez SI (-99 gdy brak).
     si__walka__p³ywanie_do_punktu__trwanie_modyfikator_losowy__czas_sekundy_i, // Wartoœæ losowa modyfikuj¹ca czas co jaki si mo¿e prze³¹czaæ siê miêdzy trybami walki.
+    si__zagaduje_sekundy__modyfikator_losowy_i, // Losowa modyfikacja czasu jak czêsto SI zagaduje.
+    si__zak³óca_sekundy__modyfikator_losowy_i, // Losowa modyfikacja czasu jak czêsto SI próbuje zak³ócaæ.
     sonar_zasiêg // Maksymalny zasiêg sonaru (0 - nieaktywny).
     //wygl¹d_elementy_nazwa_numer // Numer ostatnio utworzonego obiektu wygl¹du statku.
       : integer;
@@ -693,6 +817,7 @@ type
     punkty_¿ycia__w_zanurzeniu_przeliczaj__czas_przeliczenia_ostatniego_sekundy_i, // Czas ostatniego przeliczenia strat punktów ¿ycia ze wzglêdu na zanurzenie.
     schemat_samolot_zmiana_czas_sekundy_i, // Czas, w którym rozpoczê³a siê zmiana schematu samolotu ( 0 <> trwa proces zmiany samolotu na inny samolot, 0 = zmiana samolotu siê nie odbywa).
     si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i, // Czas ostatniego okreœlania rodzaju aktywnoœci SI.
+    si__p³ywanie_do_punktu__odnawianie_zasobów__rozpoczêcie_czas_sekundy_i, // Czas rozpoczêcia p³yniêcia do punktu w celu odnowienia zasobów, te¿ czas wyjœcia bezpoœrednio z tego trybu (nie trzeba tej wartoœci zerowaæ po wyjœciu z trybu odnawiania zasobów (sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów)).
     si__p³ywanie_losowe__zmiana_ostatnia_sekundy_i, // Czas ostatniej zmiany p³ywania losowego przez SI.
     si__p³ywanie_losowe__skrêt__zmiana_ostatnia_sekundy_i, // Czas ostatniej zmiany skrêtu p³ywania losowego przez SI.
     si__p³ywanie_losowe__zanurzenie_pu³ap__zmiana_ostatnia_sekundy_i, // Czas ostatniej zmiany zanurzenia pu³apu p³ywania losowego przez SI.
@@ -702,7 +827,9 @@ type
     si__walka__p³ywanie_do_punktu__rozpoczêcie_czas_sekundy_i, // Czas rozpoczêcia p³yniêcia do punktu w trakcie walki.
     si__wystartowanie__czas_sekundy_i, // Czas, w którym samolot wystartowa³.
     si__zagaduje__ostatnie_sekundy_i, // Czas ostatniego zagadania przez SI.
+    si__zak³óca__ostatnie_sekundy_i, // Czas ostatniej próby zak³ócania przez SI.
     sos__czas_utworzenia_ostatniego_sekundy_i, // Czas utworzenia ostatniego sygna³u sos dla statku.
+    statek__utworzenie_czas_i, // Czas utworzenia statku.
     œlad_torowy__czas_utworzenia_ostatniego_milisekundy_i, // Czas utworzenia ostatniego œladu torowego dla statku.
     toniêcie__czas_sekundy_i, // Czas, w którym rozpoczê³o siê toniêcie.
     uszkodzone_czas_sekundy_i__radar, // 0 - nie jest uszkodzone, <> 0 - zosta³o trafione i nie mo¿na go u¿ywaæ.
@@ -710,10 +837,12 @@ type
     uszkodzone_czas_sekundy_i__sonar, // 0 - nie jest uszkodzone, <> 0 - zosta³o trafione i nie mo¿na go u¿ywaæ.
     uszkodzone_czas_sekundy_i__ster, // 0 - nie jest uszkodzone, <> 0 - zosta³o trafione i nie mo¿na go u¿ywaæ. Najwiêksza wartoœæ ze wszystkich sterów statku.
     uszkodzone_czas_sekundy_i__ster_g³êbokoœci, // 0 - nie jest uszkodzone, <> 0 - zosta³o trafione i nie mo¿na go u¿ywaæ. Najwiêksza wartoœæ ze wszystkich sterów g³êbokoœci statku.
-    uszkodzone_czas_sekundy_i__œruba // 0 - nie jest uszkodzone, <> 0 - zosta³o trafione i nie mo¿na go u¿ywaæ. Najwiêksza wartoœæ ze wszystkich œrub statku.
+    uszkodzone_czas_sekundy_i__œruba, // 0 - nie jest uszkodzone, <> 0 - zosta³o trafione i nie mo¿na go u¿ywaæ. Najwiêksza wartoœæ ze wszystkich œrub statku.
+    zak³ócanie__czas_próba_ostatnia_sekundy_i // Czas ostatniej próby zak³ócania statku.
       : Int64;
 
     amunicja_zanurzenie_g³êbokoœæ_zadana,
+    //celowanie_precyzja__falowanie_niwelowanie,
     celowanie_precyzja__obrót,
     celowanie_precyzja__podniesienie,
 
@@ -788,6 +917,10 @@ type
     z_prymityw_odleg³oœæ // Odleg³oœæ miêdzy najbardziej oddalonymi wspó³rzêdnymi Z prymitywów tworz¹cych statek (wspó³rzêdne musz¹ mieæ przeciwne znaki) (d³ugoœæ). Nie mo¿e byæ równe zero, gdy¿ jest mianownikiem w dzieleniach lub wartoœci¹ przez, któr¹ siê przemna¿a.
       : single;
 
+    statek__czas_do_zatoniêcia_s : string;
+
+    punkty_¿ycia__wskaŸnik__kolor : GLColor.TColorVector;
+
     amunicja_rodzaj_zbiór : TAmunicja_Rodzaj_Zbiór;
     celowanie__tryb : TCelowanie_Tryb;
     si_aktywnoœæ,
@@ -808,6 +941,8 @@ type
 
     cel_wspó³rzêdne_bezwzglêdne_affine_vektor : TAffineVector;
 
+    punkty_¿ycia_wskaŸnik__efekty_tryb : TPunkty_¯ycia_WskaŸnik__Efekty_Tryb;
+
     statki_rozstawianie_status : TStatki_Rozstawianie_Status; // Aby nie wykrywa³ kolizji ze statkami, które s¹ w trakcie rozstawiania.
 
     wygl¹d_elementy_list : TList; // Lista elementów wygl¹du statku.
@@ -821,10 +956,7 @@ type
     punkty_¿ycia_podniesienie // Aby przechylaæ góra dó³ wskaŸnik ¿ycia do kamery. //???
       : TGLDummyCube;
 
-    dziób,
-    kad³ub,
-    punkty_¿ycia__ramka
-      : TGLCube;
+    punkty_¿ycia__ramka : TGLCube;
 
     punkty_¿ycia__wskaŸnik
       : TGLCylinder;
@@ -834,6 +966,10 @@ type
       : TGLSpaceText; // uses GLSpaceText.
 
     lotniskowiec__³apacz_samolotów_dummy : Wyglad_Elementy.TSt_GLDummyCube; // Obiekt do wykrywania l¹dowania samolotu na lotniskowcu.
+
+    dziób__brak_definicji,
+    kad³ub__brak_definicji
+      : Wyglad_Elementy.TSt_GLCube;
 
     artyleria_t : array of TArtyleria;
     dzia³a_t : array of TDzia³o;
@@ -851,14 +987,16 @@ type
     celownicza_linia : TGLLines; // U klientów nie wskazuje prawid³owo celu (serwer nie wysy³a aktualnego ustawienie linii celowania).
 
     // Je¿eli ma uszkodzone radio to nic nie ma w zasiêgu.
+    radar_id_l¹dy_w_zasiêgu, // L¹dy w zasiêgu radaru. '-99, -99' - gdy brak, '-99, 1, 2, 3, -99'.
     radar_id_statki_w_zasiêgu, // Statki w zasiêgu radaru. '-99, -99' - gdy brak, '-99, 1, 2, 3, -99'.
+    radio_id_l¹dy_w_zasiêgu, // L¹dy, których pozycje zna z radia. '-99, -99' - gdy brak, '-99, 1, 2, 3, -99'.
     radio_id_statki_w_zasiêgu, // Statki, których pozycje zna z radia. '-99, -99' - gdy brak, '-99, 1, 2, 3, -99'.
     radio_³¹cznoœæ_id_statki_w_zasiêgu, // Statki w zasiêgu radia, z którymi mo¿e wymieniaæ dane. '-99, -99' - gdy brak, '-99, 1, 2, 3, -99'.
     sonar_id_statki_w_zasiêgu // Statki w zasiêgu sonaru. '-99, -99' - gdy brak, '-99, 1, 2, 3, -99'.
       : TWieloosobowe_String;
   public
     { Public declarations }
-    constructor Create( AOwner : TGLBaseSceneObject; gl_collision_mmanager_f : TGLCollisionManager; efekt__element_uszkodzenie_gl_thor_fx_manager_f : TGLThorFXManager; const id_gracz_f, id_statek_f : integer; const wygl¹d_definicja_f : string; const prymitywy_lista_f : TSchematy_Lista_r_t );
+    constructor Create( AOwner : TGLBaseSceneObject; gl_collision_mmanager_f : TGLCollisionManager; efekt__element_uszkodzenie_gl_thor_fx_manager_f : TGLThorFXManager; const id_gracz_f, id_statek_f : integer; const wygl¹d_definicja_f : string; const prymitywy_lista_f : TSchematy_Lista_r_t; const punkty_¿ycia_wskaŸnik__material_options_f : GLMaterial.TMaterialOptions );
     destructor Destroy(); override;
 
     procedure Prêdkoœæ_Zadana_Procent_Ustaw( const prêdkoœæ_zadana_procent_f : integer );
@@ -868,7 +1006,7 @@ type
     procedure Zanurzenie_Zadane_Procent_Ustaw( const zanurzenie_pu³ap__zadane_procent_f : integer );
     procedure Zanurzenie_Zadane_Procent_Zmieñ( const zmieñ_o_f : integer; const peryskopowe_f : boolean = false );
 
-    function Grawitacja_Opadanie_Zmieñ( const delta_czasu_f : double ) : real;
+    function Grawitacja_Opadanie_Zmieñ( const delta_czasu_f : double; const grawitacja_wy³¹czona_f : boolean = false ) : real;
 
     procedure Prêdkoœæ_Procent_Zmieñ( const delta_czasu_f : double );
     procedure Skrêt_Procent_Zmieñ( const delta_czasu_f : double );
@@ -883,18 +1021,24 @@ type
     procedure Amunicja_Rodzaj_Zbiór_Wyznacz();
 
     procedure Cel_Wspó³rzêdne_Ustaw( const cel_wspó³rzêdne_bezwzglêdne_affine_vektor_f : TAffineVector; const statek_celownicza_linia_tylko_f : boolean = false );
+    procedure Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( const kamera_pod_wod¹_f : boolean; const nad_powierzchni¹_wody_utrzymuj_f : boolean = false );
 
-    procedure Broñ_Indeks_Zmieniaj_Ustaw(); overload;
-    procedure Broñ_Indeks_Zmieniaj_Ustaw( const czy_poprzednia_f : boolean ); overload;
+    function Broñ__Amunicja_Uzupe³nij( broñ_f : array of TTorpedy_Wyrzutnia; uzupe³nienie_procent_f : real = 10 ) : boolean;
+    procedure Broñ__Indeks_Zmieniaj_Ustaw(); overload;
+    procedure Broñ__Indeks_Zmieniaj_Ustaw( const czy_poprzednia_f : boolean ); overload;
 
     function Strza³( const czy_wszystkie_bronie_f, czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; const cel_wspó³rzêdne_f : TAffineVector ) : boolean;
 
-    procedure Elementy_Gracza_Dostosuj( const id_grupa_gracza_f : integer; const celownik_bombowiec_widoczne_f, lotniskowiec__³apacz_samolotów_widoczne_f, punkty_¿ycia_wskaŸnik_widoczne__gracz_f, punkty_¿ycia_wskaŸnik_widoczne__przeciwnik_f, punkty_¿ycia_wskaŸnik_widoczne__sojusznik_f, obrót_k¹t_zablokowany_wskaŸnik_widoczne_f, obrót_k¹t_zablokowany_strza³_wskaŸnik_widoczne_f : boolean );
+    procedure Elementy_Gracza_Dostosuj( const id_grupa_gracza_f : integer; const celownik_bombowiec_widoczne_f, kamera_pod_wod¹_f, lotniskowiec__³apacz_samolotów_widoczne_f, punkty_¿ycia_wskaŸnik_widoczne__gracz_f, punkty_¿ycia_wskaŸnik_widoczne__przeciwnik_f, punkty_¿ycia_wskaŸnik_widoczne__sojusznik_f, obrót_k¹t_zablokowany_wskaŸnik_widoczne_f, obrót_k¹t_zablokowany_strza³_wskaŸnik_widoczne_f : boolean );
     procedure Elementy_Gracza_Widocznoœæ( const id_grupa_gracza_f : integer; const widoczne_f : boolean );
 
     procedure Punkty_¯ycia__Zmieñ( const wartoœæ_f : real );
     procedure Punkty_¯ycia__W_Zanurzeniu_Przeliczaj();
-    procedure Punkty_¯ycia__WskaŸnik_Rysuj( const gl_camera_f : TGLCamera; const wartoœæ_liczbowa_f : integer );
+    procedure Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw( const material_options_f : GLMaterial.TMaterialOptions );
+    procedure Punkty_¯ycia__WskaŸnik__Noc_Zmieñ( dzieñ_jasnoœæ_f : real );
+    procedure Punkty_¯ycia__WskaŸnik__Rysuj( const gl_camera_f : TGLCamera; const wartoœæ_liczbowa_f : integer );
+
+    procedure Uszkodzenia_Dodaj();
 
     function Parametry_Odczytaj( const dane_wszystkie_f : boolean = false ) : string;
 
@@ -976,6 +1120,7 @@ type
   TTorpedy_Wyrzutnia = class( TGLDummyCube )
   private
     { Private declarations }
+    celownik_linia__widoczne,
     czy_broñ_obracana, // Je¿eli broñ siê nie obraca to jest zawsze wycelowana.
     czy_indeks_do_strza³u, // Oznacza, ¿e to dzia³o jest aktualnie ustawione do strza³ów pojedynczych.
     //czy_lufa_podnoszona, // Czy lufa rusza siê góra dó³. // Nie wiem czy dobrze rozpoznaje jakiej klasy jest dzia³o.
@@ -1027,6 +1172,10 @@ type
     zasiêg__broñ
       : real;
 
+    celownik_linia_bez_falowania__position_y__kamera_nad_wod¹, // Je¿eli broñ jest umieszczona pod powierzchni¹ wody to umo¿liwi przesuwanie linii celowania w górê aby by³a widoczna gdy kamera jest nad wod¹.
+    celownik_linia_bez_falowania__position_y__standardowa // Kopia pocz¹tkowej pozycji linii celowania.
+      : single;
+
     si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor : TAffineVector; // Wspó³rzêdne celu wybranego przez SI.
     obrót_kierunek_zadany : GLVectorGeometry.TVector; // uses GLVectorGeometry. //TGLCoordinates;
 
@@ -1062,7 +1211,7 @@ type
     celownik_linia,
     celownik_linia_bez_falowania, // Dla du¿ych zasiêgów koniec linii ruchomej w sporym zakresie faluje i mo¿e go byæ nie widaæ oraz trudno okreœliæ zasiêg.
     celownik_linia__do_punktu_uzbrajania, // Je¿eli uzbrajanie amunicji  odbywa siê daleko od dzia³a to czasami nie widaæ, gdzie jest linia celownicza (np. cala pod wod¹).
-    celownik_linia_bez_falowania__do_punktu_uzbrajania // Je¿eli uzbrajanie amunicji  odbywa siê daleko od dzia³a to czasami nie widaæ, gdzie jest linia celownicza (np. cala pod wod¹).
+    celownik_linia_bez_falowania__do_punktu_uzbrajania // Je¿eli uzbrajanie amunicji odbywa siê daleko od dzia³a to czasami nie widaæ, gdzie jest linia celownicza (np. cala pod wod¹).
       : TGLLines;
 
     obrót_k¹t_zablokowany_GLDisk : TGLDisk; // Wizualizuje obszar zablokowanego k¹ta obrotu.
@@ -1084,7 +1233,8 @@ type
 
     procedure Celownik_Linia_Wygl¹d_Ustaw();
 
-    procedure Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( const celownik_linia_widocznoœæ_f : boolean = true );
+    procedure Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( const celownik_linia_widocznoœæ_f : boolean = true );
+    procedure Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( const kamera_pod_wod¹_f : boolean; const nad_powierzchni¹_wody_utrzymuj_f : boolean = false );
 
     procedure Wygl¹d_Elementy__Noc_Zmieñ( const dzieñ_jasnoœæ_f : real );
 
@@ -1125,7 +1275,7 @@ type
     procedure Podniesienie_Zadane_Zmieñ( const celownik_linia_widocznoœæ_f : boolean = true );
     procedure Podniesienie_Kierunek_Zmieñ( const delta_czasu_f : double );
 
-    procedure Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( const celownik_linia_widocznoœæ_f : boolean = true );
+    procedure Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( const celownik_linia_widocznoœæ_f : boolean = true );
 
     procedure Wygl¹d_Elementy__Noc_Zmieñ( const dzieñ_jasnoœæ_f : real );
 
@@ -1426,9 +1576,7 @@ type
     GLLines1: TGLLines;
     GLLines2: TGLLines;
     GLLines3: TGLLines;
-    Celownicza_GLSphere: TGLSphere;
     Celowniczy_GLDummyCube: TGLDummyCube;
-    GLWaterPlane1: TGLWaterPlane;
     IdTCPServer1: TIdTCPServer;
     IdTCPClient1: TIdTCPClient;
     Klient_IdTCP_Czyta_Timer: TTimer;
@@ -1522,14 +1670,7 @@ type
     Has³o_Etykieta_Label: TLabel;
     Klient_Wysy³a_Timer: TTimer;
     Projektowy_Tryb_CheckBox: TCheckBox;
-    Radar_Skala_Etykieta_Label: TLabel;
-    Radar_Skala_SpinEdit: TSpinEdit;
-    Radar_Przyciski_Panel: TPanel;
-    Radar_Panel: TPanel;
-    Radar_Powiêksz_Button: TButton;
-    Radar_Pomniejsz_Button: TButton;
     Statek__Opis_BitBtn: TBitBtn;
-    Radar_Dane_Z_Radia_CheckBox: TCheckBox;
     Ustawienia_TabSheet: TTabSheet;
     Kamera_Odleg³oœæ_Maksymalna_Etykieta_Label: TLabel;
     Kamera_Odleg³oœæ_Maksymalna_SpinEdit: TSpinEdit;
@@ -1610,59 +1751,67 @@ type
     Gra_Zakoñcz_BitBtn: TBitBtn;
     Wieloosobowe_Identyfikator_Gra_Etykieta_Label: TLabel;
     Wieloosobowe_Identyfikator_Gra_Label: TLabel;
-    Celowanie_Precyzja_Obrót_Etykieta_Label: TLabel;
-    Celowanie_Precyzja_Obrót_SpinEdit: TSpinEdit;
-    Celowanie_Precyzja_Podniesienie_Etykieta_Label: TLabel;
-    Celowanie_Precyzja_Podniesienie_SpinEdit: TSpinEdit;
     Wieloosobowe_ScrollBox: TScrollBox;
     Gra_ScrollBox: TScrollBox;
     O_Programie_TabSheet: TTabSheet;
     O_Programie_Label: TLabel;
-    Celownik_Wielkoœæ_Etykieta_Label: TLabel;
-    Celownik_Wielkoœæ_Label: TLabel;
-    Celownik_Wielkoœæ_Edit: TEdit;
+    Celownik_Ekranowy__Wielkoœæ_Etykieta_Label: TLabel;
+    Celownik_Ekranowy__Wielkoœæ_Label: TLabel;
+    Celownik_Ekranowy__Wysokoœæ_Edit: TEdit;
     Celownik_Widocznoœæ_CheckBox: TCheckBox;
     Celownik_Widocznoœæ_Mouse_Look_Active_CheckBox: TCheckBox;
-    Radar_Widocznoœæ_CheckBox: TCheckBox;
     Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox: TCheckBox;
     Pe³ny_Ekran_CheckBox: TCheckBox;
     Morze_Wzburzenie_Etykieta_Label: TLabel;
     Morze_Wzburzenie_SpinEdit: TSpinEdit;
-    Radar_GLSceneViewer: TGLSceneViewer;
-    Radar_GLScene: TGLScene;
-    Radar_GLCamera: TGLCamera;
     Radar_0_GLSphere: TGLSphere;
-    Radar_GLLightSource: TGLLightSource;
-    Radar_Obiekty_GLDummyCube: TGLDummyCube;
-    Radar_T³o_GLPlane: TGLPlane;
-    Radar_Statek_GLFrustrum: TGLFrustrum;
-    Radar_Statek_GLDummyCube: TGLDummyCube;
-    Radar_Zasiêg_GLDisk: TGLDisk;
-    Radar_Œlady_GLDummyCube: TGLDummyCube;
-    Radio_Zasiêg_GLDisk: TGLDisk;
-    Radar_Czu³oœæ_Etykieta_Label: TLabel;
-    Radar_Czu³oœæ_SpinEdit: TSpinEdit;
-    Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox: TCheckBox;
-    Sonar_Zasiêg_GLDisk: TGLDisk;
-    Radar_Dane_Z_Sonaru_CheckBox: TCheckBox;
-    Radar_L_GLCapsule: TGLCapsule;
-    Radar_Rysowanie_Œladów__Statków_Sekundy_Etykieta_Label: TLabel;
-    Radar_Rysowanie_Œladów__Statków_Sekundy_SpinEdit: TSpinEdit;
-    Radar_Rysowanie_Œladów__Amunicji_Sekundy_Etykieta_Label: TLabel;
-    Radar_Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit: TSpinEdit;
+    Radar_GLCamera: TGLCamera;
     Radar_GLHUDText: TGLHUDText;
+    Radar_GLLightSource: TGLLightSource;
+    Radar_GLScene: TGLScene;
+    Radar_GLSceneViewer: TGLSceneViewer;
+    Radar_GLSkyDome: TGLSkyDome;
     Radar_GLWindowsBitmapFont: TGLWindowsBitmapFont;
-    Radar_Wspó³rzêdne_Kursora_CheckBox: TCheckBox;
     Radar_Kamera_Kierunek_GLDisk: TGLDisk;
     Radar_Kamera_Kierunek_GLDummyCube: TGLDummyCube;
-    Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox: TCheckBox;
-    Radar_Wspó³rzêdna_Y_CheckBox: TCheckBox;
+    Radar_L_GLCapsule: TGLCapsule;
+    Radar_Obiekty_GLDummyCube: TGLDummyCube;
+    Radar_Panel: TPanel;
     Radar_PN_Linia_GLLines: TGLLines;
+    Radar_Punkt_Naprowadzaj_GLDummyCube: TGLDummyCube;
+    Radar_Statek_GLDummyCube: TGLDummyCube;
+    Radar_Statek_GLFrustrum: TGLFrustrum;
+    Radar_Œlady_GLDummyCube: TGLDummyCube;
+    Radar_T³o_GLPlane: TGLPlane;
+    Radar_Zasiêg_GLDisk: TGLDisk;
+    Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox: TCheckBox;
+    Radar__Czu³oœæ_Etykieta_Label: TLabel;
+    Radar__Czu³oœæ_SpinEdit: TSpinEdit;
+    Radar__Dane_Z_Radia__L¹dy_CheckBox: TCheckBox;
+    Radar__Dane_Z_Radia_CheckBox: TCheckBox;
+    Radar__Dane_Z_Sonaru_CheckBox: TCheckBox;
+    Radar__Kamera_Kierunek_Wyœwietlaj_CheckBox: TCheckBox;
+    Radar__L¹d_Rysowanie_Zasiêg_Etykieta_Label: TLabel;
+    Radar__L¹d_Rysowanie_Zasiêg_SpinEdit: TSpinEdit;
+    Radar__Pomniejsz_Button: TButton;
+    Radar__Powiêksz_Button: TButton;
+    Radar__Przyciski_Panel: TPanel;
+    Radar__Rysowanie_Œladów__Amunicji_Sekundy_Etykieta_Label: TLabel;
+    Radar__Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit: TSpinEdit;
+    Radar__Rysowanie_Œladów__Statków_Sekundy_Etykieta_Label: TLabel;
+    Radar__Rysowanie_Œladów__Statków_Sekundy_SpinEdit: TSpinEdit;
+    Radar__Skala_Etykieta_Label: TLabel;
+    Radar__Skala_SpinEdit: TSpinEdit;
+    Radar__Skala_Y_Uwzglêdniaj_L¹d_CheckBox: TCheckBox;
+    Radar__Widocznoœæ_CheckBox: TCheckBox;
+    Radar__Wspó³rzêdna_Y_CheckBox: TCheckBox;
+    Radar__Wspó³rzêdne_Kursora_CheckBox: TCheckBox;
+    Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox: TCheckBox;
+    Radio_Zasiêg_GLDisk: TGLDisk;
+    Sonar_Zasiêg_GLDisk: TGLDisk;
     Dalmierz_Tryb_RadioGroup: TRadioGroup;
-    Punkty_¯ycia_WskaŸnik__Sposób_Prezentowania_ComboBox: TComboBox;
-    Radar_GLSkyDome: TGLSkyDome;
+    Punkty_¯ycia_WskaŸnik__Prezentowanie_Sposób_ComboBox: TComboBox;
     Broñ_Zasiêg_GLDisk: TGLDisk;
-    Radar_Broñ_Zasiêg_Wyœwietlaj_CheckBox: TCheckBox;
     Informacje_G³ówne_GLHUDSprite: TGLHUDSprite;
     Informacje_Dodatkowe_GLHUDSprite: TGLHUDSprite;
     Pod_Wod¹_GLHUDSprite: TGLHUDSprite;
@@ -1733,8 +1882,6 @@ type
     SOS_Nadaj_Button: TButton;
     Efekt__SOS_Rozb³ysk_GLPolygonPFXManager: TGLPolygonPFXManager;
     Klienci_Od³¹cz_Wszystkich_BitBtn: TBitBtn;
-    Radar_L¹d_Rysowanie_Zasiêg_Etykieta_Label: TLabel;
-    Radar_L¹d_Rysowanie_Zasiêg_SpinEdit: TSpinEdit;
     Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox: TCheckBox;
     Delta_Czasu_Wyœwietlaj_CheckBox: TCheckBox;
     L¹dowanie_U³atwione_CheckBox: TCheckBox;
@@ -1768,7 +1915,6 @@ type
     Punkt_Naprowadzaj__Y_SpinEdit: TSpinEdit;
     Punkt_Naprowadzaj_GLArrowLine: TGLArrowLine;
     Punkt_Naprowadzaj_GLDummyCube: TGLDummyCube;
-    Radar_Punkt_Naprowadzaj_GLDummyCube: TGLDummyCube;
     Punkt_Naprowadzaj_CheckBox: TCheckBox;
     Punkt_Naprowadzaj__Na_Lotniskowiec_CheckBox: TCheckBox;
     Punkt_Naprowadzaj__Odleg³oœæ_Do_Punktu_Prezentuj_CheckBox: TCheckBox;
@@ -1804,6 +1950,43 @@ type
     L¹d_Elementy_Iloœæ_Label: TLabel;
     Projektowy_Tryb__Wspó³rzêdne_Sceny_Wyœwietlaj_CheckBox: TCheckBox;
     Fotograficzny_Tryb_CheckBox: TCheckBox;
+    Gra_Pauza_Button: TButton;
+    Zak³ócanie__Dozwolone_CheckBox: TCheckBox;
+    Zak³ócanie__Graczy_Nie_SI_Dozwolone_CheckBox: TCheckBox;
+    Pokój_Rozmów__Ignoruj__Si_Zak³óca_CheckBox: TCheckBox;
+    Celownik_Ekranowy__Dó³_GLHUDSprite: TGLHUDSprite;
+    Celownik_Ekranowy__Góra_GLHUDSprite: TGLHUDSprite;
+    Celownik_Ekranowy__Lewo_GLHUDSprite: TGLHUDSprite;
+    Celownik_Ekranowy__Prawo_GLHUDSprite: TGLHUDSprite;
+    Sonarowe_U³atwienie_GLDummyCube: TGLDummyCube;
+    Sonarowe_U³atwienie_CheckBox: TCheckBox;
+    Celownik_Ekranowy__Szerokoœæ_Edit: TEdit;
+    Celownik_Ekranowy__Gruboœæ_Edit: TEdit;
+    Celownik_Ekranowy__Kolor_Etykieta_Label: TLabel;
+    Celownik_Ekranowy__Kolor__R_Edit: TEdit;
+    Celownik_Ekranowy__Kolor__G_Edit: TEdit;
+    Celownik_Ekranowy__Kolor__B_Edit: TEdit;
+    Celownik_Ekranowy__Kolor__A_Edit: TEdit;
+    Pe³ny_Ekran__Widocznoœæ_Splitter: TSplitter;
+    Pe³ny_Ekran__Znikaj¹ce_Elementy_CheckBox: TCheckBox;
+    Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox: TComboBox;
+    Efekt__Sonarowe_U³atwienie_GLFireFXManager: TGLFireFXManager;
+    Sonarowe_U³atwienie__Klient_Zmieniaæ_Mo¿e_CheckBox: TCheckBox;
+    Do_Wygaszenia_Panel: TPanel;
+    Celowanie_Precyzja__Obrót_Etykieta_Label: TLabel;
+    Celowanie_Precyzja__Obrót_SpinEdit: TSpinEdit;
+    Celowanie_Precyzja__Podniesienie_SpinEdit: TSpinEdit;
+    Celowanie_Precyzja__Podniesienie_Etykieta_Label: TLabel;
+    Celowanie_Precyzja__Falowanie_Niwelowanie_SpinEdit: TSpinEdit;
+    Celowanie_Precyzja__Falowanie_Niwelowanie_Etykieta_Label: TLabel;
+    Statystyki__Rozmiar_Zak³adki_Poszerz_CheckBox: TCheckBox;
+    Radar__Przyciski_Panel__Ukrywaj_CheckBox: TCheckBox;
+    Fale_GLHeightTileFileHDS: TGLHeightTileFileHDS;
+    Fale_GLCustomHDS: TGLCustomHDS;
+    Fale_GLTerrainRenderer: TGLTerrainRenderer;
+    Fale_GLMaterialLibrary: TGLMaterialLibrary;
+    Fale_CheckBox: TCheckBox;
+
     procedure FormShow( Sender: TObject );
     procedure FormClose( Sender: TObject; var Action: TCloseAction );
     procedure FormResize( Sender: TObject );
@@ -1817,6 +2000,11 @@ type
     procedure Gra_GLCadencerProgress( Sender: TObject; const deltaTime, newTime: Double );
     procedure Gra_GLCollisionManagerCollision( Sender: TObject; object1, object2: TGLBaseSceneObject );
 
+    procedure Fale_CheckBoxClick( Sender: TObject );
+    procedure Fale_GLTerrainRendererGetTerrainBounds( var l, t, r, b: Single );
+    procedure Fale_GLTerrainRendererHeightDataPostRender( var rci: TGLRenderContextInfo; var HeightDatas: TList );
+    procedure Fale_GLCustomHDSStartPreparingData( HeightData: TGLHeightData );
+
     procedure Statek_Parametry_Ustaw( Sender: TObject );
 
     procedure PageControl1Change( Sender: TObject );
@@ -1825,6 +2013,8 @@ type
     procedure L¹d__Odœwie¿_Wskazany_BitBtnClick( Sender: TObject );
     procedure L¹d__Utwórz_BitBtnClick( Sender: TObject );
     procedure L¹d_ComboBoxChange( Sender: TObject );
+
+    procedure Log_MemoKeyDown( Sender: TObject; var Key: Word; Shift: TShiftState );
 
     procedure Statek__Wczytaj_Listê_BitBtnClick( Sender: TObject );
     procedure Statek__Odœwie¿_Wskazany_BitBtnClick( Sender: TObject );
@@ -1842,6 +2032,8 @@ type
 
     procedure Gra_Rozpocznij_BitBtnClick( Sender: TObject );
     procedure Gra_Zakoñcz_BitBtnClick( Sender: TObject );
+
+    procedure Gra_Pauza_ButtonClick( Sender: TObject );
 
     procedure Gra_Wspó³czynnik_Prêdkoœci_SpinEditChange( Sender: TObject );
     procedure Gra_Wspó³czynnik_Trudnoœci_SpinEditChange( Sender: TObject );
@@ -1899,6 +2091,7 @@ type
 
     procedure Edit_Jako_Spin_KeyDown( Sender: TObject; var Key: Word; Shift: TShiftState );
     procedure ScrollBoxMouseWheel( Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean );
+    procedure Wspó³czynniki_Inne_Click( Sender: TObject );
 
     procedure Ustawienia_Wczytaj_ButtonClick( Sender: TObject );
     procedure Ustawienia_Zapisz_ButtonClick( Sender: TObject );
@@ -1916,17 +2109,18 @@ type
     procedure Elementy_Gracza_Dostosuj_CheckBoxClick( Sender: TObject );
 
     procedure Projektowy_Tryb_CheckBoxClick( Sender: TObject );
-    procedure Radar_Widocznoœæ_CheckBoxClick( Sender: TObject );
     procedure Informacje_Dodatkowe_GLAsyncTimerTimer( Sender: TObject );
 
     procedure Radar_GLSceneViewerMouseMove( Sender: TObject; Shift: TShiftState; X, Y: Integer );
-    procedure Radar_Wielkoœæ_ButtonClick( Sender: TObject );
-    procedure Radar_Skala_SpinEditChange( Sender: TObject );
+    procedure Radar__Skala_SpinEditChange( Sender: TObject );
+    procedure Radar__Widocznoœæ_CheckBoxClick( Sender: TObject );
+    procedure Radar__Wielkoœæ_ButtonClick( Sender: TObject );
 
     procedure Fotograficzny_Tryb_CheckBoxClick( Sender: TObject );
     procedure Gwiazdy_Migotanie_CheckBoxClick( Sender: TObject );
     procedure Punkt_Naprowadzaj_SpinEditChange( Sender: TObject );
     procedure Punkt_NaprowadzajSpinEditKeyDown( Sender: TObject; var Key: Word; Shift: TShiftState );
+    procedure Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBoxChange( Sender: TObject );
     procedure Statki_Zaprezentuj_ButtonClick( Sender: TObject );
     procedure Statki_Zaprezentuj__Zwolnij_BitBtnClick( Sender: TObject );
     procedure Statki_ZaprezentujKeyDown( Sender: TObject; var Key: Word; Shift: TShiftState );
@@ -1980,6 +2174,8 @@ type
     gra_wspó³czynnik_trudnoœci_g,
     kamera_indeks_amunicji, // Indeks w liœcie amunicji, na którym by³a ustawiona kamera.
     l¹d_nazwa_numer_g, // Numer ostatnio utworzonego obiektu l¹du.
+    page_control_1_szerokoœæ_kopia_g,
+    page_control_1_szerokoœæ_pocz¹tkowa_g,
     pokój_rozmów__ostatnia_wiadomoœci__indeks_ostatni_g, // Indeks poprzednio wys³anej wiadomoœci z tabeli kopii wys³anych wiadomoœci.
     pokój_rozmów__si_polecenia__indeks_ostatni_g, // Indeks poprzednio wybranego polecenia dla SI z tabeli poleceñ.
     pokój_rozmów__szerokoœæ_kopia_g,
@@ -1987,18 +2183,30 @@ type
     pokój_rozmów__zmiana_szerokoœci__wysokoœæ_pocz¹tkowa_g,
     pokój_rozmów__zmiana_szerokoœci__x_pocz¹tkowy_g,
     pokój_rozmów__zmiana_szerokoœci__y_pocz¹tkowy_g,
+    radar_panel__wielkoœæ_procent_okna_g,
     radar__rysowanie__l¹d_czas_milisekundy_g, // Czas potrzebny na narysowanie l¹du na radarze. // Gdy odœwie¿anie l¹du na radarze d³ugo trwa to modyfikuje czêstotliwoœæ odœwie¿ania l¹du na radarze.
-    radar__rysowanie__opóŸnienie_cykli__œlad_g // Co ile cykli odœwie¿ania radaru rysuje œlad.
+    radar__rysowanie__opóŸnienie_cykli__œlad_g, // Co ile cykli odœwie¿ania radaru rysuje œlad.
+    radar__skala_spinedit__value__poprzednia_wartoœæ_g,
+    si__zak³óca_sekundy_g, // 60. // Jak czêsto SI próbuje zak³ócaæ.
+    zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g // 30.
       : integer;
 
     oczekiwanie_na__naprawienie_elementu__czas_sekundy_g, // 30.
     oczekiwanie_na__odnowienie_statku__czas_sekundy_g, // 45.
     punkt_naprowadzaj__na_lotniskowiec__okreœlenie_ostatnie_sekundy_i, // Czas ostatniego aktualizowania wspó³rzêdnych lotniskowca, na którym ma wyl¹dowaæ samolot.
+    radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i, // Czas rozpoczêcia odliczania do ukrycia panelu przycisków radaru.
     si__lot_trwanie_do_l¹dowania__czas_sekundy_g, // 300 (5 minut). // Po jakim czasie lotu si zacznie decydowaæ o l¹dowaniu.
+    si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g, // 30. // Po jakim czasie si ma wyjœæ z trybu odnawiania zasobów (sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów).
     si__uszkodzenia_wykryto__trwanie__czas_sekundy_g, // 60 (1 minuta). // Po jakim czasie od wykrycia uszkodzenia si zignoruje uszkodzenie.
-    si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy_g // 30. // Co jaki czas si mo¿e prze³¹czaæ siê miêdzy trybami walki.
+    si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy_g, // 30. // Co jaki czas si mo¿e prze³¹czaæ siê miêdzy trybami walki.
+    zak³ócanie__czas_do_ponownej_próby_sekundy_g // 15. // Co ile czasu mo¿na ponownie próbowaæ zak³óciæ statek.
       : Int64;
 
+    fale__fala_wysokoœæ_g,
+    fale__obszar_ograniczenie_g,
+    fale__woda_poziom_g,
+    fale__wysokoœæ_bazowa_g,
+    fale__wysokoœæ_bazowa__serwer_g,
     kamera_ustawienie_kopia__ogniskowa_g,
     kamera_radar__y_domyœlne_g
       : single;
@@ -2017,6 +2225,9 @@ type
     radar__rysowanie__l¹d__ostatnie_wywo³anie_g,
     udp_data_czas_sprawdzanie_po³¹czeñ_ostatnie_g // Kiedy ostatnio: serwer - usuwa³ nieaktywne po³¹czenia z listy; klient - przypomina³, ¿e jest po³¹czony z serwerem.
       : TDateTime;
+
+    page_control_1_active_page_kopia_tab_sheet_g : TTabSheet;
+    window_state_kopia_g : TWindowState;
 
     amunicja_wystrzelona_list,
     wieloosobowe_amunicja_wystrzelona_list,
@@ -2096,6 +2307,7 @@ type
     klawisz__celownik_widocznoœæ_mouse_look_active,
     klawisz__dalmierz,
     klawisz__dalmierz_tryb,
+    klawisz__gra_wspó³czynnik_prêdkoœci__x_10,
     klawisz__gra_wspó³czynnik_prêdkoœci__plus,
     klawisz__gra_wspó³czynnik_prêdkoœci__normalna,
     klawisz__gra_wspó³czynnik_prêdkoœci__minus,
@@ -2231,6 +2443,8 @@ type
     procedure Amunicja_Wystrzelona_Zwolnij_Wszystkie();
     procedure Amunicja_Wystrzelona_Efekt_Utwórz( amunicja_f : TAmunicja; const czy_torpeda_efekt_na_wodzie_f : boolean; const czy_wieloosobowa_f : boolean = false );
 
+    function Fala__Wysokoœæ_Na_Zboczu( const absolute_position_f : TVector ) : single;
+
     function Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
     function Odczytaj_Liczbê_Z_Napisu( napis_f : string; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
 
@@ -2297,7 +2511,8 @@ type
     procedure Statek_Przywróæ_Do_Gry( const id_statek_f : integer ); overload;
     procedure Statek_Przywróæ_Do_Gry( const statek_f : TStatek ); overload;
 
-    procedure Statki_Rozstaw( const statek_f : TStatek );
+    procedure Statki__Punkty_¯ycia_WskaŸnik__Efekty_Tryb_Ustaw();
+    procedure Statki__Rozstaw( const statek_f : TStatek );
 
     procedure Lotniskowiec__Samoloty_Wszystkie__Punkty_¯ycia_Zero( const statek_lotniskowiec_f, statek_niszcz¹cy_f : TStatek; const rodzaj_f : smallint = -1 );
 
@@ -2356,24 +2571,31 @@ type
     function Identyfikator_Z_Listy_Sortowania_Wy³uskaj( napis_f : string ) : integer;
     procedure Log_Wypisz( const napis_f : string; const prze³¹cz_zak³adkê_f : boolean = true );
 
-    procedure Pokój_Rozmów__Wyœlij_Wiadomoœæ( const pokój_rozmów_r_f : TPokój_Rozmów_r );
+    procedure Pe³ny_Ekran__Znikaj¹ce_Elementy_Widocznoœæ_Ustaw();
+
+    procedure Pokój_Rozmów__Wyœlij_Wiadomoœæ( const pokój_rozmów_r_f : TPokój_Rozmów_r; const dopuszczaj_wys³anie_wiadomoœci_do_siebie_f : boolean = false );
     procedure Pokój_Rozmów__Wyœwietl_Wiadomoœæ( const pokój_rozmów_r_f : TPokój_Rozmów_r );
 
     procedure Punkt_Naprowadzaj();
     procedure Punkt_Naprowadzaj__Na_Lotniskowiec();
 
+    function Punkty_¯ycia_WskaŸnik__Material_Options_Ustal() : TMaterialOptions;
+
     procedure Radar__Odœwie¿();
     function Radar__Koryguj_Wielkoœæ_Obiektów() : real;
     procedure Radar__L¹d_Rysuj();
     procedure Radar__Statki_Rysuj();
-    procedure Radar__Statki_Znane();
+    procedure Radar__Statki__L¹dy_Znane();
     procedure Radar__Wyczyœæ( const radar_czyszczenie_zakres_f : TRadar_Czyszczenie_Zakres = rcz_Statki );
+    procedure Radar_Panel_Ukrywanie();
 
     procedure xNx__Radio_Statki_W_Zasiêgu();
 
+    function Sekundy_W__Minuty_Sekundy( sekundy_f : integer ) : string;
+
     procedure SI_Decyduj(); //16.Gru.2021.
 
-    function SI__Polecenie_Interpretuj( const pokój_rozmów_r_f : TPokój_Rozmów_r ) : boolean;
+    function SI__Polecenie__Zak³ócenia_Interpretuj( const pokój_rozmów_r_f : TPokój_Rozmów_r ) : boolean;
     procedure SI__Statek_Gracza__Sterowanie_Ustaw( const statek_f : TStatek; const si__statek_gracza__p³ywa_poprzednia_wartoœæ_f : boolean; const si__statek_gracza__strzela_poprzednia_wartoœæ_f : TSi__Statek_Gracza__Strzela );
     procedure SI__Samolot_Gracza__L¹duj_Na_Lotniskowcu_Gracza( const id_gracz_f : integer; const peer_port__nadawca_f : integer = -1 );
 
@@ -2381,6 +2603,8 @@ type
     procedure SOS__Przygotuj( const id_statek_f : integer );
 
     procedure Trafienie_Nazwa_Wyœwietl( statek__trafiony_f, statek__strzelaj¹cy_f : TStatek; const obra¿enia_f : real; const czy_amunicja_zneutralizowana_f : boolean = false );
+
+    function WaterPhase( const px_f, py_f : single ) : single;
 
     procedure Komunikacja_Rekord_Testowy_Obs³uga( const tylko_wyœwietl_f : boolean = true );
   public
@@ -2458,6 +2682,7 @@ const
   pokój_rozmów__si_polecenie__sia_Patrol_c : string = 'Patrol';
   pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Mnie_c : string = 'P³yñ do mnie'; // Ustawi punkt docelowy za statkiem.
   pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu_c : string = 'P³yñ do punktu';
+  pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów : string = 'P³yñ odnowiæ zasoby';
   pokój_rozmów__si_polecenie__sia_Postój_c : string = 'Postój';
   pokój_rozmów__si_polecenie__sia_Samolot__L¹dowanie_c : string = 'L¹dowanie';
   pokój_rozmów__si_polecenie__sia_Samolot__Startowanie_c : string = 'Startowanie';
@@ -2471,12 +2696,7 @@ const
   punkt_naprowadzaj__na_lotniskowiec__okreœlenie_sekundy_c : integer = 15; // Jak czêsto aktualizuje wspó³rzêdne lotniskowca, na którym ma wyl¹dowaæ samolot.
   punkty_¿ycia__w_zanurzeniu_przeliczaj__przeliczanie_ponowne_czas_sekundy_c : Int64 = 6; // Sekundy. // Co ile czasu przeliczaæ stratê punktów ¿ycia ze wzglêdu na zanurzenie.
 
-  radar__celownik_c = 5;
-  radar__l¹d_c = 2;
-  radar__statki_c = 4;
-  radar__statki_kierunek_c = 3;
-  radar__statki_œlady_c = 1;
-  radar__statek_margines_c = 0;
+  radar__przyciski_panel__ukrywanie__oczekiwanie_sekundy_c : integer = 3; // Po jakim czasie zostanie ukryty panel przycisków radaru.
 
   samolot_prêdkoœæ_lotu_procent_minimalny_c : real = 25; // Je¿eli samolot leci wolniej to zaczyna spadaæ.
   samolot_prêdkoœæ_lotu_procent_minimalny_tolerancja_c : real = 5; // +5% tolerancji aby móg³ wystartowaæ i wyl¹dowaæ bez obra¿eñ.
@@ -2501,6 +2721,7 @@ const
   si_pokój_rozmów__polecenie_symbol__statek_nadawca_c : string = ' [statek nadawca]'; // Oznacza, ¿e polecenie dotyczy statku nadawcy (gdy gracz ma statek i samolot).
   si_pokój_rozmów__polecenie_symbol__separator_identyfikatora_c : string = ':'; // Po tym symbolu mo¿e wyst¹piæ identyfikator gracza podany jako id_gracz b¹dŸ nazwa gracza.
   si_pokój_rozmów__znacznik_symbol__si_zagaduje_c : string = '[__si_zagaduje__]'; // Je¿eli pojawi siê w treœci wiadomoœci oznacza, ¿e wiadomoœæ jest wys³ana w kontekœcie 'SI zagaduje'.
+  si_pokój_rozmów__znacznik_symbol__si_zak³óca_c : string = '[__si_zak³óca__]'; // Je¿eli pojawi siê w treœci wiadomoœci oznacza, ¿e wiadomoœæ jest wys³ana w kontekœcie 'SI zak³óca'.
   si_pokój_rozmów__znacznik_symbol__trafienie_informacja_c : string = '[__trafienie_informacja__]';// Je¿eli pojawi siê w treœci wiadomoœci oznacza, ¿e wiadomoœæ jest wys³ana w kontekœcie informacji o trafieniach.
   si_pokój_rozmów__znacznik_symbol__wys³a³_polecenie_c : string = '[__wys³a³_polecenie__]'; // Je¿eli pojawi siê w treœci wiadomoœci oznacza, ¿e wiadomoœæ jest wys³ana w kontekœcie poinformowania, ¿e ktoœ wysy³a polecenia dla SI.
 
@@ -2517,13 +2738,13 @@ const
 
   wieloosobowe__komenda__gra__rozpocznij_c = '__Gra_Rozpocznij__';
   wieloosobowe__komenda__gra__zakoñcz_c = '__Gra_Zakoñcz__';
-  wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c = '__Gra_L¹dowanie_U³atwione__';
   wieloosobowe__komenda__gra__mg³a_c = '__Gra_Mg³a__';
   wieloosobowe__komenda__gra__morze_wzburzenie_c = '__Gra_Morze_Wzburzenie__';
   wieloosobowe__komenda__gra__noc_c = '__Gra_Noc__';
   wieloosobowe__komenda__gra__statystyki_wyœlij_c = '__Gra_Statystyki_Wyœlij__';
   wieloosobowe__komenda__gra__wspó³czynnik_prêdkoœci_c = '__Gra_Wspó³czynnik_Prêdkoœci__';
   wieloosobowe__komenda__gra__wspó³czynnik_trudnoœci_c = '__Gra_Wspó³czynnik_Trudnoœci__';
+  wieloosobowe__komenda__gra__wspó³czynniki_inne_c = '__Gra_Wspó³czynniki_Inne__';
 
   wieloosobowe__komenda__gracz_gotowoœæ_c = '__Gracz_Gotowoœæ__';
   wieloosobowe__komenda__gracz_lista_odœwie¿_c = '__Gracz_Lista_Odœwie¿__';
@@ -2536,6 +2757,12 @@ const
 
   wieloosobowe__komenda__informacja_dodatkowa_dodaj_c = '__Informacja_Dodatkowa_Dodaj__'; // Wysy³anie graczom informacji z serwera.
 
+  wieloosobowe__komenda__odbierz__gracz__nazwa_c = '__Gracz__Nazwa__';
+    // Klient:
+    //   gdy wys³ana wartoœæ jest pusta zwraca siê o nazwy wszystkich graczy;
+    //   wartoœæ niepusta jest równa id_statek, o którego nazwê zwraca siê klient.
+    // Serwer:
+    //   wysy³a wartoœæ w postaci 'id_statek;nazwa gracza'.
   wieloosobowe__komenda__odbierz__l¹d__definicja_c = '__L¹d_Definicja__';
   wieloosobowe__komenda__odbierz__l¹d__trafienie_c = '__L¹d_Trafienie__';
     wieloosobowe__l¹d__trafienie_usuñ_c = '__-usuñ__';
@@ -2544,6 +2771,7 @@ const
   wieloosobowe__komenda__odbierz__rekord_efekt_c = '__Rekord_Efekt__';
   wieloosobowe__komenda__odbierz__rekord_pokój_rozmów_r_c = '__Rekord_Pokój_Rozmów__';
   wieloosobowe__komenda__odbierz__rekord_statki_c = '__Rekord_Statki__';
+  wieloosobowe__komenda__odbierz__statek__czas_do_zatoniêcia_c = '__Statek__Czas_Do_Zatoniêcia__';
   wieloosobowe__komenda__odbierz__statki_definicje_c = '__Statki_Definicje__';
 
   wieloosobowe__komenda__pauza_c = '__Pauza__';
@@ -2618,7 +2846,7 @@ uses
 
 {$region 'TStatek.'}
 //Konstruktor klasy TStatek.
-constructor TStatek.Create( AOwner : TGLBaseSceneObject; gl_collision_mmanager_f : TGLCollisionManager; efekt__element_uszkodzenie_gl_thor_fx_manager_f : TGLThorFXManager; const id_gracz_f, id_statek_f : integer; const wygl¹d_definicja_f : string; const prymitywy_lista_f : TSchematy_Lista_r_t );
+constructor TStatek.Create( AOwner : TGLBaseSceneObject; gl_collision_mmanager_f : TGLCollisionManager; efekt__element_uszkodzenie_gl_thor_fx_manager_f : TGLThorFXManager; const id_gracz_f, id_statek_f : integer; const wygl¹d_definicja_f : string; const prymitywy_lista_f : TSchematy_Lista_r_t; const punkty_¿ycia_wskaŸnik__material_options_f : GLMaterial.TMaterialOptions );
 var
   x_prymityw_najmniejsze_l,
   x_prymityw_najwiêksze_l,
@@ -3057,21 +3285,33 @@ var
                   begin
 
                     if zt_gl_custom_scene_object <> Self.lotniskowiec__³apacz_samolotów_dummy then
+
                       if   ( zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = 'obiekt' )
                         or ( zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = wygl¹d_prymityw_c ) then
                         Self.wygl¹d_elementy_list.Add( zt_gl_custom_scene_object );
 
 
                     if zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = wygl¹d_prymityw_c then
-                      for j := 0 to Length( prymitywy_lista_f ) - 1 do
-                        if prymitywy_lista_f[ j ].plik_nazwa__sl = VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) then
-                          begin
+                      begin
 
-                            Wygl¹d_Elementy_Utwórz( j, TGLDummyCube(zt_gl_custom_scene_object) );
-                            Break;
+                        jj := 0; // Tutaj tymczasowo jako sprawdzenie czy istnieje definicja prymitywu.
 
-                          end;
-                        //---//if prymitywy_lista_f[ j ].plik_nazwa__sl = VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) then
+                        for j := 0 to Length( prymitywy_lista_f ) - 1 do
+                          if prymitywy_lista_f[ j ].plik_nazwa__sl = VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) then
+                            begin
+
+                              jj:= 1;
+                              Wygl¹d_Elementy_Utwórz( j, TGLDummyCube(zt_gl_custom_scene_object) );
+                              Break;
+
+                            end;
+                          //---//if prymitywy_lista_f[ j ].plik_nazwa__sl = VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) then
+
+                        if jj <> 1 then
+                          Statki_Form.Log_Wypisz(  'Nie odnaleziono definicji prymitywu ''' + VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) + '''.'  );
+
+                      end;
+                    //---//if zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = wygl¹d_prymityw_c then
 
 
                     kolor_losowy__do := -1;
@@ -4099,6 +4339,7 @@ var
 
 
   <liczba_definicja nazwa="liczba nazwa abc">123,456</liczba_definicja>
+  <!-- <amunicja_iloœæ nazwa="liczba nazwa abc"/> -->
 
 
   <falowanie_bok_skrêt_zakres>123,456</falowanie_bok_skrêt_zakres>
@@ -4569,8 +4810,8 @@ begin//Konstruktor klasy TStatek.
 
   inherited Create( AOwner );
 
-  //Self.ShowAxes := true; //???
-  //Self.VisibleAtRunTime := true; //???
+  //Self.ShowAxes := true;
+  //Self.VisibleAtRunTime := true;
 
   Self.id_gracz := id_gracz_f;
   Self.id_grupa := 0;
@@ -4584,6 +4825,7 @@ begin//Konstruktor klasy TStatek.
   Self.cel_wspó³rzêdne_bezwzglêdne_affine_vektor := GLVectorGeometry.AffineVectorMake( 0, 5, -15 );
 
   Self.amunicja_zanurzenie_g³êbokoœæ_zadana := -0.3;
+  //Self.celowanie_precyzja__falowanie_niwelowanie := 2;
   Self.celowanie_precyzja__obrót := 0;
   Self.celowanie_precyzja__podniesienie := 0;
 
@@ -4621,6 +4863,8 @@ begin//Konstruktor klasy TStatek.
   Self.punkty_¿ycia_maksymalne := 10;
   Self.punkty_¿ycia_aktualne := Self.punkty_¿ycia_maksymalne;
   Self.punkty_¿ycia_procent_zosta³o := 100;
+  Self.punkty_¿ycia_wskaŸnik__zanurzenie_peryskopowe__przekroczone__przeliczenie_poprzednie := not Self.Zanurzenie_Peryskopowe__Przekroczone(); // Aby siê przeliczy³o pierwszy raz.
+  Self.punkty_¿ycia__w_zanurzeniu_przeliczaj__czas_przeliczenia_ostatniego_sekundy_i := Czas_Teraz_W_Sekundach();
 
   Self.prêdkoœæ_aktualna := 0;
   Self.prêdkoœæ_maksymalna := 2;
@@ -4653,6 +4897,8 @@ begin//Konstruktor klasy TStatek.
   Self.œwiat³a_dodatkowe_w³¹czone := false;
 
   Self.schemat_samolot_zmiana_czas_sekundy_i := 0;
+  Self.statek__utworzenie_czas_i := Czas_Teraz_W_Sekundach();
+  Self.statek__czas_do_zatoniêcia_s := '';
   Self.toniêcie__czas_sekundy_i := 0;
   Self.toniêcie__obrót__lewo_prawo := 0;
   Self.toniêcie__obrót__przód_ty³ := 0;
@@ -4693,7 +4939,9 @@ begin//Konstruktor klasy TStatek.
   Self.czy_samolot__na_lotniskowcu := false;
   Self.zanurzenie_zadane_przekraczaj_100_procent := false;
 
+  Self.radar_id_l¹dy_w_zasiêgu := '-99, -99';
   Self.radar_id_statki_w_zasiêgu := '-99, -99';
+  Self.radio_id_l¹dy_w_zasiêgu := '-99, -99';
   Self.radio_id_statki_w_zasiêgu := '-99, -99';
   Self.radio_³¹cznoœæ_id_statki_w_zasiêgu := '-99, -99';
   Self.sonar_id_statki_w_zasiêgu := '-99, -99';
@@ -4709,6 +4957,7 @@ begin//Konstruktor klasy TStatek.
   Self.broñ_indeks_zmieniaj := true;
   Self.celowanie__bronie_osobno := true;
   Self.celownicze_linie_unoœ := true;
+  Self.celownik_linia_bez_falowania__pozycja_y_dostosuj__kamera_pod_wod¹ := false;
   Self.obrót_k¹t_zablokowany_wskaŸnik_widoczne := true;
   Self.obrót_k¹t_zablokowany_strza³_wskaŸnik_widoczne := true;
   Self.obracaj_dzia³a := true;
@@ -4719,7 +4968,6 @@ begin//Konstruktor klasy TStatek.
 
   Self.celowanie__tryb := ct_Punkt; // Namierzanie zbie¿ne do punktu celowania.
 
-  Self.punkty_¿ycia__w_zanurzeniu_przeliczaj__czas_przeliczenia_ostatniego_sekundy_i := Czas_Teraz_W_Sekundach();
   Self.sos__czas_utworzenia_ostatniego_sekundy_i := Czas_Teraz_W_Sekundach();
   Self.œlad_torowy__czas_utworzenia_ostatniego_milisekundy_i := Czas_Teraz_W_Milisekundach() - œlad_torowy__dodanie_kolejnego__czas_milisekundy_c;
   Self.uszkodzone_czas_sekundy_i__radar := 0;
@@ -4728,6 +4976,7 @@ begin//Konstruktor klasy TStatek.
   Self.uszkodzone_czas_sekundy_i__ster := 0;
   Self.uszkodzone_czas_sekundy_i__ster_g³êbokoœci := 0;
   Self.uszkodzone_czas_sekundy_i__œruba := 0;
+  Self.zak³ócanie__czas_próba_ostatnia_sekundy_i := Czas_Teraz_W_Sekundach();
 
   MakeVector( Self.œlad_torowy__pozycja_ostatniego, 0, 0, 0 );
 
@@ -4739,28 +4988,29 @@ begin//Konstruktor klasy TStatek.
   Self.kamera_za_statkiem_pozycja.Y := 5;
   Self.kamera_za_statkiem_pozycja.Z := 0;
 
+  Self.punkty_¿ycia_wskaŸnik__efekty_tryb := p¿wet_Podlega_Efektom_Sceny;
   Self.statki_rozstawianie_status := srs_Brak;
 
   Self.Parent := AOwner; //Gra_Obiekty_GLDummyCube
   //Self.MoveUp(); //???
   //Self.TurnAngle := 90;
   Self.Direction.SetVector( 0, 0, -1 );
-  //Self.VisibleAtRunTime := true; //???
-  //Self.ShowAxes := true; //???
+  //Self.VisibleAtRunTime := true;
+  //Self.ShowAxes := true;
 
 
   Self.toniêcie_dummy := TGLDummyCube.Create( Self );
   Self.toniêcie_dummy.Parent := Self;
   Self.toniêcie_dummy.EdgeColor.Color := GLColor.clrBlack;
-  //Self.toniêcie_dummy.ShowAxes := true; //???
-  //Self.toniêcie_dummy.VisibleAtRunTime := true; //???
+  //Self.toniêcie_dummy.ShowAxes := true;
+  //Self.toniêcie_dummy.VisibleAtRunTime := true;
 
 
   Self.falowanie_dummy := TGLDummyCube.Create( Self );
   Self.falowanie_dummy.Parent := Self.toniêcie_dummy; //Self
   Self.falowanie_dummy.EdgeColor.Color := GLColor.clrBlue;
-  //Self.falowanie_dummy.ShowAxes := true; //???
-  //Self.falowanie_dummy.VisibleAtRunTime := true; //???
+  //Self.falowanie_dummy.ShowAxes := true;
+  //Self.falowanie_dummy.VisibleAtRunTime := true;
 
 
   //zt_gl_base_scene_object := Self;
@@ -4772,7 +5022,7 @@ begin//Konstruktor klasy TStatek.
   Self.efekt__element_uszkodzenie_dummy_st := TGLDummyCube.Create( Self );
   Self.efekt__element_uszkodzenie_dummy_st.Parent := zt_gl_base_scene_object;
   Self.efekt__element_uszkodzenie_dummy_st.Visible := false;
-  //Self.efekt__element_uszkodzenie_dummy_st.VisibleAtRunTime := true; //???
+  //Self.efekt__element_uszkodzenie_dummy_st.VisibleAtRunTime := true;
 
   Self.punkty_¿ycia_dummy := TGLDummyCube.Create( Self );
   Self.punkty_¿ycia_dummy.Parent := Self;
@@ -4790,10 +5040,13 @@ begin//Konstruktor klasy TStatek.
   Self.punkty_¿ycia__wskaŸnik.BottomRadius := 0.3;
   Self.punkty_¿ycia__wskaŸnik.TopRadius := Self.punkty_¿ycia__wskaŸnik.BottomRadius;
   Self.punkty_¿ycia__wskaŸnik.Height := 10;
-  Self.punkty_¿ycia__wskaŸnik.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
+  //Self.punkty_¿ycia__wskaŸnik.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
+  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
   Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLColor.clrGreen;
+  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
   Self.punkty_¿ycia__wskaŸnik.TagFloat := Self.punkty_¿ycia__wskaŸnik.Height; // Wielkoœæ z pe³nym ¿yciem.
   Self.punkty_¿ycia__wskaŸnik.Scale.Z := 0.075; // 0.075 0.3
+  Self.punkty_¿ycia__wskaŸnik__kolor := Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color;
 
   Self.punkty_¿ycia__ramka := TGLCube.Create( Self );
   Self.punkty_¿ycia__ramka.Parent := Self.punkty_¿ycia_podniesienie; // punkty_¿ycia_dummy
@@ -4801,7 +5054,7 @@ begin//Konstruktor klasy TStatek.
   Self.punkty_¿ycia__ramka.CubeHeight := Self.punkty_¿ycia__wskaŸnik.TopRadius * 2 + Self.punkty_¿ycia__wskaŸnik.TopRadius * 0.4; // Wysokoœæ. Promieñ * 2 + œrednica + 2 * 10% z ka¿dej strony (promieñ * 40%).
   Self.punkty_¿ycia__ramka.CubeWidth := Self.punkty_¿ycia__wskaŸnik.Height + Self.punkty_¿ycia__wskaŸnik.TopRadius * 2 * 0.4; // Szerokoœæ. Taki sam margines jak wy¿ej.
   Self.punkty_¿ycia__ramka.CubeDepth := 0.01; // Gruboœæ. // 0.01 0.03
-  Self.punkty_¿ycia__ramka.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
+  //Self.punkty_¿ycia__ramka.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
   Self.punkty_¿ycia__ramka.Material.FrontProperties.Diffuse.Color := GLColor.clrBlack;
 
   Self.punkty_¿ycia__napis := TGLSpaceText.Create( Self );
@@ -4813,7 +5066,7 @@ begin//Konstruktor klasy TStatek.
   Self.punkty_¿ycia__napis.Position.Z := -Self.punkty_¿ycia__ramka.CubeDepth * 2.5;
   //Self.punkty_¿ycia__napis.Scale.Scale( 0.25 );
   Self.punkty_¿ycia__napis.TextHeight := 0.4;
-  Self.punkty_¿ycia__napis.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
+  //Self.punkty_¿ycia__napis.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
   Self.punkty_¿ycia__napis.Text := 'p¿';
 
   Self.gracz__nazwa := TGLSpaceText.Create( Self );
@@ -4824,7 +5077,7 @@ begin//Konstruktor klasy TStatek.
   Self.gracz__nazwa.Position.Y := -Self.punkty_¿ycia__ramka.CubeHeight * 0.2 + Self.punkty_¿ycia__ramka.CubeHeight;
   Self.gracz__nazwa.Position.Z := -Self.punkty_¿ycia__ramka.CubeDepth * 2;
   Self.gracz__nazwa.TextHeight := 0.4;
-  Self.gracz__nazwa.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
+  //Self.gracz__nazwa.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
   Self.gracz__nazwa.Text := 'gn';
   Self.gracz__nazwa.Font.Style := [ fsBold ];
   //Self.gracz__nazwa.Extrusion := Self.gracz__nazwa.TextHeight;
@@ -4846,8 +5099,8 @@ begin//Konstruktor klasy TStatek.
   if Trim( wygl¹d_definicja_f ) <> '' then
     begin
 
-      Self.kad³ub := nil;
-      Self.dziób := nil;
+      Self.kad³ub__brak_definicji := nil;
+      Self.dziób__brak_definicji := nil;
 
       SetLength( Self.artyleria_t, 0 ); // Iloœæ artylerii.
       SetLength( Self.bomba_g³êbinowa_t, 0 ); // Iloœæ wyrzutni bomb g³êbinowych.
@@ -4927,19 +5180,19 @@ begin//Konstruktor klasy TStatek.
     begin
 
       {$region 'Je¿eli nie podano definicji wygl¹du statku utworzy domyœlny wygl¹d.'}
-      Self.kad³ub := TGLCube.Create( zt_gl_base_scene_object );
-      Self.kad³ub.Parent := zt_gl_base_scene_object;
-      Self.kad³ub.CubeHeight := 1;
-      Self.kad³ub.CubeWidth := 3;
-      Self.kad³ub.CubeDepth := 2;
-      Self.kad³ub.TurnAngle := 90;
+      Self.kad³ub__brak_definicji := Wyglad_Elementy.TSt_GLCube.Create( zt_gl_base_scene_object );
+      Self.kad³ub__brak_definicji.Parent := zt_gl_base_scene_object;
+      Self.kad³ub__brak_definicji.CubeHeight := 1;
+      Self.kad³ub__brak_definicji.CubeWidth := 3;
+      Self.kad³ub__brak_definicji.CubeDepth := 2;
+      Self.kad³ub__brak_definicji.TurnAngle := 90;
 
 
-      Self.dziób := TGLCube.Create( zt_gl_base_scene_object );
-      Self.dziób.Parent := zt_gl_base_scene_object;
-      Self.dziób.TurnAngle := 45;
-      Self.dziób.Position.Z := 1.5;
-      Self.dziób.Tag := 1; // Oznacza, ¿e jest to dziób (czêœæ taranuj¹ca - wzmocniona).
+      Self.dziób__brak_definicji := Wyglad_Elementy.TSt_GLCube.Create( zt_gl_base_scene_object );
+      Self.dziób__brak_definicji.Parent := zt_gl_base_scene_object;
+      Self.dziób__brak_definicji.TurnAngle := 45;
+      Self.dziób__brak_definicji.Position.Z := 1.5;
+      Self.dziób__brak_definicji.dziób := true; // Oznacza, ¿e jest to dziób (czêœæ taranuj¹ca - wzmocniona).
 
 
       SetLength( Self.artyleria_t, 1 ); // Iloœæ artylerii.
@@ -4968,7 +5221,7 @@ begin//Konstruktor klasy TStatek.
 
           Self.dzia³a_t[ i ] := TDzia³o.Create( zt_gl_base_scene_object, Self, gl_collision_mmanager_f, efekt__element_uszkodzenie_gl_thor_fx_manager_f, 3, 0 );
           //Self.dzia³a_t[ i ].indeks_w_tabeli := i;
-          Self.dzia³a_t[ i ].Position.SetPoint( 0, 1.25, 0.75 ); // 0, 1, 0 //???
+          Self.dzia³a_t[ i ].Position.SetPoint( 0, 1.25, 0.75 ); // 0, 1, 0
           Self.dzia³a_t[ i ].obrót_k¹t_zadany := 0; // Plus - lewo.
           Self.dzia³a_t[ i ].skala__broñ := 0.5;
           Self.dzia³a_t[ i ].Dodatkowe_Elementy_Ustaw();
@@ -4987,7 +5240,7 @@ begin//Konstruktor klasy TStatek.
 
           Self.torpedy_wyrzutnie_t[ i ] := TTorpedy_Wyrzutnia.Create( zt_gl_base_scene_object, Self, gl_collision_mmanager_f, efekt__element_uszkodzenie_gl_thor_fx_manager_f, 3 );
           //Self.torpedy_wyrzutnie_t[ i ].indeks_w_tabeli := i;
-          Self.torpedy_wyrzutnie_t[ i ].Position.SetPoint( 0, 0.5, -1 ); // 0, 1, 0 //???
+          Self.torpedy_wyrzutnie_t[ i ].Position.SetPoint( 0, 0.5, -1 ); // 0, 1, 0
           Self.torpedy_wyrzutnie_t[ i ].obrót_k¹t_zadany := 180; // Plus - lewo.
           Self.torpedy_wyrzutnie_t[ i ].skala__broñ := 1;
 
@@ -4995,7 +5248,7 @@ begin//Konstruktor klasy TStatek.
             Self.torpedy_wyrzutnie_t[ i ].czy_indeks_do_strza³u := true;
 
 
-          if i = 0 then //???
+          if i = 0 then
             begin
 
               SetLength( Self.torpedy_wyrzutnie_t[ i ].obrót_k¹t_zablokowany_strza³_do, 2 );
@@ -5016,7 +5269,7 @@ begin//Konstruktor klasy TStatek.
 
           Self.torpedy_wyrzutnie_t[ i ].Dodatkowe_Elementy_Ustaw();
 
-          //Self.torpedy_wyrzutnie_t[ i ].obrót_szybkoœæ := 1; //???
+          //Self.torpedy_wyrzutnie_t[ i ].obrót_szybkoœæ := 1;
 
         end;
       //---//for i := 0 to Length( Self.torpedy_wyrzutnie_t ) - 1 do
@@ -5029,7 +5282,7 @@ begin//Konstruktor klasy TStatek.
 
           Self.bomba_g³êbinowa_t[ i ] := TTorpedy_Wyrzutnia.Create( zt_gl_base_scene_object, Self, gl_collision_mmanager_f, efekt__element_uszkodzenie_gl_thor_fx_manager_f, 1, Typy_Wspolne.ar_Bomba_G³êbinowa );
           //Self.bomba_g³êbinowa_t[ i ].indeks_w_tabeli := i;
-          Self.bomba_g³êbinowa_t[ i ].Position.SetPoint( -1, 1.5, -1 ); // 0, 1, 0 //???
+          Self.bomba_g³êbinowa_t[ i ].Position.SetPoint( -1, 1.5, -1 ); // 0, 1, 0
           Self.bomba_g³êbinowa_t[ i ].obrót_k¹t_zadany := -90; // Plus - lewo.
           Self.bomba_g³êbinowa_t[ i ].skala__broñ := 1;
 
@@ -5037,7 +5290,7 @@ begin//Konstruktor klasy TStatek.
             Self.bomba_g³êbinowa_t[ i ].czy_indeks_do_strza³u := true;
 
 
-          if i = 1 then //???
+          if i = 1 then
             begin
 
               // Lewa.
@@ -5050,7 +5303,7 @@ begin//Konstruktor klasy TStatek.
 
           Self.bomba_g³êbinowa_t[ i ].Dodatkowe_Elementy_Ustaw();
 
-          //Self.bomba_g³êbinowa_t[ i ].obrót_szybkoœæ := 1; //???
+          //Self.bomba_g³êbinowa_t[ i ].obrót_szybkoœæ := 1;
 
         end;
       //---//for i := 0 to Length( Self.bomba_g³êbinowa_t ) - 1 do
@@ -5063,7 +5316,7 @@ begin//Konstruktor klasy TStatek.
 
           Self.je¿e_g³êbinowe_t[ i ] := TTorpedy_Wyrzutnia.Create( zt_gl_base_scene_object, Self, gl_collision_mmanager_f, efekt__element_uszkodzenie_gl_thor_fx_manager_f, 10, Typy_Wspolne.ar_Je¿e_G³êbinowe );
           //Self.je¿e_g³êbinowe_t[ i ].indeks_w_tabeli := i;
-          Self.je¿e_g³êbinowe_t[ i ].Position.SetPoint( -1, 1.5, 1 ); // 0, 1, 0 //???
+          Self.je¿e_g³êbinowe_t[ i ].Position.SetPoint( -1, 1.5, 1 ); // 0, 1, 0
           Self.je¿e_g³êbinowe_t[ i ].obrót_k¹t_zadany := -45; // Plus - lewo.
           Self.je¿e_g³êbinowe_t[ i ].skala__broñ := 1;
 
@@ -5071,7 +5324,7 @@ begin//Konstruktor klasy TStatek.
             Self.je¿e_g³êbinowe_t[ i ].czy_indeks_do_strza³u := true;
 
 
-          if i = 1 then //???
+          if i = 1 then
             begin
 
               // Lewa.
@@ -5084,7 +5337,7 @@ begin//Konstruktor klasy TStatek.
 
           Self.je¿e_g³êbinowe_t[ i ].Dodatkowe_Elementy_Ustaw();
 
-          //Self.je¿e_g³êbinowe_t[ i ].obrót_szybkoœæ := 1; //???
+          //Self.je¿e_g³êbinowe_t[ i ].obrót_szybkoœæ := 1;
 
         end;
       //---//for i := 0 to Length( Self.je¿e_g³êbinowe_t ) - 1 do
@@ -5097,30 +5350,30 @@ begin//Konstruktor klasy TStatek.
 
           Self.œruby_t[ i ] := TŒruba.Create( zt_gl_base_scene_object, Self, i = 1, gl_collision_mmanager_f, efekt__element_uszkodzenie_gl_thor_fx_manager_f );
           Self.œruby_t[ i ].Wirnik_£opat_K¹t_Ustaw();
-          Self.œruby_t[ i ].Position.SetPoint( 0, 0, 0 ); // 0, 1, 0 //???
+          Self.œruby_t[ i ].Position.SetPoint( 0, 0, 0 ); // 0, 1, 0
           //Self.œruby_t[ i ].TurnAngle := 20 * i + 15; // Plus - lewo.
           //Self.œruby_t[ i ].TurnAngle := 90; // Plus - lewo.
-          Self.œruby_t[ i ].Position.Y := -Self.kad³ub.CubeHeight;
-          //Self.œruby_t[ i ].Position.Y := 2; //???
+          Self.œruby_t[ i ].Position.Y := -Self.kad³ub__brak_definicji.CubeHeight;
+          //Self.œruby_t[ i ].Position.Y := 2;
 
-          //???
+
           if i = 0 then
             begin
 
-              Self.œruby_t[ i ].Position.X := Self.kad³ub.CubeDepth * 0.3;
+              Self.œruby_t[ i ].Position.X := Self.kad³ub__brak_definicji.CubeDepth * 0.3;
 
             end
           else//if i = 0 then
           if i = 1 then
             begin
 
-              Self.œruby_t[ i ].Position.X := -Self.kad³ub.CubeDepth * 0.3;
+              Self.œruby_t[ i ].Position.X := -Self.kad³ub__brak_definicji.CubeDepth * 0.3;
 
             end;
           //---//if i = 1 then
 
 
-          //Self.œruby_t[ i ].Position.Z := -4 + 2 * i; //???
+          //Self.œruby_t[ i ].Position.Z := -4 + 2 * i;
 
         end;
       //---//for i := 0 to Length( Self.œruby_t ) - 1 do
@@ -5132,30 +5385,30 @@ begin//Konstruktor klasy TStatek.
         begin
 
           Self.ster_t[ i ] := TSter.Create( zt_gl_base_scene_object, Self.id_statek, gl_collision_mmanager_f, efekt__element_uszkodzenie_gl_thor_fx_manager_f, 0, 0, 0 );
-          Self.ster_t[ i ].Position.SetPoint( 0, 0, 0 ); // 0, 1, 0 //???
-          Self.ster_t[ i ].Position.Z := -Self.kad³ub.CubeWidth * 0.5;
+          Self.ster_t[ i ].Position.SetPoint( 0, 0, 0 ); // 0, 1, 0
+          Self.ster_t[ i ].Position.Z := -Self.kad³ub__brak_definicji.CubeWidth * 0.5;
 
           //Self.ster_t[ i ].Position.Y := -Self.kad³ub.CubeHeight;
-          //Self.ster_t[ i ].Position.Y := 2; //???
+          //Self.ster_t[ i ].Position.Y := 2;
 
-          //???
+
           if i = 0 then
             begin
 
-              Self.ster_t[ i ].Position.X := Self.kad³ub.CubeDepth * 0.3;
+              Self.ster_t[ i ].Position.X := Self.kad³ub__brak_definicji.CubeDepth * 0.3;
 
             end
           else//if i = 0 then
           if i = 1 then
             begin
 
-              Self.ster_t[ i ].Position.X := -Self.kad³ub.CubeDepth * 0.3;
+              Self.ster_t[ i ].Position.X := -Self.kad³ub__brak_definicji.CubeDepth * 0.3;
 
             end;
           //---//if i = 1 then
 
 
-          //Self.ster_t[ i ].Position.Z := -4 + 2 * i; //???
+          //Self.ster_t[ i ].Position.Z := -4 + 2 * i;
 
         end;
       //---//for i := 0 to Length( Self.ster_t ) - 1 do
@@ -5239,6 +5492,8 @@ begin//Konstruktor klasy TStatek.
 
   Self.Si_Wartoœci_Pocz¹tkowe_Ustaw();
 
+  Self.Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw( punkty_¿ycia_wskaŸnik__material_options_f );
+
 
   if    ( Self.czy_lotniskowiec )
     and ( Self.lotniskowiec__³apacz_samolotów_dummy = nil ) then // Element jest wymagany dla lotniskowca.
@@ -5258,8 +5513,8 @@ begin//Konstruktor klasy TStatek.
   if gl_collision_mmanager_f <> nil then
     begin
 
-      if Self.dziób <> nil then
-        with TGLBCollision.Create( Self.dziób.Behaviours ) do
+      if Self.dziób__brak_definicji <> nil then
+        with TGLBCollision.Create( Self.dziób__brak_definicji.Behaviours ) do
           begin
 
             GroupIndex := 0;
@@ -5267,10 +5522,10 @@ begin//Konstruktor klasy TStatek.
             Manager := gl_collision_mmanager_f;
 
           end;
-        //---//with TGLBCollision.Create( Self.dziób.Behaviours ) do
+        //---//with TGLBCollision.Create( Self.dziób__brak_definicji.Behaviours ) do
 
-      if Self.kad³ub <> nil then
-        with TGLBCollision.Create( Self.kad³ub.Behaviours ) do
+      if Self.kad³ub__brak_definicji <> nil then
+        with TGLBCollision.Create( Self.kad³ub__brak_definicji.Behaviours ) do
           begin
 
             GroupIndex := 0;
@@ -5278,7 +5533,7 @@ begin//Konstruktor klasy TStatek.
             Manager := gl_collision_mmanager_f;
 
           end;
-        //---//with TGLBCollision.Create( Self.kad³ub.Behaviours ) do
+        //---//with TGLBCollision.Create( Self.kad³ub__brak_definicji.Behaviours ) do
 
       if Self.lotniskowiec__³apacz_samolotów_dummy <> nil then
         with TGLBCollision.Create( Self.lotniskowiec__³apacz_samolotów_dummy.Behaviours ) do
@@ -5325,8 +5580,8 @@ begin
 
   FreeAndNil( Self.efekt__element_uszkodzenie_dummy_st );
 
-  FreeAndNil( Self.dziób );
-  FreeAndNil( Self.kad³ub );
+  FreeAndNil( Self.dziób__brak_definicji );
+  FreeAndNil( Self.kad³ub__brak_definicji );
 
   FreeAndNil( Self.gracz__nazwa );
   FreeAndNil( Self.punkty_¿ycia__wskaŸnik );
@@ -5668,7 +5923,7 @@ begin
 end;//---//Funkcja Zanurzenie_Zadane_Procent_Zmieñ().
 
 //Funkcja Grawitacja_Opadanie_Zmieñ().
-function TStatek.Grawitacja_Opadanie_Zmieñ( const delta_czasu_f : double ) : real;
+function TStatek.Grawitacja_Opadanie_Zmieñ( const delta_czasu_f : double; const grawitacja_wy³¹czona_f : boolean = false ) : real;
 var
   samolot_prêdkoœæ_korekta : real;
 begin
@@ -5700,7 +5955,7 @@ begin
       if Self.grawitacja_opadanie_obra¿enia_naliczono then
         Self.grawitacja_opadanie_obra¿enia_naliczono := false;
 
-      if not Statki_Form.Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Checked then
+      if not grawitacja_wy³¹czona_f then
         if Self.AbsolutePosition.Y > zanurzanie_precyzja_c then
           Self.grawitacja_opadanie_szybkoœæ_aktualna := Self.grawitacja_opadanie_szybkoœæ_aktualna + 50 * samolot_prêdkoœæ_korekta * delta_czasu_f
         else//if Self.AbsolutePosition.Y > zanurzanie_precyzja_c then
@@ -6723,8 +6978,93 @@ begin//Funkcja Cel_Wspó³rzêdne_Ustaw().
 
 end;//---//Funkcja Cel_Wspó³rzêdne_Ustaw().
 
-//Funkcja Broñ_Indeks_Zmieniaj_Ustaw().
-procedure TStatek.Broñ_Indeks_Zmieniaj_Ustaw();
+//Funkcja Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj().
+procedure TStatek.Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( const kamera_pod_wod¹_f : boolean; const nad_powierzchni¹_wody_utrzymuj_f : boolean = false );
+var
+  i : integer;
+begin
+
+  //
+  // Funkcja dostosowuje wysokoœæ 'wyœwietlania' linii celowniczej 'bez falowania'.
+  //
+  // Parametry:
+  //   kamera_pod_wod¹_f
+  //   nad_powierzchni¹_wody_utrzymuj_f
+  //
+
+  if Self.celownik_linia_bez_falowania__pozycja_y_dostosuj__kamera_pod_wod¹ <> kamera_pod_wod¹_f then
+    Self.celownik_linia_bez_falowania__pozycja_y_dostosuj__kamera_pod_wod¹ := kamera_pod_wod¹_f
+  else//if Self.celownik_linia_bez_falowania__pozycja_y_dostosuj__kamera_pod_wod¹ <> kamera_pod_wod¹_f then
+    if not nad_powierzchni¹_wody_utrzymuj_f then
+      Exit;
+
+
+  for i := 0 to Length( Self.artyleria_t ) - 1 do
+    Self.artyleria_t[ i ].Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( kamera_pod_wod¹_f, nad_powierzchni¹_wody_utrzymuj_f );
+
+  for i := 0 to Length( Self.bomba_g³êbinowa_t ) - 1 do
+    Self.bomba_g³êbinowa_t[ i ].Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( kamera_pod_wod¹_f, nad_powierzchni¹_wody_utrzymuj_f );
+
+  for i := 0 to Length( Self.dzia³a_t ) - 1 do
+    Self.dzia³a_t[ i ].Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( kamera_pod_wod¹_f, nad_powierzchni¹_wody_utrzymuj_f );
+
+  for i := 0 to Length( Self.je¿e_g³êbinowe_t ) - 1 do
+    Self.je¿e_g³êbinowe_t[ i ].Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( kamera_pod_wod¹_f, nad_powierzchni¹_wody_utrzymuj_f );
+
+  for i := 0 to Length( Self.torpedy_wyrzutnie_t ) - 1 do
+    Self.torpedy_wyrzutnie_t[ i ].Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( kamera_pod_wod¹_f, nad_powierzchni¹_wody_utrzymuj_f );
+
+end;//---//Funkcja Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj().
+
+//Funkcja Broñ__Amunicja_Uzupe³nij().
+function TStatek.Broñ__Amunicja_Uzupe³nij( broñ_f : array of TTorpedy_Wyrzutnia; uzupe³nienie_procent_f : real = 10 ) : boolean;
+var
+  i,
+  zti,
+  amunicja_ograniczenie_l
+    : integer;
+begin
+
+  //
+  // Funkcja uzupe³nia amunicjê we wskazanym rodzaju broni o zadany procent iloœci maksymalnej.
+  //
+
+  Result := false;
+
+  if uzupe³nienie_procent_f <= 0 then
+    Exit;
+
+  for i := 0 to Length( broñ_f ) - 1 do
+    begin
+
+      amunicja_ograniczenie_l := broñ_f[ i ].amunicja_iloœæ_pocz¹tkowa - Length( broñ_f[ i ].lufy_t );
+
+      if broñ_f[ i ].amunicja_iloœæ < amunicja_ograniczenie_l then
+        begin
+
+          Result := true;
+
+
+          zti := Floor( broñ_f[ i ].amunicja_iloœæ_pocz¹tkowa * uzupe³nienie_procent_f * 0.01 );
+
+          if zti < 1 then
+            zti := 1;
+
+          broñ_f[ i ].amunicja_iloœæ := broñ_f[ i ].amunicja_iloœæ + zti;
+
+          if broñ_f[ i ].amunicja_iloœæ > amunicja_ograniczenie_l then
+            broñ_f[ i ].amunicja_iloœæ := amunicja_ograniczenie_l;
+
+        end;
+      //---//if broñ_f[ i ].amunicja_iloœæ < amunicja_ograniczenie_l then
+
+    end;
+  //---//for i := 0 to Length( broñ_f ) - 1 do
+
+end;//---//Funkcja Broñ__Amunicja_Uzupe³nij().
+
+//Funkcja Broñ__Indeks_Zmieniaj_Ustaw().
+procedure TStatek.Broñ__Indeks_Zmieniaj_Ustaw();
 begin
 
   //
@@ -6779,12 +7119,12 @@ begin
     and (  Length( Self.torpedy_wyrzutnie_t ) > 0  ) then
     Self.torpedy_wyrzutnia_ostatni_strza³_indeks := Length( Self.torpedy_wyrzutnie_t ) - 1;
 
-end;//---//Funkcja Broñ_Indeks_Zmieniaj_Ustaw().
+end;//---//Funkcja Broñ__Indeks_Zmieniaj_Ustaw().
 
-//Funkcja Broñ_Indeks_Zmieniaj_Ustaw().
-procedure TStatek.Broñ_Indeks_Zmieniaj_Ustaw( const czy_poprzednia_f : boolean );
+//Funkcja Broñ__Indeks_Zmieniaj_Ustaw().
+procedure TStatek.Broñ__Indeks_Zmieniaj_Ustaw( const czy_poprzednia_f : boolean );
 
-  //Funkcja Broñ_Indeks_Ustaw() w Broñ_Indeks_Zmieniaj_Ustaw().
+  //Funkcja Broñ_Indeks_Ustaw() w Broñ__Indeks_Zmieniaj_Ustaw().
   procedure Broñ_Indeks_Ustaw( broñ_t_f : array of TTorpedy_Wyrzutnia; var broñ_ostatni_strza³_indeks_f : integer );
   var
     i,
@@ -6823,14 +7163,14 @@ procedure TStatek.Broñ_Indeks_Zmieniaj_Ustaw( const czy_poprzednia_f : boolean )
     for i := 0 to Length( broñ_t_f ) - 1 do
       broñ_t_f[ i ].czy_indeks_do_strza³u := i = zti;
 
-  end;//Funkcja Broñ_Indeks_Ustaw() w Broñ_Indeks_Zmieniaj_Ustaw().
+  end;//Funkcja Broñ_Indeks_Ustaw() w Broñ__Indeks_Zmieniaj_Ustaw().
 
 //type
 //  TTorpedy_Wyrzutnia_t_l = array of TTorpedy_Wyrzutnia; // Tylko aby wywo³aæ funkcjê.
 
 var
   i : integer;
-begin//Funkcja Broñ_Indeks_Zmieniaj_Ustaw().
+begin//Funkcja Broñ__Indeks_Zmieniaj_Ustaw().
 
   //
   // Funkcja przestawia na kolejn¹ lub poprzedni¹ broñ tego samego rodzaju.
@@ -6917,7 +7257,7 @@ begin//Funkcja Broñ_Indeks_Zmieniaj_Ustaw().
     and (  Length( Self.torpedy_wyrzutnie_t ) > 0  ) then
     Broñ_Indeks_Ustaw( Self.torpedy_wyrzutnie_t, Self.torpedy_wyrzutnia_ostatni_strza³_indeks );
 
-end;//---//Funkcja Broñ_Indeks_Zmieniaj_Ustaw().
+end;//---//Funkcja Broñ__Indeks_Zmieniaj_Ustaw().
 
 //Funkcja Strza³().
 function TStatek.Strza³( const czy_wszystkie_bronie_f, czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; const cel_wspó³rzêdne_f : TAffineVector ) : boolean;
@@ -7119,14 +7459,14 @@ begin//Funkcja Strza³().
   //
   // Parametry:
   //   czy_wszystkie_bronie_f
-  //     true - strza³ wszystkimi broniami wybranego rodzaju.
   //     false - strza³ jedn¹ broni¹ (egzemplarz) wybranego rodzaju.
+  //     true - strza³ wszystkimi broniami wybranego rodzaju.
   //   czy_wszystkie_lufy_f:
-  //     true - strza³ wszystkimi lufami jednej (egzemplarz) broni.
   //     false - strza³ jedn¹ luf¹ jednej (egzemplarz) broni.
+  //     true - strza³ wszystkimi lufami jednej (egzemplarz) broni.
   //   obracaj_dzia³a_f
-  //     true - strzela tylko gdy dzia³o jest wycelowane.
   //     false - je¿eli dzia³a s¹ zablokowane mo¿na strzeliæ mimo nie wycelowania.
+  //     true - strzela tylko gdy dzia³o jest wycelowane.
   //  cel_wspó³rzêdne_f - potrzebne przy tworzeniu amunicji.
   //
 
@@ -7243,7 +7583,7 @@ begin//Funkcja Strza³().
 end;//---//Funkcja Strza³().
 
 //Funkcja Elementy_Gracza_Dostosuj().
-procedure TStatek.Elementy_Gracza_Dostosuj( const id_grupa_gracza_f : integer; const celownik_bombowiec_widoczne_f, lotniskowiec__³apacz_samolotów_widoczne_f, punkty_¿ycia_wskaŸnik_widoczne__gracz_f, punkty_¿ycia_wskaŸnik_widoczne__przeciwnik_f, punkty_¿ycia_wskaŸnik_widoczne__sojusznik_f, obrót_k¹t_zablokowany_wskaŸnik_widoczne_f, obrót_k¹t_zablokowany_strza³_wskaŸnik_widoczne_f : boolean );
+procedure TStatek.Elementy_Gracza_Dostosuj( const id_grupa_gracza_f : integer; const celownik_bombowiec_widoczne_f, kamera_pod_wod¹_f, lotniskowiec__³apacz_samolotów_widoczne_f, punkty_¿ycia_wskaŸnik_widoczne__gracz_f, punkty_¿ycia_wskaŸnik_widoczne__przeciwnik_f, punkty_¿ycia_wskaŸnik_widoczne__sojusznik_f, obrót_k¹t_zablokowany_wskaŸnik_widoczne_f, obrót_k¹t_zablokowany_strza³_wskaŸnik_widoczne_f : boolean );
 var
   i,
   j
@@ -7258,6 +7598,7 @@ begin
   //     -99 - modyfikacje dotycz¹ statku gracza.
   //     ró¿ne od -99 - modyfikacje dotycz¹ statków innych graczy.
   //   celownik_bombowiec_widoczne_f
+  //   kamera_pod_wod¹_f
   //   lotniskowiec__³apacz_samolotów_widoczne_f
   //   punkty_¿ycia_wskaŸnik_widoczne__gracz_f
   //   punkty_¿ycia_wskaŸnik_widoczne__przeciwnik_f
@@ -7265,6 +7606,10 @@ begin
   //   obrót_k¹t_zablokowany_wskaŸnik_widoczne_f
   //   obrót_k¹t_zablokowany_strza³_wskaŸnik_widoczne_f
   //
+
+  Self.celownik_linia_bez_falowania__pozycja_y_dostosuj__kamera_pod_wod¹ := not kamera_pod_wod¹_f; // Aby przeliczyæ linie.
+  Self.Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( kamera_pod_wod¹_f );
+
 
   if id_grupa_gracza_f = -99 then
     begin
@@ -7396,29 +7741,11 @@ end;//---//Funkcja Elementy_Gracza_Dostosuj().
 
 //Funkcja Elementy_Gracza_Widocznoœæ().
 procedure TStatek.Elementy_Gracza_Widocznoœæ( const id_grupa_gracza_f : integer; const widoczne_f : boolean );
-
-  //Funkcja Tag_Widocznoœæ_Wpisz() w Elementy_Gracza_Widocznoœæ().
-  function Tag_Widocznoœæ_Wpisz() : integer;
-  begin
-
-    //
-    // Funkcja zamienia boolean na integer.
-    //
-    // Zwraca integer.
-    //
-
-    if widoczne_f then
-      Result := 1
-    else//if widoczne_f then
-      Result := 0;
-
-  end;//---//Funkcja Tag_Widocznoœæ_Wpisz() w Elementy_Gracza_Widocznoœæ().
-
 var
   i,
   j
     : integer;
-begin//Funkcja Elementy_Gracza_Widocznoœæ().
+begin
 
   //
   // Funkcja ukrywa lub wyœwietla elementy statku, które widzi tylko gracz tego statku.
@@ -7426,15 +7753,22 @@ begin//Funkcja Elementy_Gracza_Widocznoœæ().
   // Parametry:
   //   id_grupa_gracza_f - id grupy, do której nale¿y gracz.
   //   widoczne_f:
-  //     true - elementy s¹ widoczne.
   //     false - elementy nie s¹ widoczne.
+  //     true - elementy s¹ widoczne.
   //
 
   Self.celownicza_linia.Visible := widoczne_f;
 
 
   if Self.id_grupa <> id_grupa_gracza_f then
-    Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLColor.clrRed;
+    begin
+
+      Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLColor.clrRed;
+      Self.punkty_¿ycia__wskaŸnik__kolor := Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color;
+
+    end;
+  //---//if Self.id_grupa <> id_grupa_gracza_f then
+
 
 
   if not widoczne_f then
@@ -7443,7 +7777,7 @@ begin//Funkcja Elementy_Gracza_Widocznoœæ().
 
         Self.artyleria_t[ i ].celownik_linia.Visible := widoczne_f;
         Self.artyleria_t[ i ].celownik_linia_bez_falowania.Visible := Self.artyleria_t[ i ].celownik_linia.Visible;
-        Self.artyleria_t[ i ].celownik_linia.Tag := Tag_Widocznoœæ_Wpisz();
+        Self.artyleria_t[ i ].celownik_linia__widoczne := widoczne_f;
 
         for j := 0 to Length( Self.artyleria_t[ i ].lufy_t ) - 1 do
           Self.artyleria_t[ i ].lufy_t[ j ].prze³adowanie_wskaŸnik.Visible := widoczne_f;
@@ -7458,7 +7792,7 @@ begin//Funkcja Elementy_Gracza_Widocznoœæ().
 
         Self.bomba_g³êbinowa_t[ i ].celownik_linia.Visible := widoczne_f;
         Self.bomba_g³êbinowa_t[ i ].celownik_linia_bez_falowania.Visible := Self.bomba_g³êbinowa_t[ i ].celownik_linia.Visible;
-        Self.bomba_g³êbinowa_t[ i ].celownik_linia.Tag := Tag_Widocznoœæ_Wpisz();
+        Self.bomba_g³êbinowa_t[ i ].celownik_linia__widoczne := widoczne_f;
 
         for j := 0 to Length( Self.bomba_g³êbinowa_t[ i ].lufy_t ) - 1 do
           Self.bomba_g³êbinowa_t[ i ].lufy_t[ j ].prze³adowanie_wskaŸnik.Visible := widoczne_f;
@@ -7473,7 +7807,7 @@ begin//Funkcja Elementy_Gracza_Widocznoœæ().
 
         Self.dzia³a_t[ i ].celownik_linia.Visible := widoczne_f;
         Self.dzia³a_t[ i ].celownik_linia_bez_falowania.Visible := Self.dzia³a_t[ i ].celownik_linia.Visible;
-        Self.dzia³a_t[ i ].celownik_linia.Tag := Tag_Widocznoœæ_Wpisz();
+        Self.dzia³a_t[ i ].celownik_linia__widoczne := widoczne_f;
 
         for j := 0 to Length( Self.dzia³a_t[ i ].lufy_t ) - 1 do
           Self.dzia³a_t[ i ].lufy_t[ j ].prze³adowanie_wskaŸnik.Visible := widoczne_f;
@@ -7488,7 +7822,7 @@ begin//Funkcja Elementy_Gracza_Widocznoœæ().
 
         Self.je¿e_g³êbinowe_t[ i ].celownik_linia.Visible := widoczne_f;
         Self.je¿e_g³êbinowe_t[ i ].celownik_linia_bez_falowania.Visible := Self.je¿e_g³êbinowe_t[ i ].celownik_linia.Visible;
-        Self.je¿e_g³êbinowe_t[ i ].celownik_linia.Tag := Tag_Widocznoœæ_Wpisz();
+        Self.je¿e_g³êbinowe_t[ i ].celownik_linia__widoczne := widoczne_f;
 
         for j := 0 to Length( Self.je¿e_g³êbinowe_t[ i ].lufy_t ) - 1 do
           Self.je¿e_g³êbinowe_t[ i ].lufy_t[ j ].prze³adowanie_wskaŸnik.Visible := widoczne_f;
@@ -7503,7 +7837,7 @@ begin//Funkcja Elementy_Gracza_Widocznoœæ().
 
         Self.torpedy_wyrzutnie_t[ i ].celownik_linia.Visible := widoczne_f;
         Self.torpedy_wyrzutnie_t[ i ].celownik_linia_bez_falowania.Visible := Self.torpedy_wyrzutnie_t[ i ].celownik_linia.Visible;
-        Self.torpedy_wyrzutnie_t[ i ].celownik_linia.Tag := Tag_Widocznoœæ_Wpisz();
+        Self.torpedy_wyrzutnie_t[ i ].celownik_linia__widoczne := widoczne_f;
 
         for j := 0 to Length( Self.torpedy_wyrzutnie_t[ i ].lufy_t ) - 1 do
           Self.torpedy_wyrzutnie_t[ i ].lufy_t[ j ].prze³adowanie_wskaŸnik.Visible := widoczne_f;
@@ -7515,27 +7849,9 @@ end;//---//Funkcja Elementy_Gracza_Widocznoœæ().
 
 //Funkcja Punkty_¯ycia__Zmieñ().
 procedure TStatek.Punkty_¯ycia__Zmieñ( const wartoœæ_f : real );
-type
-  TUszkodzona_Czêœæ_l = ( uc_l_Brak, uc_l_radar, uc_l_radio, uc_l_sonar, uc_l_ster, uc_l_ster_g³êbokoœci, uc_l_œruby );
-
-var
-  uszkodzona_czêœæ_t : array of TUszkodzona_Czêœæ_l;
-
-  //Funkcja Uszkodzona_Czêœæ_Dodaj_Do_Tabeli() w Punkty_¯ycia__Zmieñ().
-  procedure Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uszkodzona_czêœæ_f : TUszkodzona_Czêœæ_l );
-  var
-    zti : integer;
-  begin
-
-    zti := Length( uszkodzona_czêœæ_t );
-    SetLength( uszkodzona_czêœæ_t, zti + 1 );
-    uszkodzona_czêœæ_t[ zti ] := uszkodzona_czêœæ_f;
-
-  end;//---//Funkcja Uszkodzona_Czêœæ_Dodaj_Do_Tabeli() w Punkty_¯ycia__Zmieñ().
-
 var
   prawdopodobieñstwo_uszkodzenia_l : real;
-begin//Funkcja Punkty_¯ycia__Zmieñ().
+begin
 
   //
   // Funkcja modyfikuje wartoœæ punktów ¿ycia.
@@ -7583,7 +7899,7 @@ begin//Funkcja Punkty_¯ycia__Zmieñ().
 
 
   //if    ( prawdopodobieñstwo_uszkodzenia_l > 0 )
-  //  and (  Random( 100 ) + 1 <= prawdopodobieñstwo_uszkodzenia_l  ) then
+  //  and (  Random( 101 ) <= prawdopodobieñstwo_uszkodzenia_l  ) then
   //  case Random( 3 ) of
   //      0 : Self.uszkodzone_czas_sekundy_i__radar := Czas_Teraz_W_Sekundach();
   //      1 : Self.uszkodzone_czas_sekundy_i__radio := Czas_Teraz_W_Sekundach();
@@ -7594,46 +7910,8 @@ begin//Funkcja Punkty_¯ycia__Zmieñ().
   //  //---//case Random( 3 ) of
 
   if    ( prawdopodobieñstwo_uszkodzenia_l > 0 )
-    and (  Random( 100 ) + 1 <= prawdopodobieñstwo_uszkodzenia_l  ) then
-    begin
-
-      if Self.radar_zasiêg > 0 then
-        Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_radar );
-
-      if Self.radio_zasiêg > 0 then
-        Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_radio );
-
-      if Self.sonar_zasiêg > 0 then
-        Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_sonar );
-
-      if Length( Self.ster_t ) > 0 then
-        Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_ster );
-
-      if Length( Self.ster_g³êbokoœci_t ) > 0 then
-        Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_ster_g³êbokoœci );
-
-      if Length( Self.œruby_t ) > 0 then
-        Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_œruby );
-
-
-      case uszkodzona_czêœæ_t[ Random(  Length( uszkodzona_czêœæ_t )  ) ] of
-          uc_l_radar : Self.uszkodzone_czas_sekundy_i__radar := Czas_Teraz_W_Sekundach();
-          uc_l_radio : Self.uszkodzone_czas_sekundy_i__radio := Czas_Teraz_W_Sekundach();
-          uc_l_sonar : Self.uszkodzone_czas_sekundy_i__sonar := Czas_Teraz_W_Sekundach();
-          uc_l_ster : Self.ster_t[ Random(  Length( Self.ster_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
-          uc_l_ster_g³êbokoœci : Self.ster_g³êbokoœci_t[ Random(  Length( Self.ster_g³êbokoœci_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
-          uc_l_œruby : Self.œruby_t[ Random(  Length( Self.œruby_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
-        end;
-      //---//case uszkodzona_czêœæ_t[ Random(  Length( uszkodzona_czêœæ_t )  ) ] of
-
-    end;
-  //---//if    ( prawdopodobieñstwo_uszkodzenia_l > 0 ) (...)
-
-
-  Self.efekt__element_uszkodzenie_dummy_st.Visible :=
-       ( Self.uszkodzone_czas_sekundy_i__radar <> 0 )
-    or ( Self.uszkodzone_czas_sekundy_i__radio <> 0 )
-    or ( Self.uszkodzone_czas_sekundy_i__sonar <> 0 );
+    and (  Random( 101 ) <= prawdopodobieñstwo_uszkodzenia_l  ) then
+    Uszkodzenia_Dodaj();
 
 end;//---//Funkcja Punkty_¯ycia__Zmieñ().
 
@@ -7690,8 +7968,43 @@ begin
 
 end;//---//Funkcja Punkty_¯ycia__W_Zanurzeniu_Przeliczaj().
 
-//Funkcja Punkty_¯ycia__WskaŸnik_Rysuj().
-procedure TStatek.Punkty_¯ycia__WskaŸnik_Rysuj( const gl_camera_f : TGLCamera; const wartoœæ_liczbowa_f : integer );
+//Funkcja Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw().
+procedure TStatek.Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw( const material_options_f : GLMaterial.TMaterialOptions );
+begin
+
+  Self.gracz__nazwa.Material.MaterialOptions := material_options_f;
+  Self.punkty_¿ycia__ramka.Material.MaterialOptions := material_options_f;
+  Self.punkty_¿ycia__napis.Material.MaterialOptions := material_options_f;
+  Self.punkty_¿ycia__wskaŸnik.Material.MaterialOptions := material_options_f;
+
+end;//---//Funkcja Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw().
+
+//Funkcja Punkty_¯ycia__WskaŸnik__Noc_Zmieñ().
+procedure TStatek.Punkty_¯ycia__WskaŸnik__Noc_Zmieñ( dzieñ_jasnoœæ_f : real );
+begin
+
+  if   ( Self.punkty_¿ycia_wskaŸnik__efekty_tryb = p¿wet_Nie_Podlega_Efektom_Sceny )
+    or (
+             ( Self.punkty_¿ycia_wskaŸnik__efekty_tryb = p¿wet_Nie_Podlega_Efektom_Sceny__Tylko_Ponad_Powierzchni¹_Wody )
+         and ( not Self.Zanurzenie_Peryskopowe__Przekroczone() )
+       ) then
+    dzieñ_jasnoœæ_f := 1;
+
+  Self.gracz__nazwa.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( GLColor.clrGray80, dzieñ_jasnoœæ_f );
+  Self.punkty_¿ycia__napis.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( GLColor.clrGray80, dzieñ_jasnoœæ_f );
+  Self.punkty_¿ycia__ramka.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( GLColor.clrBlack, dzieñ_jasnoœæ_f );
+  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( Self.punkty_¿ycia__wskaŸnik__kolor, dzieñ_jasnoœæ_f );
+
+
+  Self.gracz__nazwa.Material.FrontProperties.Diffuse.Alpha := 1;
+  Self.punkty_¿ycia__napis.Material.FrontProperties.Diffuse.Alpha := 1;
+  Self.punkty_¿ycia__ramka.Material.FrontProperties.Diffuse.Alpha := 1;
+  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Alpha := 1;
+
+end;//---//Funkcja Punkty_¯ycia__WskaŸnik__Noc_Zmieñ().
+
+//Funkcja Punkty_¯ycia__WskaŸnik__Rysuj().
+procedure TStatek.Punkty_¯ycia__WskaŸnik__Rysuj( const gl_camera_f : TGLCamera; const wartoœæ_liczbowa_f : integer );
 begin
 
   //
@@ -7712,8 +8025,8 @@ begin
     or (  not Assigned( gl_camera_f )  ) then
     Exit;
 
-  //Self.punkty_¿ycia_dummy.VisibleAtRunTime := true; //???
-  //Self.punkty_¿ycia_podniesienie.VisibleAtRunTime := true; //???
+  //Self.punkty_¿ycia_dummy.VisibleAtRunTime := true;
+  //Self.punkty_¿ycia_podniesienie.VisibleAtRunTime := true;
 
   Self.punkty_¿ycia_dummy.ResetRotations();
 
@@ -7787,7 +8100,114 @@ begin
     end;
   //---//case wartoœæ_liczbowa_f of
 
-end;//---//Funkcja Punkty_¯ycia__WskaŸnik_Rysuj().
+end;//---//Funkcja Punkty_¯ycia__WskaŸnik__Rysuj().
+
+//Funkcja Uszkodzenia_Dodaj().
+procedure TStatek.Uszkodzenia_Dodaj();
+type
+  TUszkodzona_Czêœæ_l = ( uc_l_Brak, uc_l_radar, uc_l_radio, uc_l_sonar, uc_l_ster, uc_l_ster_g³êbokoœci, uc_l_œruby );
+
+var
+  uszkodzona_broñ_t : array of Typy_Wspolne.TAmunicja_Rodzaj;
+  uszkodzona_czêœæ_t : array of TUszkodzona_Czêœæ_l;
+
+  //Funkcja Uszkodzona_Broñ_Dodaj_Do_Tabeli() w Uszkodzenia_Dodaj().
+  procedure Uszkodzona_Broñ_Dodaj_Do_Tabeli( uszkodzona_broñ_f : Typy_Wspolne.TAmunicja_Rodzaj );
+  var
+    zti : integer;
+  begin
+
+    zti := Length( uszkodzona_broñ_t );
+    SetLength( uszkodzona_broñ_t, zti + 1 );
+    uszkodzona_broñ_t[ zti ] := uszkodzona_broñ_f;
+
+  end;//---//Funkcja Uszkodzona_Broñ_Dodaj_Do_Tabeli() w Uszkodzenia_Dodaj().
+
+  //Funkcja Uszkodzona_Czêœæ_Dodaj_Do_Tabeli() w Uszkodzenia_Dodaj().
+  procedure Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uszkodzona_czêœæ_f : TUszkodzona_Czêœæ_l );
+  var
+    zti : integer;
+  begin
+
+    zti := Length( uszkodzona_czêœæ_t );
+    SetLength( uszkodzona_czêœæ_t, zti + 1 );
+    uszkodzona_czêœæ_t[ zti ] := uszkodzona_czêœæ_f;
+
+  end;//---//Funkcja Uszkodzona_Czêœæ_Dodaj_Do_Tabeli() w Uszkodzenia_Dodaj().
+
+begin//Funkcja Uszkodzenia_Dodaj().
+
+  //
+  // Funkcja ustawia uszkodzenie wylosowanego elementu.
+  //
+
+  // To samo w TStatek.Uszkodzenia_Dodaj(), TStatki_Form.Element_Uszkodzenie_Ustaw() w Oznacz_Kolizjê() w Gra_GLCollisionManagerCollision().
+
+  if Self.radar_zasiêg > 0 then
+    Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_radar );
+
+  if Self.radio_zasiêg > 0 then
+    Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_radio );
+
+  if Self.sonar_zasiêg > 0 then
+    Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_sonar );
+
+  if Length( Self.ster_t ) > 0 then
+    Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_ster );
+
+  if Length( Self.ster_g³êbokoœci_t ) > 0 then
+    Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_ster_g³êbokoœci );
+
+  if Length( Self.œruby_t ) > 0 then
+    Uszkodzona_Czêœæ_Dodaj_Do_Tabeli( uc_l_œruby );
+
+
+  if Length( uszkodzona_czêœæ_t ) > 0 then
+    case uszkodzona_czêœæ_t[ Random(  Length( uszkodzona_czêœæ_t )  ) ] of
+        uc_l_radar : Self.uszkodzone_czas_sekundy_i__radar := Czas_Teraz_W_Sekundach();
+        uc_l_radio : Self.uszkodzone_czas_sekundy_i__radio := Czas_Teraz_W_Sekundach();
+        uc_l_sonar : Self.uszkodzone_czas_sekundy_i__sonar := Czas_Teraz_W_Sekundach();
+        uc_l_ster : Self.ster_t[ Random(  Length( Self.ster_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+        uc_l_ster_g³êbokoœci : Self.ster_g³êbokoœci_t[ Random(  Length( Self.ster_g³êbokoœci_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+        uc_l_œruby : Self.œruby_t[ Random(  Length( Self.œruby_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+      end;
+    //---//case uszkodzona_czêœæ_t[ Random(  Length( uszkodzona_czêœæ_t )  ) ] of
+
+
+  Self.efekt__element_uszkodzenie_dummy_st.Visible :=
+       ( Self.uszkodzone_czas_sekundy_i__radar <> 0 )
+    or ( Self.uszkodzone_czas_sekundy_i__radio <> 0 )
+    or ( Self.uszkodzone_czas_sekundy_i__sonar <> 0 );
+
+
+
+  if Length( Self.artyleria_t ) > 0 then
+    Uszkodzona_Broñ_Dodaj_Do_Tabeli( Typy_Wspolne.ar_Artyleria );
+
+  if Length( Self.dzia³a_t ) > 0 then
+    Uszkodzona_Broñ_Dodaj_Do_Tabeli( Typy_Wspolne.ar_Pocisk );
+
+  if Length( Self.bomba_g³êbinowa_t ) > 0 then
+    Uszkodzona_Broñ_Dodaj_Do_Tabeli( Typy_Wspolne.ar_Bomba_G³êbinowa );
+
+  if Length( Self.je¿e_g³êbinowe_t ) > 0 then
+    Uszkodzona_Broñ_Dodaj_Do_Tabeli( Typy_Wspolne.ar_Je¿e_G³êbinowe );
+
+  if Length( Self.torpedy_wyrzutnie_t ) > 0 then
+    Uszkodzona_Broñ_Dodaj_Do_Tabeli( Typy_Wspolne.ar_Torpeda );
+
+
+  if Length( uszkodzona_broñ_t ) > 0 then
+    case uszkodzona_broñ_t[ Random(  Length( uszkodzona_broñ_t )  ) ] of
+        Typy_Wspolne.ar_Artyleria : Self.artyleria_t[ Random(  Length( Self.artyleria_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+        Typy_Wspolne.ar_Bomba_G³êbinowa : Self.bomba_g³êbinowa_t[ Random(  Length( Self.bomba_g³êbinowa_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+        Typy_Wspolne.ar_Je¿e_G³êbinowe : Self.je¿e_g³êbinowe_t[ Random(  Length( Self.je¿e_g³êbinowe_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+        Typy_Wspolne.ar_Pocisk : Self.dzia³a_t[ Random(  Length( Self.dzia³a_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+        Typy_Wspolne.ar_Torpeda : Self.torpedy_wyrzutnie_t[ Random(  Length( Self.torpedy_wyrzutnie_t )  ) ].uszkodzone_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+      end;
+    //---//case uszkodzona_broñ_t[ Random(  Length( uszkodzona_broñ_t )  ) ] of
+
+end;//---//Funkcja Uszkodzenia_Dodaj().
 
 //Funkcja Parametry_Odczytaj().
 function TStatek.Parametry_Odczytaj( const dane_wszystkie_f : boolean = false ) : string;
@@ -7981,6 +8401,9 @@ procedure TStatek.Wygl¹d_Elementy__Noc_Zmieñ( const dzieñ_jasnoœæ_f : real );
 var
   i : integer;
 begin
+
+  Self.Punkty_¯ycia__WskaŸnik__Noc_Zmieñ( dzieñ_jasnoœæ_f );
+
 
   for i := 0 to Length( Self.ster_t ) - 1 do
     Self.ster_t[ i ].Wygl¹d_Elementy__Noc_Zmieñ( dzieñ_jasnoœæ_f );
@@ -8400,51 +8823,14 @@ end;//---//Funkcja Prêdkoœæ_Przyspieszanie__Start_Z_Lotniskowca__Prze³adowanie()
 //Funkcja Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie().
 procedure TStatek.Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie();
 
-  //Funkcja Broñ_Amunicja_Uzupe³nij() w Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie().
-  function Broñ_Amunicja_Uzupe³nij( broñ_f : array of TTorpedy_Wyrzutnia ) : boolean;
-  var
-    i_l,
-    zti_l,
-    amunicja_ograniczenie_l
-      : integer;
-  begin
-
-    Result := false;
-
-    for i_l := 0 to Length( broñ_f ) - 1 do
-      begin
-
-        amunicja_ograniczenie_l := broñ_f[ i_l ].amunicja_iloœæ_pocz¹tkowa - Length( broñ_f[ i_l ].lufy_t );
-
-        if broñ_f[ i_l ].amunicja_iloœæ < amunicja_ograniczenie_l then
-          begin
-
-            Result := true;
-
-
-            zti_l := Floor( broñ_f[ i_l ].amunicja_iloœæ_pocz¹tkowa * 0.1 );
-
-            if zti_l < 1 then
-              zti_l := 1;
-
-            broñ_f[ i_l ].amunicja_iloœæ := broñ_f[ i_l ].amunicja_iloœæ + zti_l;
-
-            if broñ_f[ i_l ].amunicja_iloœæ > amunicja_ograniczenie_l then
-              broñ_f[ i_l ].amunicja_iloœæ := amunicja_ograniczenie_l;
-
-          end;
-        //---//if broñ_f[ i_l ].amunicja_iloœæ < amunicja_ograniczenie_l then
-
-      end;
-    //---//for i_l := 0 to Length( broñ_f ) - 1 do
-
-  end;//---//Funkcja Broñ_Amunicja_Uzupe³nij() w Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie().
-
 var
   czy_odnowiono_coœ : boolean;
-  //i : integer;
   milisekund_prze³adowania_l : Int64;
-begin//Funkcja Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie().
+begin
+
+  //
+  // Funkcja odnawia punkty ¿ycia o 10% iloœci maksymalnej i uzupe³nia amunicjê samolotowi stoj¹cemu na lotniskowcu.
+  //
 
   if   ( not Self.czy_samolot )
     or ( Self.punkty_¿ycia_aktualne <= 0 )
@@ -8492,23 +8878,24 @@ begin//Funkcja Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie().
       Self.Punkty_¯ycia__Zmieñ( Self.punkty_¿ycia_maksymalne * 0.1 );
 
 
-      if    (  Broñ_Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.artyleria_t) )  )
+      // Odnawia wszystkie bronie jednoczeœnie.
+      if    (  Self.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.artyleria_t) )  )
         and ( not czy_odnowiono_coœ ) then
         czy_odnowiono_coœ := true;
 
-      if    (  Broñ_Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.bomba_g³êbinowa_t) )  )
+      if    (  Self.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.bomba_g³êbinowa_t) )  )
         and ( not czy_odnowiono_coœ ) then
         czy_odnowiono_coœ := true;
 
-      if    (  Broñ_Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.dzia³a_t) )  )
+      if    (  Self.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.dzia³a_t) )  )
         and ( not czy_odnowiono_coœ ) then
         czy_odnowiono_coœ := true;
 
-      if    (  Broñ_Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.je¿e_g³êbinowe_t) )  )
+      if    (  Self.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.je¿e_g³êbinowe_t) )  )
         and ( not czy_odnowiono_coœ ) then
         czy_odnowiono_coœ := true;
 
-      if    (  Broñ_Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.torpedy_wyrzutnie_t) )  )
+      if    (  Self.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(Self.torpedy_wyrzutnie_t) )  )
         and ( not czy_odnowiono_coœ ) then
         czy_odnowiono_coœ := true;
 
@@ -8758,16 +9145,20 @@ begin
       Self.si_strzelanie_tryb := sist_Strzelaj_Jak_Chcesz;
       Self.si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := -si__aktywnoœæ__okreœlenie_sekundy_c;
       Self.si__zagaduje__ostatnie_sekundy_i := Czas_Teraz_W_Sekundach();
+      Self.si__zak³óca__ostatnie_sekundy_i := Czas_Teraz_W_Sekundach();
 
       Self.si__cel_odleg³oœæ := 0;
 
       Self.si__kolizja := false;
       Self.si__kolizja__prêdkoœæ_ujemna := false;
+      Self.si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów := false;
       //Self.si__kolizja__wspó³rzêdne
 
       Self.si__l¹dowanie_punkt_korekta_x := 0;
       Self.si__lotniskowiec__l¹dowanie__kurs_aktualny := false;
 
+      Self.si__p³ywanie_do_punktu__odnawianie_zasobów__rozpoczêcie_czas_sekundy_i := 0;
+      Self.si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie_modyfikator_losowy__czas_sekundy_i := 0;
       Self.si__p³ywanie_losowe__skrêt__k¹t_pocz¹tkowy := 1; // Nie zero aby po utworzeniu od razu nie wyznacza³ skrêtu tylko odliczanie do wyznaczenia skrêtu.
       Self.si__p³ywanie_losowe__skrêt__k¹t_zakres := Self.si__p³ywanie_losowe__skrêt__k¹t_pocz¹tkowy;
       Self.si__p³ywanie_losowe__skrêt__zmiana_ostatnia_sekundy_i := 0;
@@ -8792,6 +9183,8 @@ begin
       Self.si__walka__p³ywanie_do_punktu__prêdkoœæ_zadana_procent_korekta := 0;
       Self.si__walka__p³ywanie_do_punktu__rozpoczêcie_czas_sekundy_i := 0;
       Self.si__walka__p³ywanie_do_punktu__trwanie_modyfikator_losowy__czas_sekundy_i := -99;
+      Self.si__zagaduje_sekundy__modyfikator_losowy_i := Random( si__zagaduje_sekundy_c );
+      Self.si__zak³óca_sekundy__modyfikator_losowy_i := Random( 60 );
       Self.si__walka__p³ywanie_do_punktu__zbli¿anie := false;
 
       Self.si__wystartowanie__czas_sekundy_i := 0;
@@ -8911,7 +9304,7 @@ begin
 
   Self.amunicja_rodzaj := ATorpedy_Wyrzutnia.amunicja_rodzaj;
 
-  //Self.VisibleAtRunTime := true; //???
+  //Self.VisibleAtRunTime := true;
 
   Self.korpus__lufa := Wyglad_Elementy.TSt_GLCylinder.Create( Self );
   Self.korpus__lufa.Parent := Self;
@@ -8988,8 +9381,8 @@ begin
   //
   // Parametry:
   //   czy_lufa_podniesienie_k¹t_ustaw_f:
-  //     true - ustawi pocz¹tkowy k¹t podniesienia lufy.
   //     false - nie ustawi pocz¹tkowego k¹ta podniesienia lufy (dla wyrzutni torped).
+  //     true - ustawi pocz¹tkowy k¹t podniesienia lufy.
   //
 
   if Self.wylot_pozycja.Parent <> nil then
@@ -9367,8 +9760,8 @@ begin
 
   inherited Create( AOwner );
 
-  //Self.ShowAxes := true; //???
-  //Self.VisibleAtRunTime := true; //???
+  //Self.ShowAxes := true;
+  //Self.VisibleAtRunTime := true;
 
   Self.statek := AStatek;
 
@@ -9400,6 +9793,9 @@ begin
   Self.strza³_od_blokada_milisekundy := 750;
   Self.strza³y_iloœæ := 0;
   Self.zasiêg__broñ := 35; // 35 15 25 5
+
+  Self.celownik_linia_bez_falowania__position_y__kamera_nad_wod¹ := 0;
+  Self.celownik_linia_bez_falowania__position_y__standardowa := 0;
 
   Self.czy_indeks_do_strza³u := false;
   //Self.czy_lufa_podnoszona := false;
@@ -9439,13 +9835,13 @@ begin
   Self.TurnAngle := 0;
   Self.Direction.SetVector( 0, 0, -1 );
   Self.Position.SetPoint( 0, 1, 0 );
-  //Self.VisibleAtRunTime := true; //???
+  //Self.VisibleAtRunTime := true;
 
   Self.elementy_wizualne_dummy := TGLDummyCube.Create( Self );
   Self.elementy_wizualne_dummy.Parent := Self;
   Self.elementy_wizualne_dummy.EdgeColor.Color := GLColor.clrRed;
-  //Self.elementy_wizualne_dummy.ShowAxes := true; //???
-  //Self.elementy_wizualne_dummy.VisibleAtRunTime := true; //???
+  //Self.elementy_wizualne_dummy.ShowAxes := true;
+  //Self.elementy_wizualne_dummy.VisibleAtRunTime := true;
 
   Self.podstawa := Wyglad_Elementy.TSt_GLCylinder.Create( Self );
   Self.podstawa.Parent := Self.elementy_wizualne_dummy;
@@ -9460,15 +9856,15 @@ begin
   Self.efekt__element_uszkodzenie_dummy := TGLDummyCube.Create( Self );
   Self.efekt__element_uszkodzenie_dummy.Parent := Self.elementy_wizualne_dummy;
   Self.efekt__element_uszkodzenie_dummy.Visible := false;
-  //Self.efekt__element_uszkodzenie_dummy.VisibleAtRunTime := true; //???
+  //Self.efekt__element_uszkodzenie_dummy.VisibleAtRunTime := true;
 
   //Self.k¹t_test := TGLDummyCube.Create( Self );
   //Self.k¹t_test.Parent := Self.elementy_wizualne_dummy;
   //Self.k¹t_test.Position := Self.podstawa.Position;
   //Self.k¹t_test.Up.SetVector( 0, 1, 0 ); //???
   //Self.k¹t_test.EdgeColor.Color := GLColor.clrBlack;
-  ////Self.k¹t_test.ShowAxes := true; //???
-  ////Self.k¹t_test.VisibleAtRunTime := true; //???
+  //Self.k¹t_test.ShowAxes := true;
+  //Self.k¹t_test.VisibleAtRunTime := true;
 
 
   Self.korpus__broñ := Wyglad_Elementy.TSt_GLCube.Create( Self );
@@ -9591,18 +9987,18 @@ begin
   Self.celownik_linia := TGLLines.Create( Self );
   Self.celownik_linia.Parent := Self;
   Self.celownik_linia.Pickable := false;
-  Self.celownik_linia.Tag := 1; // Oznacza, ¿e element jest widoczny (1; 0 - niewidoczny).
   Self.celownik_linia.AntiAliased := true;
   Self.celownik_linia.LineWidth := 0;
   Self.celownik_linia.LineColor.Color := GLColor.clrYellow;
   Self.celownik_linia.NodesAspect := lnaInvisible;
   Self.celownik_linia.Position := Self.elementy_wizualne_dummy.Position; //Self.podstawa.Position elementy_wizualne_dummy
   Self.celownik_linia.Position.Y := Self.podstawa.Height * 0.5; // Y - w po³owie wysokoœci podstawy.
-  //Self.celownik_linia.ShowAxes := true; //???
+  //Self.celownik_linia.ShowAxes := true;
   //Self.celownik_linia.Up.SetVector( 0, 1, 0 );
-  //Self.celownik_linia.Visible := false; //???
+  //Self.celownik_linia.Visible := false;
   Self.celownik_linia.AddNode( 0, 0, 0 );
   Self.celownik_linia.AddNode( 0, 0, -Self.zasiêg__broñ ); // Zasiêg torpedy.
+  Self.celownik_linia__widoczne := true;
 
   Self.celownik_linia_bez_falowania := TGLLines.Create( Self );
   Self.celownik_linia_bez_falowania.Parent := AStatek;
@@ -9918,6 +10314,14 @@ begin//Funkcja Dodatkowe_Elementy_Ustaw().
   Self.celownik_linia_bez_falowania.Position.AsVector := Self.celownik_linia_bez_falowania.AbsoluteToLocal( Self.AbsolutePosition );
   Self.celownik_linia.Position.Y := ( Self.podstawa.Height + Self.korpus__broñ.CubeHeight * 0.5 ) * Self.skala__broñ; // Y - w po³owie wysokoœci korpusu. // Linia celownicza z wysokoœci luf.
 
+  Self.celownik_linia_bez_falowania__position_y__standardowa := Self.celownik_linia_bez_falowania.Position.Y;
+
+  if Self.celownik_linia_bez_falowania.LocalToAbsolute( Self.celownik_linia_bez_falowania.Position.AsVector ).Y < 0 then
+    Self.celownik_linia_bez_falowania__position_y__kamera_nad_wod¹ := zanurzanie_precyzja_c
+  else//if Self.celownik_linia_bez_falowania.LocalToAbsolute( Self.celownik_linia_bez_falowania.Position.AsVector ).Y < 0 then
+    Self.celownik_linia_bez_falowania__position_y__kamera_nad_wod¹ := Self.celownik_linia_bez_falowania__position_y__standardowa;
+
+
   if Length( Self.lufy_t ) > 0 then
   //  Self.celownik_linia.Nodes[ 0 ].Z := -( Self.lufy_t[ 0 ].korpus__lufa.Height * Self.skala__broñ + Self.amunicja_uzbrajanie_odleg³oœæ ) + Self.korpus_przód.Position.Z * Self.skala__broñ
     Self.celownik_linia__do_punktu_uzbrajania.Nodes[ 0 ].Z := -( Self.lufy_t[ 0 ].korpus__lufa.Height * Self.skala__broñ ) + Self.korpus_przód.Position.Z * Self.skala__broñ;
@@ -10121,12 +10525,6 @@ procedure TTorpedy_Wyrzutnia.Obrót_Zadany_Zmieñ( const celownik_linia_widocznoœæ
     if gt_lines_f.Nodes[ 1 ].AsAffineVector.X > 0 then
       Result := -Result;
 
-    //Statki_Form.Caption := FloatToStr( Result ); //???
-    //Statki_Form.Caption := FloatToStr( Self.statek.AbsoluteDirection.X ) + ' ' + FloatToStr( Self.statek.AbsoluteDirection.Z ); //???
-    //Statki_Form.Caption := FloatToStr( zt_gt_lines.Nodes[ 1 ].AsAffineVector.X ) + ' ' + FloatToStr( zt_gt_lines.Nodes[ 1 ].AsAffineVector.Z ); //???
-    //Statki_Form.Caption := FloatToStr( statek_obrót_k¹t_l );
-    //Statki_Form.Caption := FloatToStr( Self.statek.TurnAngle );
-
   end;//---//Funkcja Obrót_K¹t_Zadany_Wyznacz() w Obrót_Zadany_Zmieñ().
 
 var
@@ -10255,7 +10653,7 @@ begin//Funkcja Obrót_Zadany_Zmieñ().
   ////---//if Self.Parent <> nil then
 
 
-  Self.Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( celownik_linia_widocznoœæ_f );
+  Self.Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( celownik_linia_widocznoœæ_f );
 
 end;//---//Funkcja Obrót_Zadany_Zmieñ().
 
@@ -10306,10 +10704,8 @@ procedure TTorpedy_Wyrzutnia.Obrót_Kierunek_Zmieñ( const delta_czasu_f : double;
     //  -1 obrotu w prawo.
     //
 
-
     Result := 1;
 
-    //Statki_Form.Caption := ''; //???
 
     if Znak_SprawdŸ( Self.TurnAngle ) = Znak_SprawdŸ( Self.obrót_k¹t_zadany ) then
       begin
@@ -10354,8 +10750,6 @@ procedure TTorpedy_Wyrzutnia.Obrót_Kierunek_Zmieñ( const delta_czasu_f : double;
     if Self.obrót_k¹t_zablokowany_od = Self.obrót_k¹t_zablokowany_do then
       Exit;
 
-
-    //Statki_Form.Caption := ''; //???
 
     {$region 'Ustala zakres k¹tów przez który odbywa siê obrót.'}
     // od_1 i do_1 okreœlaj¹ zakres k¹tów z tym samym znakiem.
@@ -10500,9 +10894,6 @@ procedure TTorpedy_Wyrzutnia.Obrót_Kierunek_Zmieñ( const delta_czasu_f : double;
     {$endregion 'Ustala zakres k¹tów przez który odbywa siê obrót.'}
 
 
-    //Statki_Form.Caption := FloatToStr( Result ) + ' | ' + FloatToStr(  Round( od_1 )  ) + ' ' + FloatToStr(  Round( do_1 )  ) + ' ' + FloatToStr(  Round( od_2 )  ) + ' ' + FloatToStr(  Round( do_2 )  ); //???
-
-
     // Je¿eli obrót odbywa siê przez zablokowany zakres k¹tów odwraca kierunek obrotu.
     if   (
                ( Self.obrót_k¹t_zablokowany_do >= od_1 )
@@ -10529,17 +10920,16 @@ procedure TTorpedy_Wyrzutnia.Obrót_Kierunek_Zmieñ( const delta_czasu_f : double;
       begin
 
         Result := -Result;
-        //Statki_Form.Caption := 'O ' + Statki_Form.Caption; //???
 
       end;
     //---//if   ( (...)
 
   end;//---//Funkcja Obrót_Kierunek_Ustal() w Obrót_Kierunek_Zmieñ().
 
-  //Funkcja Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
-  function Obrót_Kierunek_Ustal_2() : real;
+  //Funkcja xNx__Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
+  function xNx__Obrót_Kierunek_Ustal_2() : real;
 
-    //Funkcja Znak_SprawdŸ() w Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
+    //Funkcja Znak_SprawdŸ() w xNx__Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
     function Znak_SprawdŸ( const liczba_f : real ) : SmallInt;
     begin
 
@@ -10556,9 +10946,9 @@ procedure TTorpedy_Wyrzutnia.Obrót_Kierunek_Zmieñ( const delta_czasu_f : double;
       else//if liczba_f >= 0 then
         Result := -1;
 
-    end;//---//Funkcja Znak_SprawdŸ() w Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
+    end;//---//Funkcja Znak_SprawdŸ() w xNx__Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
 
-    //Funkcja Posortuj_Wartoœci() w Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
+    //Funkcja Posortuj_Wartoœci() w xNx__Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
     procedure Posortuj_Wartoœci( var liczba_od_f, liczba_do_f : real );
     var
       ztr_l
@@ -10583,7 +10973,7 @@ procedure TTorpedy_Wyrzutnia.Obrót_Kierunek_Zmieñ( const delta_czasu_f : double;
         end;
       //---//if liczba_od_f > liczba_do_f then
 
-    end;//---//Funkcja Posortuj_Wartoœci() w Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
+    end;//---//Funkcja Posortuj_Wartoœci() w xNx__Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
 
   var
     odleg³oœæ_przez_0_l,
@@ -10598,7 +10988,7 @@ procedure TTorpedy_Wyrzutnia.Obrót_Kierunek_Zmieñ( const delta_czasu_f : double;
     czy_obrót_przez_0_l, //???
     czy_obrót_przez_zablokowany_zakres_l //???
       : boolean;
-  begin//Funkcja Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
+  begin//Funkcja xNx__Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
 
     //
     // Funkcja ustala, w któr¹ stronê obracaæ aby najszybciej osi¹gn¹æ zadany k¹t obrotu,
@@ -10939,7 +11329,7 @@ procedure TTorpedy_Wyrzutnia.Obrót_Kierunek_Zmieñ( const delta_czasu_f : double;
     //  //' | ' + FloatToStr(  Round( odleg³oœæ_1_l )  ) + ' ' + FloatToStr(  Round( odleg³oœæ_2_l )  ) +
     //  ' | ' + FloatToStr(  Round( odleg³oœæ_przez_0_l )  ) + ' ' + FloatToStr(  Round( odleg³oœæ_przez_180_l )  ); //???
 
-  end;//---//Funkcja Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
+  end;//---//Funkcja xNx__Obrót_Kierunek_Ustal_2() w Obrót_Kierunek_Zmieñ().
 
 var
   ztr,
@@ -11218,14 +11608,14 @@ begin//Funkcja Strza³().
   //
   // Parametry:
   //   czy_wszystkie_lufy_f:
-  //     true - strza³ wszystkimi lufami.
   //     false - strza³ jedn¹ luf¹.
+  //     true - strza³ wszystkimi lufami.
   //   obracaj_dzia³a_f
-  //     true - strzela tylko gdy dzia³o jest wycelowane.
   //     false - je¿eli dzia³a s¹ zablokowane mo¿na strzeliæ mimo nie wycelowania.
+  //     true - strzela tylko gdy dzia³o jest wycelowane.
   //  wystrzeli³y_wszystkie_f
-  //     true - z dzia³a wystrzelono tyle razy ile jest luf (w strzelaniu pojedynczym oznacza ¿eby prze³¹czyæ strzelanie na inne dzia³o).
   //     false.
+  //     true - z dzia³a wystrzelono tyle razy ile jest luf (w strzelaniu pojedynczym oznacza ¿eby prze³¹czyæ strzelanie na inne dzia³o).
   //  cel_wspó³rzêdne_f - potrzebne przy tworzeniu amunicji.
   //
 
@@ -11664,8 +12054,8 @@ begin
 
 end;//---//Funkcja Celownik_Linia_Wygl¹d_Ustaw().
 
-//Funkcja Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj().
-procedure TTorpedy_Wyrzutnia.Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( const celownik_linia_widocznoœæ_f : boolean = true );
+//Funkcja Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj().
+procedure TTorpedy_Wyrzutnia.Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( const celownik_linia_widocznoœæ_f : boolean = true );
 begin
 
   //
@@ -11679,7 +12069,7 @@ begin
 
 
   if    ( Self.amunicja_rodzaj in [ Typy_Wspolne.ar_Torpeda, Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe ] )
-    and ( Self.celownik_linia.Tag = 1 ) then
+    and ( Self.celownik_linia__widoczne ) then
     begin
 
       Self.celownik_linia.Visible := false;
@@ -11688,7 +12078,48 @@ begin
     end;
   //---//if    ( Self.amunicja_rodzaj in [ Typy_Wspolne.ar_Torpeda, Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe ] ) (...)
 
-end;//---//Funkcja Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj().
+end;//---//Funkcja Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj().
+
+//Funkcja Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj().
+procedure TTorpedy_Wyrzutnia.Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( const kamera_pod_wod¹_f : boolean; const nad_powierzchni¹_wody_utrzymuj_f : boolean = false );
+begin
+
+  //
+  // Funkcja dostosowuje wysokoœæ 'wyœwietlania' linii celowniczej 'bez falowania'.
+  //
+  // Parametry:
+  //   kamera_pod_wod¹_f:
+  //     false - kamera nad wod¹.
+  //     true - kamera pod wod¹.
+  //   nad_powierzchni¹_wody_utrzymuj_f:
+  //     false - u¿ywa przygotowanej wartoœci.
+  //     true - oblicza wartoœæ tak aby linia utrzymywa³a siê nad powierzchni¹ wody.
+  //
+
+  if    ( Self.celownik_linia_bez_falowania.Visible )
+    and (
+             ( nad_powierzchni¹_wody_utrzymuj_f )
+          or ( Self.celownik_linia_bez_falowania__position_y__kamera_nad_wod¹ <> Self.celownik_linia_bez_falowania__position_y__standardowa )
+        ) then
+    begin
+
+      if    ( not kamera_pod_wod¹_f )
+        and ( nad_powierzchni¹_wody_utrzymuj_f )
+        and ( Self.statek <> nil ) then
+        Self.celownik_linia_bez_falowania.Position.Y := Self.statek.AbsoluteToLocal(  GLVectorGeometry.AffineVectorMake( 0, zanurzanie_precyzja_c, 0 )  ).Y
+      else//if    ( not kamera_pod_wod¹_f ) (...)
+      if    ( not kamera_pod_wod¹_f )
+        and ( Self.celownik_linia_bez_falowania.Position.Y <> Self.celownik_linia_bez_falowania__position_y__kamera_nad_wod¹ ) then
+        Self.celownik_linia_bez_falowania.Position.Y := Self.celownik_linia_bez_falowania__position_y__kamera_nad_wod¹
+      else//if    ( not kamera_pod_wod¹_f ) (...)
+      if    ( kamera_pod_wod¹_f )
+        and ( Self.celownik_linia_bez_falowania.Position.Y <> Self.celownik_linia_bez_falowania__position_y__standardowa ) then
+        Self.celownik_linia_bez_falowania.Position.Y := Self.celownik_linia_bez_falowania__position_y__standardowa;
+
+    end;
+  //---//if    ( Self.celownik_linia_bez_falowania.Visible ) (...)
+
+end;//---//Funkcja Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj().
 
 //Funkcja Wygl¹d_Elementy__Noc_Zmieñ().
 procedure TTorpedy_Wyrzutnia.Wygl¹d_Elementy__Noc_Zmieñ( const dzieñ_jasnoœæ_f : real );
@@ -11888,13 +12319,8 @@ begin
 
   inherited Create( AOwner, AStatek, gl_collision_mmanager_f, efekt__element_uszkodzenie_gl_thor_fx_manager_f, lufy_iloœæ_f );
 
-  //Self.czy_lufa_podnoszona := true;
 
-//  Self.obrót_k¹t_maksymalny := 0;
-//  Self.obrót_k¹t_minimalny := 0;
-//  Self.obrót_procent := 0;
   Self.obrót_szybkoœæ := 37.5;
-//  Self.obrót_zadany_procent := 0;
 
   Self.cofanie_wystrza³_odleg³oœæ := 0;
   Self.cofanie_wystrza³_pozycja_pocz¹tkowa := 0;
@@ -11922,26 +12348,10 @@ begin
 
   //SetLength( Self.obrót_k¹t_zablokowany_strza³__podniesienie_k¹t_minimalny, 0 ); //???
 
-//  Self.Parent := AStatek;
-//  Self.MoveUp();
-//  Self.TurnAngle := 0;
-//  Self.Direction.SetVector( 0, 0, -1 );
-//  Self.Position.SetPoint( 0, 1, 1 );
-
-  //Self.VisibleAtRunTime := true;
-
-//  Self.podstawa := TGLCylinder.Create( Self );
-//  Self.podstawa.Parent := Self;
-//  Self.podstawa.TopRadius := 0.25;
-//  Self.podstawa.BottomRadius := Self.podstawa.TopRadius;
-//  Self.podstawa.Height := 0.1;
-//  Self.podstawa.Position.Y := -( Self.CubeSize / 2 ) + Self.podstawa.Height / 2;
-
-
   Self.korpus__broñ.CubeHeight := Self.podstawa.TopRadius;
   //Self.korpus__broñ.Position.Y := -( Self.CubeSize * 0.5 ) + Self.podstawa.Height * 2;
   Self.korpus__broñ.Position.Y := Self.podstawa.Position.Y + Self.podstawa.Height * 0.5 + Self.korpus__broñ.CubeHeight * 0.5;
-  //Self.korpus__broñ.Visible := false; //???
+  //Self.korpus__broñ.Visible := false;
 
   TTorpedy_Wyrzutnia(Self).korpus_przód.Visible := false;
 
@@ -11953,7 +12363,7 @@ begin
   Self.korpus_przód.PitchAngle := 45;
   Self.korpus_przód.Position.Y := Self.korpus__broñ.Position.Y;
   Self.korpus_przód.Position.Z := -Self.korpus__broñ.CubeDepth + Self.korpus_przód.CubeDepth;
-  //Self.korpus_przód.Visible := false; //???
+  //Self.korpus_przód.Visible := false;
   Wyglad_Elementy.Obiekt_Rodzaj( Self.korpus_przód, Wyglad_Elementy.or_Statek );
 
   if Self.statek <> nil then
@@ -12033,6 +12443,7 @@ end;//---//Destruktor klasy TDzia³o.
 //Funkcja Podniesienie_Zadane_Zmieñ().
 procedure TDzia³o.Podniesienie_Zadane_Zmieñ( const celownik_linia_widocznoœæ_f : boolean = true );
 var
+  //celowanie_precyzja__falowanie_niwelowanie_l,
   k¹t_zakres_l,
   podniesienie_procent_l,
   odleg³oœæ_do_celu_l,
@@ -12044,7 +12455,7 @@ var
 begin
 
   //
-  // Funkcja ustawia zadany k¹t podniesienia na k¹t, w którym parzy kamera (w p³aszczyŸnie pionowej).
+  // Funkcja ustawia zadany k¹t podniesienia na k¹t, w którym patrzy kamera (w p³aszczyŸnie pionowej).
   // Od -90 (dó³) 0 (poziomo) 90 (góra).
   //
 
@@ -12092,28 +12503,28 @@ begin
 
 
   case celowanie_tryb_l of
-      ct_Linia :
-        begin
-
-          // Namierzanie równoleg³e do linii celowania.
-
-                         // Cel                 Obiekt celuj¹cy
-          //zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.k¹t_test.AbsolutePosition.X;
-          //zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.k¹t_test.AbsolutePosition.Y;
-          //zt_vector.Z := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Z - Self.k¹t_test.AbsolutePosition.Z;
-          //Self.k¹t_test.AbsoluteDirection := VectorNormalize( zt_vector );
-          //
-          //Self.podniesienie_k¹t_zadany := Self.k¹t_test.AbsoluteDirection.Y * 90;
-          // Lub.
-          zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.podstawa.AbsolutePosition.X;
-          zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.korpus_przód.AbsolutePosition.Y; // Dok³adniej celuje w punkt.
-          zt_vector.Z := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Z - Self.podstawa.AbsolutePosition.Z;
-          zt_vector := VectorNormalize( zt_vector );
-
-          Self.podniesienie_k¹t_zadany := zt_vector.Y * 90;
-
-        end;
-      //---//ct_Linia :
+      //ct_Linia :
+      //  begin
+      //
+      //    // Namierzanie równoleg³e do linii celowania.
+      //
+      //                   // Cel                 Obiekt celuj¹cy
+      //    //zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.k¹t_test.AbsolutePosition.X;
+      //    //zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.k¹t_test.AbsolutePosition.Y;
+      //    //zt_vector.Z := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Z - Self.k¹t_test.AbsolutePosition.Z;
+      //    //Self.k¹t_test.AbsoluteDirection := VectorNormalize( zt_vector );
+      //    //
+      //    //Self.podniesienie_k¹t_zadany := Self.k¹t_test.AbsoluteDirection.Y * 90;
+      //    // Lub.
+      //    zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.podstawa.AbsolutePosition.X;
+      //    zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.korpus_przód.AbsolutePosition.Y; // Dok³adniej celuje w punkt.
+      //    zt_vector.Z := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Z - Self.podstawa.AbsolutePosition.Z;
+      //    zt_vector := VectorNormalize( zt_vector );
+      //
+      //    Self.podniesienie_k¹t_zadany := zt_vector.Y * 90;
+      //
+      //  end;
+      ////---//ct_Linia :
 
       ct_Odleg³oœæ :
         begin
@@ -12151,6 +12562,7 @@ begin
         begin
 
           // Namierzanie zbie¿ne do punktu celowania.
+          // Namierzanie równoleg³e do linii celowania.
 
           //zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.k¹t_test.AbsolutePosition.X;
           //zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.k¹t_test.AbsolutePosition.Y;
@@ -12174,54 +12586,123 @@ begin
           zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.podstawa.AbsolutePosition.X;
           zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.korpus_przód.AbsolutePosition.Y; // Dok³adniej celuje w punkt.
           zt_vector.Z := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Z - Self.podstawa.AbsolutePosition.Z;
+
+          //if    ( not Self.statek.celowanie__bronie_osobno )
+          //  and ( celowanie_tryb_l = ct_Linia ) then // Namierzanie równoleg³e do linii celowania.
+          if celowanie_tryb_l = ct_Linia then // Namierzanie równoleg³e do linii celowania.
+            begin
+
+              // Koryguje celowanie o ró¿nicê wysokoœci umieszczenia broni.
+
+              ztr := Abs( zt_vector.Y - zt_gt_lines.Nodes[ 1 ].AsAffineVector.Y );
+
+              if zt_vector.Y < zt_gt_lines.Nodes[ 1 ].AsAffineVector.Y then
+                ztr := -ztr;
+
+              zt_vector.Y := zt_vector.Y - ztr;
+
+            end;
+          //---//if celowanie_tryb_l = ct_Linia then
+
           zt_vector := VectorNormalize( zt_vector );
 
 
-          if Abs( Self.TurnAngle - Self.obrót_k¹t_zadany_bezwzglêdny ) < 2 then //???
-            begin
+          {$region 'Zakomentowane - wariant z prze³¹czaniem na celowanie niweluj¹ce falowanie.'}
+          //if Self.statek <> nil then
+          //  celowanie_precyzja__falowanie_niwelowanie_l := Self.statek.celowanie_precyzja__falowanie_niwelowanie
+          //else//if Self.statek <> nil then
+          //  celowanie_precyzja__falowanie_niwelowanie_l := 0;
+          //
+          //
+          //if Abs( Self.TurnAngle - Self.obrót_k¹t_zadany_bezwzglêdny ) < celowanie_precyzja__falowanie_niwelowanie_l then
+          //  begin
+          //
+          //    // Dobrze unosi lufê gdy obrót jest ustawiony, niweluje wp³yw falowania.
+          //    //   Podczas obracania broni zawy¿a (na plus lub minus) k¹t uniesienia luf (wynika to z tego, ¿e nie mierzy k¹ta w p³aszczyŸnie pionowej tylko wychyla wzglêdem k¹ta obrotu).
+          //
+          //    // Sprawdza k¹t miêdzy kierunkiem zadanym a kierunkiem dzia³a.
+          //    ztr := 180 -
+          //      Math.RadToDeg
+          //        (
+          //          GLVectorGeometry.AngleBetweenVectors
+          //            (
+          //              zt_vector,
+          //              Self.AbsoluteDirection,
+          //              GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
+          //            )
+          //        );
+          //
+          //  end
+          //else//if Abs( Self.TurnAngle - Self.obrót_k¹t_zadany_bezwzglêdny ) < celowanie_precyzja__falowanie_niwelowanie_l then
+          //  begin
+          //
+          //    // Dobrze unosi lufê dla dowolnego obrotu, nie niweluje wp³ywu falowania.
+          //
+          //    // Sprawdza k¹t miêdzy kierunkiem zadanym a kierunkiem dzia³a.
+          //    ztr :=
+          //      Math.RadToDeg
+          //        (
+          //          GLVectorGeometry.AngleBetweenVectors
+          //            (
+          //              zt_vector,
+          //              GLVectorGeometry.VectorMake( zt_vector.X, Self.AbsoluteDirection.Y, zt_vector.Z ),
+          //              GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
+          //            )
+          //        );
+          //
+          //  end;
+          ////---//if Abs( Self.TurnAngle - Self.obrót_k¹t_zadany_bezwzglêdny ) < celowanie_precyzja__falowanie_niwelowanie_l then
+          //
+          //
+          ////if Self.k¹t_test.AbsolutePosition.Y >= zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y then // Lub.
+          //if Self.korpus_przód.AbsolutePosition.Y >= zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y then
+          //  Self.podniesienie_k¹t_zadany := -ztr
+          //else//if Self.korpus_przód.AbsolutePosition.Y >= zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y then
+          //  Self.podniesienie_k¹t_zadany := ztr;
+          {$endregion 'Zakomentowane - wariant z prze³¹czaniem na celowanie niweluj¹ce falowanie.'}
 
-              // Dobrze unosi lufê gdy obrót jest ustawiony, niweluje wp³yw falowania.
-              //   Podczas obracania broni zawy¿a (na plus lub minus) k¹t uniesienia luf (wynika to z tego, ¿e nie mierzy k¹ta w p³aszczyŸnie pionowej tylko wychyla wzglêdem k¹ta obrotu).
-
-              // Sprawdza k¹t miêdzy kierunkiem zadanym a kierunkiem dzia³a.
-              ztr := 180 -
-                Math.RadToDeg
+          // K¹t linii celowniczej wzglêdem poziomu.
+          Self.podniesienie_k¹t_zadany :=
+            Math.RadToDeg
+              (
+                GLVectorGeometry.AngleBetweenVectors
                   (
-                    GLVectorGeometry.AngleBetweenVectors
-                      (
-                        zt_vector,
-                        Self.AbsoluteDirection,
-                        GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
-                      )
-                  );
+                    zt_vector,
+                    GLVectorGeometry.VectorMake( zt_vector.X, 0, zt_vector.Z ),
+                    GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
+                  )
+              );
 
-            end
-          else//if Abs( Self.TurnAngle - Self.obrót_k¹t_zadany_bezwzglêdny ) < 2 then
-            begin
+          if IsNan( Self.podniesienie_k¹t_zadany ) then // Raczej siê tutaj nie pojawia.
+            Self.podniesienie_k¹t_zadany := 0
+          else//if IsNan( Self.podniesienie_k¹t_zadany ) then
+            if zt_vector.Y < 0 then
+              Self.podniesienie_k¹t_zadany := -Self.podniesienie_k¹t_zadany;
 
-              // Dobrze unosi lufê dla dowolnego obrotu, nie niweluje wp³ywu falowania.
 
-              // Sprawdza k¹t miêdzy kierunkiem zadanym a kierunkiem dzia³a.
-              ztr :=
-                Math.RadToDeg
+          // K¹t wychylenia dzia³a wzglêdem poziomu.
+          ztr :=
+            Math.RadToDeg
+              (
+                GLVectorGeometry.AngleBetweenVectors
                   (
-                    GLVectorGeometry.AngleBetweenVectors
-                      (
-                        zt_vector,
-                        GLVectorGeometry.VectorMake( zt_vector.X, Self.AbsoluteDirection.Y, zt_vector.Z ),
-                        GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
-                      )
-                  );
+                    Self.AbsoluteDirection,
+                    GLVectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
+                    GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
+                  )
+              );
 
-            end;
-          //---//if Abs( Self.TurnAngle - Self.obrót_k¹t_zadany_bezwzglêdny ) < 2 then
+          if IsNan( ztr ) then
+            ztr := 0
+          else//if IsNan( ztr ) then
+            if Self.AbsoluteDirection.Y > 0 then
+              ztr := -ztr;
 
 
-          //if Self.k¹t_test.AbsolutePosition.Y >= zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y then // Lub.
-          if Self.korpus_przód.AbsolutePosition.Y >= zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y then
-            Self.podniesienie_k¹t_zadany := -ztr
-          else//if Self.korpus_przód.AbsolutePosition.Y >= zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y then
-            Self.podniesienie_k¹t_zadany := ztr;
+          Self.podniesienie_k¹t_zadany := Self.podniesienie_k¹t_zadany - ztr;
+
+          if Self.AbsoluteUp.Y < 0 then
+            Self.podniesienie_k¹t_zadany := -Self.podniesienie_k¹t_zadany;
 
         end;
       //---//case celowanie_tryb_l of
@@ -12237,7 +12718,7 @@ begin
     Self.podniesienie_k¹t_zadany := Self.podniesienie_k¹t_minimalny;
 
 
-  Self.Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( celownik_linia_widocznoœæ_f );
+  Self.Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( celownik_linia_widocznoœæ_f );
 
 end;//---//Funkcja Podniesienie_Zadane_Zmieñ().
 
@@ -12299,30 +12780,6 @@ procedure TDzia³o.Podniesienie_Kierunek_Zmieñ( const delta_czasu_f : double );
 
     //podniesienie_szybkoœæ_l := Self.podniesienie_szybkoœæ * podniesienie_k¹t_zadany_odleg³oœæ_procent_l * 0.01 * delta_czasu_f; // Im bli¿ej zadanego k¹ta wycelowana tym wolniej zmienia podniesienie luf ale z wiêksz¹ precyzj¹.
     podniesienie_szybkoœæ_l := ( Self.podniesienie_szybkoœæ + lufa_f.podniesienie_szybkoœæ_modyfikator ) * podniesienie_k¹t_zadany_odleg³oœæ_procent_l * 0.01 * delta_czasu_f; // Im bli¿ej zadanego k¹ta wycelowana tym wolniej zmienia podniesienie luf ale z wiêksz¹ precyzj¹.
-
-//    odleg³oœæ_do_celu_l := Self.DistanceTo(  zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector )  );
-//
-//    if odleg³oœæ_do_celu_l <> 0 then
-//      ztr_l := Self.zasiêg__broñ / odleg³oœæ_do_celu_l * 0.25
-//    else//if odleg³oœæ_do_celu_l <> 0 then
-//      ztr_l := celowanie_precyzja_podniesienie_l;
-
-//    if podniesienie_k¹t_zadany_odleg³oœæ_procent_l < ztr_l then
-//      podniesienie_szybkoœæ_l := podniesienie_szybkoœæ_l * podniesienie_szybkoœæ_l * podniesienie_szybkoœæ_l * podniesienie_szybkoœæ_l * podniesienie_szybkoœæ_l * podniesienie_szybkoœæ_l;
-
-//    if    ( podniesienie_k¹t_zadany_odleg³oœæ_procent_l < 2 )
-//      and ( odleg³oœæ_do_celu_l <> 0 ) then
-//      podniesienie_szybkoœæ_l := podniesienie_szybkoœæ_l / odleg³oœæ_do_celu_l;
-
-    //Statki_Form.Caption := FloatToStr( lufa_f.PitchAngle ) + ' ' + FloatToStr( lufa_f.AbsoluteDirection.Z ) + ' ' + FloatToStr( k¹t_podniesienia_aktualny_l );
-    //Statki_Form.Caption := FloatToStr( k¹t_podniesienia_aktualny_l );
-    //Statki_Form.Caption := Trim(  FormatFloat( '### ### ##0.00', k¹t_podniesienia_aktualny_l )  ) + ' ' + Trim(  FormatFloat( '### ### ##0.00', podniesienie_k¹t_zadany )  ) + ' ' + Trim(  FormatFloat( '### ### ##0.00', k¹t_do_k¹t_podniesienia_l )  ) + ' ' + Trim(  FormatFloat( '### ### ##0.00', lufa_f.PitchAngle )  );
-    //Statki_Form.Caption := Trim(  FormatFloat( '### ### ##0.00', podniesienie_szybkoœæ_l )  ) + ' ' + Trim(  FormatFloat( '### ### ##0.00', k¹t_do_k¹t_podniesienia_l )  );
-    //Statki_Form.Caption := Trim(  FormatFloat( '### ### ##0.000000', podniesienie_k¹t_zadany_odleg³oœæ_procent_l )  ) + ' ' + Trim(  FormatFloat( '### ### ##0.000000', podniesienie_szybkoœæ_l )  ) + ' c ' + Trim(  FormatFloat( '### ### ##0', odleg³oœæ_do_celu_l )  ) + ' s ' + Trim(  FormatFloat( '### ### ##0.00000', ztr_l )  );
-    //
-    //if podniesienie_k¹t_zadany_odleg³oœæ_procent_l < ztr_l then
-    //  Statki_Form.Caption := Statki_Form.Caption + '+';
-
 
     // Powy¿ej pewnej prêdkoœci gry nie mo¿e ustawiæ w³aœciwego k¹ta (za szybko zmienia k¹t i obraca lufami dooko³a).
     //ztr_l := ( podniesienie_szybkoœæ_l + lufa_f.podniesienie_szybkoœæ_modyfikator );
@@ -12519,8 +12976,8 @@ begin//Funkcja Podniesienie_Kierunek_Zmieñ().
 
 end;//---//Funkcja Podniesienie_Kierunek_Zmieñ().
 
-//Funkcja Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj().
-procedure TDzia³o.Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( const celownik_linia_widocznoœæ_f : boolean = true );
+//Funkcja Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj().
+procedure TDzia³o.Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( const celownik_linia_widocznoœæ_f : boolean = true );
 begin
 
   //
@@ -12537,14 +12994,14 @@ begin
         Self.celownik_linia_bez_falowania.Direction.Y := 0; // Je¿eli nie obraca dzia³ linia siê nie wypoziomuje.
 
 
-      if Self.celownik_linia.Tag = 1 then
+      if Self.celownik_linia__widoczne then
         begin
 
           Self.celownik_linia.Visible := ( not Self.czy_lot_parabol¹ ) and celownik_linia_widocznoœæ_f;
           Self.celownik_linia_bez_falowania.Visible := ( not Self.celownik_linia.Visible ) and celownik_linia_widocznoœæ_f;
 
         end;
-      //---//if Self.celownik_linia.Tag = 1 then
+      //---//if Self.celownik_linia__widoczne then
 
     end
   else//if Self.statek.celownicze_linie_unoœ then
@@ -12558,7 +13015,7 @@ begin
     end;
   //---//if Self.statek.celownicze_linie_unoœ then
 
-end;//---//Funkcja Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj().
+end;//---//Funkcja Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj().
 
 //Funkcja Wygl¹d_Elementy__Noc_Zmieñ().
 procedure TDzia³o.Wygl¹d_Elementy__Noc_Zmieñ( const dzieñ_jasnoœæ_f : real );
@@ -12613,11 +13070,7 @@ begin
   inherited Create( AOwner, AStatek, gl_collision_mmanager_f, efekt__element_uszkodzenie_gl_thor_fx_manager_f, lufy_iloœæ_f, lufy_podniesienie_k¹t_f );
 
 
-//  Self.obrót_k¹t_maksymalny := 0;
-//  Self.obrót_k¹t_minimalny := 0;
-//  Self.obrót_procent := 0;
   Self.obrót_szybkoœæ := 2.5; // 2.5
-//  Self.obrót_zadany_procent := 0;
 
   Self.podniesienie_k¹t_maksymalny := 60; // 60 // Dla k¹ta innego ni¿ 60 maksymalny zasiêg pocisk osi¹ga na dnie.
   //Self.podniesienie_k¹t_minimalny := -10;
@@ -12668,8 +13121,8 @@ end;//---//Funkcja Parametry_Odczytaj().
 //Konstruktor klasy TAmunicja.
 constructor TAmunicja.Create( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; cel_wspó³rzêdne_f : TAffineVector; gl_collision_mmanager_f : TGLCollisionManager );
 
-  //Funkcja Równanie_Paraboli_3_Punkty() w Konstruktor klasy TAmunicja.
-  function Równanie_Paraboli_3_Punkty( x1, y1, x2, y2, x3, y3 : real; var a, b, c : real ) : boolean;
+  //Funkcja xNx__Równanie_Paraboli_3_Punkty() w Konstruktor klasy TAmunicja.
+  function xNx__Równanie_Paraboli_3_Punkty( x1, y1, x2, y2, x3, y3 : real; var a, b, c : real ) : boolean;
   var
     sx1,
     sx2,
@@ -12759,7 +13212,7 @@ constructor TAmunicja.Create( AOwner : TGLBaseSceneObject; ALufa : TLufa; const 
     a := (  ( y2 - y1  ) / ( x2 - x1 ) * ( x1 - x3 ) - y1 + y3  ) / (  ( sx3 - sx1 ) - ( sx1 - sx2 ) / ( x2 - x1 ) * ( x1 - x3 )  );
     }
 
-  end;//---//Funkcja Równanie_Paraboli_3_Punkty() w Konstruktor klasy TAmunicja.
+  end;//---//Funkcja xNx__Równanie_Paraboli_3_Punkty() w Konstruktor klasy TAmunicja.
 
 var
   ztr,
@@ -12787,8 +13240,6 @@ begin//Konstruktor klasy TAmunicja.
     Self.dzia³o_podniesienie_procent_k¹ta_maksymalnego := ( TDzia³o(ALufa.dzia³o).podniesienie_k¹t_zadany - TDzia³o(ALufa.dzia³o).podniesienie_k¹t_minimalny ) * 100 / ( TDzia³o(ALufa.dzia³o).podniesienie_k¹t_maksymalny - TDzia³o(ALufa.dzia³o).podniesienie_k¹t_minimalny )
   else//if TDzia³o(ALufa.dzia³o).podniesienie_k¹t_maksymalny <> TDzia³o(ALufa.dzia³o).podniesienie_k¹t_minimalny then
     Self.dzia³o_podniesienie_procent_k¹ta_maksymalnego := 100;
-
-  //Statki_Form.Caption := FloatToStr( Self.dzia³o_podniesienie_procent_k¹ta_maksymalnego ); //???
 
   Self.obra¿enia_zadawane_wspó³czynnik := 1;
   Self.obra¿enia_zadawane_wspó³czynnik_zmodyfikowany := Self.obra¿enia_zadawane_wspó³czynnik;
@@ -12821,7 +13272,7 @@ begin//Konstruktor klasy TAmunicja.
   Self.pozycja_woda.Parent := AOwner; // Aby pozycja startowa siê nie przesuwa³a.
   Self.pozycja_woda.Pickable := false;
   Self.pozycja_woda.Radius := 0.15;
-  Self.pozycja_woda.Visible := false; //???
+  Self.pozycja_woda.Visible := false;
   Self.pozycja_woda.AbsolutePosition := ALufa.wylot_pozycja.AbsolutePosition;
 
   Self.Tag := 0;
@@ -12865,7 +13316,7 @@ begin//Konstruktor klasy TAmunicja.
 
 
               // Inicjuje pocz¹tkow¹ pozycjê wskaŸnika celu do wyliczenia pozycji celu przy opuszczaniu lufy przez amunicjê.
-              //Self.pozycja_celu.Visible := true; //???
+              //Self.pozycja_celu.Visible := true;
               Self.pozycja_celu.Material.FrontProperties.Emission.Color := GLColor.clrGreen;
               //Self.pozycja_celu.AbsolutePosition := TDzia³o(ALufa.dzia³o).AbsolutePosition;
 
@@ -12972,7 +13423,7 @@ begin//Konstruktor klasy TAmunicja.
           //
           //    //Statki_Form.Caption := FloatToStr( cel_oddalenie_l );
           //
-          //    if not Równanie_Paraboli_3_Punkty(
+          //    if not xNx__Równanie_Paraboli_3_Punkty(
           //               0, ALufa.wylot_pozycja.AbsolutePosition.Y, // Punkt wylotu - wa¿na jest wysokoœæ (x dla paraboli to bêdzie przebyty dystans od dzia³a).
           //               cel_oddalenie_l * 0.5, ztr, // Punkt w trakcie lotu. //???
           //               cel_oddalenie_l, cel_wspó³rzêdne_f.Y, // Punkt celu (x dla paraboli to bêdzie dystans do celu).
@@ -12987,7 +13438,7 @@ begin//Konstruktor klasy TAmunicja.
           //        Self.parabola_równanie__c := 0;
           //
           //      end;
-          //    //---//if not Równanie_Paraboli_3_Punkty( (...)
+          //    //---//if not xNx__Równanie_Paraboli_3_Punkty( (...)
           //
           //  end;
           ////---//if czy_lot_parabol¹_l then
@@ -13026,30 +13477,30 @@ begin//Konstruktor klasy TAmunicja.
 
   Self.Parent := ALufa; //AOwner; // Rodzicem jest Gra_Obiekty_GLDummyCube aby kontener obiektu porusza³ siê po wspó³rzêdnych absolutnych sceny (nie lokalnych).
   //Self.Direction.AsAffineVector := TTorpedy_Wyrzutnia(ALufa.dzia³o).Direction.AsAffineVector;
-  //Self.VisibleAtRunTime := true; //???
-  //Self.ShowAxes := true; //???
+  //Self.VisibleAtRunTime := true;
+  //Self.ShowAxes := true;
 
 
   Self.korpus_opadanie_obrót_dummy := TGLDummyCube.Create( Self );
   Self.korpus_opadanie_obrót_dummy.Parent := Self;
   Self.korpus_opadanie_obrót_dummy.EdgeColor.Color := GLColor.clrGreen;
-  //Self.korpus_opadanie_obrót_dummy.VisibleAtRunTime := true; //???
-  //Self.korpus_opadanie_obrót_dummy.ShowAxes := true; //???
+  //Self.korpus_opadanie_obrót_dummy.VisibleAtRunTime := true;
+  //Self.korpus_opadanie_obrót_dummy.ShowAxes := true;
   Self.korpus_opadanie_obrót_dummy.TagFloat := 1360;
 
 
   Self.korpus_ustawienie_pocz¹tkowe_dummy := TGLDummyCube.Create( Self );
   Self.korpus_ustawienie_pocz¹tkowe_dummy.Parent := Self.korpus_opadanie_obrót_dummy;
   Self.korpus_ustawienie_pocz¹tkowe_dummy.EdgeColor.Color := GLColor.clrYellow;
-  //Self.korpus_ustawienie_pocz¹tkowe_dummy.VisibleAtRunTime := true; //???
-  //Self.korpus_ustawienie_pocz¹tkowe_dummy.ShowAxes := true; //???
+  //Self.korpus_ustawienie_pocz¹tkowe_dummy.VisibleAtRunTime := true;
+  //Self.korpus_ustawienie_pocz¹tkowe_dummy.ShowAxes := true;
 
 
   Self.torpeda_efekt_na_wodzie := TGLDummyCube.Create( Self );
   Self.torpeda_efekt_na_wodzie.Parent := nil;
   Self.torpeda_efekt_na_wodzie.EdgeColor.Color := GLColor.clrRed;
-  //Self.torpeda_efekt_na_wodzie.VisibleAtRunTime := true; //???
-  //Self.torpeda_efekt_na_wodzie.ShowAxes := true; //???
+  //Self.torpeda_efekt_na_wodzie.VisibleAtRunTime := true;
+  //Self.torpeda_efekt_na_wodzie.ShowAxes := true;
 
 
   Self.korpus__amunicja := Wyglad_Elementy.TSt_GLCylinder.Create( Self );
@@ -13200,7 +13651,7 @@ begin//Konstruktor klasy TAmunicja.
   Self.pozycja_startowa.Radius := 0.15;
   Self.pozycja_startowa.Visible := false;
   Self.pozycja_startowa.AbsolutePosition := ALufa.wylot_pozycja.AbsolutePosition;
-  //Self.pozycja_startowa.ShowAxes := true; //???
+  //Self.pozycja_startowa.ShowAxes := true;
 
 
   // Dynamiczne dodanie zdarzenia kolizji.
@@ -13330,7 +13781,7 @@ begin
 
   Self.Parent := AOwner; // Rodzicem jest scena aby kontener obiektu porusza³ siê po wspó³rzêdnych absolutnych sceny (nie lokalnych).
   //Self.Direction.AsAffineVector := TTorpedy_Wyrzutnia(ALufa.dzia³o).Direction.AsAffineVector;
-  //Self.VisibleAtRunTime := true; //???
+  //Self.VisibleAtRunTime := true;
   Self.AbsolutePosition := AObiekty_Wieloosobowe_Amunicja_r.pozycja_am__owo; //???AAmunicja.AbsolutePosition;
   Self.Direction.AsVector := AObiekty_Wieloosobowe_Amunicja_r.kierunek_am__owo; //???AAmunicja.AbsoluteDirection;
 
@@ -13338,20 +13789,20 @@ begin
   Self.korpus_opadanie_obrót_dummy := TGLDummyCube.Create( Self );
   Self.korpus_opadanie_obrót_dummy.Parent := Self;
   Self.korpus_opadanie_obrót_dummy.EdgeColor.Color := GLColor.clrGreen;
-  //Self.korpus_opadanie_obrót_dummy.VisibleAtRunTime := true; //???
+  //Self.korpus_opadanie_obrót_dummy.VisibleAtRunTime := true;
 
 
   Self.korpus_ustawienie_pocz¹tkowe_dummy := TGLDummyCube.Create( Self );
   Self.korpus_ustawienie_pocz¹tkowe_dummy.Parent := AOwner;
   Self.korpus_ustawienie_pocz¹tkowe_dummy.EdgeColor.Color := GLColor.clrYellow;
-  //Self.korpus_ustawienie_pocz¹tkowe_dummy.VisibleAtRunTime := true; //???
+  //Self.korpus_ustawienie_pocz¹tkowe_dummy.VisibleAtRunTime := true;
 
 
   Self.torpeda_efekt_na_wodzie := TGLDummyCube.Create( Self );
   Self.torpeda_efekt_na_wodzie.Parent := nil;
   Self.torpeda_efekt_na_wodzie.EdgeColor.Color := GLColor.clrRed;
-  //Self.torpeda_efekt_na_wodzie.VisibleAtRunTime := true; //???
-  //Self.torpeda_efekt_na_wodzie.ShowAxes := true; //???
+  //Self.torpeda_efekt_na_wodzie.VisibleAtRunTime := true;
+  //Self.torpeda_efekt_na_wodzie.ShowAxes := true;
 
 
   // Elementy wizualne s¹ potomkami Self.korpus_ustawienie_pocz¹tkowe_dummy i ustawiane s¹ wed³ug jego pozycji i kierunku.
@@ -13455,8 +13906,8 @@ begin
   inherited Create( AOwner );
 
   Self.Parent := AOwner;
-  //???Self.ster_dummy.Position.Z := -Self.kad³ub.CubeWidth * 0.5;
-  //Self.ster_dummy.VisibleAtRunTime := true; //???
+
+  //Self.ster_dummy.VisibleAtRunTime := true;
 
   Self.uszkodzone_czas_sekundy_i := 0;
 
@@ -13483,7 +13934,7 @@ begin
   Self.efekt__element_uszkodzenie_dummy := TGLDummyCube.Create( Self );
   Self.efekt__element_uszkodzenie_dummy.Parent := Self.ster_mocowanie;
   Self.efekt__element_uszkodzenie_dummy.Visible := false;
-  //Self.efekt__element_uszkodzenie_dummy.VisibleAtRunTime := true; //???
+  //Self.efekt__element_uszkodzenie_dummy.VisibleAtRunTime := true;
   Self.efekt__element_uszkodzenie_dummy.Scale.Scale( 1.5 );
 
 
@@ -13585,7 +14036,7 @@ begin
   inherited Create( AOwner );
 
   Self.Parent := AOwner;
-  //Self.ster_dummy.VisibleAtRunTime := true; //???
+  //Self.ster_dummy.VisibleAtRunTime := true;
 
   Self.uszkodzone_czas_sekundy_i := 0;
 
@@ -13599,7 +14050,7 @@ begin
   Self.efekt__element_uszkodzenie_dummy := TGLDummyCube.Create( Self );
   Self.efekt__element_uszkodzenie_dummy.Parent := Self;
   Self.efekt__element_uszkodzenie_dummy.Visible := false;
-  //Self.efekt__element_uszkodzenie_dummy.VisibleAtRunTime := true; //???
+  //Self.efekt__element_uszkodzenie_dummy.VisibleAtRunTime := true;
   Self.efekt__element_uszkodzenie_dummy.Scale.Scale( 1.5 );
 
 
@@ -13772,7 +14223,6 @@ begin
   Self.prêdkoœæ_obrotowa_przyspieszanie := Self.prêdkoœæ_obrotowa_maksymalna * 0.2;
 
   //Self.czy_obrót_lewo := false;
-  //Self.czy_obrót_lewo := true; //???
 
   Self.czy_obrót_lewo := czy_obrót_lewo_f;
 
@@ -13783,8 +14233,8 @@ begin
   //Self.TurnAngle := 0;
   //Self.Direction.SetVector( 0, 0, -1 );
   //Self.Position.SetPoint( 0, 1, 0 );
-  //Self.VisibleAtRunTime := true; //???
-  //Self.ShowAxes := true; //???
+  //Self.VisibleAtRunTime := true;
+  //Self.ShowAxes := true;
 
 
   Self.wa³ := Wyglad_Elementy.TSt_GLCylinder.Create( Self );
@@ -13843,15 +14293,15 @@ begin
   Self.efekt__element_uszkodzenie_dummy := TGLDummyCube.Create( Self );
   Self.efekt__element_uszkodzenie_dummy.Parent := Self.wa³_podpórka;
   Self.efekt__element_uszkodzenie_dummy.Visible := false;
-  //Self.efekt__element_uszkodzenie_dummy.VisibleAtRunTime := true; //???
+  //Self.efekt__element_uszkodzenie_dummy.VisibleAtRunTime := true;
   Self.efekt__element_uszkodzenie_dummy.Scale.Scale( 1.5 );
 
 
   Self.obrót_dummy := TGLDummyCube.Create( Self );
   Self.obrót_dummy.Parent := Self;
   //Self.obrót_dummy.Position.Z := -Self.wa³.Height * 0.5;
-  //Self.obrót_dummy.VisibleAtRunTime := true; //???
-  //Self.obrót_dummy.ShowAxes := true; //???
+  //Self.obrót_dummy.VisibleAtRunTime := true;
+  //Self.obrót_dummy.ShowAxes := true;
 
 
   Self.wirnik_œrodek := Wyglad_Elementy.TSt_GLSphere.Create( Self );
@@ -15132,6 +15582,7 @@ begin
   Result.data_czas__udp_kontakt__kd := 0;
   Result.gotowy__kd := false;
   Result.od³¹czony__kd := false;
+  Result.w_grze__kd := false;
 
   if Self.klienci_lista_list.Count <= 0 then
     begin
@@ -15994,7 +16445,6 @@ begin
     zt_gl_dummy_cube := amunicja_f.korpus_ustawienie_pocz¹tkowe_dummy;
 
 
-  //???
   // Dodaje efekt smugi za pociskiem.
   with GetOrCreateSourcePFX( zt_gl_dummy_cube ) do // uses GLParticleFX.
     begin
@@ -16037,6 +16487,35 @@ begin
   //---//with GetOrCreateSourcePFX( zt_gl_dummy_cube ) do
 
 end;//---//Funkcja Amunicja_Wystrzelona_Efekt_Utwórz().
+
+//Funkcja Fala__Wysokoœæ_Na_Zboczu().
+function TStatki_Form.Fala__Wysokoœæ_Na_Zboczu( const absolute_position_f : TVector ) : single;
+var
+  zt_vector : TVector;
+begin
+
+  if not Fale_CheckBox.Checked then
+    Exit;
+
+  zt_vector := Fale_GLTerrainRenderer.AbsoluteToLocal( absolute_position_f );
+
+  Result :=
+      (
+          fale__woda_poziom_g
+        + Sin
+            (
+              WaterPhase
+                (
+                  zt_vector.X + Fale_GLTerrainRenderer.TileSize * 0.5,
+                  zt_vector.Y + Fale_GLTerrainRenderer.TileSize * 0.5
+                )
+            )
+        * fale__fala_wysokoœæ_g
+      )
+    * ( Fale_GLTerrainRenderer.Scale.Z / 128 );
+    //- 0; // 0 - Korekta w pionie.
+
+end;//---//Funkcja Fala__Wysokoœæ_Na_Zboczu().
 
 //Funkcja Odczytaj_Liczbê_Z_Napisu_Xml().
 function TStatki_Form.Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
@@ -16185,9 +16664,14 @@ begin
     Result := Wyglad_Elementy.TSt_GLCylinder.Create( w³aœciciel_gl_base_scene_object_f )
   else
   if l¹d_prymityw_f = wygl¹d_prymityw_c then
-    //Result := TGLDummyCube.Create( w³aœciciel_gl_base_scene_object_f )
-    Result := Wyglad_Elementy.TSt_GLDummyCube.Create( w³aœciciel_gl_base_scene_object_f )
-  else
+    begin
+
+      //Result := TGLDummyCube.Create( w³aœciciel_gl_base_scene_object_f )
+      Result := Wyglad_Elementy.TSt_GLDummyCube.Create( w³aœciciel_gl_base_scene_object_f );
+      //Wyglad_Elementy.Radar_Ignoruje( Result, true ); // Kontenerów na obiekty nie rysuje na radarze.
+
+    end
+  else//if l¹d_prymityw_f = wygl¹d_prymityw_c then
     //Result := TGLSphere.Create( w³aœciciel_gl_base_scene_object_f );
     if statek_f = nil then
       Log_Wypisz( 'Tworzenie l¹du - nieznany typ prymitywu: ' + l¹d_prymityw_f + '.', not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )
@@ -16285,8 +16769,9 @@ begin
   //     >= 0 - kopiowanemu elementowi ustawia kolor losowy z zadanego zakresu wartoœci.
   //
 
-  Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia( zt_gl_custom_scene_object_wzorzec_f )  );
-  Wyglad_Elementy.Kolizja_Wp³yw_Prêdkoœæ(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Kolizja_Wp³yw_Prêdkoœæ( zt_gl_custom_scene_object_wzorzec_f )  );
+  Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie( zt_gl_custom_scene_object_wzorzec_f )  );
+  Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( zt_gl_custom_scene_object_wzorzec_f )  );
+  Wyglad_Elementy.Kolizja_Wp³yw__Prêdkoœæ(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Kolizja_Wp³yw__Prêdkoœæ( zt_gl_custom_scene_object_wzorzec_f )  );
 
   if    ( kolor_od_f = -2 )
     and ( kolor_do_f = -2 ) then
@@ -16307,6 +16792,7 @@ begin
   Wygl¹d_Elementy__Tekstura_Wczytaj_2( zt_gl_custom_scene_object_kopia_f, '', zt_gl_custom_scene_object_wzorzec_f.Material.LibMaterialName );
 
   Wyglad_Elementy.Punkty_¯ycia(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Punkty_¯ycia( zt_gl_custom_scene_object_wzorzec_f )  );
+  Wyglad_Elementy.Radar_Ignoruje(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Radar_Ignoruje( zt_gl_custom_scene_object_wzorzec_f )  );
   Wyglad_Elementy.Œwiat³o(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Œwiat³o( zt_gl_custom_scene_object_wzorzec_f )  );
   Wyglad_Elementy.Œwiat³o_Dodatkowe(  zt_gl_custom_scene_object_kopia_f, Wyglad_Elementy.Œwiat³o_Dodatkowe( zt_gl_custom_scene_object_wzorzec_f )  );
 
@@ -16341,6 +16827,18 @@ begin
     and (  Wyglad_Elementy.Obiekt_Rodzaj( TGLCustomSceneObject(zt_gl_custom_scene_object_kopia_f) ) = Wyglad_Elementy.or_Kontener_Prymitywów  ) then // Jest to kontener na prymitywy.
     for i := 0 to zt_gl_custom_scene_object_kopia_f.Count - 1 do // Wszystkim obiektom prymitywu w kontenerze ustawia zadan¹ wartoœæ.
       Wyglad_Elementy.Punkty_¯ycia(  TGLCustomSceneObject(zt_gl_custom_scene_object_kopia_f.Children[ i ]), Wyglad_Elementy.Punkty_¯ycia( TGLCustomSceneObject(zt_gl_custom_scene_object_wzorzec_f.Children[ 0 ]) )  );
+
+
+  // Je¿eli obiekt wzorcowy w pêtli jest kontenerem i ma ustawione przekazywanie potomkom wartoœci ignorowania przez radar
+  // oraz obiekt docelowy jest kontenerem to ustawi obiektom w kontenerze docelowym ignorowanie przez radar.
+  if    ( zt_gl_custom_scene_object_wzorzec_f.Count > 0 )
+    and (  Wyglad_Elementy.Obiekt_Rodzaj( TGLCustomSceneObject(zt_gl_custom_scene_object_wzorzec_f) ) = Wyglad_Elementy.or_Kontener_Prymitywów  ) // Jest to kontener na prymitywy.
+    and (  Wyglad_Elementy.Radar_Ignoruje__Przeka¿_Potomkom( TGLCustomSceneObject(zt_gl_custom_scene_object_wzorzec_f) )  )
+    and ( zt_gl_custom_scene_object_kopia_f.Count > 0 )
+    and (  Wyglad_Elementy.Obiekt_Rodzaj( TGLCustomSceneObject(zt_gl_custom_scene_object_kopia_f) ) = Wyglad_Elementy.or_Kontener_Prymitywów  ) then // Jest to kontener na prymitywy.
+    for i := 0 to zt_gl_custom_scene_object_kopia_f.Count - 1 do // Wszystkim obiektom prymitywu w kontenerze ustawia zadan¹ wartoœæ.
+      //Wyglad_Elementy.Radar_Ignoruje( TGLCustomSceneObject(zt_gl_custom_scene_object_kopia_f.Children[ i ]), true );
+      Wyglad_Elementy.Radar_Ignoruje(  TGLCustomSceneObject(zt_gl_custom_scene_object_kopia_f.Children[ i ]), Wyglad_Elementy.Radar_Ignoruje( TGLCustomSceneObject(zt_gl_custom_scene_object_wzorzec_f) )  );
 
 end;//---//Funkcja Wygl¹d_Elementy__Kopiuj_W³aœciwoœci().
 
@@ -16614,10 +17112,66 @@ begin
     if statki_t[ i ] <> nil then
       statki_t[ i ].Wygl¹d_Elementy__Noc_Zmieñ( dzieñ_jasnoœæ_g );
 
+
+  //for i := 0 to Fale_GLMaterialLibrary.Materials.Count - 1 do
+  //  Fale_GLMaterialLibrary.Materials[ i ].Material.Texture.ImageBrightness := dzieñ_jasnoœæ_g;
+
+  Fale_GLMaterialLibrary.Materials.GetLibMaterialByName('Woda').Material.Texture.ImageBrightness := dzieñ_jasnoœæ_g;
+
 end;//---//Funkcja Wygl¹d_Elementy__Noc_Zmieñ().
 
 //Funkcja L¹d_Utwórz().
 procedure TStatki_Form.L¹d_Utwórz( const lista_indeks_f : integer; const prymityw_indeks_f : integer = -99; const prymityw_rodzic_gl_dummy_cube_f : TGLDummyCube = nil );
+
+  //Funkcja Potomkom_Cechy_Nadaj__Radar_Ignoruje() w L¹d_Utwórz().
+  procedure Potomkom_Cechy_Nadaj__Radar_Ignoruje( zt_gl_custom_scene_object_f : TGLCustomSceneObject; const radar_ignoruje_f : boolean );
+  var
+    i_l,
+    j_l
+      : integer;
+  begin
+
+    //
+    // Funkcja ustawia wartoœæ radar_ignoruje obiektom w kontenerze.
+    // Wartoœæ kontenera nadrzêdnego nadpisuje wartoœci ustawione w kontenerach podrzêdnych.
+    //
+
+    if zt_gl_custom_scene_object_f = nil then
+      Exit;
+
+
+    for i_l := 0 to zt_gl_custom_scene_object_f.Count - 1 do
+      begin
+
+        if    (  not ( zt_gl_custom_scene_object_f[ i_l ] is TSt_GLDummyCube )  ) // Kontener na obiekty.
+          and (  Wyglad_Elementy.Obiekt_Rodzaj( TGLCustomSceneObject(zt_gl_custom_scene_object_f[ i_l ]) ) <> Wyglad_Elementy.or_Kontener_Prymitywów  ) then
+          begin
+
+            // Nie jest to kontener na prymitywy.
+
+            //Wyglad_Elementy.Radar_Ignoruje(  ( TGLCustomSceneObject(zt_gl_custom_scene_object_f[ i_l ]) ), Wyglad_Elementy.Radar_Ignoruje( zt_gl_custom_scene_object_f )  );
+            Wyglad_Elementy.Radar_Ignoruje(  ( TGLCustomSceneObject(zt_gl_custom_scene_object_f[ i_l ]) ), radar_ignoruje_f  );
+
+          end
+        else//if    (  not ( zt_gl_custom_scene_object_f[ i_l ] is TSt_GLDummyCube )  ) // Kontener na obiekty. (...)
+          if    ( zt_gl_custom_scene_object_f[ i_l ].Count > 0 )
+            and (  Wyglad_Elementy.Obiekt_Rodzaj( TGLCustomSceneObject(zt_gl_custom_scene_object_f[ i_l ]) ) = Wyglad_Elementy.or_Kontener_Prymitywów  ) // Jest to kontener na prymitywy.
+            //and (  Wyglad_Elementy.Radar_Ignoruje__Przeka¿_Potomkom( TGLCustomSceneObject(zt_gl_custom_scene_object_f[ i_l ]) )  )
+            and ( zt_gl_custom_scene_object_f[ i_l ] is TSt_GLDummyCube ) then // Kontener na obiekty.
+            begin
+
+              // Jest to kontener na prymitywy.
+
+              Potomkom_Cechy_Nadaj__Radar_Ignoruje( TGLCustomSceneObject(zt_gl_custom_scene_object_f[ i_l ]), radar_ignoruje_f );
+
+            end;
+          //---//if    ( TGLCustomSceneObject(l¹d_list[ i_l ]).Count > 0 ) (...)
+
+      end;
+    //---//for i_l := 0 to zt_gl_custom_scene_object_f.Count - 1 do
+
+  end;//---//Funkcja Potomkom_Cechy_Nadaj__Radar_Ignoruje() w L¹d_Utwórz().
+
 var
   pêtla_rosn¹ca : boolean;
 
@@ -16652,7 +17206,7 @@ var
   wygl¹d_kolor_definicja : TWygl¹d_Kolor_Definicja;
   wygl¹d_liczba_definicja : TWygl¹d_Liczba_Definicja;
   zt_cursor_kopia : TCursor;
-begin
+begin//Funkcja L¹d_Utwórz().
 
   //
   // Funkcja tworzy l¹d (mapê gry).
@@ -16822,7 +17376,7 @@ begin
             and (   not wygl¹d_liczba_definicja.Definicja_Istnieje(  VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] )  )   ) then
             begin
 
-              ztr_1 := Odczytaj_Liczbê_Z_Napisu( zt_xml_document.DocumentElement.ChildNodes[ i ].Text, 0, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked );
+              ztr_1 := Odczytaj_Liczbê_Z_Napisu( zt_xml_document.DocumentElement.ChildNodes[ i ].Text, null, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked );
 
               wygl¹d_liczba_definicja.Dodaj_Definicjê(  ztr_1, VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] )  );
 
@@ -16847,15 +17401,26 @@ begin
 
 
                   if zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = wygl¹d_prymityw_c then
-                    for j := 0 to Length( prymitywy_lista_t ) - 1 do
-                      if prymitywy_lista_t[ j ].plik_nazwa__sl = VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) then
-                        begin
+                    begin
 
-                          L¹d_Utwórz( lista_indeks_f, j, TGLDummyCube(zt_gl_custom_scene_object) ); // lista_indeks_f nie ma tutaj znaczenia.
-                          Break;
+                      jj := 0; // Tutaj tymczasowo jako sprawdzenie czy istnieje definicja prymitywu.
 
-                        end;
-                      //---//if prymitywy_lista_t[ j ].plik_nazwa__sl = VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) then
+                      for j := 0 to Length( prymitywy_lista_t ) - 1 do
+                        if prymitywy_lista_t[ j ].plik_nazwa__sl = VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) then
+                          begin
+
+                            jj:= 1;
+                            L¹d_Utwórz( lista_indeks_f, j, TGLDummyCube(zt_gl_custom_scene_object) ); // lista_indeks_f nie ma tutaj znaczenia.
+                            Break;
+
+                          end;
+                        //---//if prymitywy_lista_t[ j ].plik_nazwa__sl = VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) then
+
+                      if jj <> 1 then
+                        Log_Wypisz(  'Nie odnaleziono definicji prymitywu ''' + VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].Attributes[ 'nazwa' ] ) + '''.'  );
+
+                    end;
+                  //---//if zt_xml_document.DocumentElement.ChildNodes[ i ].LocalName = wygl¹d_prymityw_c then
 
 
                   kolor_losowy__do := -1;
@@ -16865,28 +17430,38 @@ begin
                   for j := 0 to zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes.Count - 1 do
                     begin
 
-                      if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw_obra¿enia' then
+                      if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw__amunicja_uzupe³nianie' then
+                        begin
+
+                          Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie(  zt_gl_custom_scene_object, Odczytaj_Liczbê_Z_Napisu_Xml( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ], wygl¹d_liczba_definicja, null, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )  );
+
+                          if Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie( zt_gl_custom_scene_object ) < 0 then
+                            Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie( zt_gl_custom_scene_object, 0 );
+
+                        end
+                      else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw__amunicja_uzupe³nianie' then
+                      if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw__obra¿enia' then
                         begin
 
                           //zt_gl_custom_scene_object.TagFloat := Odczytaj_Liczbê_Z_Napisu_Xml( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ], wygl¹d_liczba_definicja, 0.0001, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked );
-                          Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia(  zt_gl_custom_scene_object, Odczytaj_Liczbê_Z_Napisu_Xml( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ], wygl¹d_liczba_definicja, null, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )  );
+                          Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia(  zt_gl_custom_scene_object, Odczytaj_Liczbê_Z_Napisu_Xml( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ], wygl¹d_liczba_definicja, null, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )  );
 
-                          if Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia(  zt_gl_custom_scene_object ) > 100 then
-                            Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia(  zt_gl_custom_scene_object, 100 )
-                          else//if Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia(  zt_gl_custom_scene_object ) > 100 then
-                          if Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia(  zt_gl_custom_scene_object ) < -100 then
-                            Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia(  zt_gl_custom_scene_object, -100 );
+                          if Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( zt_gl_custom_scene_object ) > 100 then
+                            Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( zt_gl_custom_scene_object, 100 )
+                          else//if Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( zt_gl_custom_scene_object ) > 100 then
+                          if Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( zt_gl_custom_scene_object ) < -100 then
+                            Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( zt_gl_custom_scene_object, -100 );
 
                         end
-                      else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw_obra¿enia' then
-                      if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw_prêdkoœæ' then
+                      else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw__obra¿enia' then
+                      if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw__prêdkoœæ' then
                         begin
 
                           //zt_gl_custom_scene_object.Tag := Round(  Odczytaj_Liczbê_Z_Napisu_Xml( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ], wygl¹d_liczba_definicja, 0.0001, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )  );
-                          Wyglad_Elementy.Kolizja_Wp³yw_Prêdkoœæ(  zt_gl_custom_scene_object, Odczytaj_Liczbê_Z_Napisu_Xml( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ], wygl¹d_liczba_definicja, null, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )  );
+                          Wyglad_Elementy.Kolizja_Wp³yw__Prêdkoœæ(  zt_gl_custom_scene_object, Odczytaj_Liczbê_Z_Napisu_Xml( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ], wygl¹d_liczba_definicja, null, not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked )  );
 
                         end
-                      else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw_prêdkoœæ' then
+                      else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolizja_wp³yw__prêdkoœæ' then
                       if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolor' then
                         begin
 
@@ -16994,6 +17569,28 @@ begin
 
                         end
                       else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'punkty_¿ycia_maksymalne' then
+                      if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'radar_ignoruje' then
+                        begin
+
+                          if AnsiLowerCase( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text ) = 'nie' then
+                            Wyglad_Elementy.Radar_Ignoruje( zt_gl_custom_scene_object, false )
+                          else//if AnsiLowerCase( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text ) = 'nie' then
+                          if AnsiLowerCase( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text ) = 'tak' then
+                            Wyglad_Elementy.Radar_Ignoruje( zt_gl_custom_scene_object, true );
+
+                          if   ( AnsiLowerCase( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text ) = 'nie' )
+                            or ( AnsiLowerCase( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text ) = 'tak' ) then
+                            begin
+
+                              Wyglad_Elementy.Radar_Ignoruje__Przeka¿_Potomkom( zt_gl_custom_scene_object, true );
+
+                              Potomkom_Cechy_Nadaj__Radar_Ignoruje( zt_gl_custom_scene_object, Wyglad_Elementy.Radar_Ignoruje( zt_gl_custom_scene_object ) ); // Istotne je¿eli kontener na obiekty nie jest w nadrzêdnym kontenerze na obiekty.
+
+                            end;
+                          //---//if   ( AnsiLowerCase( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text ) = 'nie' ) (...)
+
+                        end
+                      else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'radar_ignoruje' then
                       if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'skala' then
                         begin
 
@@ -17022,15 +17619,6 @@ begin
 
                         end
                       else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'skala_proporcjonalna' then
-                      if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'tekstura' then
-                        begin
-
-                          if not ( zt_gl_custom_scene_object is TGLLines ) then
-                            if not Wygl¹d_Elementy__Tekstura_Wczytaj_2( zt_gl_custom_scene_object, zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text )  then
-                              Log_Wypisz( 'Tworzenie l¹du - b³¹d wczytania tekstury: ' + zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text + '.', not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked );
-
-                        end
-                      else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'tekstura' then
                       if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'œwiat³o' then
                         begin
 
@@ -17047,6 +17635,15 @@ begin
 
                         end
                       else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'œwiat³o_dodatkowe' then
+                      if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'tekstura' then
+                        begin
+
+                          if not ( zt_gl_custom_scene_object is TGLLines ) then
+                            if not Wygl¹d_Elementy__Tekstura_Wczytaj_2( zt_gl_custom_scene_object, zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text )  then
+                              Log_Wypisz( 'Tworzenie l¹du - b³¹d wczytania tekstury: ' + zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text + '.', not L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked );
+
+                        end
+                      else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'tekstura' then
                       if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'wartoœæ_dodatkowa_01' then
                         begin
 
@@ -17175,6 +17772,10 @@ begin
                                           Wygl¹d_Elementy__Kopiuj_W³aœciwoœci( zt_gl_custom_scene_object, zt_pêtla_gl_custom_scene_object, kolor_losowy__od, kolor_losowy__do );
 
 
+                                          if Wyglad_Elementy.Radar_Ignoruje__Przeka¿_Potomkom( zt_gl_custom_scene_object ) then
+                                            Potomkom_Cechy_Nadaj__Radar_Ignoruje( zt_pêtla_gl_custom_scene_object, Wyglad_Elementy.Radar_Ignoruje( zt_gl_custom_scene_object ) );
+
+
                                           if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'pêtla_x' then
                                             zt_pêtla_gl_custom_scene_object.Position.X := zt_pêtla_gl_custom_scene_object.Position.X + jj * pêtla_x_skok
                                           else
@@ -17230,6 +17831,10 @@ begin
 
 
                                           Wygl¹d_Elementy__Kopiuj_W³aœciwoœci( zt_gl_custom_scene_object, zt_pêtla_gl_custom_scene_object, kolor_losowy__od, kolor_losowy__do );
+
+
+                                          if Wyglad_Elementy.Radar_Ignoruje__Przeka¿_Potomkom( zt_gl_custom_scene_object ) then
+                                            Potomkom_Cechy_Nadaj__Radar_Ignoruje( zt_pêtla_gl_custom_scene_object, Wyglad_Elementy.Radar_Ignoruje( zt_gl_custom_scene_object ) );
 
 
                                           if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'pêtla_x' then
@@ -17354,6 +17959,10 @@ begin
 
 
                                           Wygl¹d_Elementy__Kopiuj_W³aœciwoœci( zt_gl_custom_scene_object, zt_pêtla_gl_custom_scene_object, kolor_losowy__od, kolor_losowy__do );
+
+
+                                          if Wyglad_Elementy.Radar_Ignoruje__Przeka¿_Potomkom( zt_gl_custom_scene_object ) then
+                                            Potomkom_Cechy_Nadaj__Radar_Ignoruje( zt_pêtla_gl_custom_scene_object, Wyglad_Elementy.Radar_Ignoruje( zt_gl_custom_scene_object ) );
 
 
                                             // Je¿eli mia³yby byæ losowe przesuniêcia w pêtli to nale¿y klientom wys³aæ te losowe wartoœci.
@@ -17561,7 +18170,14 @@ begin
       Wygl¹d_Elementy__Noc_Zmieñ();
 
 
-      L¹d_Elementy_Iloœæ_Label.Caption := Trim(  FormatFloat( '### ### ##0', l¹d_list.Count )  );
+      j := 0;
+
+      for i := 0 to l¹d_list.Count - 1 do
+        if    (  not Wyglad_Elementy.Radar_Ignoruje( l¹d_list[ i ] )  )
+          and (  not ( TGLCustomSceneObject(l¹d_list[ i ]) is TSt_GLDummyCube )  ) then // Kontenerów na obiekty nie rysuje na radarze.
+          inc( j );
+
+      L¹d_Elementy_Iloœæ_Label.Caption := Trim(  FormatFloat( '### ### ##0', l¹d_list.Count )  ) + ' / ' + Trim(  FormatFloat( '### ### ##0', j )  );
 
     end;
   //---//if prymityw_rodzic_gl_dummy_cube_f = nil then
@@ -17617,6 +18233,7 @@ begin
 
 
   <liczba_definicja nazwa="liczba nazwa abc">123,456</liczba_definicja>
+  <!-- <amunicja_iloœæ nazwa="liczba nazwa abc"/> -->
 
 
   <obiekt typ="kula">
@@ -17653,10 +18270,13 @@ begin
       <z>123,456</z>
     </wspó³rzêdne>
 
-    <kolizja_wp³yw_obra¿enia>123.456</kolizja_wp³yw_obra¿enia>
+    <kolizja_wp³yw__amunicja_uzupe³nianie>123.456</kolizja_wp³yw__amunicja_uzupe³nianie>
+      <!-- od 0, wyra¿ona w procentach, 0 - neutralna wartoœæ, im wiêksza wartoœæ tym wiêcej amunicji odnawia. -->
+
+    <kolizja_wp³yw__obra¿enia>123.456</kolizja_wp³yw__obra¿enia>
       <!-- od -100 do 100, wyra¿ona w procentach, 0 - neutralna wartoœæ, < 0 - leczy, > 0 zadaje obra¿enia, im wiêksza wartoœæ (bezwzglêdna) tym mocniej. -->
 
-    <kolizja_wp³yw_prêdkoœæ>1</kolizja_wp³yw_prêdkoœæ>
+    <kolizja_wp³yw__prêdkoœæ>1</kolizja_wp³yw__prêdkoœæ>
       <!-- 0 - neutralna wartoœæ, > 0 - spowalnia, < 0 odbija (im wiêksza wartoœæ tym mocniej), od -100 do 100 (wielkoœci poza -100 i 100 bêd¹ potem i tak ograniczane w obliczeniach). -->
 
     <obrót__lewo_prawo>123,456</obrót__lewo_prawo>
@@ -17669,6 +18289,12 @@ begin
 
     <punkty_¿ycia_maksymalne>123,456</punkty_¿ycia_maksymalne>
       <!--  Wartoœæ mniejsza od 0 oznacza niezniszczalny l¹d; mo¿na ustawiaæ obiektom w definicji prymitywu jak i podczas u¿ywania prymitywu (w tym wypadku wszystkim obiektom w kontenerze prymitywu przypisze zadan¹ wartoœæ). -->
+
+    <radar_ignoruje>Tak</radar_ignoruje>
+      <!--  Nie - obiekt jest widoczny na radarze; Tak - obiekt nie jest widoczny na radarze. -->
+      <!--  Brak (te¿ jakakolwiek inna wartoœæ lub brak wêz³a) - dla prymitywów okreœla, ¿e obiekty w nich zawarte bêd¹ rysowane wed³ug w³asnych definicji. -->
+      <!--  Dla prymitywów wartoœci 'Nie', 'Tak' okreœlaj¹ jak ma byæ nadpisana wartoœæ 'radar_ignoruje' obiektów w nich zawartych. -->
+      <!--  Wartoœæ kontenera nadrzêdnego nadpisuje wartoœci ustawione w kontenerach podrzêdnych. -->
 
     <œwiat³o>Tak</œwiat³o>
     <œwiat³o_dodatkowe>Tak</œwiat³o_dodatkowe>
@@ -17823,7 +18449,9 @@ end;//---//Funkcja L¹d_Punkty_¯ycia_Zmieñ().
 procedure TStatki_Form.L¹d_Zwolnij_Uszkodzenia();
 var
   kontener_usuniêto : boolean;
-  i : integer;
+  i,
+  zti
+    : integer;
   zts : string;
   rodzic_gl_base_scene_object : TGLBaseSceneObject;
 begin
@@ -17887,7 +18515,14 @@ begin
     l¹d_zwolnij_uszkodzenia_przelicz_g := false;
 
 
-  L¹d_Elementy_Iloœæ_Label.Caption := Trim(  FormatFloat( '### ### ##0', l¹d_list.Count )  );
+  zti := 0;
+
+  for i := 0 to l¹d_list.Count - 1 do
+    if    (  not Wyglad_Elementy.Radar_Ignoruje( l¹d_list[ i ] )  )
+      and (  not ( TGLCustomSceneObject(l¹d_list[ i ]) is TSt_GLDummyCube )  ) then // Kontenerów na obiekty nie rysuje na radarze.
+      inc( zti );
+
+  L¹d_Elementy_Iloœæ_Label.Caption := Trim(  FormatFloat( '### ### ##0', l¹d_list.Count )  ) + ' / ' + Trim(  FormatFloat( '### ### ##0', zti )  );
 
 end;//---//Funkcja L¹d_Zwolnij_Uszkodzenia().
 
@@ -18512,6 +19147,10 @@ begin
 
         end;
       //---//if    ( not TŒlad_Torowy(œlad_torowy_list[ i ]).zmieni³_kolor ) (...)
+
+
+      // Wysokoœæ na zboczu fali.
+      TŒlad_Torowy(œlad_torowy_list[ i ]).Position.Y := Fala__Wysokoœæ_Na_Zboczu( TŒlad_Torowy(œlad_torowy_list[ i ]).AbsolutePosition );
 
 
       //if TŒlad_Torowy(œlad_torowy_list[ i ]).zmieni³_kolor then //???
@@ -19362,10 +20001,10 @@ begin//Funkcja Statek_Klawisze_Obs³uga().
 
 
   if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar_widocznoœæ ) then
-    Radar_Widocznoœæ_CheckBox.Checked := not Radar_Widocznoœæ_CheckBox.Checked;
+    Radar__Widocznoœæ_CheckBox.Checked := not Radar__Widocznoœæ_CheckBox.Checked;
 
   if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar_broñ_zasiêg_wyœwietlaj ) then
-    Radar_Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked := not Radar_Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked;
+    Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked := not Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked;
 
 
       if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__samolot_katapult¹_startuj ) then
@@ -19445,13 +20084,13 @@ begin//Funkcja Statek_Klawisze_Obs³uga().
 
 
   if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__strza³__broñ_indeks_zmieniaj ) then
-    zt_statek.Broñ_Indeks_Zmieniaj_Ustaw();
+    zt_statek.Broñ__Indeks_Zmieniaj_Ustaw();
 
   if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__strza³__broñ_indeks_poprzedni ) then
-    zt_statek.Broñ_Indeks_Zmieniaj_Ustaw( true );
+    zt_statek.Broñ__Indeks_Zmieniaj_Ustaw( true );
 
   if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__strza³__broñ_indeks_nastêpny ) then
-    zt_statek.Broñ_Indeks_Zmieniaj_Ustaw( false );
+    zt_statek.Broñ__Indeks_Zmieniaj_Ustaw( false );
 
 
   // Je¿eli gracz ma statek i samolot to taka sama wartoœæ jest ustawiana do obu.
@@ -19810,10 +20449,12 @@ begin//Funkcja Klawisze_Obs³uga().
             Opcje_Pionowy_Splitter.Visible := true;
 
 
-          PageControl1.Width := Round( Self.Width * 0.2 );
+          //PageControl1.Width := Round( Self.Width * 0.2 );
 
-          if PageControl1.Width < 350 then
-            PageControl1.Width := Round( Self.Width * 0.35 );
+          //if PageControl1.Width < page_control_1_szerokoœæ_pocz¹tkowa_g then
+          //  PageControl1.Width := Round( Self.Width * 0.35 );
+
+          PageControl1.Width := page_control_1_szerokoœæ_pocz¹tkowa_g;
 
         end;
       //---//if PageControl1.Width > 1 then
@@ -19829,18 +20470,8 @@ begin//Funkcja Klawisze_Obs³uga().
 
       Pauza( not czy_pauza_g );
 
-      if czy_pauza_g then
-        Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__pauza_c, -99, 'Tak' )
-      else//if czy_pauza_g then
-        Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__pauza_c, -99, 'Nie' );
-
     end;
   //---//if    (  Klawisz_Wciœniêto_SprawdŸ_l( klawisz__pauza )  ) (...)
-
-
-//  if    (  Key = Ord( 'S' )  )
-//    and ( ssAlt in Shift ) then
-//    Wieloosobowe__Tryb_RadioGroup.Visible := not Wieloosobowe__Tryb_RadioGroup.Visible;
 
 
   //if not czy_pauza_g then
@@ -19940,7 +20571,8 @@ begin//Funkcja Klawisze_Obs³uga().
 
 
       if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__l¹dowanie_u³atwione ) then
-        L¹dowanie_U³atwione_CheckBox.Checked := not L¹dowanie_U³atwione_CheckBox.Checked;
+        if not czy_klient_g then
+          L¹dowanie_U³atwione_CheckBox.Checked := not L¹dowanie_U³atwione_CheckBox.Checked;
 
       if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__lotniskowiec_samolot_l¹dowanie_informacje ) then
         Lotniskowiec_Samolot_L¹dowanie_Informacje_CheckBox.Checked := not Lotniskowiec_Samolot_L¹dowanie_Informacje_CheckBox.Checked;
@@ -20106,6 +20738,9 @@ begin//Funkcja Klawisze_Obs³uga().
 
       if not czy_klient_g then
         begin
+
+          if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__gra_wspó³czynnik_prêdkoœci__x_10 ) then
+            Gra_Wspó³czynnik_Prêdkoœci_SpinEdit.Value := 1000;
 
           if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__gra_wspó³czynnik_prêdkoœci__plus ) then
             Gra_Wspó³czynnik_Prêdkoœci_SpinEdit.Value := Gra_Wspó³czynnik_Prêdkoœci_SpinEdit.Value + Gra_Wspó³czynnik_Prêdkoœci_SpinEdit.Increment;
@@ -20307,12 +20942,10 @@ var
   czy_samolot__kolizja_kopia : boolean;
   i,
   i_s,
+  zti,
   morze_wzburzenie_l
     : integer;
   ztr : real;
-  zt_vector_1,
-  zt_vector_2
-    : GLVectorGeometry.TVector;
   zt_statek : TStatek;
 begin
 
@@ -20417,7 +21050,7 @@ begin
                     zt_statek.schemat_samolot_zmiana_czas_sekundy_i := 0; // Ruch przerywa proces zmiany samolotu.
 
 
-                  ztr := zt_statek.Grawitacja_Opadanie_Zmieñ( delta_czasu_f );
+                  ztr := zt_statek.Grawitacja_Opadanie_Zmieñ( delta_czasu_f, Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Checked );
                   zt_statek.Skrêt_Procent_Zmieñ( delta_czasu_f );
                   zt_statek.Zanurzenie_Procent_Zmieñ( Dno_GLPlane.Position.Y );
 
@@ -20430,8 +21063,8 @@ begin
                       if i >= 0 then
                         begin
 
-                          gra_statystyki_r_t[ i ].obra¿enia_otrzymane := gra_statystyki_r_t[ i ].obra¿enia_otrzymane + ztr;
-                          gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji := gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji + ztr;
+                          gra_statystyki_r_t[ i ].obra¿enia_otrzymane__gs := gra_statystyki_r_t[ i ].obra¿enia_otrzymane__gs + ztr;
+                          gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji__gs := gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji__gs + ztr;
 
                         end;
                       //---//if i >= 0 then
@@ -20543,7 +21176,7 @@ begin
                                  ( zt_statek.si_decyduje )
                               or ( zt_statek.si__statek_gracza__p³ywa )
                             )
-                        and ( zt_statek.si_aktywnoœæ in [ sia_Odnawianie_Zasobów, sia_Postój ] )
+                        and ( zt_statek.si_aktywnoœæ in [ sia_Odnawianie_Zasobów__Lotniskowiec, sia_Postój ] )
                         and ( zt_statek.Samolot_Na_Lotniskowcu() <> nil ) then
                         begin
 
@@ -20621,6 +21254,17 @@ begin
                     zt_statek.zanurzenie_pu³ap__aktualne := zt_statek.Position.Y
                   else//if zt_statek.czy_samolot then
                     zt_statek.zanurzenie_pu³ap__aktualne := -zt_statek.Position.Y;
+
+
+                  if zt_statek.punkty_¿ycia_wskaŸnik__zanurzenie_peryskopowe__przekroczone__przeliczenie_poprzednie <> zt_statek.Zanurzenie_Peryskopowe__Przekroczone() then
+                    begin
+
+                      zt_statek.punkty_¿ycia_wskaŸnik__zanurzenie_peryskopowe__przekroczone__przeliczenie_poprzednie := zt_statek.Zanurzenie_Peryskopowe__Przekroczone();
+
+                      zt_statek.Punkty_¯ycia__WskaŸnik__Noc_Zmieñ( dzieñ_jasnoœæ_g );
+
+                    end;
+                  //---//if zt_statek.punkty_¿ycia_wskaŸnik__zanurzenie_peryskopowe__przekroczone__przeliczenie_poprzednie <> zt_statek.Zanurzenie_Peryskopowe__Przekroczone() then
                   {$endregion 'Ruch statku.'}
 
 
@@ -20678,7 +21322,7 @@ begin
                   //      zt_statek.torpedy_wyrzutnie_t[ i ].celownik_linia.LineColor.Color := GLColor.clrYellow;
                   //
                   //  end;
-                  ////---//if zt_statek.obracaj_dzia³a the
+                  ////---//if zt_statek.obracaj_dzia³a then
                   {$endregion '//Ruch dzia³.'}
 
 
@@ -20706,7 +21350,7 @@ begin
 
                       zt_statek.artyleria_t[ i ].Celownik_Linia_Wygl¹d_Ustaw();
 
-                      zt_statek.artyleria_t[ i ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__artyleria or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
+                      zt_statek.artyleria_t[ i ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__artyleria or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
 
                       zt_statek.artyleria_t[ i ].Element_Uszkodzenie_Przeliczaj();
 
@@ -20723,7 +21367,7 @@ begin
 
                       zt_statek.bomba_g³êbinowa_t[ i ].Celownik_Linia_Wygl¹d_Ustaw();
 
-                      zt_statek.bomba_g³êbinowa_t[ i ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__bomba_g³êbinowa or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
+                      zt_statek.bomba_g³êbinowa_t[ i ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__bomba_g³êbinowa or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
 
                       zt_statek.bomba_g³êbinowa_t[ i ].Element_Uszkodzenie_Przeliczaj();
 
@@ -20758,7 +21402,7 @@ begin
 
                       zt_statek.dzia³a_t[ i ].Celownik_Linia_Wygl¹d_Ustaw();
 
-                      zt_statek.dzia³a_t[ i ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__pocisk or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
+                      zt_statek.dzia³a_t[ i ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__pocisk or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
 
                       zt_statek.dzia³a_t[ i ].Element_Uszkodzenie_Przeliczaj();
 
@@ -20784,7 +21428,7 @@ begin
 
                       zt_statek.je¿e_g³êbinowe_t[ i ].Celownik_Linia_Wygl¹d_Ustaw();
 
-                      zt_statek.je¿e_g³êbinowe_t[ i ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__je¿e_g³êbinowe or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
+                      zt_statek.je¿e_g³êbinowe_t[ i ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__je¿e_g³êbinowe or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
 
                       zt_statek.je¿e_g³êbinowe_t[ i ].Element_Uszkodzenie_Przeliczaj();
 
@@ -20810,7 +21454,7 @@ begin
 
                       zt_statek.torpedy_wyrzutnie_t[ i ].Celownik_Linia_Wygl¹d_Ustaw();
 
-                      zt_statek.torpedy_wyrzutnie_t[ i ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__torpeda or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
+                      zt_statek.torpedy_wyrzutnie_t[ i ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( zt_statek.amunicja_rodzaj_wybrana__torpeda or zt_statek.amunicja_rodzaj_wybrana__wszystkie );
 
                       zt_statek.torpedy_wyrzutnie_t[ i ].Element_Uszkodzenie_Przeliczaj();
 
@@ -20847,6 +21491,47 @@ begin
 
                       if zt_statek.schemat_samolot_zmiana_czas_sekundy_i <> 0 then
                         zt_statek.schemat_samolot_zmiana_czas_sekundy_i := 0; // Utrata ca³ego ¿ycia przerywa proces zmiany samolotu.
+
+
+                      if zt_statek.statek__czas_do_zatoniêcia_s = '' then
+                        begin
+
+                          zti := Czas_Miêdzy_W_Sekundach( zt_statek.statek__utworzenie_czas_i );
+
+                          zt_statek.statek__czas_do_zatoniêcia_s := Sekundy_W__Minuty_Sekundy( zti );
+
+                          i := Gra_Statystyki_R_Identyfikator_ZnajdŸ( zt_statek.id_gracz );
+
+                          if i >= 0 then
+                            begin
+
+                              if   ( gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najd³u¿szy_sekund__gs < zti )
+                                or ( gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najd³u¿szy_sekund__gs = -1 ) then
+                                gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najd³u¿szy_sekund__gs := zti;
+
+                              if   ( gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najkrótszy_sekund__gs > zti )
+                                or ( gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najkrótszy_sekund__gs = -1 ) then
+                                gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najkrótszy_sekund__gs := zti;
+
+                              gra_statystyki_r_t[ i ].czas_do_zatoniêcia__suma_sekund__gs := gra_statystyki_r_t[ i ].czas_do_zatoniêcia__suma_sekund__gs + zti;
+                              gra_statystyki_r_t[ i ].zatoniêcia__gs := gra_statystyki_r_t[ i ].zatoniêcia__gs + 1;
+
+                            end;
+                          //---//if i >= 0 then
+
+
+                          for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
+                            if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd = zt_statek.id_gracz then
+                              begin
+
+                                Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__odbierz__statek__czas_do_zatoniêcia_c, TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_tcp__kd, IntToStr( zt_statek.id_statek ) + ';' + zt_statek.statek__czas_do_zatoniêcia_s  );
+                                Break;
+
+                              end;
+                            //---//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd <= si_peer_port_c then
+
+                        end;
+                      //---//if zt_statek.statek__czas_do_zatoniêcia_s = '' then
 
 
                       {$region 'Animacja toniêcia statku.'}
@@ -20894,27 +21579,28 @@ begin
 
 
                       //zt_statek.Lift( -0.005 ); // Dó³ (-). // Po obrocie przesuwa prostopadle do dna statku a nie w dó³ sceny.
+                      {$endregion 'Animacja toniêcia statku.'}
 
 
                       if Czas_Miêdzy_W_Sekundach( zt_statek.toniêcie__czas_sekundy_i ) > oczekiwanie_na__odnowienie_statku__czas_sekundy_g then
                         begin
 
-                          i := Gra_Statystyki_R_Identyfikator_ZnajdŸ( zt_statek.id_gracz );
-
-                          if i >= 0 then
-                            begin
-
-                              gra_statystyki_r_t[ i ].zatoniêcia := gra_statystyki_r_t[ i ].zatoniêcia + 1;
-
-                            end;
-                          //---//if zti >= 0 then
+                          // Ze wzglêdu na wyliczanie statystyk lepiej wczeœniej wyliczaæ t¹ wartoœæ (statki z zerow¹ iloœci¹ punktów ¿ycia nie s¹ naprawiane).
+                          //i := Gra_Statystyki_R_Identyfikator_ZnajdŸ( zt_statek.id_gracz );
+                          //
+                          //if i >= 0 then
+                          //  begin
+                          //
+                          //    gra_statystyki_r_t[ i ].zatoniêcia__gs := gra_statystyki_r_t[ i ].zatoniêcia__gs + 1;
+                          //
+                          //  end;
+                          ////---//if i >= 0 then
 
 
                           zt_statek.czy_usun¹æ_statek := true;
 
                         end;
                       //---//if Czas_Miêdzy_W_Sekundach( zt_statek.toniêcie__czas_sekundy_i ) > oczekiwanie_na__odnowienie_statku__czas_sekundy_g then
-                      {$endregion 'Animacja toniêcia statku.'}
 
                     end
                   else//if zt_statek.punkty_¿ycia_aktualne <= 0 then
@@ -20931,7 +21617,7 @@ begin
               //---//if not czy_klient_g then
 
 
-              zt_statek.Punkty_¯ycia__WskaŸnik_Rysuj( Gra_GLCamera, Punkty_¯ycia_WskaŸnik__Sposób_Prezentowania_ComboBox.ItemIndex );
+              zt_statek.Punkty_¯ycia__WskaŸnik__Rysuj( Gra_GLCamera, Punkty_¯ycia_WskaŸnik__Prezentowanie_Sposób_ComboBox.ItemIndex );
 
 
               Œlad_Torowy__Utwórz_Jeden( zt_statek );
@@ -21007,8 +21693,26 @@ begin
                       if zt_statek.falowanie_góra_dó³_wysokoœæ_aktualna >= 360 then
                         zt_statek.falowanie_góra_dó³_wysokoœæ_aktualna := zt_statek.falowanie_góra_dó³_wysokoœæ_aktualna - 360;
 
-                      ztr := zt_statek.falowanie_góra_dó³_zakres * morze_wzburzenie_l * 0.01;
-                      zt_statek.falowanie_dummy.Position.Y := Sin(  DegToRad( zt_statek.falowanie_góra_dó³_wysokoœæ_aktualna ) ) * ztr;
+
+                      if   ( not Fale_CheckBox.Checked )
+                        or (
+                                 ( zt_statek.czy_samolot )
+                             and ( zt_statek.AbsolutePosition.Y > samolot_w_powietrzu_wysokoœæ_od_c ) // Dla wysokich fal mo¿e wystêpowaæ przeskok w pozycji samolotu w pionie.
+                           ) then
+                        begin
+
+                          ztr := zt_statek.falowanie_góra_dó³_zakres * morze_wzburzenie_l * 0.01;
+                          zt_statek.falowanie_dummy.Position.Y := Sin(  DegToRad( zt_statek.falowanie_góra_dó³_wysokoœæ_aktualna ) ) * ztr;
+
+                        end
+                      else//if   ( not Fale_CheckBox.Checked ) (...)
+                        begin
+
+                          // Wysokoœæ na zboczu fali.
+                          zt_statek.falowanie_dummy.Position.Y := Fala__Wysokoœæ_Na_Zboczu( zt_statek.AbsolutePosition );
+
+                        end;
+                      //---//if   ( not Fale_CheckBox.Checked ) (...)
 
 
                       // Gdy jednoczeœnie zmienia siê PitchAngle i RollAngle to falowanie_dummy zaczyna siê krêciæ wokó³ osi Y.
@@ -21244,7 +21948,7 @@ begin
                   //
                   //        //zt_amunicja.Turn( zt_amunicja.statek.prêdkoœæ_obrotu_aktualna );
                   //        zt_amunicja.TurnAngle := zt_amunicja.TurnAngle - zt_amunicja.statek.prêdkoœæ_obrotu_aktualna;
-                  //        zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.Color := GLColor.clrGreen; //???
+                  //        zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.Color := GLColor.clrGreen;
                   //
                   //      end
                   //    else//if zt_amunicja.korpus__amunicja.DistanceTo( zt_amunicja.pozycja_startowa.AbsolutePosition ) <= zt_amunicja.strza³_od_blokada_dystans then
@@ -21256,7 +21960,7 @@ begin
                   //          zt_amunicja.czy_poza_luf¹ := true;
                   //
                   //
-                  //        zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.Color := GLColor.clrRed; //???
+                  //        zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.Color := GLColor.clrRed;
                   //
                   //        //if zt_amunicja.pozycja_startowa.AbsolutePosition.Y <> 0 then
                   //          //???zt_amunicja.pozycja_startowa.Position.Y := zt_amunicja.pozycja_startowa.AbsoluteToLocal( GLVectorGeometry.TVector(0, 0, 0) ).Y; // Zawsze poziom wody.
@@ -21374,8 +22078,8 @@ begin
                       if zti >= 0 then
                         begin
 
-                          gra_statystyki_r_t[ zti ].amunicja_wystrzelona_iloœæ := gra_statystyki_r_t[ zti ].amunicja_wystrzelona_iloœæ + 1;
-                          gra_statystyki_r_t[ zti ].amunicja_wystrzelona_obra¿enia_zadawane := gra_statystyki_r_t[ zti ].amunicja_wystrzelona_obra¿enia_zadawane + zt_amunicja.obra¿enia_zadawane;
+                          gra_statystyki_r_t[ zti ].amunicja_wystrzelona_iloœæ__gs := gra_statystyki_r_t[ zti ].amunicja_wystrzelona_iloœæ__gs + 1;
+                          gra_statystyki_r_t[ zti ].amunicja_wystrzelona_obra¿enia_zadawane__gs := gra_statystyki_r_t[ zti ].amunicja_wystrzelona_obra¿enia_zadawane__gs + zt_amunicja.obra¿enia_zadawane;
 
                         end;
                       //---//if zti >= 0 then
@@ -21406,7 +22110,10 @@ begin
                         and (
                                  ( zt_amunicja.id_gracz = Gracz_Identyfikator() )
                               or ( // Gdy gra nie jest rozpoczêta.
-                                       ( Wieloosobowe_Identyfikator_Edit.Text = '' )
+                                       (
+                                            ( Wieloosobowe_Identyfikator_Edit.Text = '' )
+                                         or ( Wieloosobowe_Identyfikator_Edit.Text = '-1' ) // Gra nie jest rozpoczêta ale jest pod³¹czenie jako gra lokalna albo serwer (klient bez rozpoczêtej gry nie mo¿e sterowaæ statkiem). //???
+                                       )
                                    and ( zt_amunicja.id_gracz = 0 )
                                  )
                             ) then
@@ -21842,7 +22549,7 @@ begin
                                       //  begin
                                       //
                                       //    // Im mniejszy dystans do zadanej g³êbokoœci tym prêdkoœæ opadania jest procentowo obni¿ana do 0 (im dalej tym jej skutecznoœæ osi¹ga 100%).
-                                      //    //??? wielkoœæ wskaznika os³abiæ os³abiani gdy daleko
+                                      //    //??? wielkoœæ wskaŸnika os³abiæ os³abianie gdy daleko
                                       //    ztr := Abs( 100 - Abs( zt_amunicja.korpus_opadanie_obrót_dummy.AbsolutePosition.Y * 100 / zt_amunicja.zanurzenie_g³êbokoœæ_zadana )  ) * 0.01;
                                       //
                                       //    if ztr > 1 then
@@ -22347,6 +23054,39 @@ begin
     end;
   //---//if    ( kamera_tryb_g <> kt_Statek__Projektowy_Tryb ) (...)
 
+
+  if Fale_CheckBox.Checked then
+    begin
+
+      if Gra_GLCamera.AbsolutePosition.Y > 50 then
+        begin
+
+          //Woda_Góra_GLPlane.Position.Y := -Gra_GLCamera.AbsolutePosition.Y
+
+          if Woda_Góra_GLPlane.Position.Y > Dno_GLPlane.Position.Y * 0.5 then
+            Woda_Góra_GLPlane.Position.Y := Dno_GLPlane.Position.Y * 0.5; // Z wiêkszej odleg³oœci p³aszczyzna migocze pod falami.
+
+        end
+      else//if Gra_GLCamera.AbsolutePosition.Y > 50 then
+        Woda_Góra_GLPlane.Position.Y := Woda_Dó³_GLPlane.Position.Y;
+
+
+      // Odleg³oœæ kamery od œrodka obszaru fal w poziomie.
+      if Fale_GLTerrainRenderer.DistanceTo(  GLVectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > fale__obszar_ograniczenie_g * 0.5 then
+        begin
+
+          // Obszar falowania jest zbyt ma³y ze wzglêdu na wydajnoœæ.
+          // Je¿eli kamera zbli¿y siê do brzegu obszaru falowania zostanie on przesuniêty w miejsce kamery (dla du¿ych fal to rozwi¹zanie skutkuje skokiem w animacji falowania).
+
+          Fale_GLTerrainRenderer.Position.X := Gra_GLCamera.AbsolutePosition.X;
+          Fale_GLTerrainRenderer.Position.Z := Gra_GLCamera.AbsolutePosition.Z;
+
+        end;
+      //---//if Fale_GLTerrainRenderer.DistanceTo(  GLVectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > fale__obszar_ograniczenie_g * 0.5 then
+
+    end;
+  //---//if Fale_CheckBox.Checked then
+
 end;//---//Funkcja Kamera_Odleg³oœæ_Kontroluj_Ustaw().
 
 //Funkcja Kamera_Prze³¹cz().
@@ -22367,8 +23107,8 @@ begin
   //
   // Parametry:
   //   kamera_tryb_f:
-  //     true - ustawi kamerê na wystrzelonej amunicji.
   //     false - ustawi kamerê na statku lub swobodn¹.
+  //     true - ustawi kamerê na wystrzelonej amunicji.
   //
 
 
@@ -22871,6 +23611,18 @@ begin//Funkcja Kamera_Woda_Pod_Nad_Widok_Ustaw().
     end;
   //---//if    ( Gra_GLCamera.AbsolutePosition.Y >= 0 ) (...)
 
+
+  if Statek_Gracza__Gracz_Tryb_Zwróæ() <> nil then
+    begin
+
+      if Gra_GLCamera.AbsolutePosition.Y < 0 then
+        Statek_Gracza__Gracz_Tryb_Zwróæ().Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( true )
+      else//if Gra_GLCamera.AbsolutePosition.Y < 0 then
+        Statek_Gracza__Gracz_Tryb_Zwróæ().Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( false, not Statek_Gracza__Gracz_Tryb_Zwróæ().Zanurzenie_Peryskopowe__Przekroczone() );
+
+    end;
+  //---//if Statek_Gracza__Gracz_Tryb_Zwróæ() <> nil then
+
 end;//---//Funkcja Kamera_Woda_Pod_Nad_Widok_Ustaw().
 
 //Funkcja Kamera_Na_Statek_Gracza_Ustaw().
@@ -22993,7 +23745,7 @@ var
   end;//---//Funkcja Ró¿a_Wiatrów().
 
   //Funkcja Radar_Napisy() w Napis_Odœwie¿().
-  procedure Radar_Napisy( const statek_f : TStatek );
+  procedure Radar_Napisy( const statek_f : TStatek; const odstêp_f : string = ''  );
   begin
 
     if statek_f = nil then
@@ -23001,10 +23753,11 @@ var
 
 
     Radar_GLHUDText.Text :=
+      odstêp_f +
       'S x: ' + Trim(  FormatFloat( '### ### ##0', statek_f.AbsolutePosition.X )  ) +
       ', z: ' + Trim(  FormatFloat( '### ### ##0', statek_f.AbsolutePosition.Z )  );
 
-    if Radar_Wspó³rzêdna_Y_CheckBox.Checked then
+    if Radar__Wspó³rzêdna_Y_CheckBox.Checked then
       Radar_GLHUDText.Text := Radar_GLHUDText.Text +
         ', y: ' + Trim(  FormatFloat( '### ### ##0', statek_f.AbsolutePosition.Y )  );
 
@@ -23019,14 +23772,16 @@ var
       Radar_GLHUDText.Text := Radar_GLHUDText.Text +
         ró¿a_wiatrów_statek;
 
-    if Radar_Wspó³rzêdne_Kursora_CheckBox.Checked then
+    if Radar__Wspó³rzêdne_Kursora_CheckBox.Checked then
       begin
 
-        Radar_GLHUDText.Text := Radar_GLHUDText.Text + #13 + #10 +
+        Radar_GLHUDText.Text := Radar_GLHUDText.Text +
+          #13 + #10 +
+          odstêp_f +
           'C x: ' + Trim(  FormatFloat( '### ### ##0', wspó³rzêdne_œwiata_z_radaru_affine_vector_g.X )  ) +
           ', z: ' + Trim(  FormatFloat( '### ### ##0', wspó³rzêdne_œwiata_z_radaru_affine_vector_g.Z )  );
 
-        if Radar_Wspó³rzêdna_Y_CheckBox.Checked then
+        if Radar__Wspó³rzêdna_Y_CheckBox.Checked then
           Radar_GLHUDText.Text := Radar_GLHUDText.Text +
             ', y: ' + Trim(  FormatFloat( '### ### ##0', wspó³rzêdne_œwiata_z_radaru_affine_vector_g.Y )  );
 
@@ -23035,7 +23790,9 @@ var
 
 
     if Dalmierz_CheckBox.Checked then
-      Radar_GLHUDText.Text := Radar_GLHUDText.Text + #13 + #10 +
+      Radar_GLHUDText.Text := Radar_GLHUDText.Text +
+        #13 + #10 +
+        odstêp_f +
         'd: ' + Trim(   FormatFloat(  '### ### ##0.000', statek_f.DistanceTo( wspó³rzêdne_œwiata_z_radaru_affine_vector_g )  )   );
 
   end;//---//Funkcja Radar_Napisy().
@@ -23139,7 +23896,7 @@ var
                 if uszkodzenia_broñ_licznik_l = 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f +
                   #13 + #10 +
-                  odstêp_f + odstêp_f + '<u artyleria: '
+                  odstêp_f + odstêp_f + '<artyleria: '
                 else//if uszkodzenia_broñ_licznik_l = 1 then
                 if uszkodzenia_broñ_licznik_l > 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f + ', ';
@@ -23226,7 +23983,7 @@ var
                 if uszkodzenia_broñ_licznik_l = 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f +
                   #13 + #10 +
-                  odstêp_f + odstêp_f + '<u bomby g³êbinowe: '
+                  odstêp_f + odstêp_f + '<bomby g³êbinowe: '
                 else//if uszkodzenia_broñ_licznik_l = 1 then
                 if uszkodzenia_broñ_licznik_l > 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f + ', ';
@@ -23313,7 +24070,7 @@ var
                 if uszkodzenia_broñ_licznik_l = 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f +
                   #13 + #10 +
-                  odstêp_f + odstêp_f + '<u dzia³a: '
+                  odstêp_f + odstêp_f + '<dzia³a: '
                 else//if uszkodzenia_broñ_licznik_l = 1 then
                 if uszkodzenia_broñ_licznik_l > 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f + ', ';
@@ -23400,7 +24157,7 @@ var
                 if uszkodzenia_broñ_licznik_l = 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f +
                   #13 + #10 +
-                  odstêp_f + odstêp_f + '<u je¿e g³êbinowe: '
+                  odstêp_f + odstêp_f + '<je¿e g³êbinowe: '
                 else//if uszkodzenia_broñ_licznik_l = 1 then
                 if uszkodzenia_broñ_licznik_l > 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f + ', ';
@@ -23487,7 +24244,7 @@ var
                 if uszkodzenia_broñ_licznik_l = 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f +
                   #13 + #10 +
-                  odstêp_f + odstêp_f + '<u torpedy: '
+                  odstêp_f + odstêp_f + '<torpedy: '
                 else//if uszkodzenia_broñ_licznik_l = 1 then
                 if uszkodzenia_broñ_licznik_l > 1 then
                   uszkodzenia_opis_f := uszkodzenia_opis_f + ', ';
@@ -24007,7 +24764,9 @@ begin//Funkcja Napis_Odœwie¿().
                 Trim(   FormatFloat(  '### ### ##0.00', Czas_Miêdzy_W_Sekundach( zt_statek.toniêcie__czas_sekundy_i )  )   ) +
                 ' z ' +
                 Trim(  FormatFloat( '### ### ##0.00', oczekiwanie_na__odnowienie_statku__czas_sekundy_g )  ) +
-                ' [s]';
+                ' [s]' +
+                #13 + #10 +
+                statek_informacje_odstêp_c_l + statek_informacje_odstêp_c_l + 'czas gry ' + zt_statek.statek__czas_do_zatoniêcia_s + ' [mmm:ss]';
 
             end
           else//if zt_statek.punkty_¿ycia_aktualne <= 0 then
@@ -24178,7 +24937,9 @@ begin//Funkcja Napis_Odœwie¿().
                     Trim(   FormatFloat(  '### ### ##0.00', Czas_Miêdzy_W_Sekundach( samolot__statek_gracza.toniêcie__czas_sekundy_i )  )   ) +
                     ' z ' +
                     Trim(  FormatFloat( '### ### ##0.00', oczekiwanie_na__odnowienie_statku__czas_sekundy_g )  ) +
-                    ' [s]';
+                    ' [s]' +
+                    #13 + #10 +
+                    samolot_informacje_odstêp_c_l + samolot_informacje_odstêp_c_l + 'czas gry ' + samolot__statek_gracza.statek__czas_do_zatoniêcia_s + ' [mmm:ss]';
 
                 end
               else//if samolot__statek_gracza.punkty_¿ycia_aktualne <= 0 then
@@ -24321,9 +25082,9 @@ begin//Funkcja Napis_Odœwie¿().
 
           if    ( gracz_tryb_g = gt_Samolot )
             and ( samolot__statek_gracza <> nil ) then
-            Radar_Napisy( samolot__statek_gracza )
+            Radar_Napisy( samolot__statek_gracza, statek_informacje_odstêp_c_l )
           else//if    ( gracz_tryb_g = gt_Samolot ) (...)
-            Radar_Napisy( zt_statek );
+            Radar_Napisy( zt_statek, statek_informacje_odstêp_c_l );
 
         end;
       //---//if zt_statek <> nil then
@@ -24384,12 +25145,16 @@ begin//Funkcja Napis_Odœwie¿().
 
   Informacje_G³ówne_GLHUDSprite.Height := 27 * zti;
 
-  try
-    Informacje_G³ówne_GLHUDSprite.Width := Gra_GLWindowsBitmapFont.TextWidth( zts ) + 5; // W IDE 10.2 zg³asza b³¹d 'Range check error'.
-  except
-    Informacje_G³ówne_GLHUDSprite.Width := Length( zts ) + 5;
-  end;
-  //---//try
+
+  if Fotograficzny_Tryb_CheckBox.Checked then
+    Informacje_G³ówne_GLHUDSprite.Width := 0
+  else//if Fotograficzny_Tryb_CheckBox.Checked then
+    try
+      Informacje_G³ówne_GLHUDSprite.Width := Gra_GLWindowsBitmapFont.TextWidth( zts ) + 5; // w IDE 10.2 czasami zg³asza b³¹d 'Range check error'.
+    except
+      Informacje_G³ówne_GLHUDSprite.Width := Length( zts ) + 5;
+    end;
+    //---//try
 
   Informacje_G³ówne_GLHUDSprite.Position.X := Informacje_G³ówne_GLHUDSprite.Width * 0.5;
   Informacje_G³ówne_GLHUDSprite.Position.Y := Informacje_G³ówne_GLHUDSprite.Height * 0.5;
@@ -24419,7 +25184,7 @@ begin//Funkcja Napis_Odœwie¿().
   Informacje_Dodatkowe_GLHUDSprite.Height := 27 * zti;
 
   try
-    Informacje_Dodatkowe_GLHUDSprite.Width := Gra_GLWindowsBitmapFont.TextWidth( zts ) + 15; // W IDE 10.2 zg³asza b³¹d 'Range check error'.
+    Informacje_Dodatkowe_GLHUDSprite.Width := Gra_GLWindowsBitmapFont.TextWidth( zts ) + 15; // w IDE 10.2 czasami zg³asza b³¹d 'Range check error'.
   except
     Informacje_Dodatkowe_GLHUDSprite.Width := Length( zts ) + 15;
   end;
@@ -24451,8 +25216,25 @@ begin
   //  Exit;
 
 
-  mysz_pozycja_point := Mouse.CursorPos;
-  mysz_pozycja_point := ScreenToClient( mysz_pozycja_point );
+  if not Gra_GLUserInterface.MouseLookActive then
+    begin
+
+      // Pozycja wed³ug kursora myszy.
+
+      mysz_pozycja_point := Mouse.CursorPos;
+      mysz_pozycja_point := ScreenToClient( mysz_pozycja_point );
+
+    end
+  else//if not Gra_GLUserInterface.MouseLookActive then
+    begin
+
+      // Pozycja wed³ug œrodka Gra_GLSceneViewer.
+
+      mysz_pozycja_point.X := Gra_GLSceneViewer.Left + Round( Gra_GLSceneViewer.Width * 0.5 );
+      mysz_pozycja_point.Y := Gra_GLSceneViewer.Top + Round( Gra_GLSceneViewer.Height * 0.5 );
+
+    end;
+  //---//if not Gra_GLUserInterface.MouseLookActive then
 
 
   if zt_statek <> nil then
@@ -24469,6 +25251,28 @@ begin
     if Projektowy_Tryb__Wspó³rzêdne_Sceny_Wyœwietlaj_CheckBox.Checked then
       Celowniczy_GLDummyCube.Position.AsAffineVector := Gra_GLSceneViewer.Buffer.PixelRayToWorld( mysz_pozycja_point.X, mysz_pozycja_point.Y );
 
+
+  // Celownik na ekranie.
+  if Celownik_Ekranowy__Dó³_GLHUDSprite.Visible then
+    begin
+
+      Celownik_Ekranowy__Dó³_GLHUDSprite.Position.X := Gra_GLSceneViewer.Width * 0.5;
+      Celownik_Ekranowy__Dó³_GLHUDSprite.Position.Y := Gra_GLSceneViewer.Height * 0.5;
+
+      Celownik_Ekranowy__Góra_GLHUDSprite.Position := Celownik_Ekranowy__Dó³_GLHUDSprite.Position;
+      Celownik_Ekranowy__Lewo_GLHUDSprite.Position := Celownik_Ekranowy__Dó³_GLHUDSprite.Position;
+      Celownik_Ekranowy__Prawo_GLHUDSprite.Position := Celownik_Ekranowy__Dó³_GLHUDSprite.Position;
+
+      Celownik_Ekranowy__Dó³_GLHUDSprite.Position.Y := Celownik_Ekranowy__Dó³_GLHUDSprite.Position.Y + Celownik_Ekranowy__Lewo_GLHUDSprite.Height * 0.5 + Celownik_Ekranowy__Dó³_GLHUDSprite.Height * 0.5;
+      Celownik_Ekranowy__Góra_GLHUDSprite.Position.Y := Celownik_Ekranowy__Góra_GLHUDSprite.Position.Y - Celownik_Ekranowy__Lewo_GLHUDSprite.Height * 0.5 - Celownik_Ekranowy__Dó³_GLHUDSprite.Height * 0.5;
+
+      Celownik_Ekranowy__Lewo_GLHUDSprite.Position.X := Celownik_Ekranowy__Lewo_GLHUDSprite.Position.X - Celownik_Ekranowy__Dó³_GLHUDSprite.Width * 0.5 - Celownik_Ekranowy__Lewo_GLHUDSprite.Width * 0.5;
+      Celownik_Ekranowy__Prawo_GLHUDSprite.Position.X := Celownik_Ekranowy__Prawo_GLHUDSprite.Position.X + Celownik_Ekranowy__Dó³_GLHUDSprite.Width * 0.5 + Celownik_Ekranowy__Lewo_GLHUDSprite.Width * 0.5;
+
+    end;
+  //---//if Celownik_Ekranowy__Dó³_GLHUDSprite.Visible then
+  //---// Celownik na ekranie.
+
 end;//---//Funkcja Celownicza_Kula_Zmieñ_Pozycjê().
 
 //Funkcja Pauza().
@@ -24480,8 +25284,8 @@ begin
   //
   // Parametry:
   //   czy_pauza_f:
-  //     true - w³¹cza pauzê.
   //     false - wy³¹cza pauzê.
+  //     true - w³¹cza pauzê.
   //
 
   czy_pauza_g := czy_pauza_f;
@@ -24506,6 +25310,8 @@ begin
 
       Napis_Odœwie¿( -1, true );
 
+      Gra_Pauza_Button.Font.Style := [ fsBold ];
+
     end
   else//if czy_pauza_g then
     begin
@@ -24517,8 +25323,17 @@ begin
 
       Gra_Wspó³czynnik_Prêdkoœci_SpinEditChange( nil ); // Je¿eli zmienia siê Gra_GLCadencer.TimeMultiplier podczas pauzy to po wy³¹czeniu pauzy nastêpuje skok w przeliczaniu.
 
+      Gra_Pauza_Button.Font.Style := [];
+
     end;
   //---//if czy_pauza_g then
+
+
+  if czy_serwer_g then
+    if czy_pauza_g then
+      Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__pauza_c, -99, 'Tak' )
+    else//if czy_pauza_g then
+      Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__pauza_c, -99, 'Nie' );
 
 end;//---//Funkcja Pauza().
 
@@ -24563,7 +25378,7 @@ begin
           inc( zti );
 
           SetLength( statki_t, zti + 1 );
-          statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd, zti, Statek_Odczytaj_Schemat( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek_schemat__kd ), prymitywy_lista_t  );
+          statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd, zti, Statek_Odczytaj_Schemat( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek_schemat__kd ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal()  );
           statki_t[ zti ].id_grupa := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_grupa__kd;
           statki_t[ zti ].id_statek_schemat := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek_schemat__kd;
           statki_t[ zti ].gracz__nazwa.Text :=
@@ -24594,7 +25409,7 @@ begin
 
               Celowanie_ParametryClick( nil );
 
-              statek_gracza.Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
+              statek_gracza.Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
 
               Interfejs_Parametry_Wed³ug_Statku_Ustaw();
 
@@ -24603,7 +25418,7 @@ begin
             begin
 
               statki_t[ zti ].Elementy_Gracza_Widocznoœæ( Gracz_Grupa_SpinEdit.Value, false );
-              statki_t[ zti ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
+              statki_t[ zti ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
 
             end;
           //---//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd = Gracz_Identyfikator() then
@@ -24616,7 +25431,7 @@ begin
               inc( zti );
 
               SetLength( statki_t, zti + 1 );
-              statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd, zti, Statek_Odczytaj_Schemat( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek__samolot_schemat__kd ), prymitywy_lista_t  );
+              statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd, zti, Statek_Odczytaj_Schemat( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek__samolot_schemat__kd ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal()  );
               statki_t[ zti ].id_grupa := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_grupa__kd;
               statki_t[ zti ].id_statek_schemat := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek__samolot_schemat__kd;
               statki_t[ zti ].gracz__nazwa.Text :=
@@ -24649,7 +25464,7 @@ begin
 
                   Celowanie_ParametryClick( nil );
 
-                  samolot__statek_gracza.Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
+                  samolot__statek_gracza.Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
 
                   Interfejs_Parametry_Wed³ug_Statku_Ustaw();
 
@@ -24658,7 +25473,7 @@ begin
                 begin
 
                   statki_t[ zti ].Elementy_Gracza_Widocznoœæ( Gracz_Grupa_SpinEdit.Value, false );
-                  statki_t[ zti ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
+                  statki_t[ zti ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
 
                 end;
               //---//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd = Gracz_Identyfikator() then
@@ -24671,10 +25486,13 @@ begin
       //---//for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
 
 
+      Statki__Punkty_¯ycia_WskaŸnik__Efekty_Tryb_Ustaw();
+
+
       L¹d_Utwórz( L¹d_ComboBox.ItemIndex ); // Wczytuje pozycje pocz¹tkowe statków.
 
 
-      Statki_Rozstaw( nil );
+      Statki__Rozstaw( nil );
 
     end;
   //---//if not czy_klient_g then
@@ -24784,9 +25602,6 @@ begin
   //
   // Funkcja zwalnia i tworzy na nowo statek.
   //
-
-
-  // Pojawia siê b³¹d access violation nie wiadomo gdzie. //???
 
   id_statek_l := -99;
   id_statek__lotniskowiec_dla_samolotu_l := -99;
@@ -24898,7 +25713,7 @@ begin
 
         gracz_tryb_g := gracz_tryb_l;
 
-        statki_t[ i ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, id_gracz_l, id_statek_l, Statek_Odczytaj_Schemat( id_statek_schemat_l ), prymitywy_lista_t  );
+        statki_t[ i ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, id_gracz_l, id_statek_l, Statek_Odczytaj_Schemat( id_statek_schemat_l ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal()  );
         statki_t[ i ].id_grupa := id_grupa_l;
         statki_t[ i ].id_statek_schemat := id_statek_schemat_l;
         statki_t[ i ].gracz__nazwa.Text := gracz__nazwa_l;
@@ -24916,7 +25731,7 @@ begin
 
             Celowanie_ParametryClick( nil );
 
-            statki_t[ i ].Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
+            statki_t[ i ].Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
 
             Interfejs_Parametry_Wed³ug_Statku_Ustaw(); // Je¿eli zmieniono samolot i s¹ inne rodzaje broni to pojawia siê b³¹d dostêpu.
 
@@ -24938,7 +25753,7 @@ begin
           begin
 
             statki_t[ i ].Elementy_Gracza_Widocznoœæ( Gracz_Grupa_SpinEdit.Value, false );
-            statki_t[ i ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
+            statki_t[ i ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
 
           end;
         //---//if   ( czy_samolot__statek_gracza_l ) (...)
@@ -24991,7 +25806,7 @@ begin
   else//if    ( statki_t[ i ].czy_samolot ) (...)
     if    ( i >= 0 )
       and (  i <= Length( statki_t ) - 1  ) then
-      Statki_Rozstaw( statki_t[ i ] );
+      Statki__Rozstaw( statki_t[ i ] );
 
 
   if    ( czy_serwer_g )
@@ -25001,8 +25816,27 @@ begin
 
 end;//---//Funkcja Statek_Przywróæ_Do_Gry().
 
-//Funkcja Statki_Rozstaw().
-procedure TStatki_Form.Statki_Rozstaw( const statek_f : TStatek );
+//Statki__Punkty_¯ycia_WskaŸnik__Efekty_Tryb_Ustaw().
+procedure TStatki_Form.Statki__Punkty_¯ycia_WskaŸnik__Efekty_Tryb_Ustaw();
+var
+  i : integer;
+begin
+
+  for i := 0 to Length( statki_t ) - 1 do
+    if statki_t[ i ] <> nil then
+      begin
+
+        statki_t[ i ].punkty_¿ycia_wskaŸnik__efekty_tryb := TPunkty_¯ycia_WskaŸnik__Efekty_Tryb(Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex + 1);
+        statki_t[ i ].Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw( Punkty_¯ycia_WskaŸnik__Material_Options_Ustal() );
+        statki_t[ i ].Punkty_¯ycia__WskaŸnik__Noc_Zmieñ( dzieñ_jasnoœæ_g );
+
+      end;
+    //---//if statki_t[ i ] <> nil then
+
+end;//---//Statki__Punkty_¯ycia_WskaŸnik__Efekty_Tryb_Ustaw().
+
+//Funkcja Statki__Rozstaw().
+procedure TStatki_Form.Statki__Rozstaw( const statek_f : TStatek );
 var
   czy_kolizja_wykryta_l,
   koniec_grup_l
@@ -25383,7 +26217,7 @@ begin
 
   Screen.Cursor := zt_cursor_kopia;
 
-end;//---//Funkcja Statki_Rozstaw().
+end;//---//Funkcja Statki__Rozstaw().
 
 //Funkcja Lotniskowiec__Samoloty_Wszystkie__Punkty_¯ycia_Zero().
 procedure TStatki_Form.Lotniskowiec__Samoloty_Wszystkie__Punkty_¯ycia_Zero( const statek_lotniskowiec_f, statek_niszcz¹cy_f : TStatek; const rodzaj_f : smallint = -1 );
@@ -25442,14 +26276,14 @@ begin
             if j >= 0 then
               begin
 
-                gra_statystyki_r_t[ j ].zatopienia := gra_statystyki_r_t[ j ].zatopienia + 1;
-                gra_statystyki_r_t[ j ].obra¿enia_zadane__amunicja := gra_statystyki_r_t[ j ].obra¿enia_zadane__amunicja + statki_t[ i ].punkty_¿ycia_aktualne;
+                gra_statystyki_r_t[ j ].zatopienia__gs := gra_statystyki_r_t[ j ].zatopienia__gs + 1;
+                gra_statystyki_r_t[ j ].obra¿enia_zadane__amunicja__gs := gra_statystyki_r_t[ j ].obra¿enia_zadane__amunicja__gs + statki_t[ i ].punkty_¿ycia_aktualne;
 
                 if statek_niszcz¹cy_f.id_grupa = statek_lotniskowiec_f.id_grupa then
                   begin
 
-                    gra_statystyki_r_t[ j ].zatopienia_sojuszników := gra_statystyki_r_t[ j ].zatopienia_sojuszników + 1;
-                    gra_statystyki_r_t[ j ].obra¿enia_zadane__amunicja_sojusznikom := gra_statystyki_r_t[ j ].obra¿enia_zadane__amunicja_sojusznikom + statki_t[ i ].punkty_¿ycia_aktualne;
+                    gra_statystyki_r_t[ j ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ j ].zatopienia_sojuszników__gs + 1;
+                    gra_statystyki_r_t[ j ].obra¿enia_zadane__amunicja_sojusznikom__gs := gra_statystyki_r_t[ j ].obra¿enia_zadane__amunicja_sojusznikom__gs + statki_t[ i ].punkty_¿ycia_aktualne;
 
                   end;
                 //---//if statek_niszcz¹cy_f.id_grupa = statek_lotniskowiec_f.id_grupa then
@@ -25500,7 +26334,7 @@ var
   zts : string;
   plik_ini : TIniFile; // uses IniFiles.
 begin
-//??? sprawdzic wszystkie pozycje
+
   //
   // Funkcja wczytuje i zapisuje ustawienia.
   //
@@ -25528,6 +26362,23 @@ begin
 
 
   if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'GRA', 'fale__obszar_ograniczenie' )  ) then
+    plik_ini.WriteFloat( 'GRA', 'fale__obszar_ograniczenie', fale__obszar_ograniczenie_g )
+  else
+    fale__obszar_ograniczenie_g := plik_ini.ReadFloat( 'GRA', 'fale__obszar_ograniczenie', fale__obszar_ograniczenie_g ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'GRA', 'fale__wysokoœæ_bazowa' )  ) then
+    plik_ini.WriteFloat( 'GRA', 'fale__wysokoœæ_bazowa', fale__wysokoœæ_bazowa_g )
+  else
+    fale__wysokoœæ_bazowa_g := plik_ini.ReadFloat( 'GRA', 'fale__wysokoœæ_bazowa', fale__wysokoœæ_bazowa_g ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  if not czy_klient_g then
+    fale__wysokoœæ_bazowa__serwer_g := fale__wysokoœæ_bazowa_g;
+
+
+  if   (  zapisuj_ustawienia_f )
     or (  not plik_ini.ValueExists( 'GRA', 'oczekiwanie_na__naprawienie_elementu__czas_sekund' )  ) then
     plik_ini.WriteInteger( 'GRA', 'oczekiwanie_na__naprawienie_elementu__czas_sekund', oczekiwanie_na__naprawienie_elementu__czas_sekundy_g )
   else
@@ -25548,6 +26399,12 @@ begin
     si__lot_trwanie_do_l¹dowania__czas_sekundy_g := plik_ini.ReadInteger( 'GRA', 'si__lot_trwanie_do_l¹dowania__czas_sekundy', si__lot_trwanie_do_l¹dowania__czas_sekundy_g ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'GRA', 'si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy' )  ) then
+    plik_ini.WriteInteger( 'GRA', 'si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy', si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g )
+  else
+    si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g := plik_ini.ReadInteger( 'GRA', 'si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy', si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  if   (  zapisuj_ustawienia_f )
     or (  not plik_ini.ValueExists( 'GRA', 'si__uszkodzenia_wykryto__trwanie__czas_sekundy' )  ) then
     plik_ini.WriteInteger( 'GRA', 'si__uszkodzenia_wykryto__trwanie__czas_sekundy', si__uszkodzenia_wykryto__trwanie__czas_sekundy_g )
   else
@@ -25558,6 +26415,24 @@ begin
     plik_ini.WriteInteger( 'GRA', 'si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy', si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy_g )
   else
     si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy_g := plik_ini.ReadInteger( 'GRA', 'si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy', si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy_g ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'GRA', 'si__zak³óca_sekundy' )  ) then
+    plik_ini.WriteInteger( 'GRA', 'si__zak³óca_sekundy', si__zak³óca_sekundy_g )
+  else
+    si__zak³óca_sekundy_g := plik_ini.ReadInteger( 'GRA', 'si__zak³óca_sekundy', si__zak³óca_sekundy_g ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'GRA', 'zak³ócanie__czas_do_ponownej_próby_sekundy' )  ) then
+    plik_ini.WriteInteger( 'GRA', 'zak³ócanie__czas_do_ponownej_próby_sekundy', zak³ócanie__czas_do_ponownej_próby_sekundy_g )
+  else
+    zak³ócanie__czas_do_ponownej_próby_sekundy_g := plik_ini.ReadInteger( 'GRA', 'zak³ócanie__czas_do_ponownej_próby_sekundy', zak³ócanie__czas_do_ponownej_próby_sekundy_g ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'GRA', 'zak³ócenie__prawdopodobieñstwo_sukcesu_procent' )  ) then
+    plik_ini.WriteInteger( 'GRA', 'zak³ócenie__prawdopodobieñstwo_sukcesu_procent', zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g )
+  else
+    zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g := plik_ini.ReadInteger( 'GRA', 'zak³ócenie__prawdopodobieñstwo_sukcesu_procent', zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
   {$endregion 'GRA.'}
 
   {$region 'KLAWIATURA_KONFIGURACJA.'}
@@ -25636,7 +26511,8 @@ begin
   else
     zts := plik_ini.ReadString( 'POZOSTA£E', 'projektowy_tryb', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
-  Projektowy_Tryb_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+  if not czy_klient_g then
+    Projektowy_Tryb_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
   zts := Boolean_W__Tak_Nie( Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Checked );
@@ -25841,6 +26717,28 @@ begin
 
   for zti := 0 to Statki_Zaprezentuj_CheckListBox.Items.Count - 1 do
     Statki_Zaprezentuj_CheckListBox.Checked[ zti ] := Pos( ', ' + IntToStr( zti ) + ',', zts ) > 0;
+
+
+  zts := Boolean_W__Tak_Nie( Zak³ócanie__Dozwolone_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'zak³ócanie__dozwolone' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'zak³ócanie__dozwolone', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'zak³ócanie__dozwolone', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Zak³ócanie__Dozwolone_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Zak³ócanie__Graczy_Nie_SI_Dozwolone_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'zak³ócanie__graczy_nie_si_dozwolone' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'zak³ócanie__graczy_nie_si_dozwolone', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'zak³ócanie__graczy_nie_si_dozwolone', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Zak³ócanie__Graczy_Nie_SI_Dozwolone_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
   {$region 'Zmieniaj automatycznie intensywnoœæ.'}
@@ -26122,7 +27020,8 @@ begin
   else
     zti := plik_ini.ReadInteger( 'PREFERENCJE', 'l¹d', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
-  L¹d_ComboBox.ItemIndex := zti; // Nie wywo³a L¹d_ComboBoxChange().
+  if L¹d_ComboBox.Enabled then // Aby nie zmieniaæ mapy gdy nie jest to wskazane (np. wczytanie ustawieñ podczas gry).  
+    L¹d_ComboBox.ItemIndex := zti; // Nie wywo³a L¹d_ComboBoxChange().
 
 
   zts := Boolean_W__Tak_Nie( L¹d__Komunikat_B³êdu_Pomiñ_CheckBox.Checked );
@@ -26177,7 +27076,8 @@ begin
   else
     zti := plik_ini.ReadInteger( 'PREFERENCJE', 'statek', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
-  Statek_ComboBox.ItemIndex := zti; // Nie wywo³a Statek_ComboBoxChange().
+  if Statek_ComboBox.Enabled then // Aby nie zmieniaæ statku gdy nie jest to wskazane (np. wczytanie ustawieñ podczas gry).  
+    Statek_ComboBox.ItemIndex := zti; // Nie wywo³a Statek_ComboBoxChange().
 
 
   zti := Statek__Samolot_ComboBox.ItemIndex;
@@ -26223,6 +27123,18 @@ begin
 
   Statystyki_W_Logu_Wypisz_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
   {$endregion 'PREFERENCJE.'}
+
+  {$region 'STATYSTYKI.'}
+  zts := Boolean_W__Tak_Nie( Statystyki__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'STATYSTYKI', 'statystyki__rozmiar_zak³adki_poszerz' )  ) then
+    plik_ini.WriteString( 'STATYSTYKI', 'statystyki__rozmiar_zak³adki_poszerz', zts )
+  else
+    zts := plik_ini.ReadString( 'STATYSTYKI', 'statystyki__rozmiar_zak³adki_poszerz', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Statystyki__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+  {$endregion 'STATYSTYKI.'}
 
   {$region 'USTAWIENIA.'}
   zts := Boolean_W__Tak_Nie( Amunicja__Cel_Pozycja_Dla_Lotu_Parabol¹_Wyœwietl_CheckBox.Checked );
@@ -26280,26 +27192,37 @@ begin
   Celowanie__Tryb_RadioGroup.ItemIndex := zti;
 
 
-  zti := Celowanie_Precyzja_Obrót_SpinEdit.Value;
+  //zti := Celowanie_Precyzja__Falowanie_Niwelowanie_SpinEdit.Value;
+  //
+  //if   (  zapisuj_ustawienia_f )
+  //  or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celowanie_precyzja__falowanie_niwelowanie' )  ) then
+  //  plik_ini.WriteInteger( 'USTAWIENIA', 'celowanie_precyzja__falowanie_niwelowanie', zti )
+  //else
+  //  zti := plik_ini.ReadInteger( 'USTAWIENIA', 'celowanie_precyzja__falowanie_niwelowanie', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+  //
+  //Celowanie_Precyzja__Falowanie_Niwelowanie_SpinEdit.Value := zti;
+
+
+  zti := Celowanie_Precyzja__Obrót_SpinEdit.Value;
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celowanie_precyzja_obrót' )  ) then
-    plik_ini.WriteInteger( 'USTAWIENIA', 'celowanie_precyzja_obrót', zti )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celowanie_precyzja__obrót' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'celowanie_precyzja__obrót', zti )
   else
-    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'celowanie_precyzja_obrót', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'celowanie_precyzja__obrót', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
-  Celowanie_Precyzja_Obrót_SpinEdit.Value := zti;
+  Celowanie_Precyzja__Obrót_SpinEdit.Value := zti;
 
 
-  zti := Celowanie_Precyzja_Podniesienie_SpinEdit.Value;
+  zti := Celowanie_Precyzja__Podniesienie_SpinEdit.Value;
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celowanie_precyzja_podniesienie' )  ) then
-    plik_ini.WriteInteger( 'USTAWIENIA', 'celowanie_precyzja_podniesienie', zti )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celowanie_precyzja__podniesienie' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'celowanie_precyzja__podniesienie', zti )
   else
-    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'celowanie_precyzja_podniesienie', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'celowanie_precyzja__podniesienie', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
-  Celowanie_Precyzja_Podniesienie_SpinEdit.Value := zti;
+  Celowanie_Precyzja__Podniesienie_SpinEdit.Value := zti;
 
 
   zts := Boolean_W__Tak_Nie( Celownicze_Linie_Unoœ_CheckBox.Checked );
@@ -26324,6 +27247,83 @@ begin
   Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
+  ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Kolor__R_Edit.Text, 0.0 );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celownik_ekranowy__kolor__r' )  ) then
+    plik_ini.WriteFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__r', ztr )
+  else
+    ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__r', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Celownik_Ekranowy__Kolor__R_Edit.Text := FloatToStr( ztr );
+
+
+  ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Kolor__G_Edit.Text, 0.0 );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celownik_ekranowy__kolor__g' )  ) then
+    plik_ini.WriteFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__g', ztr )
+  else
+    ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__g', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Celownik_Ekranowy__Kolor__G_Edit.Text := FloatToStr( ztr );
+
+
+  ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Kolor__B_Edit.Text, 0.0 );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celownik_ekranowy__kolor__b' )  ) then
+    plik_ini.WriteFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__b', ztr )
+  else
+    ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__b', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Celownik_Ekranowy__Kolor__B_Edit.Text := FloatToStr( ztr );
+
+
+  ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Kolor__A_Edit.Text, 0.0 );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celownik_ekranowy__kolor__a' )  ) then
+    plik_ini.WriteFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__a', ztr )
+  else
+    ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__a', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Celownik_Ekranowy__Kolor__A_Edit.Text := FloatToStr( ztr );
+
+
+  ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Szerokoœæ_Edit.Text, 0.01 );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celownik_ekranowy__szerokoœæ' )  ) then
+    plik_ini.WriteFloat( 'USTAWIENIA', 'celownik_ekranowy__szerokoœæ', ztr )
+  else
+    ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__szerokoœæ', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Celownik_Ekranowy__Szerokoœæ_Edit.Text := FloatToStr( ztr );
+
+
+  ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Wysokoœæ_Edit.Text, 0.01 );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celownik_ekranowy__wysokoœæ' )  ) then
+    plik_ini.WriteFloat( 'USTAWIENIA', 'celownik_ekranowy__wysokoœæ', ztr )
+  else
+    ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__wysokoœæ', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Celownik_Ekranowy__Wysokoœæ_Edit.Text := FloatToStr( ztr );
+
+
+  ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Gruboœæ_Edit.Text, 0.01 );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celownik_ekranowy__gruboœæ' )  ) then
+    plik_ini.WriteFloat( 'USTAWIENIA', 'celownik_ekranowy__gruboœæ', ztr )
+  else
+    ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__gruboœæ', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Celownik_Ekranowy__Gruboœæ_Edit.Text := FloatToStr( ztr );
+
+
   zts := Boolean_W__Tak_Nie( Celownik_Widocznoœæ_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
@@ -26344,17 +27344,6 @@ begin
     zts := plik_ini.ReadString( 'USTAWIENIA', 'celownik_widocznoœæ_mouse_look_active', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
   Celownik_Widocznoœæ_Mouse_Look_Active_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
-
-
-  ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Wielkoœæ_Edit.Text, 0.01 );
-
-  if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'celownik_wielkoœæ' )  ) then
-    plik_ini.WriteFloat( 'USTAWIENIA', 'celownik_wielkoœæ', ztr )
-  else
-    ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_wielkoœæ', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
-
-  Celownik_Wielkoœæ_Edit.Text := FloatToStr( ztr );
 
 
   zts := Boolean_W__Tak_Nie( Dalmierz_CheckBox.Checked );
@@ -26380,6 +27369,17 @@ begin
     and ( zti >= 0 )
     and ( zti <= Dalmierz_Tryb_RadioGroup.Items.Count - 1 ) then
     Dalmierz_Tryb_RadioGroup.ItemIndex := zti;
+
+
+  zts := Boolean_W__Tak_Nie( Fale_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'fale' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'fale', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'fale', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Fale_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
   zti := Gra_Wspó³czynnik_Prêdkoœci_SpinEdit.Value;
@@ -26576,6 +27576,17 @@ begin
   Pe³ny_Ekran_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
+  zts := Boolean_W__Tak_Nie( Pe³ny_Ekran__Znikaj¹ce_Elementy_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'pe³ny_ekran__znikaj¹ce_elementy' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'pe³ny_ekran__znikaj¹ce_elementy', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'pe³ny_ekran__znikaj¹ce_elementy', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Pe³ny_Ekran__Znikaj¹ce_Elementy_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
   zts := Boolean_W__Tak_Nie( Pokój_Rozmów__Data_Czas_Wyœwietlaj_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
@@ -26596,6 +27607,17 @@ begin
     zts := plik_ini.ReadString( 'USTAWIENIA', 'pokój_rozmów__ignoruj__si_zagaduje', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
   Pokój_Rozmów__Ignoruj__Si_Zagaduje_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Pokój_Rozmów__Ignoruj__Si_Zak³óca_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'pokój_rozmów__ignoruj__si_zak³óca' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'pokój_rozmów__ignoruj__si_zak³óca', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'pokój_rozmów__ignoruj__si_zak³óca', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Pokój_Rozmów__Ignoruj__Si_Zak³óca_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
   zts := Boolean_W__Tak_Nie( Pokój_Rozmów__Ignoruj__Trafienie_Informacja_CheckBox.Checked );
@@ -26642,6 +27664,18 @@ begin
   Pokój_Rozmów__Na_Ekranie_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
+  zti := Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex;
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__efekty_tryb' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__efekty_tryb', zti )
+  else
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__efekty_tryb', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  if not czy_klient_g then
+    Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex := zti; // Nie wywo³a Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBoxChange().
+
+
   zts := Boolean_W__Tak_Nie( Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
@@ -26651,6 +27685,17 @@ begin
     zts := plik_ini.ReadString( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__gracz', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
   Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zti := Punkty_¯ycia_WskaŸnik__Prezentowanie_Sposób_ComboBox.ItemIndex;
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__prezentowanie_sposób' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__prezentowanie_sposób', zti )
+  else
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__prezentowanie_sposób', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Punkty_¯ycia_WskaŸnik__Prezentowanie_Sposób_ComboBox.ItemIndex := zti;
 
 
   zts := Boolean_W__Tak_Nie( Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked );
@@ -26675,146 +27720,179 @@ begin
   Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
-  zti := Punkty_¯ycia_WskaŸnik__Sposób_Prezentowania_ComboBox.ItemIndex;
+  zts := Boolean_W__Tak_Nie( Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__sposób_prezentowania' )  ) then
-    plik_ini.WriteInteger( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__sposób_prezentowania', zti )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__broñ_zasiêg_wyœwietlaj' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__broñ_zasiêg_wyœwietlaj', zts )
   else
-    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'punkty_¿ycia_wskaŸnik__sposób_prezentowania', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__broñ_zasiêg_wyœwietlaj', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
-  Punkty_¯ycia_WskaŸnik__Sposób_Prezentowania_ComboBox.ItemIndex := zti;
+  Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
-  zts := Boolean_W__Tak_Nie( Radar_Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked );
+  zti := Radar__Czu³oœæ_SpinEdit.Value;
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_broñ_zasiêg_wyœwietlaj' )  ) then
-    plik_ini.WriteString( 'USTAWIENIA', 'radar_broñ_zasiêg_wyœwietlaj', zts )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__czu³oœæ' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'radar__czu³oœæ', zti )
   else
-    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_broñ_zasiêg_wyœwietlaj', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar__czu³oœæ', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
-  Radar_Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+  Radar__Czu³oœæ_SpinEdit.Value := zti;
 
 
-  zti := Radar_Czu³oœæ_SpinEdit.Value;
+  zts := Boolean_W__Tak_Nie( Radar__Dane_Z_Radia__L¹dy_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_czu³oœæ' )  ) then
-    plik_ini.WriteInteger( 'USTAWIENIA', 'radar_czu³oœæ', zti )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__dane_z_radia__l¹dy' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__dane_z_radia__l¹dy', zts )
   else
-    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar_czu³oœæ', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__dane_z_radia__l¹dy', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
-  Radar_Czu³oœæ_SpinEdit.Value := zti;
+  Radar__Dane_Z_Radia__L¹dy_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
-  zts := Boolean_W__Tak_Nie( Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked );
+  zts := Boolean_W__Tak_Nie( Radar__Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_kamera_kierunek_wyœwietlaj' )  ) then
-    plik_ini.WriteString( 'USTAWIENIA', 'radar_kamera_kierunek_wyœwietlaj', zts )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__kamera_kierunek_wyœwietlaj' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__kamera_kierunek_wyœwietlaj', zts )
   else
-    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_kamera_kierunek_wyœwietlaj', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__kamera_kierunek_wyœwietlaj', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
-  Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+  Radar__Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
-  zti := Radar_L¹d_Rysowanie_Zasiêg_SpinEdit.Value;
+  zti := Radar__L¹d_Rysowanie_Zasiêg_SpinEdit.Value;
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_l¹d_rysowanie_zasiêg' )  ) then
-    plik_ini.WriteInteger( 'USTAWIENIA', 'radar_l¹d_rysowanie_zasiêg', zti )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__l¹d_rysowanie_zasiêg' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'radar__l¹d_rysowanie_zasiêg', zti )
   else
-    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar_l¹d_rysowanie_zasiêg', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar__l¹d_rysowanie_zasiêg', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
-  Radar_L¹d_Rysowanie_Zasiêg_SpinEdit.Value := zti;
+  Radar__L¹d_Rysowanie_Zasiêg_SpinEdit.Value := zti;
 
 
-  zti := Radar_Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value;
+  zti := radar_panel__wielkoœæ_procent_okna_g;
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_rysowanie_œladów__amunicji_sekundy' )  ) then
-    plik_ini.WriteInteger( 'USTAWIENIA', 'radar_rysowanie_œladów__amunicji_sekundy', zti )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__panel__wielkoœæ_procent_okna' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'radar__panel__wielkoœæ_procent_okna', zti )
   else
-    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar_rysowanie_œladów__amunicji_sekundy', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar__panel__wielkoœæ_procent_okna', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
-  Radar_Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value := zti;
+  radar_panel__wielkoœæ_procent_okna_g := zti;
 
 
-  zti := Radar_Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value;
+  zts := Boolean_W__Tak_Nie( Radar__Przyciski_Panel__Ukrywaj_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_rysowanie_œladów__statków_sekundy' )  ) then
-    plik_ini.WriteInteger( 'USTAWIENIA', 'radar_rysowanie_œladów__statków_sekundy', zti )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__przyciski_panel__ukrywaj' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__przyciski_panel__ukrywaj', zts )
   else
-    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar_rysowanie_œladów__statków_sekundy', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__przyciski_panel__ukrywaj', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
-  Radar_Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value := zti;
+  Radar__Przyciski_Panel__Ukrywaj_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
-    if Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked then
+  zti := Radar__Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value;
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__rysowanie_œladów__amunicji_sekundy' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'radar__rysowanie_œladów__amunicji_sekundy', zti )
+  else
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar__rysowanie_œladów__amunicji_sekundy', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Radar__Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value := zti;
+
+
+  zti := Radar__Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value;
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__rysowanie_œladów__statków_sekundy' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'radar__rysowanie_œladów__statków_sekundy', zti )
+  else
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar__rysowanie_œladów__statków_sekundy', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  Radar__Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value := zti;
+
+
+    if Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked then
       ztr := 1
-    else//if Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked then
+    else//if Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked then
       ztr := 0;
 
-    Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked := false; // Aby zmiana skali radaru nie zmieni³a czu³oœci radaru.
+    Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked := false; // Aby zmiana skali radaru nie zmieni³a czu³oœci radaru.
 
-  zti := Radar_Skala_SpinEdit.Value;
+  zti := Radar__Skala_SpinEdit.Value;
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_skala' )  ) then
-    plik_ini.WriteInteger( 'USTAWIENIA', 'radar_skala', zti )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__skala' )  ) then
+    plik_ini.WriteInteger( 'USTAWIENIA', 'radar__skala', zti )
   else
-    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar_skala', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+    zti := plik_ini.ReadInteger( 'USTAWIENIA', 'radar__skala', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
-  Radar_Skala_SpinEdit.Value := zti;
+  Radar__Skala_SpinEdit.Value := zti;
 
     if ztr = 1 then
-      Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked := true;
+      Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked := true;
 
 
-  zts := Boolean_W__Tak_Nie( Radar_Widocznoœæ_CheckBox.Checked );
-
-  if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_widocznoœæ' )  ) then
-    plik_ini.WriteString( 'USTAWIENIA', 'radar_widocznoœæ', zts )
-  else
-    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_widocznoœæ', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
-
-  Radar_Widocznoœæ_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
-
-
-  zts := Boolean_W__Tak_Nie( Radar_Wspó³rzêdne_Kursora_CheckBox.Checked );
+  zts := Boolean_W__Tak_Nie( Radar__Skala_Y_Uwzglêdniaj_L¹d_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_wspó³rzêdne_kursora' )  ) then
-    plik_ini.WriteString( 'USTAWIENIA', 'radar_wspó³rzêdne_kursora', zts )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__skala_y_uwzglêdniaj_l¹d' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__skala_y_uwzglêdniaj_l¹d', zts )
   else
-    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_wspó³rzêdne_kursora', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__skala_y_uwzglêdniaj_l¹d', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
-  Radar_Wspó³rzêdne_Kursora_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+  Radar__Skala_Y_Uwzglêdniaj_L¹d_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
-  zts := Boolean_W__Tak_Nie( Radar_Wspó³rzêdna_Y_CheckBox.Checked );
+  zts := Boolean_W__Tak_Nie( Radar__Widocznoœæ_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_wspó³rzêdna_y' )  ) then
-    plik_ini.WriteString( 'USTAWIENIA', 'radar_wspó³rzêdna_y', zts )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__widocznoœæ' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__widocznoœæ', zts )
   else
-    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_wspó³rzêdna_y', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__widocznoœæ', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
-  Radar_Wspó³rzêdna_Y_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+  Radar__Widocznoœæ_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
-  zts := Boolean_W__Tak_Nie( Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked );
+  zts := Boolean_W__Tak_Nie( Radar__Wspó³rzêdna_Y_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
-    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar_zmieniaj_czu³oœæ_wraz_ze_skal¹' )  ) then
-    plik_ini.WriteString( 'USTAWIENIA', 'radar_zmieniaj_czu³oœæ_wraz_ze_skal¹', zts )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__wspó³rzêdna_y' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__wspó³rzêdna_y', zts )
   else
-    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar_zmieniaj_czu³oœæ_wraz_ze_skal¹', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__wspó³rzêdna_y', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
 
-  Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+  Radar__Wspó³rzêdna_Y_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Radar__Wspó³rzêdne_Kursora_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__wspó³rzêdne_kursora' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__wspó³rzêdne_kursora', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__wspó³rzêdne_kursora', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Radar__Wspó³rzêdne_Kursora_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'radar__zmieniaj_czu³oœæ_wraz_ze_skal¹' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'radar__zmieniaj_czu³oœæ_wraz_ze_skal¹', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'radar__zmieniaj_czu³oœæ_wraz_ze_skal¹', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
   zts := Boolean_W__Tak_Nie( SI__P³ywa__Samolot_Gracza_CheckBox.Checked );
@@ -26848,6 +27926,30 @@ begin
     zti := plik_ini.ReadInteger( 'USTAWIENIA', 'si__strzela__statek_gracza', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   SI__Strzela__Statek_Gracza_RadioGroup.ItemIndex := zti;
+
+
+  zts := Boolean_W__Tak_Nie( Sonarowe_U³atwienie_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'sonarowe_u³atwienie' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'sonarowe_u³atwienie', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'sonarowe_u³atwienie', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not czy_klient_g then
+    Sonarowe_U³atwienie_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Sonarowe_U³atwienie__Klient_Zmieniaæ_Mo¿e_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'USTAWIENIA', 'sonarowe_u³atwienie__klient_zmieniaæ_mo¿e' )  ) then
+    plik_ini.WriteString( 'USTAWIENIA', 'sonarowe_u³atwienie__klient_zmieniaæ_mo¿e', zts )
+  else
+    zts := plik_ini.ReadString( 'USTAWIENIA', 'sonarowe_u³atwienie__klient_zmieniaæ_mo¿e', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not czy_klient_g then
+    Sonarowe_U³atwienie__Klient_Zmieniaæ_Mo¿e_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
   zts := Boolean_W__Tak_Nie( Œwiat³a_CheckBox.Checked );
@@ -26955,6 +28057,8 @@ begin
 
 
   L¹d_ComboBoxChange( nil );
+  Morze_Wzburzenie_SpinEditChange( nil ); // Je¿eli zmieni siê wartoœæ fale__wysokoœæ_bazowa_g ale nie zmieni siê wartoœæ wzburzenia morza.
+  Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBoxChange( nil );
   SI__Schemat_Opis_Memo.Text := 'Opis schematu si.';
   SI__Schemat_ComboBoxChange( nil );
   Statek_ComboBoxChange( nil );
@@ -26964,6 +28068,9 @@ begin
 
   if czy_klient_g then
     Interfejs_Aktywnoœæ_Ustaw__Klient( false );
+
+
+  Radar__Wielkoœæ_ButtonClick( Radar_Panel ); // Dla radar_panel__wielkoœæ_procent_okna_g.
 
 end;//---//Funkcja Ustawienia_Plik().
 
@@ -27524,8 +28631,8 @@ begin//Funkcja Wieloosobowe_Amunicja_Parametry_Ustaw().
         //---//if not ztb then
 
         // ???
-//        TAmunicja(wieloosobowe_amunicja_wystrzelona_list[ i ]).Position.X := TAmunicja(wieloosobowe_amunicja_wystrzelona_list[ i ]).Position.X + 1;
-//        TAmunicja(wieloosobowe_amunicja_wystrzelona_list[ i ]).Position.Z := TAmunicja(wieloosobowe_amunicja_wystrzelona_list[ i ]).Position.Z + 1;
+        //TAmunicja(wieloosobowe_amunicja_wystrzelona_list[ i ]).Position.X := TAmunicja(wieloosobowe_amunicja_wystrzelona_list[ i ]).Position.X + 1;
+        //TAmunicja(wieloosobowe_amunicja_wystrzelona_list[ i ]).Position.Z := TAmunicja(wieloosobowe_amunicja_wystrzelona_list[ i ]).Position.Z + 1;
 
       end;
     //---//if not wieloosobowe__amunicja_t[ i ].przeliczone__owo then
@@ -27692,6 +28799,7 @@ begin
       wieloosobowe__statek_klawisze_obs³uga_r.amunicja_rodzaj_wybrana__wszystkie__owo := zt_statek.amunicja_rodzaj_wybrana__wszystkie;
       wieloosobowe__statek_klawisze_obs³uga_r.celowanie__bronie_osobno__owo := zt_statek.celowanie__bronie_osobno;
       wieloosobowe__statek_klawisze_obs³uga_r.celowanie__tryb__owo := integer(zt_statek.celowanie__tryb);
+      //wieloosobowe__statek_klawisze_obs³uga_r.celowanie_precyzja__falowanie_niwelowanie__owo := zt_statek.celowanie_precyzja__falowanie_niwelowanie;
       wieloosobowe__statek_klawisze_obs³uga_r.celowanie_precyzja__obrót__owo := zt_statek.celowanie_precyzja__obrót;
       wieloosobowe__statek_klawisze_obs³uga_r.celowanie_precyzja__podniesienie__owo := zt_statek.celowanie_precyzja__podniesienie;
       wieloosobowe__statek_klawisze_obs³uga_r.si__statek_gracza__p³ywa__owo := zt_statek.si__statek_gracza__p³ywa;
@@ -27772,6 +28880,7 @@ begin
     and (  wieloosobowe__statek_klawisze_obs³uga_r_f.celowanie__tryb__owo <= integer(High( TCelowanie_Tryb ))  ) then
     zt_statek.celowanie__tryb := TCelowanie_Tryb(wieloosobowe__statek_klawisze_obs³uga_r_f.celowanie__tryb__owo);
 
+  //zt_statek.celowanie_precyzja__falowanie_niwelowanie := wieloosobowe__statek_klawisze_obs³uga_r_f.celowanie_precyzja__falowanie_niwelowanie__owo;
   zt_statek.celowanie_precyzja__obrót := wieloosobowe__statek_klawisze_obs³uga_r_f.celowanie_precyzja__obrót__owo;
   zt_statek.celowanie_precyzja__podniesienie := wieloosobowe__statek_klawisze_obs³uga_r_f.celowanie_precyzja__podniesienie__owo;
 
@@ -27837,7 +28946,7 @@ begin
       wieloosobowe__statki_t[ i ].id_gracz__owo := -99;
       wieloosobowe__statki_t[ i ].id_statek_st__owo := -99;
       wieloosobowe__statki_t[ i ].id_statek_schemat__owo := -1;
-      wieloosobowe__statki_t[ i ].gracz__nazwa__owo := '';
+      //wieloosobowe__statki_t[ i ].gracz__nazwa__owo := '';
 
       SetLength( wieloosobowe__statki_t[ i ].ster__uszkodzone_czas_i_t__owo, 0 );
       SetLength( wieloosobowe__statki_t[ i ].ster_g³êbokoœci__uszkodzone_czas_i_t__owo, 0 );
@@ -27917,7 +29026,7 @@ begin
       wieloosobowe__statki_t[ i ].id_grupa__owo := statki_t[ i ].id_grupa;
       wieloosobowe__statki_t[ i ].id_statek_st__owo := statki_t[ i ].id_statek;
       wieloosobowe__statki_t[ i ].id_statek_schemat__owo := statki_t[ i ].id_statek_schemat;
-      wieloosobowe__statki_t[ i ].gracz__nazwa__owo := statki_t[ i ].gracz__nazwa.Text;
+      //wieloosobowe__statki_t[ i ].gracz__nazwa__owo := statki_t[ i ].gracz__nazwa.Text;
       wieloosobowe__statki_t[ i ].przeliczone__owo := false;
 
       wieloosobowe__statki_t[ i ].pozycja_st__owo := Vector__Do__Wieloosobowe__Wektor_4( statki_t[ i ].AbsolutePosition );
@@ -27946,7 +29055,9 @@ begin
         wieloosobowe__statki_t[ i ].ster_g³êbokoœci_k¹t__owo := 0;
 
 
+      wieloosobowe__statki_t[ i ].radar_id_l¹dy_w_zasiêgu__owo := statki_t[ i ].radar_id_l¹dy_w_zasiêgu;
       wieloosobowe__statki_t[ i ].radar_id_statki_w_zasiêgu__owo := statki_t[ i ].radar_id_statki_w_zasiêgu;
+      wieloosobowe__statki_t[ i ].radio_id_l¹dy_w_zasiêgu__owo := statki_t[ i ].radio_id_l¹dy_w_zasiêgu;
       wieloosobowe__statki_t[ i ].radio_id_statki_w_zasiêgu__owo := statki_t[ i ].radio_id_statki_w_zasiêgu;
       wieloosobowe__statki_t[ i ].sonar_id_statki_w_zasiêgu__owo := statki_t[ i ].sonar_id_statki_w_zasiêgu;
 
@@ -27964,6 +29075,7 @@ begin
 
       wieloosobowe__statki_t[ i ].œwiat³a_w³¹czone__owo := statki_t[ i ].œwiat³a_w³¹czone;
       wieloosobowe__statki_t[ i ].œwiat³a_dodatkowe_w³¹czone__owo := statki_t[ i ].œwiat³a_dodatkowe_w³¹czone;
+      wieloosobowe__statki_t[ i ].zanurzenie_peryskopowe__przekroczone__owo := statki_t[ i ].Zanurzenie_Peryskopowe__Przekroczone();
       wieloosobowe__statki_t[ i ].zanurzenie_zadane_przekraczaj_100_procent__owo := statki_t[ i ].zanurzenie_zadane_przekraczaj_100_procent;
 
       wieloosobowe__statki_t[ i ].zanurzenie_pu³ap__aktualne__owo := statki_t[ i ].zanurzenie_pu³ap__aktualne;
@@ -28269,13 +29381,14 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
       // Funkcja tworzy jeden statek dla klienta gry wieloosobowej.
       //
 
-      statki_t[ indeks_statku_f_f ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, nil, Efekt__Element_Uszkodzenie_GLThorFXManager, wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_gracz__owo, wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_st__owo, Statek_Odczytaj_Schemat( wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_schemat__owo ), prymitywy_lista_t  );
+      statki_t[ indeks_statku_f_f ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, nil, Efekt__Element_Uszkodzenie_GLThorFXManager, wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_gracz__owo, wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_st__owo, Statek_Odczytaj_Schemat( wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_schemat__owo ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal()  );
       statki_t[ indeks_statku_f_f ].id_gracz := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_gracz__owo;
       statki_t[ indeks_statku_f_f ].id_grupa := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_grupa__owo;
       statki_t[ indeks_statku_f_f ].id_statek_schemat := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_schemat__owo;
       statki_t[ indeks_statku_f_f ].czy_lotniskowiec := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].czy_lotniskowiec__owo;
       statki_t[ indeks_statku_f_f ].czy_samolot := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].czy_samolot__owo;
-      statki_t[ indeks_statku_f_f ].gracz__nazwa.Text := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].gracz__nazwa__owo;
+      //statki_t[ indeks_statku_f_f ].gracz__nazwa.Text := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].gracz__nazwa__owo;
+      statki_t[ indeks_statku_f_f ].punkty_¿ycia_wskaŸnik__zanurzenie_peryskopowe__przekroczone__przeliczenie_poprzednie := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].zanurzenie_peryskopowe__przekroczone__owo;
       statki_t[ indeks_statku_f_f ].œwiat³a_w³¹czone := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].œwiat³a_w³¹czone__owo;
       statki_t[ indeks_statku_f_f ].œwiat³a_dodatkowe_w³¹czone := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].œwiat³a_dodatkowe_w³¹czone__owo;
       statki_t[ indeks_statku_f_f ].zanurzenie_zadane_przekraczaj_100_procent := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].zanurzenie_zadane_przekraczaj_100_procent__owo;
@@ -28298,7 +29411,7 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
 
           // Pozycja kamery na statek. //???
 
-          statki_t[ indeks_statku_f_f ].Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
+          statki_t[ indeks_statku_f_f ].Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
 
           Interfejs_Parametry_Wed³ug_Statku_Ustaw();
 
@@ -28307,7 +29420,7 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
         begin
 
           statki_t[ indeks_statku_f_f ].Elementy_Gracza_Widocznoœæ( Gracz_Grupa_SpinEdit.Value, false );
-          statki_t[ indeks_statku_f_f ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
+          statki_t[ indeks_statku_f_f ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
 
         end;
       //---//if statki_t[ indeks_statku_f_f ].id_gracz = Gracz_Identyfikator() then
@@ -28315,7 +29428,7 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
     end;//---//Funkcja Statek_Utwórz() w Statki_Utwórz() w Wieloosobowe_Statki_Parametry_Ustaw().
 
   var
-    i : integer;
+    i_l : integer;
   begin//Funkcja Statki_Utwórz() w Wieloosobowe_Statki_Parametry_Ustaw().
 
     //
@@ -28328,15 +29441,15 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
 
         Statki_Zwolnij();
 
-        for i := 0 to Length( wieloosobowe__statki_t ) - 1 do
+        for i_l := 0 to Length( wieloosobowe__statki_t ) - 1 do
           begin
 
-            SetLength( statki_t, i + 1 );
+            SetLength( statki_t, i_l + 1 );
 
-            Statek_Utwórz( i, i );
+            Statek_Utwórz( i_l, i_l );
 
           end;
-        //---//for i := 0 to Length( wieloosobowe__statki_t ) - 1 do
+        //---//for i_l := 0 to Length( wieloosobowe__statki_t ) - 1 do
 
       end
     else//if    ( indeks_statku_f = -1 ) (...)
@@ -28361,6 +29474,13 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
 
     Interfejs_Aktywnoœæ_Ustaw__Schemat_Samolot_Zmieñ( true );
 
+
+    if    ( indeks_statku_f = -1 )
+      and ( indeks_wieloosobowe__statki_f = -1 ) then
+      Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__odbierz__gracz__nazwa_c, -99, '' )
+    else//    if    ( indeks_statku_f = -1 ) (...)
+      Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__odbierz__gracz__nazwa_c, -99, IntToStr( statki_t[ indeks_statku_f ].id_statek )  );
+
   end;//---//Funkcja Statki_Utwórz() w Wieloosobowe_Statki_Parametry_Ustaw().
 
   //Funkcja Parametry_Ustaw() w Wieloosobowe_Statki_Parametry_Ustaw().
@@ -28369,7 +29489,7 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
     //Funkcja Parametry_Ustaw_Statek_Gracza() w Parametry_Ustaw() w Wieloosobowe_Statki_Parametry_Ustaw().
     procedure Parametry_Ustaw_Statek_Gracza( statek_f_f : TStatek );
     var
-      // Nie ma i aby by³o tak samo jak w konstruktorze. //???
+      // Nie ma i aby by³o tak samo jak w konstruktorze.
       j_l,
       k_l
         : integer;
@@ -28487,9 +29607,10 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
 
   var
     czy_œwiat³a_w³¹czone_zmiana,
-    czy_œwiat³a_dodatkowe_w³¹czone_zmiana
+    czy_œwiat³a_dodatkowe_w³¹czone_zmiana,
+    czy_zanurzenie_peryskopowe__przekroczone_zmiana
       : boolean;
-    // Nie ma i aby by³o tak samo jak w konstruktorze. //???
+    // Nie ma i aby by³o tak samo jak w konstruktorze.
     j,
     k
       : integer;
@@ -28513,9 +29634,14 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
     if statek_f.punkty_¿ycia_maksymalne <> obiekty_wieloosobowe_statek_r_f.punkty_¿ycia_maksymalne__owo then
       statek_f.punkty_¿ycia_maksymalne := obiekty_wieloosobowe_statek_r_f.punkty_¿ycia_maksymalne__owo;
 
+    statek_f.radar_id_l¹dy_w_zasiêgu := obiekty_wieloosobowe_statek_r_f.radar_id_l¹dy_w_zasiêgu__owo;
     statek_f.radar_id_statki_w_zasiêgu := obiekty_wieloosobowe_statek_r_f.radar_id_statki_w_zasiêgu__owo;
+    statek_f.radio_id_l¹dy_w_zasiêgu := obiekty_wieloosobowe_statek_r_f.radio_id_l¹dy_w_zasiêgu__owo;
     statek_f.radio_id_statki_w_zasiêgu := obiekty_wieloosobowe_statek_r_f.radio_id_statki_w_zasiêgu__owo;
     statek_f.sonar_id_statki_w_zasiêgu := obiekty_wieloosobowe_statek_r_f.sonar_id_statki_w_zasiêgu__owo;
+
+    czy_zanurzenie_peryskopowe__przekroczone_zmiana := statek_f.punkty_¿ycia_wskaŸnik__zanurzenie_peryskopowe__przekroczone__przeliczenie_poprzednie <> obiekty_wieloosobowe_statek_r_f.zanurzenie_peryskopowe__przekroczone__owo;
+    statek_f.punkty_¿ycia_wskaŸnik__zanurzenie_peryskopowe__przekroczone__przeliczenie_poprzednie := obiekty_wieloosobowe_statek_r_f.zanurzenie_peryskopowe__przekroczone__owo;
 
     czy_œwiat³a_w³¹czone_zmiana := statek_f.œwiat³a_w³¹czone <> obiekty_wieloosobowe_statek_r_f.œwiat³a_w³¹czone__owo;
     statek_f.œwiat³a_w³¹czone := obiekty_wieloosobowe_statek_r_f.œwiat³a_w³¹czone__owo;
@@ -28576,8 +29702,8 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
         statek_f.artyleria_t[ j ].celownik_linia_bez_falowania.LinePattern := statek_f.artyleria_t[ j ].celownik_linia.LinePattern;
         statek_f.artyleria_t[ j ].celownik_linia_bez_falowania.LineWidth := statek_f.artyleria_t[ j ].celownik_linia.LineWidth;
         //statek_f.artyleria_t[ j ].celownik_linia_bez_falowania.NodesAspect := statek_f.artyleria_t[ j ].celownik_linia.NodesAspect;
-        TTorpedy_Wyrzutnia(statek_f.artyleria_t[ j ]).Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( false );
-        statek_f.artyleria_t[ j ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__artyleria or statek_f.amunicja_rodzaj_wybrana__wszystkie );
+        TTorpedy_Wyrzutnia(statek_f.artyleria_t[ j ]).Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( false );
+        statek_f.artyleria_t[ j ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__artyleria or statek_f.amunicja_rodzaj_wybrana__wszystkie );
         statek_f.artyleria_t[ j ].uszkodzone_czas_sekundy_i := obiekty_wieloosobowe_statek_r_f.artyleria_t__owo[ j ].uszkodzone_czas_i__owo;
         statek_f.artyleria_t[ j ].Element_Uszkodzenie_Przeliczaj( czy_klient_g );
 
@@ -28610,7 +29736,7 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
         statek_f.bomba_g³êbinowa_t[ j ].celownik_linia_bez_falowania.LinePattern := statek_f.bomba_g³êbinowa_t[ j ].celownik_linia.LinePattern;
         statek_f.bomba_g³êbinowa_t[ j ].celownik_linia_bez_falowania.LineWidth := statek_f.bomba_g³êbinowa_t[ j ].celownik_linia.LineWidth;
         //statek_f.bomba_g³êbinowa_t[ j ].celownik_linia_bez_falowania.NodesAspect := statek_f.bomba_g³êbinowa_t[ j ].celownik_linia.NodesAspect;
-        statek_f.bomba_g³êbinowa_t[ j ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__bomba_g³êbinowa or statek_f.amunicja_rodzaj_wybrana__wszystkie );
+        statek_f.bomba_g³êbinowa_t[ j ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__bomba_g³êbinowa or statek_f.amunicja_rodzaj_wybrana__wszystkie );
         statek_f.bomba_g³êbinowa_t[ j ].uszkodzone_czas_sekundy_i := obiekty_wieloosobowe_statek_r_f.bomba_g³êbinowa_t__owo[ j ].uszkodzone_czas_i__owo;
         statek_f.bomba_g³êbinowa_t[ j ].Element_Uszkodzenie_Przeliczaj( czy_klient_g );
 
@@ -28643,8 +29769,8 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
         statek_f.dzia³a_t[ j ].celownik_linia_bez_falowania.LinePattern := statek_f.dzia³a_t[ j ].celownik_linia.LinePattern;
         statek_f.dzia³a_t[ j ].celownik_linia_bez_falowania.LineWidth := statek_f.dzia³a_t[ j ].celownik_linia.LineWidth;
         //statek_f.dzia³a_t[ j ].celownik_linia_bez_falowania.NodesAspect := statek_f.dzia³a_t[ j ].celownik_linia.NodesAspect;
-        TTorpedy_Wyrzutnia(statek_f.dzia³a_t[ j ]).Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( false );
-        statek_f.dzia³a_t[ j ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__pocisk or statek_f.amunicja_rodzaj_wybrana__wszystkie );
+        TTorpedy_Wyrzutnia(statek_f.dzia³a_t[ j ]).Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( false );
+        statek_f.dzia³a_t[ j ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__pocisk or statek_f.amunicja_rodzaj_wybrana__wszystkie );
         statek_f.dzia³a_t[ j ].uszkodzone_czas_sekundy_i := obiekty_wieloosobowe_statek_r_f.dzia³a_t__owo[ j ].uszkodzone_czas_i__owo;
         statek_f.dzia³a_t[ j ].Element_Uszkodzenie_Przeliczaj( czy_klient_g );
 
@@ -28677,7 +29803,7 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
         statek_f.je¿e_g³êbinowe_t[ j ].celownik_linia_bez_falowania.LinePattern := statek_f.je¿e_g³êbinowe_t[ j ].celownik_linia.LinePattern;
         statek_f.je¿e_g³êbinowe_t[ j ].celownik_linia_bez_falowania.LineWidth := statek_f.je¿e_g³êbinowe_t[ j ].celownik_linia.LineWidth;
         //statek_f.je¿e_g³êbinowe_t[ j ].celownik_linia_bez_falowania.NodesAspect := statek_f.je¿e_g³êbinowe_t[ j ].celownik_linia.NodesAspect;
-        statek_f.je¿e_g³êbinowe_t[ j ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__je¿e_g³êbinowe or statek_f.amunicja_rodzaj_wybrana__wszystkie );
+        statek_f.je¿e_g³êbinowe_t[ j ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__je¿e_g³êbinowe or statek_f.amunicja_rodzaj_wybrana__wszystkie );
         statek_f.je¿e_g³êbinowe_t[ j ].uszkodzone_czas_sekundy_i := obiekty_wieloosobowe_statek_r_f.je¿e_g³êbinowe_t__owo[ j ].uszkodzone_czas_i__owo;
         statek_f.je¿e_g³êbinowe_t[ j ].Element_Uszkodzenie_Przeliczaj( czy_klient_g );
 
@@ -28710,7 +29836,7 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
         statek_f.torpedy_wyrzutnie_t[ j ].celownik_linia_bez_falowania.LinePattern := statek_f.torpedy_wyrzutnie_t[ j ].celownik_linia.LinePattern;
         statek_f.torpedy_wyrzutnie_t[ j ].celownik_linia_bez_falowania.LineWidth := statek_f.torpedy_wyrzutnie_t[ j ].celownik_linia.LineWidth;
         //statek_f.torpedy_wyrzutnie_t[ j ].celownik_linia_bez_falowania.NodesAspect := statek_f.torpedy_wyrzutnie_t[ j ].celownik_linia.NodesAspect;
-        statek_f.torpedy_wyrzutnie_t[ j ].Celownik_Linia_Bez_Falowania_Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__torpeda or statek_f.amunicja_rodzaj_wybrana__wszystkie );
+        statek_f.torpedy_wyrzutnie_t[ j ].Celownik_Linia_Bez_Falowania__Kierunek_Aktualizuj( statek_f.amunicja_rodzaj_wybrana__torpeda or statek_f.amunicja_rodzaj_wybrana__wszystkie );
         statek_f.torpedy_wyrzutnie_t[ j ].uszkodzone_czas_sekundy_i := obiekty_wieloosobowe_statek_r_f.torpedy_wyrzutnie_t__owo[ j ].uszkodzone_czas_i__owo;
         statek_f.torpedy_wyrzutnie_t[ j ].Element_Uszkodzenie_Przeliczaj( czy_klient_g );
 
@@ -28758,6 +29884,10 @@ procedure TStatki_Form.Wieloosobowe_Statki_Parametry_Ustaw();
     if   ( czy_œwiat³a_w³¹czone_zmiana )
       or ( czy_œwiat³a_dodatkowe_w³¹czone_zmiana ) then // UDP mo¿e przeoczyæ tak¹ zmianê.
       Wygl¹d_Elementy__Noc_Zmieñ();
+
+
+    if czy_zanurzenie_peryskopowe__przekroczone_zmiana then // UDP mo¿e przeoczyæ tak¹ zmianê.
+      statek_f.Punkty_¯ycia__WskaŸnik__Noc_Zmieñ( dzieñ_jasnoœæ_g );
 
   end;//---//Funkcja Parametry_Ustaw() w Wieloosobowe_Statki_Parametry_Ustaw().
 
@@ -29026,11 +30156,14 @@ procedure TStatki_Form.Wieloosobowe__Strumieñ_Wyœlij( const komenda_f : string; 
   end;//---//Funkcja Strumieñ_Napis_Wpisz() w Wieloosobowe__Strumieñ_Wyœlij().
 
 var
-  czy_b³¹d : boolean;
+  ztb,
+  czy_b³¹d
+    : boolean;
   i,
   j,
   k
     : integer;
+  ztsi : single;
   zts : string;
   lista : TList;
   zt_tcp_klient_dane : TTCP_Klient_Dane;
@@ -29058,13 +30191,13 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
     or (
              ( komenda_f <> wieloosobowe__komenda__gra__rozpocznij_c )
          and ( komenda_f <> wieloosobowe__komenda__gra__zakoñcz_c )
-         and ( komenda_f <> wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c )
          and ( komenda_f <> wieloosobowe__komenda__gra__mg³a_c )
          and ( komenda_f <> wieloosobowe__komenda__gra__morze_wzburzenie_c )
          and ( komenda_f <> wieloosobowe__komenda__gra__noc_c )
          and ( komenda_f <> wieloosobowe__komenda__gra__statystyki_wyœlij_c )
          and ( komenda_f <> wieloosobowe__komenda__gra__wspó³czynnik_prêdkoœci_c )
          and ( komenda_f <> wieloosobowe__komenda__gra__wspó³czynnik_trudnoœci_c )
+         and ( komenda_f <> wieloosobowe__komenda__gra__wspó³czynniki_inne_c )
          and ( komenda_f <> wieloosobowe__komenda__gracz_gotowoœæ_c )
          and ( komenda_f <> wieloosobowe__komenda__gracz_lista_odœwie¿_c )
          and ( komenda_f <> wieloosobowe__komenda__has³o__sprawdŸ_c )
@@ -29072,6 +30205,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
          and ( komenda_f <> wieloosobowe__komenda__identyfikator__przypomnij_c )
          and ( komenda_f <> wieloosobowe__komenda__identyfikator__zapamiêtaj_c )
          and ( komenda_f <> wieloosobowe__komenda__informacja_dodatkowa_dodaj_c )
+         and ( komenda_f <> wieloosobowe__komenda__odbierz__gracz__nazwa_c )
          and ( komenda_f <> wieloosobowe__komenda__odbierz__l¹d__definicja_c )
          and ( komenda_f <> wieloosobowe__komenda__odbierz__l¹d__trafienie_c )
          and ( komenda_f <> wieloosobowe__komenda__odbierz__prymitywy_definicja_c )
@@ -29079,6 +30213,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
          and ( komenda_f <> wieloosobowe__komenda__odbierz__rekord_efekt_c )
          and ( komenda_f <> wieloosobowe__komenda__odbierz__rekord_pokój_rozmów_r_c )
          and ( komenda_f <> wieloosobowe__komenda__odbierz__rekord_statki_c )
+         and ( komenda_f <> wieloosobowe__komenda__odbierz__statek__czas_do_zatoniêcia_c )
          and ( komenda_f <> wieloosobowe__komenda__odbierz__statki_definicje_c )
          and ( komenda_f <> wieloosobowe__komenda__pauza_c )
          and ( komenda_f <> wieloosobowe__komenda__schemat_samolot_zmieñ_c )
@@ -29109,8 +30244,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
   //  begin
   //  end
   //else//if komenda_f = wieloosobowe__komenda__gra__zakoñcz_c then
-  if   ( komenda_f = wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c )
-    or ( komenda_f = wieloosobowe__komenda__gra__mg³a_c )
+  if   ( komenda_f = wieloosobowe__komenda__gra__mg³a_c )
     or ( komenda_f = wieloosobowe__komenda__gra__morze_wzburzenie_c )
     or ( komenda_f = wieloosobowe__komenda__gra__noc_c )
     or ( komenda_f = wieloosobowe__komenda__gra__wspó³czynnik_prêdkoœci_c )
@@ -29128,7 +30262,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
       //---//if czy_serwer_g then
 
     end
-  else//if   ( komenda_f = wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c ) (...)
+  else//if   ( komenda_f = wieloosobowe__komenda__gra__mg³a_c ) (...)
   if komenda_f = wieloosobowe__komenda__gra__statystyki_wyœlij_c then
     begin
 
@@ -29157,6 +30291,54 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
 
     end
   else//if komenda_f = wieloosobowe__komenda__gra__statystyki_wyœlij_c then
+  if komenda_f = wieloosobowe__komenda__gra__wspó³czynniki_inne_c then
+    begin
+
+      if czy_serwer_g then
+        begin
+
+          // Tylko serwer wysy³a informacje o innych wspó³czynnikach gry.
+
+          strumieñ_pamiêci_l.Write(  fale__wysokoœæ_bazowa_g, SizeOf ( fale__wysokoœæ_bazowa_g )  );
+
+          ztb := L¹dowanie_U³atwione_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          ztb := Projektowy_Tryb_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          ztb := Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          i := Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex;
+          strumieñ_pamiêci_l.Write(  i, SizeOf ( integer )  );
+
+          ztb := SI__Patrol_Blisko_Zostaje_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          ztb := SI__P³ywa_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          ztb := SI__Strzela_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          ztb := Sonarowe_U³atwienie__Klient_Zmieniaæ_Mo¿e_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          ztb := Sonarowe_U³atwienie_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          ztb := Zak³ócanie__Dozwolone_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+          ztb := Zak³ócanie__Graczy_Nie_SI_Dozwolone_CheckBox.Checked;
+          strumieñ_pamiêci_l.Write(  ztb, SizeOf ( boolean )  );
+
+        end;
+      //---//if czy_serwer_g then
+
+    end
+  else//if komenda_f = wieloosobowe__komenda__gra__wspó³czynniki_inne_c then
   if komenda_f = wieloosobowe__komenda__gracz_gotowoœæ_c then
     begin
 
@@ -29246,6 +30428,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
 
               strumieñ_pamiêci_l.Write(  zt_tcp_klient_dane.gotowy__kd, SizeOf( boolean )  );
               strumieñ_pamiêci_l.Write(  zt_tcp_klient_dane.od³¹czony__kd, SizeOf( boolean )  );
+              strumieñ_pamiêci_l.Write(  zt_tcp_klient_dane.w_grze__kd, SizeOf( boolean )  );
 
               strumieñ_pamiêci_l.Write( zt_tcp_klient_dane.nazwa__kd, wieloosobowe_string__rozmiar_c );
 
@@ -29344,6 +30527,16 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
 
     end
   else//if komenda_f = wieloosobowe__komenda__informacja_dodatkowa_dodaj_c then
+  if komenda_f = wieloosobowe__komenda__odbierz__gracz__nazwa_c then
+    begin
+
+      // Klient zwraca siê o przes³anie nazwy graczy.
+      // Serwer wysy³a nazwy graczy.
+
+      Strumieñ_Napis_Wpisz( wartoœæ_f, strumieñ_pamiêci_l );
+
+    end
+  else//if komenda_f = wieloosobowe__komenda__odbierz__gracz__nazwa_c then
   if komenda_f = wieloosobowe__komenda__odbierz__l¹d__definicja_c then
     begin
 
@@ -29529,6 +30722,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].przeliczone__owo, SizeOf( boolean )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].œwiat³a_w³¹czone__owo, SizeOf( boolean )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].œwiat³a_dodatkowe_w³¹czone__owo, SizeOf( boolean )  );
+          strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].zanurzenie_peryskopowe__przekroczone__owo, SizeOf( boolean )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].zanurzenie_zadane_przekraczaj_100_procent__owo, SizeOf( boolean )  );
 
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].id_gracz__owo, SizeOf( integer )  );
@@ -29575,7 +30769,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].zanurzenie_pu³ap__aktualne_procent__owo, SizeOf( real )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].zanurzenie_pu³ap__zadane_procent__owo, SizeOf( real )  );
 
-          strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].gracz__nazwa__owo, SizeOf( TWieloosobowe_String )  );
+          //strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].gracz__nazwa__owo, SizeOf( TWieloosobowe_String )  );
 
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].cel_wspó³rzêdne_st__owo, SizeOf( TAffineVector )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].kierunek_st__owo, SizeOf( TWieloosobowe__Wektor_4 )  );
@@ -29767,7 +30961,9 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
           //---//for j := 0 to Length( wieloosobowe__statki_t[ i ].torpedy_wyrzutnie_t__owo ) - 1 do
 
 
+          Strumieñ_Napis_Wpisz( wieloosobowe__statki_t[ i ].radar_id_l¹dy_w_zasiêgu__owo, strumieñ_pamiêci_l );
           Strumieñ_Napis_Wpisz( wieloosobowe__statki_t[ i ].radar_id_statki_w_zasiêgu__owo, strumieñ_pamiêci_l );
+          Strumieñ_Napis_Wpisz( wieloosobowe__statki_t[ i ].radio_id_l¹dy_w_zasiêgu__owo, strumieñ_pamiêci_l );
           Strumieñ_Napis_Wpisz( wieloosobowe__statki_t[ i ].radio_id_statki_w_zasiêgu__owo, strumieñ_pamiêci_l );
           Strumieñ_Napis_Wpisz( wieloosobowe__statki_t[ i ].sonar_id_statki_w_zasiêgu__owo, strumieñ_pamiêci_l );
 
@@ -29782,6 +30978,21 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
 
     end
   else//if komenda_f = wieloosobowe__komenda__odbierz__rekord_statki_c then
+  if komenda_f = wieloosobowe__komenda__odbierz__statek__czas_do_zatoniêcia_c then
+    begin
+
+      if czy_serwer_g then
+        begin
+
+          // Tylko serwer wysy³a informacjê o czasie zatoniêcia statku.
+
+          Strumieñ_Napis_Wpisz( wartoœæ_f, strumieñ_pamiêci_l );
+
+        end;
+      //---//if czy_serwer_g then
+
+    end
+  else//if komenda_f = wieloosobowe__komenda__odbierz__statek__czas_do_zatoniêcia_c then
   if komenda_f = wieloosobowe__komenda__odbierz__statki_definicje_c then
     begin
 
@@ -30194,7 +31405,9 @@ function TStatki_Form.Wieloosobowe__Odczytaj( const io_handler_f : TIdIOHandler;
   end;//---//Funkcja Strumieñ_Napis_Odczytaj() w Wieloosobowe__Odczytaj().
 
 var
-  czy_udp_l : boolean;
+  ztb,
+  czy_udp_l
+    : boolean;
   i,
   j,
   k,
@@ -30269,13 +31482,13 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
   if   ( komenda_l = wieloosobowe__komenda__gra__rozpocznij_c )
     or ( komenda_l = wieloosobowe__komenda__gra__zakoñcz_c )
-    or ( komenda_l = wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c )
     or ( komenda_l = wieloosobowe__komenda__gra__mg³a_c )
     or ( komenda_l = wieloosobowe__komenda__gra__morze_wzburzenie_c )
     or ( komenda_l = wieloosobowe__komenda__gra__noc_c )
     or ( komenda_l = wieloosobowe__komenda__gra__statystyki_wyœlij_c )
     or ( komenda_l = wieloosobowe__komenda__gra__wspó³czynnik_prêdkoœci_c )
     or ( komenda_l = wieloosobowe__komenda__gra__wspó³czynnik_trudnoœci_c )
+    or ( komenda_l = wieloosobowe__komenda__gra__wspó³czynniki_inne_c )
     or ( komenda_l = wieloosobowe__komenda__gracz_gotowoœæ_c )
     or ( komenda_l = wieloosobowe__komenda__gracz_lista_odœwie¿_c )
     or ( komenda_l = wieloosobowe__komenda__has³o__sprawdŸ_c )
@@ -30283,6 +31496,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
     or ( komenda_l = wieloosobowe__komenda__identyfikator__przypomnij_c )
     or ( komenda_l = wieloosobowe__komenda__identyfikator__zapamiêtaj_c )
     or ( komenda_l = wieloosobowe__komenda__informacja_dodatkowa_dodaj_c )
+    or ( komenda_l = wieloosobowe__komenda__odbierz__gracz__nazwa_c )
     or ( komenda_l = wieloosobowe__komenda__odbierz__l¹d__definicja_c )
     or ( komenda_l = wieloosobowe__komenda__odbierz__l¹d__trafienie_c )
     or ( komenda_l = wieloosobowe__komenda__odbierz__prymitywy_definicja_c )
@@ -30290,6 +31504,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
     or ( komenda_l = wieloosobowe__komenda__odbierz__rekord_efekt_c )
     or ( komenda_l = wieloosobowe__komenda__odbierz__rekord_pokój_rozmów_r_c )
     or ( komenda_l = wieloosobowe__komenda__odbierz__rekord_statki_c )
+    or ( komenda_l = wieloosobowe__komenda__odbierz__statek__czas_do_zatoniêcia_c )
     or ( komenda_l = wieloosobowe__komenda__odbierz__statki_definicje_c )
     or ( komenda_l = wieloosobowe__komenda__pauza_c )
     or ( komenda_l = wieloosobowe__komenda__schemat_samolot_zmieñ_c )
@@ -30518,23 +31733,6 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
             end
           else//if komenda_l = wieloosobowe__komenda__gra__zakoñcz_c then
-          if komenda_l = wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c then
-            begin
-
-              if czy_klient_g then
-                begin
-
-                  // Tylko klient odczytuje komunikat o wspó³czynniku u³atwionego l¹dowania.
-
-                  zts := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
-
-                  L¹dowanie_U³atwione_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
-
-                end;
-              //---//if czy_klient_g then
-
-            end
-          else//if komenda_l = wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c then
           if komenda_l = wieloosobowe__komenda__gra__mg³a_c then
             begin
 
@@ -30683,6 +31881,69 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
             end
           else//if komenda_l = wieloosobowe__komenda__gra__wspó³czynnik_trudnoœci_c then
+          if komenda_l = wieloosobowe__komenda__gra__wspó³czynniki_inne_c then
+            begin
+
+              if czy_klient_g then
+                begin
+
+                  // Tylko klient odczytuje informacje o innych wspó³czynnikach gry.
+
+                  strumieñ_pamiêci_l.Read(  fale__wysokoœæ_bazowa__serwer_g, SizeOf ( fale__wysokoœæ_bazowa__serwer_g )  );
+
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+                  L¹dowanie_U³atwione_CheckBox.Checked := ztb;
+
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+
+                  if ztb then
+                    Projektowy_Tryb_CheckBox.Font.Style := [ fsUnderline ]
+                  else//if ztb then
+                    Projektowy_Tryb_CheckBox.Font.Style := [];
+
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+                  Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Checked := ztb;
+
+                  strumieñ_pamiêci_l.Read(  i, SizeOf ( integer )  );
+                  Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex := i; // Nie wywo³a Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBoxChange().
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+                  SI__Patrol_Blisko_Zostaje_CheckBox.Checked := ztb;
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+                  SI__P³ywa_CheckBox.Checked := ztb;
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+                  SI__Strzela_CheckBox.Checked := ztb;
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  ); // Sonarowe_U³atwienie__Klient_Zmieniaæ_Mo¿e_CheckBox.Checked.
+                  Sonarowe_U³atwienie_CheckBox.Enabled := ztb;
+
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+
+                  if not Sonarowe_U³atwienie_CheckBox.Enabled then
+                    Sonarowe_U³atwienie_CheckBox.Checked := ztb;
+
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+                  Zak³ócanie__Dozwolone_CheckBox.Checked := ztb;
+
+                  strumieñ_pamiêci_l.Read(  ztb, SizeOf ( boolean )  );
+                  Zak³ócanie__Graczy_Nie_SI_Dozwolone_CheckBox.Checked := ztb;
+
+
+                  Statki__Punkty_¯ycia_WskaŸnik__Efekty_Tryb_Ustaw();
+                  Morze_Wzburzenie_SpinEditChange( nil );
+
+                end;
+              //---//if czy_klient_g then
+
+            end
+          else//if komenda_l = wieloosobowe__komenda__gra__wspó³czynniki_inne_c then
           if komenda_l = wieloosobowe__komenda__gracz_gotowoœæ_c then
             begin
 
@@ -30823,6 +32084,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
                       strumieñ_pamiêci_l.Read(  zt_tcp_klient_dane.gotowy__kd, SizeOf( boolean )  );
                       strumieñ_pamiêci_l.Read(  zt_tcp_klient_dane.od³¹czony__kd, SizeOf( boolean )  );
+                      strumieñ_pamiêci_l.Read(  zt_tcp_klient_dane.w_grze__kd, SizeOf( boolean )  );
 
                       strumieñ_pamiêci_l.Read( zt_tcp_klient_dane.nazwa__kd, wieloosobowe_string__rozmiar_c );
 
@@ -31014,6 +32276,94 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
             end
           else//if komenda_l = wieloosobowe__komenda__informacja_dodatkowa_dodaj_c then
+          if komenda_l = wieloosobowe__komenda__odbierz__gracz__nazwa_c then
+            begin
+
+              if czy_serwer_g then
+                begin
+
+                  // Serwer wysy³a nazwy graczy.
+
+                  if peer_port__nadawca_l <> -99 then
+                    begin
+
+                      zts := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
+
+                      if zts <> '' then
+                        try
+                          j := StrToInt( zts );
+                        except
+                          zts := '';
+                        end;
+                        //---//try
+
+                      for i := 0 to Length( statki_t ) - 1 do
+                        if    ( statki_t[ i ] <> nil )
+                          and (
+                                   ( zts = '' )
+                                or ( statki_t[ i ].id_statek = j )
+                              ) then
+                          begin
+
+                            Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__odbierz__gracz__nazwa_c, peer_port__nadawca_l, IntToStr( statki_t[ i ].id_statek ) + ';' + statki_t[ i ].gracz__nazwa.Text  );
+
+                            if zts <> '' then
+                              Break;
+
+                          end;
+                        //---//if    ( statki_t[ i ] <> nil ) (...)
+
+                    end;
+                  //---//if peer_port__nadawca_l <> -99 then
+
+                end
+              else//if czy_serwer_g then
+              if czy_klient_g then
+                begin
+
+                  // Klient odczytuje dane o nazwach graczy.
+
+                  zts := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
+
+                  i := Pos( ';', zts );
+
+                  if i > 0 then
+                    begin
+
+                      try
+                        j := StrToInt(  Copy( zts, 1, i - 1 )  );
+                      except
+                        zts := '';
+                      end;
+                      //---//try
+
+                      if zts <> '' then
+                        begin
+
+                          Delete( zts, 1, i );
+
+                          for i := 0 to Length( statki_t ) - 1 do
+                            if    ( statki_t[ i ] <> nil )
+                              and ( statki_t[ i ].id_statek = j ) then
+                              begin
+
+                                statki_t[ i ].gracz__nazwa.Text := zts;
+                                Break;
+
+                              end;
+                            //---//if    ( statki_t[ i ] <> nil ) (...)
+
+                        end;
+                      //---//if j = 0 then
+
+                    end;
+                  //---//if zts <> '' then
+
+                end;
+              //---//if czy_klient_g then
+
+            end
+          else//if komenda_l = wieloosobowe__komenda__odbierz__gracz__nazwa_c then
           if komenda_l = wieloosobowe__komenda__odbierz__l¹d__definicja_c then
             begin
 
@@ -31225,7 +32575,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   //---//if pokój_rozmów_r_l.odbiorca_rodzaj = pror_Wszyscy then
 
 
-                  SI__Polecenie_Interpretuj( pokój_rozmów_r_l );
+                  SI__Polecenie__Zak³ócenia_Interpretuj( pokój_rozmów_r_l );
 
                 end;
               //---//if czy_serwer_g then
@@ -31329,6 +32679,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].przeliczone__owo, SizeOf( boolean )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].œwiat³a_w³¹czone__owo, SizeOf( boolean )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].œwiat³a_dodatkowe_w³¹czone__owo, SizeOf( boolean )  );
+                  strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].zanurzenie_peryskopowe__przekroczone__owo, SizeOf( boolean )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].zanurzenie_zadane_przekraczaj_100_procent__owo, SizeOf( boolean )  );
 
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].id_gracz__owo, SizeOf( integer )  );
@@ -31375,7 +32726,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].zanurzenie_pu³ap__aktualne_procent__owo, SizeOf( real )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].zanurzenie_pu³ap__zadane_procent__owo, SizeOf( real )  );
 
-                  strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].gracz__nazwa__owo, SizeOf( TWieloosobowe_String )  );
+                  //strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].gracz__nazwa__owo, SizeOf( TWieloosobowe_String )  );
 
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].cel_wspó³rzêdne_st__owo, SizeOf( TAffineVector )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].kierunek_st__owo, SizeOf( TWieloosobowe__Wektor_4 )  );
@@ -31600,7 +32951,9 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   //---//for j := 0 to Length( wieloosobowe__statki_t[ i ].torpedy_wyrzutnie_t__owo ) - 1 do
 
 
+                  wieloosobowe__statki_t[ i ].radar_id_l¹dy_w_zasiêgu__owo := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
                   wieloosobowe__statki_t[ i ].radar_id_statki_w_zasiêgu__owo := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
+                  wieloosobowe__statki_t[ i ].radio_id_l¹dy_w_zasiêgu__owo := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
                   wieloosobowe__statki_t[ i ].radio_id_statki_w_zasiêgu__owo := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
                   wieloosobowe__statki_t[ i ].sonar_id_statki_w_zasiêgu__owo := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
 
@@ -31610,6 +32963,55 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
             end
           else//if komenda_l = wieloosobowe__komenda__odbierz__rekord_statki_c then
+          if komenda_l = wieloosobowe__komenda__odbierz__statek__czas_do_zatoniêcia_c then
+            begin
+
+              if czy_klient_g then
+                begin
+
+                  // Tylko klient odczytuje dane o czasie zatoniêcia statku.
+
+                  zts := Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_l );
+
+                  i := Pos( ';', zts );
+
+                  if i > 0 then
+                    begin
+
+                      try
+                        j := StrToInt(  Copy( zts, 1, i - 1 )  );
+                      except
+                        zts := '';
+                      end;
+                      //---//try
+
+                      if zts <> '' then
+                        begin
+
+                          Delete( zts, 1, i );
+
+                          for i := 0 to Length( statki_t ) - 1 do
+                            if    ( statki_t[ i ] <> nil )
+                              and ( statki_t[ i ].id_statek = j ) then
+                              begin
+
+                                statki_t[ i ].statek__czas_do_zatoniêcia_s := zts;
+                                Break;
+
+                              end;
+                            //---//if    ( statki_t[ i ] <> nil ) (...)
+
+                        end;
+                      //---//if j = 0 then
+
+                    end;
+                  //---//if zts <> '' then
+
+                end;
+              //---//if czy_klient_g then
+
+            end
+          else//if komenda_l = wieloosobowe__komenda__odbierz__statek__czas_do_zatoniêcia_c then
           if komenda_l = wieloosobowe__komenda__odbierz__statki_definicje_c then
             begin
 
@@ -31978,7 +33380,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
               strumieñ_pamiêci_l.Read( i, SizeOf( integer )  ); // id_statek.
 
-              if czy_serwer_g then
+              if czy_klient_g then
                 Statek_Przywróæ_Do_Gry( i );
 
             end
@@ -32308,12 +33710,12 @@ begin
   // Funkcja wysy³a informacje o wspó³czynnikach gry ustawianych tylko na serwerze.
   //
 
-  Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c, peer_port_f, Boolean_W__Tak_Nie( L¹dowanie_U³atwione_CheckBox.Checked )  );
   Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__gra__mg³a_c, peer_port_f, IntToStr( Mg³a_SpinEdit.Value )  );
   Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__gra__morze_wzburzenie_c, peer_port_f, IntToStr( Morze_Wzburzenie_SpinEdit.Value )  );
   Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__gra__noc_c, peer_port_f, IntToStr( Noc_SpinEdit.Value )  );
   Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__gra__wspó³czynnik_prêdkoœci_c, peer_port_f, IntToStr( Gra_Wspó³czynnik_Prêdkoœci_SpinEdit.Value )  );
   Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__gra__wspó³czynnik_trudnoœci_c, peer_port_f, IntToStr( Gra_Wspó³czynnik_Trudnoœci_SpinEdit.Value )  );
+  Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__gra__wspó³czynniki_inne_c, peer_port_f, '' );
 
 end;//---//Funkcja Wspó³czynniki_Gry_Informacja_Wyœlij().
 
@@ -32367,8 +33769,8 @@ begin//Funkcja Gracze_Lista_Odœwie¿().
   kolumna_kopia := Gracze_Lista_StringGrid.Col;
   wiersz_kopia := Gracze_Lista_StringGrid.Row;
 
-  if Gracze_Lista_StringGrid.ColCount <> 14 then
-    Gracze_Lista_StringGrid.ColCount := 14;
+  if Gracze_Lista_StringGrid.ColCount <> 15 then
+    Gracze_Lista_StringGrid.ColCount := 15;
 
   if tcp_klienci_lista_g.klienci_lista_list.Count > 0 then
     Gracze_Lista_StringGrid.RowCount := tcp_klienci_lista_g.klienci_lista_list.Count + 1
@@ -32386,13 +33788,14 @@ begin//Funkcja Gracze_Lista_Odœwie¿().
       Gracze_Lista_StringGrid.Cells[ 4, 0 ] := 'Samolot';
       Gracze_Lista_StringGrid.Cells[ 5, 0 ] := 'Grupa';
       Gracze_Lista_StringGrid.Cells[ 6, 0 ] := 'Gotowy';
-      Gracze_Lista_StringGrid.Cells[ 7, 0 ] := 'Peer port tcp';
-      Gracze_Lista_StringGrid.Cells[ 8, 0 ] := 'Peer port udp';
-      Gracze_Lista_StringGrid.Cells[ 9, 0 ] := 'Czas pod³¹czenia';
-      Gracze_Lista_StringGrid.Cells[ 10, 0 ] := 'Czas pod³¹czenia ostatniego';
-      Gracze_Lista_StringGrid.Cells[ 11, 0 ] := 'Czas d³¹czenia';
-      Gracze_Lista_StringGrid.Cells[ 12, 0 ] := 'Czas kontaktu udp ostatniego';
-      Gracze_Lista_StringGrid.Cells[ 13, 0 ] := 'Od³¹czony';
+      Gracze_Lista_StringGrid.Cells[ 7, 0 ] := 'W grze';
+      Gracze_Lista_StringGrid.Cells[ 8, 0 ] := 'Peer port tcp';
+      Gracze_Lista_StringGrid.Cells[ 9, 0 ] := 'Peer port udp';
+      Gracze_Lista_StringGrid.Cells[ 10, 0 ] := 'Czas pod³¹czenia';
+      Gracze_Lista_StringGrid.Cells[ 11, 0 ] := 'Czas pod³¹czenia ostatniego';
+      Gracze_Lista_StringGrid.Cells[ 12, 0 ] := 'Czas d³¹czenia';
+      Gracze_Lista_StringGrid.Cells[ 13, 0 ] := 'Czas kontaktu udp ostatniego';
+      Gracze_Lista_StringGrid.Cells[ 14, 0 ] := 'Od³¹czony';
 
     end;
   //---//if Gracze_Lista_StringGrid.Cells[ 0, 0 ] = '' then
@@ -32431,21 +33834,26 @@ begin//Funkcja Gracze_Lista_Odœwie¿().
   //    else//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).gotowy__kd then
   //      Gracze_Lista_StringGrid.Cells[ 6, i + 1 ] := 'nie';
   //
-  //    Gracze_Lista_StringGrid.Cells[ 7, i + 1 ] := Trim(  FormatFloat( '### ### ##0', TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_tcp__kd )  );
-  //    Gracze_Lista_StringGrid.Cells[ 8, i + 1 ] := Trim(  FormatFloat( '### ### ##0', TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_udp__kd )  );
-  //    Gracze_Lista_StringGrid.Cells[ 9, i + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia__kd );
-  //    Gracze_Lista_StringGrid.Cells[ 10, i + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia_ostatniego__kd );
+  //    if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).w_grze__kd then__kd
+  //      Gracze_Lista_StringGrid.Cells[ 7, i + 1 ] := 'tak'
+  //    else//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).w_grze__kd then
+  //      Gracze_Lista_StringGrid.Cells[ 7, i + 1 ] := 'nie';
+  //
+  //    Gracze_Lista_StringGrid.Cells[ 8, i + 1 ] := Trim(  FormatFloat( '### ### ##0', TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_tcp__kd )  );
+  //    Gracze_Lista_StringGrid.Cells[ 9, i + 1 ] := Trim(  FormatFloat( '### ### ##0', TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_udp__kd )  );
+  //    Gracze_Lista_StringGrid.Cells[ 10, i + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia__kd );
+  //    Gracze_Lista_StringGrid.Cells[ 11, i + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia_ostatniego__kd );
   //
   //    if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__d³¹czenia__kd <> 0 then
-  //      Gracze_Lista_StringGrid.Cells[ 11, i + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__d³¹czenia__kd );
+  //      Gracze_Lista_StringGrid.Cells[ 12, i + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__d³¹czenia__kd );
   //
   //    if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__udp_kontakt__kd <> 0 then
-  //      Gracze_Lista_StringGrid.Cells[ 12, i + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__udp_kontakt__kd );
+  //      Gracze_Lista_StringGrid.Cells[ 13, i + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__udp_kontakt__kd );
   //
   //    if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).od³¹czony__kd then
-  //      Gracze_Lista_StringGrid.Cells[ 13, i + 1 ] := 'tak'
+  //      Gracze_Lista_StringGrid.Cells[ 14, i + 1 ] := 'tak'
   //    else//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).od³¹czony__kd then
-  //      Gracze_Lista_StringGrid.Cells[ 13, i + 1 ] := 'nie';
+  //      Gracze_Lista_StringGrid.Cells[ 14, i + 1 ] := 'nie';
   //
   //  end;
   ////---//for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
@@ -32483,13 +33891,14 @@ begin//Funkcja Gracze_Lista_Odœwie¿().
           4 : zts := samolot_nazwa_l; // Samolot.
           5 : zts := IntToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_grupa__kd ); // Grupa.
           6 : zts := BoolToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).gotowy__kd ); // Gotowy.
-          7 : zts := IntToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_tcp__kd ); // Peer port tcp.
-          8 : zts := IntToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_udp__kd ); // Peer port udp.
-          9 : zts := Data_Czas_Do_Napisu( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia__kd ); // Czas pod³¹czenia.
-          10 : zts := Data_Czas_Do_Napisu( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia_ostatniego__kd ); // Czas pod³¹czenia ostatniego.
-          11 : zts := Data_Czas_Do_Napisu( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__d³¹czenia__kd ); // Czas d³¹czenia.
-          12 : zts := Data_Czas_Do_Napisu( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__udp_kontakt__kd ); // Czas kontaktu udp ostatniego.
-          13 : zts := BoolToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).od³¹czony__kd ); // Od³¹czony.
+          7 : zts := BoolToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).w_grze__kd ); // W grze.
+          8 : zts := IntToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_tcp__kd ); // Peer port tcp.
+          9 : zts := IntToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_udp__kd ); // Peer port udp.
+          10 : zts := Data_Czas_Do_Napisu( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia__kd ); // Czas pod³¹czenia.
+          11 : zts := Data_Czas_Do_Napisu( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia_ostatniego__kd ); // Czas pod³¹czenia ostatniego.
+          12 : zts := Data_Czas_Do_Napisu( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__d³¹czenia__kd ); // Czas d³¹czenia.
+          13 : zts := Data_Czas_Do_Napisu( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__udp_kontakt__kd ); // Czas kontaktu udp ostatniego.
+          14 : zts := BoolToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).od³¹czony__kd ); // Od³¹czony.
           else//case Gracze_Lista_StringGrid.Tag of
             zts := '';
         end;
@@ -32504,7 +33913,7 @@ begin//Funkcja Gracze_Lista_Odœwie¿().
 
 
       // Liczby ujemne poprzedza spacj¹ aby lepiej siê sortowa³y (nadal nie s¹ rosn¹co).
-      if    ( Gracze_Lista_StringGrid.Tag in [ 0, 1, 7, 8 ] ) // Id, peer port tcp, peer port udp.
+      if    ( Gracze_Lista_StringGrid.Tag in [ 0, 1, 8, 9 ] ) // Id, peer port tcp, peer port udp.
         and ( Length( zts ) > 0 )
         and ( zts[ 1 ] = '-' ) then
         zts := ' ' + zts;
@@ -32555,21 +33964,26 @@ begin//Funkcja Gracze_Lista_Odœwie¿().
           else//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).gotowy__kd then
             Gracze_Lista_StringGrid.Cells[ 6, k + 1 ] := 'nie';
 
-          Gracze_Lista_StringGrid.Cells[ 7, k + 1 ] := Trim(  FormatFloat( '### ### ##0', TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_tcp__kd )  );
-          Gracze_Lista_StringGrid.Cells[ 8, k + 1 ] := Trim(  FormatFloat( '### ### ##0', TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_udp__kd )  );
-          Gracze_Lista_StringGrid.Cells[ 9, k + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia__kd );
-          Gracze_Lista_StringGrid.Cells[ 10, k + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia_ostatniego__kd );
+          if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).w_grze__kd then
+            Gracze_Lista_StringGrid.Cells[ 7, k + 1 ] := 'tak'
+          else//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).w_grze__kd then
+            Gracze_Lista_StringGrid.Cells[ 7, k + 1 ] := 'nie';
+
+          Gracze_Lista_StringGrid.Cells[ 8, k + 1 ] := Trim(  FormatFloat( '### ### ##0', TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_tcp__kd )  );
+          Gracze_Lista_StringGrid.Cells[ 9, k + 1 ] := Trim(  FormatFloat( '### ### ##0', TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).peer_port_udp__kd )  );
+          Gracze_Lista_StringGrid.Cells[ 10, k + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia__kd );
+          Gracze_Lista_StringGrid.Cells[ 11, k + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__pod³¹czenia_ostatniego__kd );
 
           if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__d³¹czenia__kd <> 0 then
-            Gracze_Lista_StringGrid.Cells[ 11, k + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__d³¹czenia__kd );
+            Gracze_Lista_StringGrid.Cells[ 12, k + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__d³¹czenia__kd );
 
           if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__udp_kontakt__kd <> 0 then
-            Gracze_Lista_StringGrid.Cells[ 12, k + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__udp_kontakt__kd );
+            Gracze_Lista_StringGrid.Cells[ 13, k + 1 ] := DateTimeToStr( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).data_czas__udp_kontakt__kd );
 
           if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).od³¹czony__kd then
-            Gracze_Lista_StringGrid.Cells[ 13, k + 1 ] := 'tak'
+            Gracze_Lista_StringGrid.Cells[ 14, k + 1 ] := 'tak'
           else//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).od³¹czony__kd then
-            Gracze_Lista_StringGrid.Cells[ 13, k + 1 ] := 'nie';
+            Gracze_Lista_StringGrid.Cells[ 14, k + 1 ] := 'nie';
 
 
           Break;
@@ -32656,7 +34070,7 @@ begin//Funkcja Gracze_Lista_Odœwie¿().
   zt_pokój_rozmów__wyœlij_do__odbiorca_rodzaj := TPokój_Rozmów__Wyœlij_Do__Odbiorca_Rodzaj.Create();
   zt_pokój_rozmów__wyœlij_do__odbiorca_rodzaj.id_odbiorca := 0;
   zt_pokój_rozmów__wyœlij_do__odbiorca_rodzaj.odbiorca_rodzaj := pror_Grupa_Jedna;
-  Pokój_Rozmów__Ignoruj_CheckListBox.Items.AddObject( 'grupy nieokreœlone', zt_pokój_rozmów__wyœlij_do__odbiorca_rodzaj );
+  Pokój_Rozmów__Ignoruj_CheckListBox.Items.AddObject( 'grupy nieokreœlone (klienci nieuczestnicz¹cy w grze)', zt_pokój_rozmów__wyœlij_do__odbiorca_rodzaj );
 
   zt_pokój_rozmów__wyœlij_do__odbiorca_rodzaj := TPokój_Rozmów__Wyœlij_Do__Odbiorca_Rodzaj.Create();
   zt_pokój_rozmów__wyœlij_do__odbiorca_rodzaj.id_odbiorca := si_peer_port_c;
@@ -32796,21 +34210,30 @@ begin
 
   gra_statystyki_r_f.id_grupa__gs := -99;
   gra_statystyki_r_f.identyfikator__gs := -99;
-  gra_statystyki_r_f.amunicja_wystrzelona_iloœæ := 0;
-  gra_statystyki_r_f.amunicja_wystrzelona_obra¿enia_zadawane := 0;
-  gra_statystyki_r_f.obra¿enia_otrzymane := 0;
-  gra_statystyki_r_f.obra¿enia_otrzymane__od_sojuszników := 0;
-  gra_statystyki_r_f.obra¿enia_otrzymane__z_kolizji := 0;
-  gra_statystyki_r_f.obra¿enia_zadane__amunicja := 0;
-  gra_statystyki_r_f.obra¿enia_zadane__amunicja_sojusznikom := 0;
-  gra_statystyki_r_f.obra¿enia_zadane__taranowanie := 0;
-  gra_statystyki_r_f.obra¿enia_zadane__taranowanie_sojusznikom := 0;
-  gra_statystyki_r_f.taranowania_iloœæ := 0;
-  gra_statystyki_r_f.taranowania_iloœæ_sojuszników := 0;
-  gra_statystyki_r_f.trafienia := 0;
-  gra_statystyki_r_f.zatoniêcia := 0;
-  gra_statystyki_r_f.zatopienia := 0;
-  gra_statystyki_r_f.zatopienia_sojuszników := 0;
+  gra_statystyki_r_f.amunicja_wystrzelona_iloœæ__gs := 0;
+  gra_statystyki_r_f.amunicja_wystrzelona_obra¿enia_zadawane__gs := 0;
+  gra_statystyki_r_f.czas_do_zatoniêcia__najd³u¿szy_sekund__gs := -1;
+  gra_statystyki_r_f.czas_do_zatoniêcia__najkrótszy_sekund__gs := -1;
+  gra_statystyki_r_f.czas_do_zatoniêcia__suma_sekund__gs := 0;
+  gra_statystyki_r_f.obra¿enia_otrzymane__gs := 0;
+  gra_statystyki_r_f.obra¿enia_otrzymane__od_sojuszników__gs := 0;
+  gra_statystyki_r_f.obra¿enia_otrzymane__z_kolizji__gs := 0;
+  gra_statystyki_r_f.obra¿enia_otrzymane__z_zak³óceñ__gs := 0;
+  gra_statystyki_r_f.obra¿enia_zadane__amunicja__gs := 0;
+  gra_statystyki_r_f.obra¿enia_zadane__amunicja_sojusznikom__gs := 0;
+  gra_statystyki_r_f.obra¿enia_zadane__taranowanie__gs := 0;
+  gra_statystyki_r_f.obra¿enia_zadane__taranowanie_sojusznikom__gs := 0;
+  gra_statystyki_r_f.odnawianie_zasobów_iloœæ_razy__gs := 0;
+  gra_statystyki_r_f.taranowania_iloœæ__gs := 0;
+  gra_statystyki_r_f.taranowania_iloœæ_sojuszników__gs := 0;
+  gra_statystyki_r_f.trafienia__gs := 0;
+  gra_statystyki_r_f.zak³ócenia__nieudane__gs := 0;
+  gra_statystyki_r_f.zak³ócenia__odbite__cudze__gs := 0;
+  gra_statystyki_r_f.zak³ócenia__odbite__w³asne__gs := 0;
+  gra_statystyki_r_f.zak³ócenia__udane__gs := 0;
+  gra_statystyki_r_f.zatoniêcia__gs := 0;
+  gra_statystyki_r_f.zatopienia__gs := 0;
+  gra_statystyki_r_f.zatopienia_sojuszników__gs := 0;
 
 end;//---//Funkcja Gra_Statystyki_Zeruj().
 
@@ -32846,11 +34269,41 @@ end;//---//Funkcja Gra_Statystyki_R_Identyfikator_ZnajdŸ().
 //Funkcja Gra_Statystyki_Wypisz().
 procedure TStatki_Form.Gra_Statystyki_Wypisz( const czy_w_logu_f : boolean );
 
+  //Funkcja Przedstaw_Jako_Procent() w Gra_Statystyki_Wypisz().
+  function Przedstaw_Jako_Procent( const suma_cz¹stkowa_f, suma_wszystkich_f : integer; const formatuj_dla_sortowania_f : boolean = false ) : string;
+  var
+    zts_l : string;
+  begin
+
+    if formatuj_dla_sortowania_f then
+      zts_l := '000 000 000 000 000.00'
+    else//if formatuj_dla_sortowania_f then
+      zts_l := '### ### ##0.00';
+
+
+    if suma_wszystkich_f <> 0 then
+      Result := Trim(  FormatFloat( zts_l, suma_cz¹stkowa_f * 100 / suma_wszystkich_f )  )
+    else//if suma_wszystkich_f <> 0 then
+      Result := '<n/d>';
+
+  end;//---//Funkcja Przedstaw_Jako_Procent() w Gra_Statystyki_Wypisz().
+
+  //Funkcja Œrednia_Wylicz() w Gra_Statystyki_Wypisz().
+  function Œrednia_Wylicz( const iloœæ_f, suma_f : integer ) : integer;
+  begin
+
+    if iloœæ_f <> 0 then
+      Result := Round( suma_f / iloœæ_f )
+    else//if iloœæ_f <> 0 then
+      Result := -1;
+
+  end;//---//Funkcja Œrednia_Wylicz() w Gra_Statystyki_Wypisz().
+
   //Funkcja Statystyki_Wypisz() w Gra_Statystyki_Wypisz().
   procedure Statystyki_Wypisz( const gra_statystyki_r_f : TGra_Statystyki_r; const czy_grupa_f : boolean; const kolumna_indeks_f : integer = -99 );
   var
     i_l : integer;
-    zts,
+    zts_l,
     nazwa_l_l,
     statek_nazwa_l_l,
     samolot_nazwa_l_l
@@ -32875,13 +34328,13 @@ procedure TStatki_Form.Gra_Statystyki_Wypisz( const czy_w_logu_f : boolean );
     if not czy_grupa_f then
       begin
 
-        zts := '';
+        zts_l := '';
 
         for i_l := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
           if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd = gra_statystyki_r_f.identyfikator__gs then
             begin
 
-              zts := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).nazwa__kd;
+              zts_l := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).nazwa__kd;
               nazwa_l_l := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).nazwa__kd;
 
 
@@ -32889,7 +34342,7 @@ procedure TStatki_Form.Gra_Statystyki_Wypisz( const czy_w_logu_f : boolean );
                 and (  TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).id_statek_schemat__kd <= Length( statki_lista_t ) - 1  ) then
                 begin
 
-                  zts := zts + ', ' + statki_lista_t[ TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).id_statek_schemat__kd ].nazwa__sl;
+                  zts_l := zts_l + ', ' + statki_lista_t[ TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).id_statek_schemat__kd ].nazwa__sl;
                   statek_nazwa_l_l := statki_lista_t[ TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).id_statek_schemat__kd ].nazwa__sl;
 
                 end;
@@ -32907,11 +34360,11 @@ procedure TStatki_Form.Gra_Statystyki_Wypisz( const czy_w_logu_f : boolean );
           //---//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator = gra_statystyki_r_f.identyfikator__gs then
 
 
-        if Trim( zts ) <> '' then
-          zts := ', ' + zts;
+        if Trim( zts_l ) <> '' then
+          zts_l := ', ' + zts_l;
 
         if kolumna_indeks_f < 0 then
-          Log_Memo.Lines.Add(   'identyfikator ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.identyfikator__gs )  ) + zts + ', ' + 'grupa ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.id_grupa__gs )  )   );
+          Log_Memo.Lines.Add(   'identyfikator ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.identyfikator__gs )  ) + zts_l + ', ' + 'grupa ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.id_grupa__gs )  )   );
 
       end
     else//if not czy_grupa_f then
@@ -32929,45 +34382,59 @@ procedure TStatki_Form.Gra_Statystyki_Wypisz( const czy_w_logu_f : boolean );
     if kolumna_indeks_f < 0 then
       begin
 
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'amunicja wystrzelona iloœæ ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.amunicja_wystrzelona_iloœæ )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'amunicja wystrzelona obra¿enia zadawane ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.amunicja_wystrzelona_obra¿enia_zadawane )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia otrzymane ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia otrzymane od sojuszników ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__od_sojuszników )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia otrzymane z kolizji ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_kolizji )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia zadane amunicja ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia zadane amunicja w tym sojusznikom ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja_sojusznikom )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia zadane taranowanie ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia zadane taranowanie w tym sojusznikom ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie_sojusznikom )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'taranowania iloœæ ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'taranowania iloœæ sojuszników ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ_sojuszników )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'trafienia ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.trafienia )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'zatoniêcia ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatoniêcia )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'zatopienia ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia )  )   );
-        //Log_Memo.Lines.Add(   odstêp_c_l + 'zatopienia w tym sojuszników ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia_sojuszników )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'amunicja wystrzelona iloœæ ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.amunicja_wystrzelona_iloœæ__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'amunicja wystrzelona obra¿enia zadawane ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.amunicja_wystrzelona_obra¿enia_zadawane__gs )  )   );
+        //Log_Memo.Lines.Add(  odstêp_c_l + 'czas do zatoniêcia najd³u¿szy ' + Sekundy_W__Minuty_Sekundy( gra_statystyki_r_f.czas_do_zatoniêcia__najd³u¿szy_sekund__gs )  );
+        //Log_Memo.Lines.Add(  odstêp_c_l + 'czas do zatoniêcia najkrótszy ' + Sekundy_W__Minuty_Sekundy( gra_statystyki_r_f.czas_do_zatoniêcia__najkrótszy_sekund__gs )  );
+        //Log_Memo.Lines.Add(  odstêp_c_l + 'czas do zatoniêcia suma ' + Sekundy_W__Minuty_Sekundy( gra_statystyki_r_f.czas_do_zatoniêcia__suma_sekund__gs )  );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'czas do zatoniêcia œredni ' + Sekundy_W__Minuty_Sekundy(  Œrednia_Wylicz( gra_statystyki_r_f.zatoniêcia__gs, gra_statystyki_r_f.czas_do_zatoniêcia__suma_sekund__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia otrzymane ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia otrzymane od sojuszników ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__od_sojuszników__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia otrzymane z kolizji ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_kolizji__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia otrzymane z zak³óceñ ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_zak³óceñ__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia zadane amunicja ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia zadane amunicja w tym sojusznikom ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja_sojusznikom__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia zadane taranowanie ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'obra¿enia zadane taranowanie w tym sojusznikom ' + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie_sojusznikom__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'odnawianie zasobów iloœæ ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.odnawianie_zasobów_iloœæ_razy__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'taranowania iloœæ ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'taranowania iloœæ sojuszników ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ_sojuszników__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'trafienia ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.trafienia__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'zak³ócenia nieudane ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__nieudane__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'zak³ócenia odbite cudze ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__odbite__cudze__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'zak³ócenia odbite w³asne ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__odbite__w³asne__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'zak³ócenia udane ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__udane__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'zatoniêcia ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatoniêcia__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'zatopienia ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia__gs )  )   );
+        //Log_Memo.Lines.Add(   odstêp_c_l + 'zatopienia w tym sojuszników ' + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia_sojuszników__gs )  )   );
+        //Log_Memo.Lines.Add(  odstêp_c_l + 'celnoœæ % ' + Przedstaw_Jako_Procent( gra_statystyki_r_f.trafienia__gs, gra_statystyki_r_f.amunicja_wystrzelona_iloœæ__gs )  );
 
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.amunicja_wystrzelona_iloœæ )  ) + ' amunicja wystrzelona iloœæ'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.amunicja_wystrzelona_obra¿enia_zadawane )  ) + ' amunicja wystrzelona obra¿enia zadawane'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane )  ) + ' obra¿enia otrzymane'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__od_sojuszników )  ) + ' obra¿enia otrzymane od sojuszników'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_kolizji )  ) + ' obra¿enia otrzymane z kolizji'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja )  ) + ' obra¿enia zadane amunicja'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja_sojusznikom )  ) + ' obra¿enia zadane amunicja w tym sojusznikom'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie )  ) + ' obra¿enia zadane taranowanie'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie_sojusznikom )  ) + ' obra¿enia zadane taranowanie w tym sojusznikom'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ )  ) + ' taranowania iloœæ'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ_sojuszników )  ) + ' taranowania iloœæ sojuszników'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.trafienia )  ) + ' trafienia'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatoniêcia )  ) + ' zatoniêcia'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia )  ) + ' zatopienia'   );
-        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia_sojuszników )  ) + ' zatopienia w tym sojuszników'   );
-
-        if gra_statystyki_r_f.amunicja_wystrzelona_iloœæ <> 0 then
-          zts := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.trafienia * 100 / gra_statystyki_r_f.amunicja_wystrzelona_iloœæ )  )
-        else//if gra_statystyki_r_f.amunicja_wystrzelona_iloœæ <> 0 then
-          zts := '<n/d>';
-
-        Log_Memo.Lines.Add( odstêp_c_l + zts + ' % celnoœæ' );
-
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.amunicja_wystrzelona_iloœæ__gs )  ) + ' amunicja wystrzelona iloœæ'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.amunicja_wystrzelona_obra¿enia_zadawane__gs )  ) + ' amunicja wystrzelona obra¿enia zadawane'   );
+        Log_Memo.Lines.Add(  odstêp_c_l + Sekundy_W__Minuty_Sekundy( gra_statystyki_r_f.czas_do_zatoniêcia__najd³u¿szy_sekund__gs ) + ' czas do zatoniêcia najd³u¿szy'  );
+        Log_Memo.Lines.Add(  odstêp_c_l + Sekundy_W__Minuty_Sekundy( gra_statystyki_r_f.czas_do_zatoniêcia__najkrótszy_sekund__gs ) + ' czas do zatoniêcia najkrótszy'  );
+        Log_Memo.Lines.Add(  odstêp_c_l + Sekundy_W__Minuty_Sekundy( gra_statystyki_r_f.czas_do_zatoniêcia__suma_sekund__gs ) + ' czas do zatoniêcia suma'  );
+        Log_Memo.Lines.Add(   odstêp_c_l + Sekundy_W__Minuty_Sekundy(  Œrednia_Wylicz( gra_statystyki_r_f.zatoniêcia__gs, gra_statystyki_r_f.czas_do_zatoniêcia__suma_sekund__gs )  ) + ' czas do zatoniêcia œredni'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__gs )  ) + ' obra¿enia otrzymane'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__od_sojuszników__gs )  ) + ' obra¿enia otrzymane od sojuszników'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_kolizji__gs )  ) + ' obra¿enia otrzymane z kolizji'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_zak³óceñ__gs )  ) + ' obra¿enia otrzymane z zak³óceñ'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja__gs )  ) + ' obra¿enia zadane amunicja'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja_sojusznikom__gs )  ) + ' obra¿enia zadane amunicja w tym sojusznikom'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie__gs )  ) + ' obra¿enia zadane taranowanie'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie_sojusznikom__gs )  ) + ' obra¿enia zadane taranowanie w tym sojusznikom'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.odnawianie_zasobów_iloœæ_razy__gs )  ) + ' odnawianie zasobów iloœæ'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ__gs )  ) + ' taranowania iloœæ'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ_sojuszników__gs )  ) + ' taranowania iloœæ sojuszników'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.trafienia__gs )  ) + ' trafienia'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__nieudane__gs )  ) + ' zak³ócenia nieudane'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__odbite__cudze__gs )  ) + ' zak³ócenia odbite cudze'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__odbite__w³asne__gs )  ) + ' zak³ócenia odbite w³asne'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__udane__gs )  ) + ' zak³ócenia udane'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatoniêcia__gs )  ) + ' zatoniêcia'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia__gs )  ) + ' zatopienia'   );
+        Log_Memo.Lines.Add(   odstêp_c_l + Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia_sojuszników__gs )  ) + ' zatopienia w tym sojuszników'   );
+        Log_Memo.Lines.Add(  odstêp_c_l + Przedstaw_Jako_Procent( gra_statystyki_r_f.trafienia__gs, gra_statystyki_r_f.amunicja_wystrzelona_iloœæ__gs ) + ' % celnoœæ'  );
 
       end
     else//if kolumna_indeks_f < 0 then
@@ -32984,28 +34451,31 @@ procedure TStatki_Form.Gra_Statystyki_Wypisz( const czy_w_logu_f : boolean );
         Statystyki_StringGrid.Cells[ 3, kolumna_indeks_f ] := nazwa_l_l;
         Statystyki_StringGrid.Cells[ 4, kolumna_indeks_f ] := statek_nazwa_l_l;
         Statystyki_StringGrid.Cells[ 5, kolumna_indeks_f ] := samolot_nazwa_l_l;
-        Statystyki_StringGrid.Cells[ 6, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.amunicja_wystrzelona_iloœæ )  );
-        Statystyki_StringGrid.Cells[ 7, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.amunicja_wystrzelona_obra¿enia_zadawane )  );
-        Statystyki_StringGrid.Cells[ 8, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane )  );
-        Statystyki_StringGrid.Cells[ 9, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__od_sojuszników )  );
-        Statystyki_StringGrid.Cells[ 10, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_kolizji )  );
-        Statystyki_StringGrid.Cells[ 11, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja )  );
-        Statystyki_StringGrid.Cells[ 12, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja_sojusznikom )  );
-        Statystyki_StringGrid.Cells[ 13, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie )  );
-        Statystyki_StringGrid.Cells[ 14, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie_sojusznikom )  );
-        Statystyki_StringGrid.Cells[ 15, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ )  );
-        Statystyki_StringGrid.Cells[ 16, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ_sojuszników )  );
-        Statystyki_StringGrid.Cells[ 17, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.trafienia )  );
-        Statystyki_StringGrid.Cells[ 18, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatoniêcia )  );
-        Statystyki_StringGrid.Cells[ 19, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia )  );
-        Statystyki_StringGrid.Cells[ 20, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia_sojuszników )  );
-
-        if gra_statystyki_r_f.amunicja_wystrzelona_iloœæ <> 0 then
-          zts := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.trafienia * 100 / gra_statystyki_r_f.amunicja_wystrzelona_iloœæ )  )
-        else//if gra_statystyki_r_f.amunicja_wystrzelona_iloœæ <> 0 then
-          zts := '<n/d>';
-
-        Statystyki_StringGrid.Cells[ 21, kolumna_indeks_f ] := zts;
+        Statystyki_StringGrid.Cells[ 6, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.amunicja_wystrzelona_iloœæ__gs )  );
+        Statystyki_StringGrid.Cells[ 7, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.amunicja_wystrzelona_obra¿enia_zadawane__gs )  );
+        Statystyki_StringGrid.Cells[ 8, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__gs )  );
+        Statystyki_StringGrid.Cells[ 9, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__od_sojuszników__gs )  );
+        Statystyki_StringGrid.Cells[ 10, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_kolizji__gs )  );
+        Statystyki_StringGrid.Cells[ 11, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja__gs )  );
+        Statystyki_StringGrid.Cells[ 12, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__amunicja_sojusznikom__gs )  );
+        Statystyki_StringGrid.Cells[ 13, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie__gs )  );
+        Statystyki_StringGrid.Cells[ 14, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_zadane__taranowanie_sojusznikom__gs )  );
+        Statystyki_StringGrid.Cells[ 15, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ__gs )  );
+        Statystyki_StringGrid.Cells[ 16, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.taranowania_iloœæ_sojuszników__gs )  );
+        Statystyki_StringGrid.Cells[ 17, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.trafienia__gs )  );
+        Statystyki_StringGrid.Cells[ 18, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatoniêcia__gs )  );
+        Statystyki_StringGrid.Cells[ 19, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia__gs )  );
+        Statystyki_StringGrid.Cells[ 20, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zatopienia_sojuszników__gs )  );
+        Statystyki_StringGrid.Cells[ 21, kolumna_indeks_f ] := Przedstaw_Jako_Procent( gra_statystyki_r_f.trafienia__gs, gra_statystyki_r_f.amunicja_wystrzelona_iloœæ__gs );
+        Statystyki_StringGrid.Cells[ 22, kolumna_indeks_f ] := Sekundy_W__Minuty_Sekundy( gra_statystyki_r_f.czas_do_zatoniêcia__najkrótszy_sekund__gs );
+        Statystyki_StringGrid.Cells[ 23, kolumna_indeks_f ] := Sekundy_W__Minuty_Sekundy( gra_statystyki_r_f.czas_do_zatoniêcia__najd³u¿szy_sekund__gs );
+        Statystyki_StringGrid.Cells[ 24, kolumna_indeks_f ] := Sekundy_W__Minuty_Sekundy(  Œrednia_Wylicz( gra_statystyki_r_f.zatoniêcia__gs, gra_statystyki_r_f.czas_do_zatoniêcia__suma_sekund__gs )  );
+        Statystyki_StringGrid.Cells[ 25, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__udane__gs )  );
+        Statystyki_StringGrid.Cells[ 26, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__nieudane__gs )  );
+        Statystyki_StringGrid.Cells[ 27, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__odbite__cudze__gs )  );
+        Statystyki_StringGrid.Cells[ 28, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.zak³ócenia__odbite__w³asne__gs )  );
+        Statystyki_StringGrid.Cells[ 29, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0.00', gra_statystyki_r_f.obra¿enia_otrzymane__z_zak³óceñ__gs )  );
+        Statystyki_StringGrid.Cells[ 30, kolumna_indeks_f ] := Trim(  FormatFloat( '### ### ##0', gra_statystyki_r_f.odnawianie_zasobów_iloœæ_razy__gs )  );
 
       end;
     //---//if kolumna_indeks_f < 0 then
@@ -33061,41 +34531,73 @@ begin
       if gra_statystyki_r_t[ i ].id_grupa__gs = statystyki__grupa__1_r_l.id_grupa__gs then
         begin
 
-          statystyki__grupa__1_r_l.amunicja_wystrzelona_iloœæ := statystyki__grupa__1_r_l.amunicja_wystrzelona_iloœæ + gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ;
-          statystyki__grupa__1_r_l.amunicja_wystrzelona_obra¿enia_zadawane := statystyki__grupa__1_r_l.amunicja_wystrzelona_obra¿enia_zadawane + gra_statystyki_r_t[ i ].amunicja_wystrzelona_obra¿enia_zadawane;
-          statystyki__grupa__1_r_l.obra¿enia_otrzymane := statystyki__grupa__1_r_l.obra¿enia_otrzymane + gra_statystyki_r_t[ i ].obra¿enia_otrzymane;
-          statystyki__grupa__1_r_l.obra¿enia_otrzymane__od_sojuszników := statystyki__grupa__1_r_l.obra¿enia_otrzymane__od_sojuszników + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__od_sojuszników;
-          statystyki__grupa__1_r_l.obra¿enia_otrzymane__z_kolizji := statystyki__grupa__1_r_l.obra¿enia_otrzymane__z_kolizji + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji;
-          statystyki__grupa__1_r_l.obra¿enia_zadane__amunicja := statystyki__grupa__1_r_l.obra¿enia_zadane__amunicja + gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja;
-          statystyki__grupa__1_r_l.obra¿enia_zadane__amunicja_sojusznikom := statystyki__grupa__1_r_l.obra¿enia_zadane__amunicja_sojusznikom + gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja_sojusznikom;
-          statystyki__grupa__1_r_l.obra¿enia_zadane__taranowanie := statystyki__grupa__1_r_l.obra¿enia_zadane__taranowanie + gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie;
-          statystyki__grupa__1_r_l.obra¿enia_zadane__taranowanie_sojusznikom := statystyki__grupa__1_r_l.obra¿enia_zadane__taranowanie_sojusznikom + gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie_sojusznikom;
-          statystyki__grupa__1_r_l.taranowania_iloœæ := statystyki__grupa__1_r_l.taranowania_iloœæ + gra_statystyki_r_t[ i ].taranowania_iloœæ;
-          statystyki__grupa__1_r_l.taranowania_iloœæ_sojuszników := statystyki__grupa__1_r_l.taranowania_iloœæ_sojuszników + gra_statystyki_r_t[ i ].taranowania_iloœæ_sojuszników;
-          statystyki__grupa__1_r_l.trafienia := statystyki__grupa__1_r_l.trafienia + gra_statystyki_r_t[ i ].trafienia;
-          statystyki__grupa__1_r_l.zatoniêcia := statystyki__grupa__1_r_l.zatoniêcia + gra_statystyki_r_t[ i ].zatoniêcia;
-          statystyki__grupa__1_r_l.zatopienia := statystyki__grupa__1_r_l.zatopienia + gra_statystyki_r_t[ i ].zatopienia;
-          statystyki__grupa__1_r_l.zatopienia_sojuszników := statystyki__grupa__1_r_l.zatopienia_sojuszników + gra_statystyki_r_t[ i ].zatopienia_sojuszników;
+          statystyki__grupa__1_r_l.amunicja_wystrzelona_iloœæ__gs := statystyki__grupa__1_r_l.amunicja_wystrzelona_iloœæ__gs + gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ__gs;
+          statystyki__grupa__1_r_l.amunicja_wystrzelona_obra¿enia_zadawane__gs := statystyki__grupa__1_r_l.amunicja_wystrzelona_obra¿enia_zadawane__gs + gra_statystyki_r_t[ i ].amunicja_wystrzelona_obra¿enia_zadawane__gs;
+
+          if   ( statystyki__grupa__1_r_l.czas_do_zatoniêcia__najd³u¿szy_sekund__gs < gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najd³u¿szy_sekund__gs )
+            or ( statystyki__grupa__1_r_l.czas_do_zatoniêcia__najd³u¿szy_sekund__gs = -1 ) then
+            statystyki__grupa__1_r_l.czas_do_zatoniêcia__najd³u¿szy_sekund__gs := gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najd³u¿szy_sekund__gs;
+
+          if   ( statystyki__grupa__1_r_l.czas_do_zatoniêcia__najkrótszy_sekund__gs > gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najkrótszy_sekund__gs )
+            or ( statystyki__grupa__1_r_l.czas_do_zatoniêcia__najkrótszy_sekund__gs = -1 ) then
+            statystyki__grupa__1_r_l.czas_do_zatoniêcia__najkrótszy_sekund__gs := gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najkrótszy_sekund__gs;
+
+          statystyki__grupa__1_r_l.czas_do_zatoniêcia__suma_sekund__gs := statystyki__grupa__1_r_l.czas_do_zatoniêcia__suma_sekund__gs + gra_statystyki_r_t[ i ].czas_do_zatoniêcia__suma_sekund__gs;
+          statystyki__grupa__1_r_l.obra¿enia_otrzymane__gs := statystyki__grupa__1_r_l.obra¿enia_otrzymane__gs + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__gs;
+          statystyki__grupa__1_r_l.obra¿enia_otrzymane__od_sojuszników__gs := statystyki__grupa__1_r_l.obra¿enia_otrzymane__od_sojuszników__gs + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__od_sojuszników__gs;
+          statystyki__grupa__1_r_l.obra¿enia_otrzymane__z_kolizji__gs := statystyki__grupa__1_r_l.obra¿enia_otrzymane__z_kolizji__gs + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji__gs;
+          statystyki__grupa__1_r_l.obra¿enia_otrzymane__z_zak³óceñ__gs := statystyki__grupa__1_r_l.obra¿enia_otrzymane__z_zak³óceñ__gs + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_zak³óceñ__gs;
+          statystyki__grupa__1_r_l.obra¿enia_zadane__amunicja__gs := statystyki__grupa__1_r_l.obra¿enia_zadane__amunicja__gs + gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja__gs;
+          statystyki__grupa__1_r_l.obra¿enia_zadane__amunicja_sojusznikom__gs := statystyki__grupa__1_r_l.obra¿enia_zadane__amunicja_sojusznikom__gs + gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja_sojusznikom__gs;
+          statystyki__grupa__1_r_l.obra¿enia_zadane__taranowanie__gs := statystyki__grupa__1_r_l.obra¿enia_zadane__taranowanie__gs + gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie__gs;
+          statystyki__grupa__1_r_l.obra¿enia_zadane__taranowanie_sojusznikom__gs := statystyki__grupa__1_r_l.obra¿enia_zadane__taranowanie_sojusznikom__gs + gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie_sojusznikom__gs;
+          statystyki__grupa__1_r_l.odnawianie_zasobów_iloœæ_razy__gs := statystyki__grupa__1_r_l.odnawianie_zasobów_iloœæ_razy__gs + gra_statystyki_r_t[ i ].odnawianie_zasobów_iloœæ_razy__gs;
+          statystyki__grupa__1_r_l.taranowania_iloœæ__gs := statystyki__grupa__1_r_l.taranowania_iloœæ__gs + gra_statystyki_r_t[ i ].taranowania_iloœæ__gs;
+          statystyki__grupa__1_r_l.taranowania_iloœæ_sojuszników__gs := statystyki__grupa__1_r_l.taranowania_iloœæ_sojuszników__gs + gra_statystyki_r_t[ i ].taranowania_iloœæ_sojuszników__gs;
+          statystyki__grupa__1_r_l.trafienia__gs := statystyki__grupa__1_r_l.trafienia__gs + gra_statystyki_r_t[ i ].trafienia__gs;
+          statystyki__grupa__1_r_l.zak³ócenia__nieudane__gs := statystyki__grupa__1_r_l.zak³ócenia__nieudane__gs + gra_statystyki_r_t[ i ].zak³ócenia__nieudane__gs;
+          statystyki__grupa__1_r_l.zak³ócenia__odbite__cudze__gs := statystyki__grupa__1_r_l.zak³ócenia__odbite__cudze__gs + gra_statystyki_r_t[ i ].zak³ócenia__odbite__cudze__gs;
+          statystyki__grupa__1_r_l.zak³ócenia__odbite__w³asne__gs := statystyki__grupa__1_r_l.zak³ócenia__odbite__w³asne__gs + gra_statystyki_r_t[ i ].zak³ócenia__odbite__w³asne__gs;
+          statystyki__grupa__1_r_l.zak³ócenia__udane__gs := statystyki__grupa__1_r_l.zak³ócenia__udane__gs + gra_statystyki_r_t[ i ].zak³ócenia__udane__gs;
+          statystyki__grupa__1_r_l.zatoniêcia__gs := statystyki__grupa__1_r_l.zatoniêcia__gs + gra_statystyki_r_t[ i ].zatoniêcia__gs;
+          statystyki__grupa__1_r_l.zatopienia__gs := statystyki__grupa__1_r_l.zatopienia__gs + gra_statystyki_r_t[ i ].zatopienia__gs;
+          statystyki__grupa__1_r_l.zatopienia_sojuszników__gs := statystyki__grupa__1_r_l.zatopienia_sojuszników__gs + gra_statystyki_r_t[ i ].zatopienia_sojuszników__gs;
 
         end
       else//if gra_statystyki_r_t[ i ].id_grupa__gs = statystyki__grupa__1_r_l.id_grupa__gs then
         begin
 
-          statystyki__grupa__2_r_l.amunicja_wystrzelona_iloœæ := statystyki__grupa__2_r_l.amunicja_wystrzelona_iloœæ + gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ;
-          statystyki__grupa__2_r_l.amunicja_wystrzelona_obra¿enia_zadawane := statystyki__grupa__2_r_l.amunicja_wystrzelona_obra¿enia_zadawane + gra_statystyki_r_t[ i ].amunicja_wystrzelona_obra¿enia_zadawane;
-          statystyki__grupa__2_r_l.obra¿enia_otrzymane := statystyki__grupa__2_r_l.obra¿enia_otrzymane + gra_statystyki_r_t[ i ].obra¿enia_otrzymane;
-          statystyki__grupa__2_r_l.obra¿enia_otrzymane__od_sojuszników := statystyki__grupa__2_r_l.obra¿enia_otrzymane__od_sojuszników + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__od_sojuszników;
-          statystyki__grupa__2_r_l.obra¿enia_otrzymane__z_kolizji := statystyki__grupa__2_r_l.obra¿enia_otrzymane__z_kolizji + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji;
-          statystyki__grupa__2_r_l.obra¿enia_zadane__amunicja := statystyki__grupa__2_r_l.obra¿enia_zadane__amunicja + gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja;
-          statystyki__grupa__2_r_l.obra¿enia_zadane__amunicja_sojusznikom := statystyki__grupa__2_r_l.obra¿enia_zadane__amunicja_sojusznikom + gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja_sojusznikom;
-          statystyki__grupa__2_r_l.obra¿enia_zadane__taranowanie := statystyki__grupa__2_r_l.obra¿enia_zadane__taranowanie + gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie;
-          statystyki__grupa__2_r_l.obra¿enia_zadane__taranowanie_sojusznikom := statystyki__grupa__2_r_l.obra¿enia_zadane__taranowanie_sojusznikom + gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie_sojusznikom;
-          statystyki__grupa__2_r_l.taranowania_iloœæ := statystyki__grupa__2_r_l.taranowania_iloœæ + gra_statystyki_r_t[ i ].taranowania_iloœæ;
-          statystyki__grupa__2_r_l.taranowania_iloœæ_sojuszników := statystyki__grupa__2_r_l.taranowania_iloœæ_sojuszników + gra_statystyki_r_t[ i ].taranowania_iloœæ_sojuszników;
-          statystyki__grupa__2_r_l.trafienia := statystyki__grupa__2_r_l.trafienia + gra_statystyki_r_t[ i ].trafienia;
-          statystyki__grupa__2_r_l.zatoniêcia := statystyki__grupa__2_r_l.zatoniêcia + gra_statystyki_r_t[ i ].zatoniêcia;
-          statystyki__grupa__2_r_l.zatopienia := statystyki__grupa__2_r_l.zatopienia + gra_statystyki_r_t[ i ].zatopienia;
-          statystyki__grupa__2_r_l.zatopienia_sojuszników := statystyki__grupa__2_r_l.zatopienia_sojuszników + gra_statystyki_r_t[ i ].zatopienia_sojuszników;
+          statystyki__grupa__2_r_l.amunicja_wystrzelona_iloœæ__gs := statystyki__grupa__2_r_l.amunicja_wystrzelona_iloœæ__gs + gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ__gs;
+          statystyki__grupa__2_r_l.amunicja_wystrzelona_obra¿enia_zadawane__gs := statystyki__grupa__2_r_l.amunicja_wystrzelona_obra¿enia_zadawane__gs + gra_statystyki_r_t[ i ].amunicja_wystrzelona_obra¿enia_zadawane__gs;
+
+          if   ( statystyki__grupa__2_r_l.czas_do_zatoniêcia__najd³u¿szy_sekund__gs < gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najd³u¿szy_sekund__gs )
+            or ( statystyki__grupa__2_r_l.czas_do_zatoniêcia__najd³u¿szy_sekund__gs = -1 ) then
+            statystyki__grupa__2_r_l.czas_do_zatoniêcia__najd³u¿szy_sekund__gs := gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najd³u¿szy_sekund__gs;
+
+          if   ( statystyki__grupa__2_r_l.czas_do_zatoniêcia__najkrótszy_sekund__gs > gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najkrótszy_sekund__gs )
+            or ( statystyki__grupa__2_r_l.czas_do_zatoniêcia__najkrótszy_sekund__gs = -1 ) then
+            statystyki__grupa__2_r_l.czas_do_zatoniêcia__najkrótszy_sekund__gs := gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najkrótszy_sekund__gs;
+
+          statystyki__grupa__2_r_l.czas_do_zatoniêcia__suma_sekund__gs := statystyki__grupa__2_r_l.czas_do_zatoniêcia__suma_sekund__gs + gra_statystyki_r_t[ i ].czas_do_zatoniêcia__suma_sekund__gs;
+          statystyki__grupa__2_r_l.obra¿enia_otrzymane__gs := statystyki__grupa__2_r_l.obra¿enia_otrzymane__gs + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__gs;
+          statystyki__grupa__2_r_l.obra¿enia_otrzymane__od_sojuszników__gs := statystyki__grupa__2_r_l.obra¿enia_otrzymane__od_sojuszników__gs + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__od_sojuszników__gs;
+          statystyki__grupa__2_r_l.obra¿enia_otrzymane__z_kolizji__gs := statystyki__grupa__2_r_l.obra¿enia_otrzymane__z_kolizji__gs + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji__gs;
+          statystyki__grupa__2_r_l.obra¿enia_otrzymane__z_zak³óceñ__gs := statystyki__grupa__2_r_l.obra¿enia_otrzymane__z_zak³óceñ__gs + gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_zak³óceñ__gs;
+          statystyki__grupa__2_r_l.obra¿enia_zadane__amunicja__gs := statystyki__grupa__2_r_l.obra¿enia_zadane__amunicja__gs + gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja__gs;
+          statystyki__grupa__2_r_l.obra¿enia_zadane__amunicja_sojusznikom__gs := statystyki__grupa__2_r_l.obra¿enia_zadane__amunicja_sojusznikom__gs + gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja_sojusznikom__gs;
+          statystyki__grupa__2_r_l.obra¿enia_zadane__taranowanie__gs := statystyki__grupa__2_r_l.obra¿enia_zadane__taranowanie__gs + gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie__gs;
+          statystyki__grupa__2_r_l.obra¿enia_zadane__taranowanie_sojusznikom__gs := statystyki__grupa__2_r_l.obra¿enia_zadane__taranowanie_sojusznikom__gs + gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie_sojusznikom__gs;
+          statystyki__grupa__2_r_l.odnawianie_zasobów_iloœæ_razy__gs := statystyki__grupa__2_r_l.odnawianie_zasobów_iloœæ_razy__gs + gra_statystyki_r_t[ i ].odnawianie_zasobów_iloœæ_razy__gs;
+          statystyki__grupa__2_r_l.taranowania_iloœæ__gs := statystyki__grupa__2_r_l.taranowania_iloœæ__gs + gra_statystyki_r_t[ i ].taranowania_iloœæ__gs;
+          statystyki__grupa__2_r_l.taranowania_iloœæ_sojuszników__gs := statystyki__grupa__2_r_l.taranowania_iloœæ_sojuszników__gs + gra_statystyki_r_t[ i ].taranowania_iloœæ_sojuszników__gs;
+          statystyki__grupa__2_r_l.trafienia__gs := statystyki__grupa__2_r_l.trafienia__gs + gra_statystyki_r_t[ i ].trafienia__gs;
+          statystyki__grupa__2_r_l.zak³ócenia__nieudane__gs := statystyki__grupa__2_r_l.zak³ócenia__nieudane__gs + gra_statystyki_r_t[ i ].zak³ócenia__nieudane__gs;
+          statystyki__grupa__2_r_l.zak³ócenia__odbite__cudze__gs := statystyki__grupa__2_r_l.zak³ócenia__odbite__cudze__gs + gra_statystyki_r_t[ i ].zak³ócenia__odbite__cudze__gs;
+          statystyki__grupa__2_r_l.zak³ócenia__odbite__w³asne__gs := statystyki__grupa__2_r_l.zak³ócenia__odbite__w³asne__gs + gra_statystyki_r_t[ i ].zak³ócenia__odbite__w³asne__gs;
+          statystyki__grupa__2_r_l.zak³ócenia__udane__gs := statystyki__grupa__2_r_l.zak³ócenia__udane__gs + gra_statystyki_r_t[ i ].zak³ócenia__udane__gs;
+          statystyki__grupa__2_r_l.zatoniêcia__gs := statystyki__grupa__2_r_l.zatoniêcia__gs + gra_statystyki_r_t[ i ].zatoniêcia__gs;
+          statystyki__grupa__2_r_l.zatopienia__gs := statystyki__grupa__2_r_l.zatopienia__gs + gra_statystyki_r_t[ i ].zatopienia__gs;
+          statystyki__grupa__2_r_l.zatopienia_sojuszników__gs := statystyki__grupa__2_r_l.zatopienia_sojuszników__gs + gra_statystyki_r_t[ i ].zatopienia_sojuszników__gs;
 
         end;
       //---//if gra_statystyki_r_t[ i ].id_grupa__gs = statystyki__grupa__1_r_l.id_grupa__gs then
@@ -33144,8 +34646,8 @@ begin
   kolumna_kopia := Statystyki_StringGrid.Col;
   wiersz_kopia := Statystyki_StringGrid.Row;
 
-  if Statystyki_StringGrid.ColCount <> 22 then
-    Statystyki_StringGrid.ColCount := 22;
+  if Statystyki_StringGrid.ColCount <> 31 then
+    Statystyki_StringGrid.ColCount := 31;
 
 
   Statystyki_StringGrid.RowCount := 2; // Nag³ówek i jeden pusty wiersz.
@@ -33185,15 +34687,24 @@ begin
       Statystyki_StringGrid.Cells[ 19, 0 ] := 'Zatopienia';
       Statystyki_StringGrid.Cells[ 20, 0 ] := 'Z. w. sojuszników';
       Statystyki_StringGrid.Cells[ 21, 0 ] := 'Celnoœæ %';
+      Statystyki_StringGrid.Cells[ 22, 0 ] := 'Czas do zatoniêcia najkrótszy';
+      Statystyki_StringGrid.Cells[ 23, 0 ] := 'Czas do z. najd³u¿szy';
+      Statystyki_StringGrid.Cells[ 24, 0 ] := 'Czas do z. œredni';
+      Statystyki_StringGrid.Cells[ 25, 0 ] := 'Zak³ócenia udane';
+      Statystyki_StringGrid.Cells[ 26, 0 ] := 'Zak³. nieudane';
+      Statystyki_StringGrid.Cells[ 27, 0 ] := 'Zak³. odbite cudze';
+      Statystyki_StringGrid.Cells[ 28, 0 ] := 'Zak³. odbite w³asne';
+      Statystyki_StringGrid.Cells[ 29, 0 ] := 'O. o. z zak³óceñ';
+      Statystyki_StringGrid.Cells[ 30, 0 ] := 'Odnawianie zas.';
 
 
       for i := 0 to Statystyki_StringGrid.ColCount - 1 do
         case i of
-            0, 1, 2 : Statystyki_StringGrid.ColWidths[ i ] := 25;
+            0, 1, 2 : Statystyki_StringGrid.ColWidths[ i ] := 25; // L. p., Identyfikator, Grupa.
 
-            4, 5 : Statystyki_StringGrid.ColWidths[ i ] := 64; // Domyœlna wartoœæ.
+            4, 5 : Statystyki_StringGrid.ColWidths[ i ] := 64; // Domyœlna wartoœæ. Statek, Samolot.
 
-            17, 18, 19, 21 : Statystyki_StringGrid.ColWidths[ i ] := 50;
+            17, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 : Statystyki_StringGrid.ColWidths[ i ] := 50; // Trafienia, Zatoniêcia, Zatopienia, Celnoœæ %, Czas do zatoniêcia najkrótszy, Czas do z. najd³u¿szy, Czas do z. œredni, Zak³ócenia udane, Zak³. nieudane, Zak³. odbite cudze, Zak³. odbite w³asne, O. o. z zak³óceñ.
 
             else//case przedial of
               Statystyki_StringGrid.ColWidths[ i ] := 100;
@@ -33274,31 +34785,31 @@ begin
           3 : zts := gracz_nazwa_l;
           4 : zts := statek_nazwa_l;
           5 : zts := samolot_nazwa_l;
-          6 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ )  );
-          7 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].amunicja_wystrzelona_obra¿enia_zadawane )  );
-          8 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_otrzymane )  );
-          9 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_otrzymane__od_sojuszników )  );
-          10 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji )  );
-          11 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja )  );
-          12 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja_sojusznikom )  );
-          13 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie )  );
-          14 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie_sojusznikom )  );
-          15 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].taranowania_iloœæ )  );
-          16 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].taranowania_iloœæ_sojuszników )  );
-          17 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].trafienia )  );
-          18 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zatoniêcia )  );
-          19 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zatopienia )  );
-          20 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zatopienia_sojuszników )  );
-          21 :
-            begin
-
-              if gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ <> 0 then
-                zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].trafienia * 100 / gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ )  )
-              else//if gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ <> 0 then
-                zts := '<n/d>';
-
-            end;
-          //---//19 :
+          6 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ__gs )  );
+          7 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].amunicja_wystrzelona_obra¿enia_zadawane__gs )  );
+          8 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_otrzymane__gs )  );
+          9 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_otrzymane__od_sojuszników__gs )  );
+          10 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_kolizji__gs )  );
+          11 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja__gs )  );
+          12 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_zadane__amunicja_sojusznikom__gs )  );
+          13 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie__gs )  );
+          14 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_zadane__taranowanie_sojusznikom__gs )  );
+          15 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].taranowania_iloœæ__gs )  );
+          16 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].taranowania_iloœæ_sojuszników__gs )  );
+          17 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].trafienia__gs )  );
+          18 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zatoniêcia__gs )  );
+          19 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zatopienia__gs )  );
+          20 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zatopienia_sojuszników__gs )  );
+          21 : zts := Przedstaw_Jako_Procent( gra_statystyki_r_t[ i ].trafienia__gs, gra_statystyki_r_t[ i ].amunicja_wystrzelona_iloœæ__gs, true );
+          22 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najkrótszy_sekund__gs )  );
+          23 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].czas_do_zatoniêcia__najd³u¿szy_sekund__gs )  );
+          24 : zts := Trim(   FormatFloat(  '000 000 000 000 000', Œrednia_Wylicz( gra_statystyki_r_t[ i ].zatoniêcia__gs, gra_statystyki_r_t[ i ].czas_do_zatoniêcia__suma_sekund__gs )  )   );
+          25 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zak³ócenia__udane__gs )  );
+          26 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zak³ócenia__nieudane__gs )  );
+          27 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zak³ócenia__odbite__cudze__gs )  );
+          28 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].zak³ócenia__odbite__w³asne__gs )  );
+          29 : zts := Trim(  FormatFloat( '000 000 000 000 000.00', gra_statystyki_r_t[ i ].obra¿enia_otrzymane__z_zak³óceñ__gs )  );
+          30 : zts := Trim(  FormatFloat( '000 000 000 000 000', gra_statystyki_r_t[ i ].odnawianie_zasobów_iloœæ_razy__gs )  );
 
           else//case Statystyki_StringGrid.Tag of
             zts := '';
@@ -33434,18 +34945,30 @@ begin
   Mg³a_SpinEdit.Enabled := aktywne_f;
   Morze_Wzburzenie_SpinEdit.Enabled := aktywne_f;
   Noc_SpinEdit.Enabled := aktywne_f;
+
+
   Projektowy_Tryb_CheckBox.Enabled := aktywne_f;
 
   if    ( not Projektowy_Tryb_CheckBox.Enabled )
     and ( Projektowy_Tryb_CheckBox.Checked ) then
     Projektowy_Tryb_CheckBox.Checked := false;
 
-  Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Enabled := aktywne_f;
-  Projektowy_Tryb__Przesuwanie_Skaluj_CheckBox.Enabled := aktywne_f;
+  if aktywne_f then
+    Projektowy_Tryb_CheckBox.Font.Style := [];
 
-  if    ( not Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Enabled )
-    and ( Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Checked ) then
-    Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Checked := false;
+
+  Projektowy_Tryb__Grawitacja_Wy³¹cz_CheckBox.Enabled := aktywne_f;
+  Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.Enabled := aktywne_f;
+  SI__Patrol_Blisko_Zostaje_CheckBox.Enabled := aktywne_f;
+  SI__P³ywa_CheckBox.Enabled := aktywne_f;
+  SI__Strzela_CheckBox.Enabled := aktywne_f;
+
+  if aktywne_f then
+    Sonarowe_U³atwienie_CheckBox.Enabled := aktywne_f;
+
+  Sonarowe_U³atwienie__Klient_Zmieniaæ_Mo¿e_CheckBox.Enabled := aktywne_f;
+  Zak³ócanie__Dozwolone_CheckBox.Enabled := aktywne_f;
+  Zak³ócanie__Graczy_Nie_SI_Dozwolone_CheckBox.Enabled := aktywne_f;
 
   Statek__Odœwie¿_Wskazany_BitBtn.Enabled := aktywne_f;
   Statek__Wczytaj_Listê_BitBtn.Enabled := aktywne_f;
@@ -33574,8 +35097,8 @@ begin
   Radio_Zasiêg_GLDisk.OuterRadius := zt_statek.radio_zasiêg;
   Sonar_Zasiêg_GLDisk.OuterRadius := zt_statek.sonar_zasiêg;
 
-  Radar_Dane_Z_Sonaru_CheckBox.Enabled := zt_statek.sonar_zasiêg > 0;
-  Radar_Dane_Z_Sonaru_CheckBox.Checked := Radar_Dane_Z_Sonaru_CheckBox.Enabled;
+  Radar__Dane_Z_Sonaru_CheckBox.Enabled := zt_statek.sonar_zasiêg > 0;
+  Radar__Dane_Z_Sonaru_CheckBox.Checked := Radar__Dane_Z_Sonaru_CheckBox.Enabled;
 
   if zt_statek.radar_zasiêg > zt_statek.radio_zasiêg then
     kamera_radar__y_domyœlne_g := zt_statek.radar_zasiêg
@@ -33595,7 +35118,7 @@ begin
   Kamera_Odleg³oœæ_Maksymalna_SpinEdit.MaxValue := zt_statek.kamera_odleg³oœæ_maksymalna;
   Kamera_Odleg³oœæ_Maksymalna_SpinEdit.Value := Kamera_Odleg³oœæ_Maksymalna_SpinEdit.MaxValue;
 
-  Radar_Skala_SpinEdit.Hint :=
+  Radar__Skala_SpinEdit.Hint :=
     'Skala radaru. ' + #13 +
     'Zasiêg radaru: ' + Trim(  FormatFloat( '### ### ##0', zt_statek.radar_zasiêg )  ) +
     ', radia: ' + Trim(  FormatFloat( '### ### ##0', zt_statek.radio_zasiêg )  ) +
@@ -33660,12 +35183,12 @@ end;//---//Funkcja Klawisz_Konfiguracja_Zwolnij().
 //Funkcja Identyfikator_Z_Listy_Sortowania_Wy³uskaj().
 function TStatki_Form.Identyfikator_Z_Listy_Sortowania_Wy³uskaj( napis_f : string ) : integer;
 var
-  zti_l : integer;
+  zti : integer;
 begin
 
   napis_f := ReverseString( napis_f ); //uses StrUtils.
-  zti_l := Pos( ';', napis_f );
-  Delete(   napis_f, zti_l, Length( napis_f )  );
+  zti := Pos( ';', napis_f );
+  Delete(   napis_f, zti, Length( napis_f )  );
   napis_f := ReverseString( napis_f ); //uses StrUtils.
 
   try
@@ -33705,8 +35228,27 @@ begin
 
 end;//---//Funkcja Log_Wypisz().
 
+//Funkcja Pe³ny_Ekran__Znikaj¹ce_Elementy_Widocznoœæ_Ustaw().
+procedure TStatki_Form.Pe³ny_Ekran__Znikaj¹ce_Elementy_Widocznoœæ_Ustaw();
+begin
+
+  //
+  // Funkcja na pe³nym ekranie na niektórych komputerach nie widaæ Radar_Panel
+  // gdy nie jest widoczny jakiœ element wyrównany do krawêdzi
+  // wiêc po to jest Pe³ny_Ekran__Znikaj¹ce_Elementy_CheckBox.
+  //
+
+  if    ( Pe³ny_Ekran_CheckBox.Checked )
+    and ( Radar__Widocznoœæ_CheckBox.Checked )
+    and ( Pe³ny_Ekran__Znikaj¹ce_Elementy_CheckBox.Checked ) then
+    Pe³ny_Ekran__Widocznoœæ_Splitter.Visible := true
+  else//if    ( Pe³ny_Ekran_CheckBox.Checked ) (...)
+    Pe³ny_Ekran__Widocznoœæ_Splitter.Visible := false;
+
+end;//---//Funkcja Pe³ny_Ekran__Znikaj¹ce_Elementy_Widocznoœæ_Ustaw().
+
 //Funkcja Pokój_Rozmów__Wyœlij_Wiadomoœæ().
-procedure TStatki_Form.Pokój_Rozmów__Wyœlij_Wiadomoœæ( const pokój_rozmów_r_f : TPokój_Rozmów_r );
+procedure TStatki_Form.Pokój_Rozmów__Wyœlij_Wiadomoœæ( const pokój_rozmów_r_f : TPokój_Rozmów_r; const dopuszczaj_wys³anie_wiadomoœci_do_siebie_f : boolean = false );
 var
   i : integer;
 begin
@@ -33720,7 +35262,10 @@ begin
     begin
 
       for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
-        if    ( pokój_rozmów_r_f.id_nadawca <> TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd ) // Nie wysy³a wiadomoœci do siebie.
+        if    (
+                   ( dopuszczaj_wys³anie_wiadomoœci_do_siebie_f )
+                or ( pokój_rozmów_r_f.id_nadawca <> TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd ) // Nie wysy³a wiadomoœci do siebie.
+              )
           and (
                    (
                          ( pokój_rozmów_r_f.odbiorca_rodzaj = pror_Gracz_Jeden )
@@ -33739,7 +35284,7 @@ begin
                 Break;
 
             end;
-          //---//if    ( pokój_rozmów_r_f.id_nadawca <> TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd ) (...)
+          //---//if    ( (...)
 
     end;
   //---//if pokój_rozmów_r_f.odbiorca_rodzaj = pror_Wszyscy then
@@ -33758,6 +35303,10 @@ begin
   if   (
              ( Pokój_Rozmów__Ignoruj__Si_Zagaduje_CheckBox.Checked )
          and (  Pos( si_pokój_rozmów__znacznik_symbol__si_zagaduje_c, pokój_rozmów_r_f.wiadomoœæ ) > 0  )
+       )
+    or (
+             ( Pokój_Rozmów__Ignoruj__Si_Zak³óca_CheckBox.Checked )
+         and (  Pos( si_pokój_rozmów__znacznik_symbol__si_zak³óca_c, pokój_rozmów_r_f.wiadomoœæ ) > 0  )
        )
     or (
              ( Pokój_Rozmów__Ignoruj__Trafienie_Informacja_CheckBox.Checked )
@@ -33842,6 +35391,9 @@ begin
 
   if Pos( si_pokój_rozmów__znacznik_symbol__si_zagaduje_c, pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ ) > 0 then
     pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ := StringReplace( pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ, si_pokój_rozmów__znacznik_symbol__si_zagaduje_c, '', [ rfReplaceAll ] );
+
+  if Pos( si_pokój_rozmów__znacznik_symbol__si_zak³óca_c, pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ ) > 0 then
+    pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ := StringReplace( pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ, si_pokój_rozmów__znacznik_symbol__si_zak³óca_c, '', [ rfReplaceAll ] );
 
   if Pos( si_pokój_rozmów__znacznik_symbol__trafienie_informacja_c, pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ ) > 0 then
     pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ := StringReplace( pokój_rozmów_powiadomienie_l.pokój_rozmów_r.wiadomoœæ, si_pokój_rozmów__znacznik_symbol__trafienie_informacja_c, '', [ rfReplaceAll ] );
@@ -33972,6 +35524,22 @@ begin
 
 end;//---//Funkcja Punkt_Naprowadzaj__Na_Lotniskowiec().
 
+//Funkcja Punkty_¯ycia_WskaŸnik__Material_Options_Ustal().
+function TStatki_Form.Punkty_¯ycia_WskaŸnik__Material_Options_Ustal() : TMaterialOptions;
+begin
+
+  Result := [ GLMaterial.moNoLighting ]; // Po obróceniu wskaŸnika punktów ¿ycia bokiem do œwiat³a wskaŸnik robi siê ciemny.
+
+  case Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex of
+      // nie podlega efektom sceny
+      // nie podlega efektom sceny tylko ponad powierzchni¹ wody
+      0, 1 : Result := Result + [ GLMaterial.moIgnoreFog ];
+      // podlega efektom sceny
+    end;
+  //---//case Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex of
+
+end;//---//Funkcja Punkty_¯ycia_WskaŸnik__Material_Options_Ustal().
+
 //Radar__Odœwie¿().
 procedure TStatki_Form.Radar__Odœwie¿();
 var
@@ -34011,11 +35579,11 @@ begin
 
       //Radar_T³o_GLPlane.Position.Y := zt_statek.AbsolutePosition.Y; // 0 aby czêœciowo zanurzone statki i samoloty w powietrzu nie znika³y pod t³em radaru.
 
-      Radar_GLCamera.Position.Y := kamera_radar__y_domyœlne_g * Radar_Skala_SpinEdit.Value * 0.01;
+      Radar_GLCamera.Position.Y := kamera_radar__y_domyœlne_g * Radar__Skala_SpinEdit.Value * 0.01;
 
 
-      Radio_Zasiêg_GLDisk.Visible := Radar_Dane_Z_Radia_CheckBox.Checked;
-      Sonar_Zasiêg_GLDisk.Visible := Radar_Dane_Z_Sonaru_CheckBox.Checked;
+      Radio_Zasiêg_GLDisk.Visible := Radar__Dane_Z_Radia_CheckBox.Checked;
+      Sonar_Zasiêg_GLDisk.Visible := Radar__Dane_Z_Sonaru_CheckBox.Checked;
 
       Radar_Statek_GLDummyCube.AbsoluteDirection := zt_statek.AbsoluteDirection;
       Radar_Statek_GLDummyCube.Direction.Y := 0; // Aby okrêgi radaru nie znika³y pod t³em radaru gdy statek siê przechyla.
@@ -34025,13 +35593,13 @@ begin
       Radar_PN_Linia_GLLines.AbsolutePosition := Radar_Statek_GLDummyCube.AbsolutePosition;
 
 
-      Radar_Kamera_Kierunek_GLDisk.Visible := Radar_Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked;
+      Radar_Kamera_Kierunek_GLDisk.Visible := Radar__Kamera_Kierunek_Wyœwietlaj_CheckBox.Checked;
 
       Radar_Kamera_Kierunek_GLDummyCube.AbsoluteDirection := Gra_GLCamera.AbsoluteDirection;
       Radar_Kamera_Kierunek_GLDummyCube.Direction.Y := 0;
       Radar_Kamera_Kierunek_GLDummyCube.AbsoluteUp := VectorMake( 0, 1, 0 );
 
-      Radar_Kamera_Kierunek_GLDisk.OuterRadius := 2.0 * Radar_Skala_SpinEdit.Value;
+      Radar_Kamera_Kierunek_GLDisk.OuterRadius := 2.0 * Radar__Skala_SpinEdit.Value;
       Radar_PN_Linia_GLLines.Scale.X := 40.0 * Radar__Koryguj_Wielkoœæ_Obiektów();
 
 
@@ -34074,8 +35642,8 @@ begin
 
 
   // Komponent dok³adnie nie pilnuje zakresów.
-  if Radar_Skala_SpinEdit.Value < Radar_Skala_SpinEdit.MinValue then
-    Radar_Skala_SpinEdit.Value := Radar_Skala_SpinEdit.MinValue;
+  if Radar__Skala_SpinEdit.Value < Radar__Skala_SpinEdit.MinValue then
+    Radar__Skala_SpinEdit.Value := Radar__Skala_SpinEdit.MinValue;
 
 
   // Dostosowuje wielkoœæ statku gracza na radarze.
@@ -34089,7 +35657,7 @@ begin
 
 
   //xNx__Radio_Statki_W_Zasiêgu();
-  Radar__Statki_Znane();
+  Radar__Statki__L¹dy_Znane();
 
 
   Radar__Wyczyœæ();
@@ -34140,7 +35708,7 @@ begin
       // Rysuje na radarze zasiêg broni.
       ztr := 0;
 
-      if Radar_Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked then
+      if Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked then
         begin
 
           // Wybierze najwiêkszy dostêpny zasiêg.
@@ -34190,7 +35758,7 @@ begin
             ztr := zt_statek.torpedy_wyrzutnie_t[ 0 ].zasiêg__broñ;
 
         end;
-      //---//if Radar_Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked then
+      //---//if Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked then
 
       Broñ_Zasiêg_GLDisk.OuterRadius := ztr;
       //---// Rysuje na radarze zasiêg broni.
@@ -34213,10 +35781,10 @@ begin
   // Zwraca wartoœæ wspó³czynnika wielkoœci obiektów na radarze.
   //
 
-  Result := Radar_Czu³oœæ_SpinEdit.Value;
+  Result := Radar__Czu³oœæ_SpinEdit.Value;
 
-  if Result < Radar_Czu³oœæ_SpinEdit.MinValue then
-    Result := Radar_Czu³oœæ_SpinEdit.MinValue;
+  if Result < Radar__Czu³oœæ_SpinEdit.MinValue then
+    Result := Radar__Czu³oœæ_SpinEdit.MinValue;
 
   Result := Result * 0.01;
 
@@ -34227,20 +35795,25 @@ procedure TStatki_Form.Radar__L¹d_Rysuj();
 var
   i : integer;
   ztr : real;
+  skala__x,
+  skala__y,
+  skala__z
+    : single;
   ztdt_1,
   ztdt_2
     : TDateTime;
+  zt_gl_base_scene_object : TGLBaseSceneObject;
   zt_radar_obiekt : Klasy_Dodatkowe.TRadar_Obiekt;
   zt_statek : TStatek;
 begin
 
-  ztr := Radar_L¹d_Rysowanie_Zasiêg_SpinEdit.Value;
+  ztr := Radar__L¹d_Rysowanie_Zasiêg_SpinEdit.Value;
 
-  if ztr > Radar_L¹d_Rysowanie_Zasiêg_SpinEdit.MaxValue then
-    ztr := Radar_L¹d_Rysowanie_Zasiêg_SpinEdit.MaxValue
+  if ztr > Radar__L¹d_Rysowanie_Zasiêg_SpinEdit.MaxValue then
+    ztr := Radar__L¹d_Rysowanie_Zasiêg_SpinEdit.MaxValue
   else
-  if ztr < Radar_L¹d_Rysowanie_Zasiêg_SpinEdit.MinValue then
-    ztr := Radar_L¹d_Rysowanie_Zasiêg_SpinEdit.MinValue;
+  if ztr < Radar__L¹d_Rysowanie_Zasiêg_SpinEdit.MinValue then
+    ztr := Radar__L¹d_Rysowanie_Zasiêg_SpinEdit.MinValue;
 
 
   if   ( l¹d_list = nil )
@@ -34259,22 +35832,69 @@ begin
       if   ( zt_statek = nil )
         or (
                  ( zt_statek <> nil )
-             and ( not zt_statek.Zanurzenie_Peryskopowe__Przekroczone() ) // W zanurzeniu radar nie dzia³a.
-             and ( zt_statek.uszkodzone_czas_sekundy_i__radar = 0 )
-             and ( zt_statek.DistanceTo( TGLCustomSceneObject(l¹d_list[ i ]) ) <= zt_statek.radar_zasiêg * ztr * 0.01 )
+             and (
+                      ( // L¹d widoczny na radarze.
+                            ( not Wyglad_Elementy.Radar_Ignoruje( TGLCustomSceneObject(l¹d_list[ i ]) ) )
+                        and (  not ( TGLCustomSceneObject(l¹d_list[ i ]) is TSt_GLDummyCube )  ) // Kontenerów na obiekty nie rysuje na radarze.
+                        and ( not zt_statek.Zanurzenie_Peryskopowe__Przekroczone() ) // W zanurzeniu radar nie dzia³a.
+                        and ( zt_statek.radar_zasiêg > 0)
+                        and ( zt_statek.uszkodzone_czas_sekundy_i__radar = 0 )
+                        //and (  zt_statek.DistanceTo( TGLCustomSceneObject(l¹d_list[ i ]) ) <= zt_statek.radar_zasiêg * ztr * 0.01  )
+                        and (  zt_statek.DistanceTo( TGLCustomSceneObject(l¹d_list[ i ]) ) <= zt_statek.radar_zasiêg * ztr * 0.01 + ( TGLCustomSceneObject(l¹d_list[ i ]).Scale.X + TGLCustomSceneObject(l¹d_list[ i ]).Scale.Z ) * 0.5  )
+                      )
+                   or ( // L¹d widoczny na sonarze.
+                            ( not Wyglad_Elementy.Radar_Ignoruje( TGLCustomSceneObject(l¹d_list[ i ]) ) )
+                        and (  not ( TGLCustomSceneObject(l¹d_list[ i ]) is TSt_GLDummyCube )  ) // Kontenerów na obiekty nie rysuje na radarze.
+                        and ( zt_statek.sonar_zasiêg > 0)
+                        and ( zt_statek.uszkodzone_czas_sekundy_i__sonar = 0 )
+                        and ( Radar__Dane_Z_Sonaru_CheckBox.Enabled )
+                        and ( Radar__Dane_Z_Sonaru_CheckBox.Checked )
+                        //and (  zt_statek.DistanceTo( TGLCustomSceneObject(l¹d_list[ i ]) ) <= zt_statek.radar_zasiêg * ztr * 0.01  )
+                        and (  zt_statek.DistanceTo( TGLCustomSceneObject(l¹d_list[ i ]) ) <= zt_statek.sonar_zasiêg * ztr * 0.01 + ( TGLCustomSceneObject(l¹d_list[ i ]).Scale.X + TGLCustomSceneObject(l¹d_list[ i ]).Scale.Z ) * 0.5  )
+                      )
+                   or ( // Dane o l¹dzie z radia.
+                            ( Radar__Dane_Z_Radia_CheckBox.Checked )
+                        and ( Radar__Dane_Z_Radia__L¹dy_CheckBox.Checked )
+                        and (    Pos(   ', ' + IntToStr(  Wyglad_Elementy.Identyfikator_Elementu( TGLCustomSceneObject(l¹d_list[ i ]) )  ) + ',', zt_statek.radio_id_l¹dy_w_zasiêgu   ) > 0    ) // Statek ma w zasiêgu radia sprawdzany l¹d.
+                      )
+                 )
            ) then
         begin
 
-          zt_radar_obiekt := Klasy_Dodatkowe.TRadar_Obiekt.Create( Self );
-          zt_radar_obiekt.Parent := Radar_Obiekty_GLDummyCube;
-          zt_radar_obiekt.Pickable := false;
+          zt_radar_obiekt := Klasy_Dodatkowe.TRadar_Obiekt.Create( Self, Radar_Obiekty_GLDummyCube, TGLCustomSceneObject(l¹d_list[ i ]) );
           zt_radar_obiekt.AbsolutePosition := VectorMake( TGLCustomSceneObject(l¹d_list[ i ]).AbsolutePosition.X, TGLCustomSceneObject(l¹d_list[ i ]).AbsolutePosition.Y, TGLCustomSceneObject(l¹d_list[ i ]).AbsolutePosition.Z );
-          //zt_radar_obiekt.Radius := 2.5 * Radar__Koryguj_Wielkoœæ_Obiektów();
-          zt_radar_obiekt.Radius := Radar_Skala_SpinEdit.Value * 0.25;
-          zt_radar_obiekt.Material.FrontProperties.Ambient.Color := GLColor.clrDarkBrown;
-          zt_radar_obiekt.Material.FrontProperties.Diffuse.Color := GLColor.clrVeryDarkBrown;
-          zt_radar_obiekt.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
-          zt_radar_obiekt.l¹d__ro := true;
+          zt_radar_obiekt.AbsoluteUp := VectorMake( TGLCustomSceneObject(l¹d_list[ i ]).AbsoluteUp.X, TGLCustomSceneObject(l¹d_list[ i ]).AbsoluteUp.Y, TGLCustomSceneObject(l¹d_list[ i ]).AbsoluteUp.Z );
+          zt_radar_obiekt.AbsoluteDirection := VectorMake( TGLCustomSceneObject(l¹d_list[ i ]).AbsoluteDirection.X, TGLCustomSceneObject(l¹d_list[ i ]).AbsoluteDirection.Y, TGLCustomSceneObject(l¹d_list[ i ]).AbsoluteDirection.Z );
+
+
+          skala__x := TGLCustomSceneObject(l¹d_list[ i ]).Scale.X;
+          skala__y := TGLCustomSceneObject(l¹d_list[ i ]).Scale.Y;
+          skala__z := TGLCustomSceneObject(l¹d_list[ i ]).Scale.Z;
+
+          // Uwzglêdnia skalowanie kontenerów zawieraj¹cych obiekt.
+          zt_gl_base_scene_object := TGLCustomSceneObject(l¹d_list[ i ]);
+
+          while ( zt_gl_base_scene_object.Parent <> nil )
+            and ( zt_gl_base_scene_object.Parent.Name <> Gra_Obiekty_GLDummyCube.Name )
+            and ( zt_gl_base_scene_object.Parent.Name <> Gra_GLScene.Objects.Name ) do // 'ObjectRoot'
+            begin
+
+              skala__x := skala__x * zt_gl_base_scene_object.Parent.Scale.X;
+              skala__y := skala__y * zt_gl_base_scene_object.Parent.Scale.Y;
+              skala__z := skala__z * zt_gl_base_scene_object.Parent.Scale.Z;
+
+              zt_gl_base_scene_object := zt_gl_base_scene_object.Parent;
+
+            end;
+          //---//while ( zt_gl_base_scene_object.Parent <> nil ) (...)
+          //---// Uwzglêdnia skalowanie kontenerów zawieraj¹cych obiekt.
+
+          zt_radar_obiekt.Scale.X := skala__x * Radar__Koryguj_Wielkoœæ_Obiektów();
+
+          if Radar__Skala_Y_Uwzglêdniaj_L¹d_CheckBox.Checked then
+            zt_radar_obiekt.Scale.Y := skala__y * Radar__Koryguj_Wielkoœæ_Obiektów();
+
+          zt_radar_obiekt.Scale.Z := skala__z * Radar__Koryguj_Wielkoœæ_Obiektów();
 
         end;
       //---//if   ( zt_statek = nil ) (...)
@@ -34336,12 +35956,12 @@ begin
                           ( zt_statek.id_statek = statki_t[ i ].id_statek )
                        or (   Pos(  ', ' + IntToStr( statki_t[ i ].id_statek ) + ',', zt_statek.radar_id_statki_w_zasiêgu  ) > 0   ) // Statek ma w zasiêgu radaru sprawdzany statek.
                        or (
-                                ( Radar_Dane_Z_Radia_CheckBox.Checked )
+                                ( Radar__Dane_Z_Radia_CheckBox.Checked )
                             and (   Pos(  ', ' + IntToStr( statki_t[ i ].id_statek ) + ',', zt_statek.radio_id_statki_w_zasiêgu  ) > 0   ) // Statek ma w zasiêgu radia sprawdzany statek.
                           )
                        or (
-                                ( Radar_Dane_Z_Sonaru_CheckBox.Enabled )
-                            and ( Radar_Dane_Z_Sonaru_CheckBox.Checked )
+                                ( Radar__Dane_Z_Sonaru_CheckBox.Enabled )
+                            and ( Radar__Dane_Z_Sonaru_CheckBox.Checked )
                             and (   Pos(  ', ' + IntToStr( statki_t[ i ].id_statek ) + ',', zt_statek.sonar_id_statki_w_zasiêgu  ) > 0   ) // Statek ma w zasiêgu sonaru sprawdzany statek.
                           )
                      )
@@ -34404,6 +36024,92 @@ begin
                   if statki_t[ i ].punkty_¿ycia_aktualne <= 0 then
                     zt_gl_frustrum.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( zt_gl_frustrum.Material.FrontProperties.Diffuse.Color, 0.2 );
 
+
+
+                  if    ( Sonarowe_U³atwienie_CheckBox.Checked )
+                    and (  Pos(  ', ' + IntToStr( statki_t[ i ].id_statek ) + ',', zt_statek.sonar_id_statki_w_zasiêgu  ) > 0  )
+                    and (
+                             (     // Statek skanuj¹cy jest zanurzony.
+                                   ( zt_statek.czy_zanurzanie )
+                               and ( Pod_Wod¹_GLHUDSprite.Visible )
+                               and (
+                                        ( zt_statek.Zanurzenie_Peryskopowe__Utrzymywane() )
+                                     or ( zt_statek.Zanurzenie_Peryskopowe__Przekroczone() )
+                                   )
+                             )
+                          or ( // Statek skanowany jest zanurzony.
+                               ( statki_t[ i ].Zanurzenie_Peryskopowe__Przekroczone() )
+                             )
+                        ) then
+                    begin
+
+                      // Statek ma w zasiêgu sonaru sprawdzany statek.
+                      // Statek jest '³odzi¹ podwodn¹' i zanurzy³ siê co najmniej na g³êbokoœæ peryskopow¹ (kamera jest pod wod¹).
+                      // Statek nie zanurzy³ siê co najmniej na g³êbokoœæ peryskopow¹ (albo w ogóle siê nie zanurza)
+                      // i sprawdzany statek jest zanurzony poni¿ej g³êbokoœci peryskopowej.
+
+
+                      // Nie widaæ w nocy.
+                      //zt_gl_dummy_cube := TGLDummyCube.Create( Self );
+                      //zt_gl_dummy_cube.Parent := Sonarowe_U³atwienie_GLDummyCube;
+                      //zt_gl_dummy_cube.Pickable := false;
+                      //zt_gl_dummy_cube.VisibleAtRunTime := true;
+                      //zt_gl_dummy_cube.AbsoluteUp := statki_t[ i ].falowanie_dummy.AbsoluteUp;
+                      //zt_gl_dummy_cube.AbsoluteDirection := statki_t[ i ].falowanie_dummy.AbsoluteDirection;
+                      //
+                      //zt_gl_dummy_cube.EdgeColor := Sonar_Zasiêg_GLDisk.Material.FrontProperties.Diffuse;
+                      //zt_gl_dummy_cube.EdgeColor.Alpha := 1;
+                      //
+                      //zt_gl_dummy_cube.Material.MaterialOptions := [ GLMaterial.moIgnoreFog ]; // GLMaterial.moNoLighting //???
+                      //
+                      //zt_gl_dummy_cube.Scale.X := statki_t[ i ].x_prymityw_odleg³oœæ;
+                      //zt_gl_dummy_cube.Scale.Y := statki_t[ i ].y_prymityw_najwiêksze;
+                      //zt_gl_dummy_cube.Scale.Z := statki_t[ i ].z_prymityw_odleg³oœæ;
+                      //
+                      //zt_gl_dummy_cube.AbsolutePosition := statki_t[ i ].AbsolutePosition;
+                      //
+                      //if zt_gl_dummy_cube.Position.Y > -zt_gl_dummy_cube.Scale.Y * 0.5 then
+                      //  zt_gl_dummy_cube.Position.Y := -zt_gl_dummy_cube.Scale.Y * 0.5;
+                      //
+                      //TGLBFireFX(zt_gl_dummy_cube.AddNewEffect( TGLBFireFX )).Manager := Efekt__Sonarowe_U³atwienie_GLFireFXManager;
+
+
+                      zt_gl_sphere := TGLSphere.Create( Self );
+                      zt_gl_sphere.Parent := Sonarowe_U³atwienie_GLDummyCube;
+                      zt_gl_sphere.Pickable := false;
+                      zt_gl_sphere.AbsoluteUp := statki_t[ i ].falowanie_dummy.AbsoluteUp;
+                      zt_gl_sphere.AbsoluteDirection := statki_t[ i ].falowanie_dummy.AbsoluteDirection;
+
+                      //zt_gl_sphere.Material.BlendingMode := bmModulate;
+                      zt_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
+                      zt_gl_sphere.Material.FrontProperties.Diffuse := Sonar_Zasiêg_GLDisk.Material.FrontProperties.Diffuse;
+
+                      zt_gl_sphere.Material.FrontProperties.Diffuse.Alpha := 0.1;
+                      zt_gl_sphere.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
+                      zt_gl_sphere.Material.MaterialOptions := [ GLMaterial.moIgnoreFog ]; // GLMaterial.moNoLighting //???
+
+                      //zt_gl_sphere.Material.FrontProperties.Ambient := zt_gl_sphere.Material.FrontProperties.Diffuse;
+                      //zt_gl_sphere.Material.FrontProperties.Emission := zt_gl_sphere.Material.FrontProperties.Diffuse;
+
+                      //zt_gl_sphere.Material.PolygonMode := pmPoints;
+                      zt_gl_sphere.Slices := 1; // Aby kula nie by³a widoczna a tylko efekt.
+                      zt_gl_sphere.Stacks := 1; // Aby kula nie by³a widoczna a tylko efekt.
+
+                      zt_gl_sphere.Scale.X := statki_t[ i ].x_prymityw_odleg³oœæ;
+                      zt_gl_sphere.Scale.Y := statki_t[ i ].y_prymityw_najwiêksze * 0.5;
+                      zt_gl_sphere.Scale.Z := statki_t[ i ].z_prymityw_odleg³oœæ * 0.5;
+
+                      zt_gl_sphere.AbsolutePosition := statki_t[ i ].AbsolutePosition;
+
+                      if   ( zt_gl_sphere.Position.Y > -zt_gl_sphere.Scale.Y * 0.5 )
+                        or ( not zt_statek.Zanurzenie_Peryskopowe__Przekroczone() ) then
+                        zt_gl_sphere.Position.Y := -zt_gl_sphere.Scale.Y * 0.5;
+
+                      TGLBFireFX(zt_gl_sphere.AddNewEffect( TGLBFireFX )).Manager := Efekt__Sonarowe_U³atwienie_GLFireFXManager;
+
+                    end;
+                  //---//if    ( Sonarowe_U³atwienie_CheckBox.Checked ) (...)
+
                 end;
               //---//if zt_statek <> statki_t[ i ] then
 
@@ -34411,20 +36117,10 @@ begin
               if œlad_rysuj then
                 begin
 
-                  zt_radar_obiekt := Klasy_Dodatkowe.TRadar_Obiekt.Create( Self );
-                  zt_radar_obiekt.Parent := Radar_Œlady_GLDummyCube;
-                  zt_radar_obiekt.Pickable := false;
-                  zt_radar_obiekt.AbsolutePosition := VectorMake( statki_t[ i ].AbsolutePosition.X, 0, statki_t[ i ].AbsolutePosition.Z );
-                  zt_radar_obiekt.Radius := 5 * Radar__Koryguj_Wielkoœæ_Obiektów();
-                  zt_radar_obiekt.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
+                  zt_radar_obiekt := Klasy_Dodatkowe.TRadar_Obiekt.Create( Self, Radar_Œlady_GLDummyCube, nil, Radar__Koryguj_Wielkoœæ_Obiektów() );
                   zt_radar_obiekt.Material.FrontProperties.Diffuse.Color := GLColor.clrSilver;
-                  zt_radar_obiekt.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
-                  //zt_radar_obiekt.Material.BlendingMode := bmModulate;
-                  zt_radar_obiekt.Material.PolygonMode := GLState.pmPoints;
-                  zt_radar_obiekt.Slices := 4;
-                  zt_radar_obiekt.Stacks := 4;
+                  zt_radar_obiekt.AbsolutePosition := VectorMake( statki_t[ i ].AbsolutePosition.X, 0, statki_t[ i ].AbsolutePosition.Z );
                   zt_radar_obiekt.utworzenie_czas__ro := Czas_Teraz_W_Sekundach();
-                  //zt_radar_obiekt.amunicja_rodzaj__ro := Typy_Wspolne.ar_Brak;
                   zt_radar_obiekt.MoveLast();
 
                 end;
@@ -34451,7 +36147,7 @@ begin
       zt_gl_sphere.Pickable := false;
       zt_gl_sphere.AbsolutePosition := VectorMake( Celowniczy_GLDummyCube.AbsolutePosition.X, Celowniczy_GLDummyCube.AbsolutePosition.Y, Celowniczy_GLDummyCube.AbsolutePosition.Z );
       //zt_gl_sphere.Radius := 5 * Radar__Koryguj_Wielkoœæ_Obiektów();
-      zt_gl_sphere.Radius := Radar_Skala_SpinEdit.Value * 0.25;
+      zt_gl_sphere.Radius := Radar__Skala_SpinEdit.Value * 0.25;
       zt_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrYellowGreen;
       zt_gl_sphere.Material.FrontProperties.Diffuse.Color := GLColor.clrYellow;
       zt_gl_sphere.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
@@ -34461,8 +36157,8 @@ begin
 
 
   // Rysuje amunicjê.
-  if    ( Radar_Dane_Z_Sonaru_CheckBox.Enabled )
-    and ( Radar_Dane_Z_Sonaru_CheckBox.Checked ) then
+  if    ( Radar__Dane_Z_Sonaru_CheckBox.Enabled )
+    and ( Radar__Dane_Z_Sonaru_CheckBox.Checked ) then
     begin
 
       if czy_klient_g then
@@ -34530,9 +36226,11 @@ begin
                   if œlad_rysuj then
                     begin
 
-                      zt_radar_obiekt := Klasy_Dodatkowe.TRadar_Obiekt.Create( Self );
-                      zt_radar_obiekt.Parent := Radar_Œlady_GLDummyCube;
-                      zt_radar_obiekt.Pickable := false;
+                      zt_radar_obiekt := Klasy_Dodatkowe.TRadar_Obiekt.Create( Self, Radar_Œlady_GLDummyCube, nil, Radar__Koryguj_Wielkoœæ_Obiektów() );
+                      zt_radar_obiekt.Material.FrontProperties.Diffuse.Color := GLColor.clrWhite;
+                      zt_radar_obiekt.utworzenie_czas__ro := Czas_Teraz_W_Sekundach();
+                      zt_radar_obiekt.amunicja_rodzaj__ro := Typy_Wspolne.ar_Torpeda;
+                      zt_radar_obiekt.MoveLast();
 
                       if czy_klient_g then
                         begin
@@ -34548,18 +36246,6 @@ begin
                         end;
                       //---//if czy_klient_g then
 
-                      zt_radar_obiekt.Radius := 5 * Radar__Koryguj_Wielkoœæ_Obiektów();
-                      zt_radar_obiekt.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
-                      zt_radar_obiekt.Material.FrontProperties.Diffuse.Color := GLColor.clrWhite;
-                      zt_radar_obiekt.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
-                      //zt_radar_obiekt.Material.BlendingMode := bmModulate;
-                      zt_radar_obiekt.Material.PolygonMode := GLState.pmPoints;
-                      zt_radar_obiekt.Slices := 4;
-                      zt_radar_obiekt.Stacks := 4;
-                      zt_radar_obiekt.utworzenie_czas__ro := Czas_Teraz_W_Sekundach();
-                      zt_radar_obiekt.amunicja_rodzaj__ro := Typy_Wspolne.ar_Torpeda;
-                      zt_radar_obiekt.MoveLast();
-
                     end;
                   //---//if œlad_rysuj then
 
@@ -34573,67 +36259,94 @@ begin
       //---//for i := 0 to zt_amunicja_wystrzelona_list.Count - 1 do
 
     end;
-  //---//if    ( Radar_Dane_Z_Sonaru_CheckBox.Enabled ) (...)
+  //---//if    ( Radar__Dane_Z_Sonaru_CheckBox.Enabled ) (...)
   //---// Rysuje amunicjê.
 
 end;//---//Funkcja Radar__Statki_Rysuj().
 
-//Funkcja Radar__Statki_Znane().
-procedure TStatki_Form.Radar__Statki_Znane();
+//Funkcja Radar__Statki__L¹dy_Znane().
+procedure TStatki_Form.Radar__Statki__L¹dy_Znane();
 
-  //Funkcja Radio_Dane_Wymieñ() w Radar__Statki_Znane().
-  function Radio_Dane_Wymieñ( const zt_statek_f : TStatek; id_statek_f : integer ) : boolean;
-  var
-    i_l : integer;
-  begin
+  //Funkcja Radio_Dane_Wymieñ() w Radar__Statki__L¹dy_Znane().
+  procedure Radio_Dane_Wymieñ( zt_statek__1_f, zt_statek__2_f : TStatek );
+
+    //Funkcja Wartoœci_Nowe_Dodaj() w Radio_Dane_Wymieñ() w Radar__Statki__L¹dy_Znane().
+    procedure Wartoœci_Nowe_Dodaj( var wartoœæ_znane_f : TWieloosobowe_String; wartoœæ_do_dodania_f : TWieloosobowe_String );
+    var
+      zti_l : integer;
+      zts_l : string;
+    begin
+
+      //
+      // Funkcja do wartoœci znanych dopisuje nowe, niewystêpuj¹ce wartoœci.
+      //
+      // Parametry:
+      //   wartoœæ_znane_f - w postaci '-99, 1, 2, 3, -99'.
+      //   wartoœæ_do_dodania_f - w postaci '-99, 1, 2, 3, -99'.
+      //
+
+      zti_l := Pos( ',', wartoœæ_do_dodania_f );
+
+      while zti_l > 0 do
+        begin
+
+          zts_l := Trim(  Copy( wartoœæ_do_dodania_f, 1, zti_l - 1 )  );
+          Delete( wartoœæ_do_dodania_f, 1, zti_l );
+
+
+          if    (  Trim( zts_l ) <> ''  )
+            and ( zts_l <> '-99' )
+            and (  Pos( ', ' + zts_l + ',', wartoœæ_znane_f ) <= 0  ) then
+            //wartoœæ_znane_f := StringReplace( wartoœæ_znane_f, ', -99', ', ' + zts_l + ', -99', [ rfReplaceAll ] );
+            begin
+
+              zts_l := ', ' + zts_l;
+
+              if Length( wartoœæ_znane_f + zts_l ) <= High( TWieloosobowe_String ) then
+                wartoœæ_znane_f := StringReplace( wartoœæ_znane_f, ', -99', zts_l + ', -99', [ rfReplaceAll ] );
+
+            end;
+          //---//if    (  Trim( zts_l ) <> ''  ) (...)
+
+
+          zti_l := Pos( ',', wartoœæ_do_dodania_f );
+
+        end;
+      //---//while zti_l > 0 do
+
+    end;//---//Funkcja Wartoœci_Nowe_Dodaj() w Radio_Dane_Wymieñ() w Radar__Statki__L¹dy_Znane().
+
+  begin//Funkcja Radio_Dane_Wymieñ() w Radar__Statki__L¹dy_Znane().
 
     //
-    // Funkcja sprawdza czy informacje o danym statku mog¹ zostaæ przekazane przez radio.
+    // Funkcja sprawdza czy informacje miêdzy dwoma statkami mog¹ byæ wymienione przez radio.
     //
-    // Zwraca prawdê gdy informacje o danym statku mog¹ zostaæ przekazane przez radio.
+    // Zwraca prawdê gdy informacje miêdzy dwoma statkami mog¹ byæ wymienione przez radio.
     //
     // Parametry:
-    //   zt_statek_f - statek pytaj¹cy o informacje.
-    //   id_statek_f - id sprawdzanego statku.
+    //   zt_statek__1_f
+    //   zt_statek__2_f
     //
 
-    Result := false;
-
-    if zt_statek_f = nil then
-      Exit;
-
-
-    if zt_statek_f.uszkodzone_czas_sekundy_i__radio <> 0 then
-      Exit;
-
-
-    for i_l := 0 to Length( statki_t ) - 1 do
+    if    ( zt_statek__1_f <> nil )
+      and ( zt_statek__2_f <> nil )
+      and ( zt_statek__1_f.id_grupa = zt_statek__2_f.id_grupa ) // Informacje wymieniaj¹ tylko statki z tej samej grupy.
+      and ( zt_statek__1_f.uszkodzone_czas_sekundy_i__radio = 0 ) // Informacje wymieniaj¹ tylko statki ze sprawnym radiem.
+      and ( zt_statek__2_f.uszkodzone_czas_sekundy_i__radio = 0 ) // Informacje wymieniaj¹ tylko statki ze sprawnym radiem.
+      and (   Pos(  ', ' + IntToStr( zt_statek__2_f.id_statek ) + ',', zt_statek__1_f.radio_³¹cznoœæ_id_statki_w_zasiêgu  ) > 0   ) // Statki s¹ w zasiêgu radiowym.
+      and (   Pos(  ', ' + IntToStr( zt_statek__1_f.id_statek ) + ',', zt_statek__2_f.radio_³¹cznoœæ_id_statki_w_zasiêgu  ) > 0   ) then // Statki s¹ w zasiêgu radiowym. Powinno wystarczyæ tylko sprawdzenie dla jednego statku.
       begin
 
-        if    ( statki_t[ i_l ] <> nil )
-          and ( statki_t[ i_l ].id_grupa = zt_statek_f.id_grupa ) // Informacje wymieniaj¹ tylko statki z tej samej grupy.
-          and ( statki_t[ i_l ].uszkodzone_czas_sekundy_i__radio = 0 ) // Informacje wymieniaj¹ tylko statki ze sprawnym radiem.
-          and (   Pos(  ', ' + IntToStr( statki_t[ i_l ].id_statek ) + ',', zt_statek_f.radio_³¹cznoœæ_id_statki_w_zasiêgu  ) > 0   ) // Statki s¹ w zasiêgu radiowym.
-          and (
-                   ( statki_t[ i_l ].id_statek = id_statek_f ) // Pytany statek przekazuje w³asn¹ pozycjê.
-                or (   Pos(  ', ' + IntToStr( id_statek_f ) + ',', statki_t[ i_l ].radar_id_statki_w_zasiêgu  ) > 0   ) // Statek ma w zasiêgu radaru sprawdzany statek.
-                or (   Pos(  ', ' + IntToStr( id_statek_f ) + ',', statki_t[ i_l ].sonar_id_statki_w_zasiêgu  ) > 0   ) // Statek ma w zasiêgu sonaru sprawdzany statek.
-              )
-          then
-          begin
-
-            Result := true;
-            Exit;
-
-          end;
-        //---//if statki_t[ i_l ] <> nil then
+        Wartoœci_Nowe_Dodaj( zt_statek__1_f.radio_id_l¹dy_w_zasiêgu, zt_statek__2_f.radar_id_l¹dy_w_zasiêgu );
+        Wartoœci_Nowe_Dodaj(  zt_statek__1_f.radio_id_statki_w_zasiêgu, zt_statek__2_f.radar_id_statki_w_zasiêgu + ', ' + IntToStr( zt_statek__2_f.id_statek ) + ','  ); // zt_statek__2_f.id_statek - pytany statek przekazuje w³asn¹ pozycjê.
+        Wartoœci_Nowe_Dodaj( zt_statek__1_f.radio_id_statki_w_zasiêgu, zt_statek__2_f.sonar_id_statki_w_zasiêgu );
 
       end;
-    //---//for i_l := 0 to Length( statki_t ) - 1 do
+    //---//if    ( zt_statek__1_f <> nil ) (...)
 
-  end;//---//Funkcja Radio_Dane_Wymieñ() w Radar__Statki_Znane().
+  end;//---//Funkcja Radio_Dane_Wymieñ() w Radar__Statki__L¹dy_Znane().
 
-  //Funkcja Czy_Statek_Widoczny__Skanowanie() w Radar__Statki_Znane().
+  //Funkcja Czy_Statek_Widoczny__Skanowanie() w Radar__Statki__L¹dy_Znane().
   function Czy_Statek_Widoczny__Skanowanie( statek_skanuj¹cy_f, statek_skanowany_f : TStatek; const dane_z_radaru_f, dane_z_sonaru_f : boolean ) : boolean;
   begin
 
@@ -34678,9 +36391,9 @@ procedure TStatki_Form.Radar__Statki_Znane();
       then
       Result := true;
 
-  end;//---//Funkcja Czy_Statek_Widoczny__Skanowanie() w Radar__Statki_Znane().
+  end;//---//Funkcja Czy_Statek_Widoczny__Skanowanie() w Radar__Statki__L¹dy_Znane().
 
-  //Funkcja Czy_Statek_Widoczny__Optycznie() w Radar__Statki_Znane().
+  //Funkcja Czy_Statek_Widoczny__Optycznie() w Radar__Statki__L¹dy_Znane().
   function Czy_Statek_Widoczny__Optycznie( statek_skanuj¹cy_f, statek_skanowany_f : TStatek ) : boolean;
   var
     ztr_1,
@@ -34804,17 +36517,17 @@ procedure TStatki_Form.Radar__Statki_Znane();
            ) then
       Result := true;
 
-  end;//---//Funkcja Czy_Statek_Widoczny__Optycznie() w Radar__Statki_Znane().
+  end;//---//Funkcja Czy_Statek_Widoczny__Optycznie() w Radar__Statki__L¹dy_Znane().
 
 var
   i,
   j,
   zti
     : integer;
-begin//Funkcja Radar__Statki_Znane().
+begin//Funkcja Radar__Statki__L¹dy_Znane().
 
   //
-  // Funkcja ustawia statkom jakie id statki maj¹ w zasiêgu radaru, sonaru i radia.
+  // Funkcja ustawia statkom jakie id statki, id l¹dy maj¹ w zasiêgu radaru, sonaru i radia.
   //
 
   if czy_klient_g then
@@ -34822,6 +36535,7 @@ begin//Funkcja Radar__Statki_Znane().
 
 
   // Jakie statki s¹ widoczne na radarze, sonarze, jakie statki z w³asnej grupy ma w zasiêgu radia statek.
+  // Jakie l¹dy s¹ widoczne na radarze.
   for i := 0 to Length( statki_t ) - 1 do
     begin
 
@@ -34850,7 +36564,8 @@ begin//Funkcja Radar__Statki_Znane().
                     and ( statki_t[ j ].uszkodzone_czas_sekundy_i__radio = 0 )
                     and ( not statki_t[ i ].Zanurzenie_Peryskopowe__Przekroczone() )
                     and ( not statki_t[ j ].Zanurzenie_Peryskopowe__Przekroczone() )
-                    and ( statki_t[ i ].DistanceTo( statki_t[ j ] ) <= statki_t[ i ].radio_zasiêg ) then
+                    and ( statki_t[ i ].DistanceTo( statki_t[ j ] ) <= statki_t[ i ].radio_zasiêg )
+                    and ( statki_t[ j ].DistanceTo( statki_t[ i ] ) <= statki_t[ j ].radio_zasiêg ) then // Oba statki musz¹ byæ w zasiêgu swoich radiów. Mog³o by byæ, ¿e ten statek, który odbiera dane jest w zasiêgu radia statku, który nadaje ale za³ó¿my, ¿e komunikacja musi byæ obustronna.
                     statki_t[ i ].radio_³¹cznoœæ_id_statki_w_zasiêgu := statki_t[ i ].radio_³¹cznoœæ_id_statki_w_zasiêgu +
                       ', ' + IntToStr( statki_t[ j ].id_statek );
 
@@ -34874,6 +36589,33 @@ begin//Funkcja Radar__Statki_Znane().
           statki_t[ i ].sonar_id_statki_w_zasiêgu := statki_t[ i ].sonar_id_statki_w_zasiêgu +
             ', -99';
 
+
+
+          statki_t[ i ].radar_id_l¹dy_w_zasiêgu := '-99';
+
+          for j := 0 to l¹d_list.Count - 1 do
+            begin
+
+              if    ( not Wyglad_Elementy.Radar_Ignoruje( TGLCustomSceneObject(l¹d_list[ j ]) ) )
+                and (  not ( TGLCustomSceneObject(l¹d_list[ j ]) is TSt_GLDummyCube )  ) // Kontenerów na obiekty nie rysuje na radarze.
+                and ( not statki_t[ i ].Zanurzenie_Peryskopowe__Przekroczone() ) // W zanurzeniu radar nie dzia³a.
+                and ( statki_t[ i ].uszkodzone_czas_sekundy_i__radar = 0 )
+                //and (  statki_t[ i ].DistanceTo( TGLCustomSceneObject(l¹d_list[ j ]) ) <= statki_t[ i ].radar_zasiêg  )
+                and (  statki_t[ i ].DistanceTo( TGLCustomSceneObject(l¹d_list[ j ]) ) <= statki_t[ i ].radar_zasiêg + ( TGLCustomSceneObject(l¹d_list[ j ]).Scale.X + TGLCustomSceneObject(l¹d_list[ j ]).Scale.Z ) * 0.5  ) then
+                begin
+
+                  statki_t[ i ].radar_id_l¹dy_w_zasiêgu := statki_t[ i ].radar_id_l¹dy_w_zasiêgu +
+                    ', ' + IntToStr(  Wyglad_Elementy.Identyfikator_Elementu( TGLCustomSceneObject(l¹d_list[ j ]) )  );
+
+                end;
+              //---//if    ( not Wyglad_Elementy.Radar_Ignoruje( TGLCustomSceneObject(l¹d_list[ j ]) ) ) (...)
+
+            end;
+          //---//for j := 0 to l¹d_list.Count - 1 do
+
+          statki_t[ i ].radar_id_l¹dy_w_zasiêgu := statki_t[ i ].radar_id_l¹dy_w_zasiêgu +
+            ', -99';
+
         end;
       //---//if statki_t[ i ] <> nil then
 
@@ -34889,19 +36631,14 @@ begin//Funkcja Radar__Statki_Znane().
       if statki_t[ i ] <> nil then
         begin
 
-          statki_t[ i ].radio_id_statki_w_zasiêgu := '-99';
+          statki_t[ i ].radio_id_l¹dy_w_zasiêgu := '-99, -99';
+          statki_t[ i ].radio_id_statki_w_zasiêgu := '-99, -99';
 
 
           for j := 0 to Length( statki_t ) - 1 do
             if    ( statki_t[ j ] <> nil )
-              and ( statki_t[ i ] <> statki_t[ j ] )
-              and (  Radio_Dane_Wymieñ( statki_t[ i ], statki_t[ j ].id_statek )  ) then
-              statki_t[ i ].radio_id_statki_w_zasiêgu := statki_t[ i ].radio_id_statki_w_zasiêgu +
-                ', ' + IntToStr( statki_t[ j ].id_statek );
-
-
-          statki_t[ i ].radio_id_statki_w_zasiêgu := statki_t[ i ].radio_id_statki_w_zasiêgu +
-            ', -99';
+              and ( statki_t[ i ] <> statki_t[ j ] ) then
+              Radio_Dane_Wymieñ( statki_t[ i ], statki_t[ j ] );
 
         end;
       //---//if statki_t[ i ] <> nil then
@@ -34928,8 +36665,11 @@ begin//Funkcja Radar__Statki_Znane().
                 and ( statki_t[ i ] <> statki_t[ j ] ) then
                 begin
 
-                  if   (  Czy_Statek_Widoczny__Skanowanie( statki_t[ i ], statki_t[ j ], true, true )  )
-                    or (  Radio_Dane_Wymieñ( statki_t[ i ], statki_t[ j ].id_statek )  ) // Dane z radia.
+                  if   (
+                             ( statki_t[ i ].uszkodzone_czas_sekundy_i__radio = 0 )
+                         and (   Pos(  ', ' + IntToStr( statki_t[ j ].id_statek ) + ',', statki_t[ i ].radio_id_statki_w_zasiêgu  ) > 0   ) // Statek ma w zasiêgu radia sprawdzany statek.
+                       )
+                    or (  Czy_Statek_Widoczny__Skanowanie( statki_t[ i ], statki_t[ j ], true, true )  )
                     or (  Czy_Statek_Widoczny__Optycznie( statki_t[ i ], statki_t[ j ] )  ) then
                     begin
 
@@ -34939,7 +36679,7 @@ begin//Funkcja Radar__Statki_Znane().
                       statki_t[ i ].si__statki_znane_r_t[ zti ].id_statek__sisz := statki_t[ j ].id_statek;
 
                     end;
-                  //---//if   (  Czy_Statek_Widoczny__Skanowanie( statki_t[ i ], statki_t[ j ], true, true )  ) (...)
+                  //---//if   ( (...)
 
                 end;
               //---//if    ( statki_t[ j ] <> nil ) (...)
@@ -34954,7 +36694,7 @@ begin//Funkcja Radar__Statki_Znane().
   //---//for i := 0 to Length( statki_t ) - 1 do
   //---// Zbiera dane dla SI.
 
-end;//---//Funkcja Radar__Statki_Znane().
+end;//---//Funkcja Radar__Statki__L¹dy_Znane().
 
 //Funkcja Radar__Wyczyœæ().
 procedure TStatki_Form.Radar__Wyczyœæ( const radar_czyszczenie_zakres_f : TRadar_Czyszczenie_Zakres = rcz_Statki );
@@ -34974,16 +36714,18 @@ begin
       or (
                ( Radar_Œlady_GLDummyCube.Children[ i ] is Klasy_Dodatkowe.TRadar_Obiekt )
            and ( Klasy_Dodatkowe.TRadar_Obiekt(Radar_Œlady_GLDummyCube.Children[ i ]).amunicja_rodzaj__ro <> Typy_Wspolne.ar_Torpeda ) // Œlady statków.
-           and (  Czas_Miêdzy_W_Sekundach( Klasy_Dodatkowe.TRadar_Obiekt(Radar_Œlady_GLDummyCube.Children[ i ]).utworzenie_czas__ro ) > Radar_Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value  )
+           and (  Czas_Miêdzy_W_Sekundach( Klasy_Dodatkowe.TRadar_Obiekt(Radar_Œlady_GLDummyCube.Children[ i ]).utworzenie_czas__ro ) > Radar__Rysowanie_Œladów__Statków_Sekundy_SpinEdit.Value  )
          )
       or (
                ( Radar_Œlady_GLDummyCube.Children[ i ] is Klasy_Dodatkowe.TRadar_Obiekt )
            and ( Klasy_Dodatkowe.TRadar_Obiekt(Radar_Œlady_GLDummyCube.Children[ i ]).amunicja_rodzaj__ro = Typy_Wspolne.ar_Torpeda ) // Œlady torped.
-           and (  Czas_Miêdzy_W_Sekundach( Klasy_Dodatkowe.TRadar_Obiekt(Radar_Œlady_GLDummyCube.Children[ i ]).utworzenie_czas__ro ) > Radar_Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value  )
+           and (  Czas_Miêdzy_W_Sekundach( Klasy_Dodatkowe.TRadar_Obiekt(Radar_Œlady_GLDummyCube.Children[ i ]).utworzenie_czas__ro ) > Radar__Rysowanie_Œladów__Amunicji_Sekundy_SpinEdit.Value  )
          ) then
       Radar_Œlady_GLDummyCube.Children[ i ].Free()
     else//if   ( czyœæ_wszystko_f ) (...)
-      TGLSphere(Radar_Œlady_GLDummyCube.Children[ i ]).Radius := 5 * Radar__Koryguj_Wielkoœæ_Obiektów(); // Aktualizuje rozmiar gdy zmieni siê skalê radaru.
+      //TGLSphere(Radar_Œlady_GLDummyCube.Children[ i ]).Radius := 5 * Radar__Koryguj_Wielkoœæ_Obiektów(); // Aktualizuje rozmiar gdy zmieni siê skalê radaru.
+      if Radar_Œlady_GLDummyCube.Children[ i ] is Klasy_Dodatkowe.TRadar_Obiekt then
+        Klasy_Dodatkowe.TRadar_Obiekt(Radar_Œlady_GLDummyCube.Children[ i ]).Œlad_Wielkoœæ_Zmieñ( Radar__Koryguj_Wielkoœæ_Obiektów() ); // Aktualizuje rozmiar gdy zmieni siê skalê radaru.
 
 
   for i := Radar_Obiekty_GLDummyCube.Count - 1 downto 0 do
@@ -35001,7 +36743,89 @@ begin
     end;
   //---//for i := Radar_Obiekty_GLDummyCube.Count - 1 downto 0 do
 
+
+  for i := Sonarowe_U³atwienie_GLDummyCube.Count - 1 downto 0 do
+    begin
+
+      Sonarowe_U³atwienie_GLDummyCube.Children[ i ].Free();
+
+    end;
+  //---//for i := Sonarowe_U³atwienie_GLDummyCube.Count - 1 downto 0 do
+
 end;//---//Funkcja Radar__Wyczyœæ().
+
+//Funkcja Radar_Panel_Ukrywanie().
+procedure TStatki_Form.Radar_Panel_Ukrywanie();
+var
+  mysz_pozycja_point : TPoint;
+begin
+
+  if not Radar__Przyciski_Panel__Ukrywaj_CheckBox.Checked then
+    begin
+
+      if not Radar__Przyciski_Panel.Visible then
+        Radar__Przyciski_Panel.Visible := true;
+
+      if radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i > 0 then
+        radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i := -1;
+
+      Exit;
+
+    end;
+  //---//if not Radar__Przyciski_Panel__Ukrywaj_CheckBox.Checked then
+
+
+  mysz_pozycja_point := Mouse.CursorPos;
+  mysz_pozycja_point := ScreenToClient( mysz_pozycja_point );
+
+  if    ( mysz_pozycja_point.X >= Radar_Panel.Left )
+    and ( mysz_pozycja_point.X <= Radar_Panel.Left + Radar_Panel.Width )
+    and ( mysz_pozycja_point.Y >= Radar_Panel.Top )
+    //and ( mysz_pozycja_point.Y <= Radar_Panel.Top + Radar_Panel.Height ) then
+    and ( mysz_pozycja_point.Y <= Radar_Panel.Top + Radar__Przyciski_Panel.Height ) // Kursor myszy na obszarze panelu przycisków radaru.
+    or ( Radar__Powiêksz_Button.Focused() )
+    or ( Radar__Pomniejsz_Button.Focused() )
+    or ( Radar__Skala_SpinEdit.Focused() )
+    or ( Radar__Czu³oœæ_SpinEdit.Focused() )
+    or ( Radar__Dane_Z_Radia_CheckBox.Focused() )
+    or ( Radar__Dane_Z_Sonaru_CheckBox.Focused() )
+    or ( Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Focused() ) then
+    begin
+
+      if not Radar__Przyciski_Panel.Visible then
+        begin
+
+          Radar__Przyciski_Panel.Visible := true;
+
+          if radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i > 0 then
+            radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i := -1;
+
+        end;
+      //---//if not Radar__Przyciski_Panel.Visible then
+
+    end
+  else//if    ( mysz_pozycja_point.X >= Radar_Panel.Left ) (...)
+    begin
+
+      if radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i <= -1 then
+        radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i := Czas_Teraz_W_Sekundach()
+      else//if radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i <= -1 then
+        if    ( Radar__Przyciski_Panel.Visible )
+          and (  Czas_Miêdzy_W_Sekundach( radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i ) > radar__przyciski_panel__ukrywanie__oczekiwanie_sekundy_c  ) then
+          begin
+
+            Radar__Przyciski_Panel.Visible := false;
+            radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i := -1;
+
+          end;
+        //---//if    ( Radar__Przyciski_Panel.Visible ) (...)
+
+    end;
+  //---//if    ( mysz_pozycja_point.X >= Radar_Panel.Left ) (...)
+
+  //Label1.Caption := 'X = ' + IntToStr( mysz_pozycja_point.X ) + ', Y = ' + IntToStr( mysz_pozycja_point.Y ); // Wspó³rzêdne wed³ug okna.
+
+end;//---//Funkcja Radar_Panel_Ukrywanie().
 
 //Funkcja xNx__Radio_Statki_W_Zasiêgu().
 procedure TStatki_Form.xNx__Radio_Statki_W_Zasiêgu();
@@ -35022,14 +36846,16 @@ begin
   zt_statek := Statek_Gracza__Gracz_Tryb_Zwróæ();
 
   //if    ( czy_gra_lokalna_g )
-  //  and ( not Radar_Dane_Z_Radia_CheckBox.Checked ) then
-  if not Radar_Dane_Z_Radia_CheckBox.Checked then // Gdy radio wy³¹czone to nie wysy³a danych do innych statków.
+  //  and ( not Radar__Dane_Z_Radia_CheckBox.Checked ) then
+  if not Radar__Dane_Z_Radia_CheckBox.Checked then // Gdy radio wy³¹czone to nie wysy³a danych do innych statków.
     begin
 
       if zt_statek <> nil then
         begin
 
+          zt_statek.radar_id_l¹dy_w_zasiêgu := '-99, -99';
           zt_statek.radar_id_statki_w_zasiêgu := '-99, -99';
+          zt_statek.radio_id_l¹dy_w_zasiêgu := '-99, -99';
           zt_statek.radio_id_statki_w_zasiêgu := '-99, -99';
           zt_statek.sonar_id_statki_w_zasiêgu := '-99, -99';
 
@@ -35040,7 +36866,7 @@ begin
       Exit;
 
     end;
-  //---//if not Radar_Dane_Z_Radia_CheckBox.Checked then
+  //---//if not Radar__Dane_Z_Radia_CheckBox.Checked then
 
 
 
@@ -35050,7 +36876,9 @@ begin
 
       // W zanurzeniu radio nie dzia³a.
 
+      zt_statek.radar_id_l¹dy_w_zasiêgu := '-99, -99';
       zt_statek.radar_id_statki_w_zasiêgu := '-99, -99';
+      zt_statek.radio_id_l¹dy_w_zasiêgu := '-99, -99';
       zt_statek.radio_id_statki_w_zasiêgu := '-99, -99';
       zt_statek.sonar_id_statki_w_zasiêgu := '-99, -99';
 
@@ -35067,8 +36895,9 @@ begin
       if statki_t[ i ] <> nil then
         begin
 
+          statki_t[ i ].radar_id_l¹dy_w_zasiêgu := '-99';
           statki_t[ i ].radar_id_statki_w_zasiêgu := '-99';
-          statki_t[ i ].radio_id_statki_w_zasiêgu := '-99';
+          statki_t[ i ].radio_id_l¹dy_w_zasiêgu := '-99';
           statki_t[ i ].sonar_id_statki_w_zasiêgu := '-99';
 
 
@@ -35137,10 +36966,13 @@ begin
             //---//for j := 0 to Length( statki_t ) - 1 do
 
 
+          statki_t[ i ].radar_id_l¹dy_w_zasiêgu := statki_t[ i ].radar_id_l¹dy_w_zasiêgu +
+            ', -99';
+
           statki_t[ i ].radar_id_statki_w_zasiêgu := statki_t[ i ].radar_id_statki_w_zasiêgu +
             ', -99';
 
-          statki_t[ i ].radio_id_statki_w_zasiêgu := statki_t[ i ].radio_id_statki_w_zasiêgu +
+          statki_t[ i ].radio_id_l¹dy_w_zasiêgu := statki_t[ i ].radio_id_l¹dy_w_zasiêgu +
             ', -99';
 
           statki_t[ i ].sonar_id_statki_w_zasiêgu := statki_t[ i ].sonar_id_statki_w_zasiêgu +
@@ -35153,6 +36985,35 @@ begin
   //---//for i := 0 to Length( statki_t ) - 1 do
 
 end;//---//Funkcja xNx__Radio_Statki_W_Zasiêgu().
+
+//Funkcja Sekundy_W__Minuty_Sekundy().
+function TStatki_Form.Sekundy_W__Minuty_Sekundy( sekundy_f : integer ) : string;
+var
+  minuty_l : integer;
+begin
+
+  //
+  // Funkcja zamienia wartoœæ sekund do postaci minuty sekundy 00:00.
+  //
+  // Zwraca iloœæ minut i sekund w postaci napisu mm:ss.
+  //
+
+  if sekundy_f < 0 then
+    begin
+
+      Result := '<n/d>';
+      Exit;
+
+    end;
+  //---//if sekundy_f < 0 then
+
+
+  minuty_l := Trunc( sekundy_f / 60 );
+  sekundy_f := sekundy_f - minuty_l * 60;
+
+  Result := Trim(  FormatFloat( '### ### #00', minuty_l )  ) + ':' + Trim(  FormatFloat( '00', sekundy_f )  );
+
+end;//---//Funkcja Sekundy_W__Minuty_Sekundy().
 
 //Funkcja SI_Decyduj().
 procedure TStatki_Form.SI_Decyduj();
@@ -35321,6 +37182,41 @@ procedure TStatki_Form.SI_Decyduj();
     torpedy_wyrzutnia_f.si__cel__wyszukanie_ostatnie_sekundy_i := Czas_Teraz_W_Sekundach();
 
   end;//---//Funkcja xNx__Broñ__Cel_Wyznacz() w SI_Decyduj().
+
+  //Funkcja Broñ__Amunicja_Uzupe³niona() w SI_Decyduj().
+  function Broñ__Amunicja_Uzupe³niona( broñ_f : array of TTorpedy_Wyrzutnia ) : boolean;
+  var
+    i_l : integer;
+  begin
+
+    //
+    // Funkcja zwraca prawdê gdy wszystkie egzemplarze danej broni s¹ w pe³ni na³adowane
+    // albo statek nie posiada danego rodzaju broni.
+    //
+
+    Result := true;
+
+
+    if Length( broñ_f ) <= 0 then
+      Exit;
+
+
+    for i_l := 0 to Length( broñ_f ) - 1 do
+      begin
+
+        if broñ_f[ i_l ].amunicja_iloœæ < broñ_f[ i_l ].amunicja_iloœæ_pocz¹tkowa - Length( broñ_f[ i_l ].lufy_t ) then
+          begin
+
+            Result := false;
+            Exit;
+
+          end;
+        //---//if broñ_f[ i_l ].amunicja_iloœæ < broñ_f[ i_l ].amunicja_iloœæ_pocz¹tkowa - Length( broñ_f[ i_l ].lufy_t ) then
+
+      end;
+    //---//for i_l := 0 to Length( broñ_f ) - 1 do
+
+  end;//---//Funkcja Broñ__Amunicja_Uzupe³niona() w SI_Decyduj().
 
   //Funkcja Broñ__Namiar_Wyznacz() w SI_Decyduj().
   procedure Broñ__Namiar_Wyznacz( torpedy_wyrzutnia_f : TTorpedy_Wyrzutnia );
@@ -35629,6 +37525,17 @@ procedure TStatki_Form.SI_Decyduj();
     // Dla tych broni je¿eli cel jest zbyt wysoko to nie strzela (np. do samolotów).
     if    ( torpedy_wyrzutnia_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe, Typy_Wspolne.ar_Torpeda ] )
       and ( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor.Y > samolot_w_powietrzu_wysokoœæ_od_c ) then
+      begin
+
+        torpedy_wyrzutnia_f.Si__Cel__Brak_Ustaw();
+        Exit;
+
+      end;
+    //---//if    ( torpedy_wyrzutnia_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe, Typy_Wspolne.ar_Torpeda ] ) (...)
+
+
+    if    ( torpedy_wyrzutnia_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe ] )
+      and ( torpedy_wyrzutnia_f.statek.Zanurzenie_Strza³_Przekroczone() ) then
       begin
 
         torpedy_wyrzutnia_f.Si__Cel__Brak_Ustaw();
@@ -36685,6 +38592,178 @@ procedure TStatki_Form.SI_Decyduj();
 
   end;//---//Funkcja Patrol_Punkt_Wyznacz() w SI_Decyduj().
 
+  //Funkcja Odnawianie_Zasobów__Punkt_Wyznacz() w SI_Decyduj().
+  function Odnawianie_Zasobów__Punkt_Wyznacz( statek_f : TStatek ) : boolean;
+
+    //Funkcja Punkt_ZnajdŸ() w Odnawianie_Zasobów__Punkt_Wyznacz() w SI_Decyduj().
+    function Punkt_ZnajdŸ( statek_f_f : TStatek; const punkt_dowolny_f : boolean ) : boolean;
+    var
+      ztb_l : boolean;
+      i_l : integer;
+    begin
+
+      //
+      // Funkcja próbuje znaleŸæ dobry punkt do odnawiania zasobów.
+      //
+      // Zwraca prawdê gdy uda³o siê znaleŸæ dobry punkt do odnawiania zasobów.
+      //
+      // Parametry:
+      //   punkt_dowolny_f:
+      //     false - spróbuje wyszukaæ punkt ³atwy w dostêpie dla statku.
+      //     true - wyszuka najbli¿szy punkt.
+      //
+
+      Result := false;
+
+
+      ztb_l := false;
+
+      for i_l := 0 to l¹d_list.Count - 1 do
+        begin
+
+          if    (
+                     (  Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie( l¹d_list[ i_l ] ) > 0  )
+                  or (  Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( l¹d_list[ i_l ] ) < 0  )
+                )
+            and (  not Wyglad_Elementy.Radar_Ignoruje( l¹d_list[ i_l ] )  ) // Aby przeliczanych by³o mniej elementów.
+            and (  not ( TGLCustomSceneObject(l¹d_list[ i_l ]) is TSt_GLDummyCube )  ) // Kontenerów na obiekty nie rysuje na radarze.
+            and (
+                     ( statek_f_f = nil )
+                  or ( punkt_dowolny_f )
+                  or (
+                            ( statek_f_f <> nil )
+                        and (
+                                 (
+                                       ( not statek_f_f.czy_samolot )
+                                   and ( TGLCustomSceneObject(l¹d_list[ i_l ]).AbsolutePosition.Y <= statek_f_f.y_prymityw_najwiêksze )
+                                   //and ( TGLCustomSceneObject(l¹d_list[ i_l ]).AbsolutePosition.Y - TGLCustomSceneObject(l¹d_list[ i_l ]).Scale.Y <= statek_f_f.y_prymityw_najwiêksze ) // Nie uwzglêdnia skali zagnie¿d¿onych obiektów.
+                                 )
+                              or (
+                                       ( not statek_f_f.czy_zanurzanie )
+                                   and ( TGLCustomSceneObject(l¹d_list[ i_l ]).AbsolutePosition.Y >= 0 )
+                                   and ( TGLCustomSceneObject(l¹d_list[ i_l ]).AbsolutePosition.Y <= statek_f_f.y_prymityw_najwiêksze )
+                                 )
+                            )
+                     )
+                ) then
+            begin
+
+              if not Result then
+                Result := true;
+
+
+              if statek_f_f = nil then
+                Exit;
+
+
+              if not ztb_l then
+                begin
+
+                  // Pierwsze podstawienie.
+
+                  ztb_l := true;
+
+                  statek_f_f.si__punkt_zadany__wspó³rzêdne := TGLCustomSceneObject(l¹d_list[ i_l ]).AbsolutePosition;
+
+                end
+              else//if not ztb_l then
+                begin
+
+                  if statek_f_f.DistanceTo( TGLCustomSceneObject(l¹d_list[ i_l ]).AbsolutePosition ) < statek_f_f.DistanceTo( statek_f_f.si__punkt_zadany__wspó³rzêdne ) then
+                    statek_f_f.si__punkt_zadany__wspó³rzêdne := TGLCustomSceneObject(l¹d_list[ i_l ]).AbsolutePosition;
+
+                end;
+              //---//if not ztb_l then
+
+            end;
+          //---//if    ( (...)
+
+        end;
+      //---//for i_l := 0 to l¹d_list.Count - 1 do
+
+    end;//---//Funkcja Punkt_ZnajdŸ() w Odnawianie_Zasobów__Punkt_Wyznacz() w SI_Decyduj().
+
+  var
+    ztb_l : boolean;
+    i_l : integer;
+  begin
+
+    //
+    // Funkcja ustawia aktywnoœæ si,
+    // wyznacza punkt, do którego bêdzie pod¹¿a³ statek aby odnowiæ zasoby.
+    //
+    // Zwraca prawdê gdy istniej¹ obiekty l¹dowe odnawiaj¹ce zasoby.
+    //
+
+    Result := Punkt_ZnajdŸ( nil, true );
+
+
+    if   ( statek_f = nil )
+      or (  not Assigned( statek_f )  ) then
+      Exit;
+
+
+    if not Punkt_ZnajdŸ( statek_f, false ) then
+      Punkt_ZnajdŸ( statek_f, true );
+
+
+    if   (
+               ( statek_f.czy_samolot )
+           and ( statek_f.si__punkt_zadany__wspó³rzêdne.Y < 0 )
+         )
+      or (
+               ( statek_f.czy_zanurzanie )
+           and ( statek_f.si__punkt_zadany__wspó³rzêdne.Y > 0 ) // Zostanie zinterpretowane jako g³êbokoœæ do zanurzenia.
+         ) then
+      statek_f.si__punkt_zadany__wspó³rzêdne.Y := 0;
+
+
+    statek_f.si_aktywnoœæ := sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów;
+    statek_f.si__p³ywanie_do_punktu__odnawianie_zasobów__rozpoczêcie_czas_sekundy_i := Czas_Teraz_W_Sekundach();
+    statek_f.si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie_modyfikator_losowy__czas_sekundy_i := Random( si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g ) - Round( si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g * 0.5 );
+
+    if statek_f.si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów then
+      statek_f.si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów := false;
+
+    if statek_f.si__punkt_zadany__wspó³rzêdne.Y > statek_f.zanurzenie_pu³ap__maksymalne then
+      statek_f.si__punkt_zadany__wspó³rzêdne.Y := statek_f.zanurzenie_pu³ap__maksymalne;
+
+    if    ( statek_f.czy_samolot )
+      and ( statek_f.si__punkt_zadany__wspó³rzêdne.Y < samolot_w_powietrzu_wysokoœæ_od_c ) then
+      statek_f.si__punkt_zadany__wspó³rzêdne.Y := samolot_w_powietrzu_wysokoœæ_od_c;
+
+  end;//---//Funkcja Odnawianie_Zasobów__Punkt_Wyznacz() w SI_Decyduj().
+
+  //Funkcja Odnawianie_Zasobów__Zakoñczyæ_SprawdŸ() w SI_Decyduj().
+  function Odnawianie_Zasobów__Zakoñczyæ_SprawdŸ( statek_f : TStatek ) : boolean;
+  begin
+
+    //
+    // Funkcja okreœla czy zakoñczyæ tryb odnawiania zasobów.
+    //
+    // Zwraca prawdê gdy nale¿y zakoñczyæ tryb odnawiania zasobów.
+    //
+
+    Result := false;
+
+    if   ( statek_f = nil )
+      or (  not Assigned( statek_f )  )
+      or (  not ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )  ) then
+      Exit;
+
+
+    if    ( statek_f.punkty_¿ycia_aktualne >= statek_f.punkty_¿ycia_maksymalne )
+      and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.artyleria_t) )  )
+      and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.bomba_g³êbinowa_t) )  )
+      and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.dzia³a_t) )  )
+      and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.je¿e_g³êbinowe_t) )  )
+      and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.torpedy_wyrzutnie_t) )  )
+      or ( statek_f.si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów )
+      or (  Czas_Miêdzy_W_Sekundach( statek_f.si__p³ywanie_do_punktu__odnawianie_zasobów__rozpoczêcie_czas_sekundy_i ) > si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g + statek_f.si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie_modyfikator_losowy__czas_sekundy_i  ) then
+      Result := true;
+
+  end;//---//Funkcja Odnawianie_Zasobów__Zakoñczyæ_SprawdŸ() w SI_Decyduj().
+
   //Funkcja Walka__P³ywanie_Do_Punktu__Punkt_Wyznacz() w SI_Decyduj().
   function Walka__P³ywanie_Do_Punktu__Punkt_Wyznacz( statek_f : TStatek; const wspó³rzêdne_celu_wyznacz_f : boolean = true ) : TStatek;
   var
@@ -36931,44 +39010,10 @@ procedure TStatki_Form.SI_Decyduj();
   //Funkcja SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
   procedure SI_Aktywnoœæ_Okreœl( statek_f : TStatek );
 
-    //Funkcja Broñ_Amunicja_Uzupe³niona() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
-    function Broñ_Amunicja_Uzupe³niona( broñ_f : array of TTorpedy_Wyrzutnia ) : boolean;
-    var
-      i_l : integer;
-    begin
+    //Funkcja L¹dowanie__Odnawianie_Zasobów_Decyzja() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
+    function L¹dowanie__Odnawianie_Zasobów_Decyzja( statek_f_f : TStatek; const odnawianie_zasobów_f : boolean = false ) : boolean;
 
-      //
-      // Funkcja zwraca prawdê gdy wszystkie egzemplarze danej broni s¹ w pe³ni na³adowane.
-      //
-
-      Result := true;
-
-
-      if Length( broñ_f ) <= 0 then
-        Exit;
-
-
-      for i_l := 0 to Length( broñ_f ) - 1 do
-        begin
-
-          if broñ_f[ i_l ].amunicja_iloœæ < broñ_f[ i_l ].amunicja_iloœæ_pocz¹tkowa - Length( broñ_f[ i_l ].lufy_t ) then
-            begin
-
-              Result := false;
-              Exit;
-
-            end;
-          //---//if broñ_f[ i_l ].amunicja_iloœæ < broñ_f[ i_l ].amunicja_iloœæ_pocz¹tkowa - Length( broñ_f[ i_l ].lufy_t ) then
-
-        end;
-      //---//for i_l := 0 to Length( broñ_f ) - 1 do
-
-    end;//---//Funkcja Broñ_Amunicja_Uzupe³niona() w Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie().
-
-    //Funkcja L¹dowanie_Decyzja() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
-    function L¹dowanie_Decyzja( statek_f_f : TStatek ) : boolean;
-
-      //Funkcja Broñ_Amunicja_Zosta³o_Procent() w Funkcja L¹dowanie_Decyzja() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
+      //Funkcja Broñ_Amunicja_Zosta³o_Procent() w Funkcja L¹dowanie__Odnawianie_Zasobów_Decyzja() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
       function Broñ_Amunicja_Zosta³o_Procent( var amunicja_procent_pozosta³o_najmniejszy_f : real; broñ_f : array of TTorpedy_Wyrzutnia ) : real;
       var
         i_l_l : integer;
@@ -37017,15 +39062,22 @@ procedure TStatki_Form.SI_Decyduj();
           or ( amunicja_procent_pozosta³o_najmniejszy_f > Result ) then
           amunicja_procent_pozosta³o_najmniejszy_f := Result;
 
-      end;//---//Funkcja Broñ_Amunicja_Zosta³o_Procent() w Funkcja L¹dowanie_Decyzja() w Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie().
+      end;//---//Funkcja Broñ_Amunicja_Zosta³o_Procent() w Funkcja L¹dowanie__Odnawianie_Zasobów_Decyzja() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
 
     var
       i_l : integer;
       l¹dowanie_prawdopodobieñstwo_l : real;
-    begin//Funkcja L¹dowanie_Decyzja() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
+    begin//Funkcja L¹dowanie__Odnawianie_Zasobów_Decyzja() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
 
       //
-      // Funkcja zwraca prawdê gdy si zdecyduje, ¿e samolot bêdzie l¹dowa³.
+      // Funkcja zwraca prawdê gdy si zdecyduje, ¿e samolot bêdzie l¹dowa³
+      //  albo (samolot/statek) bêdzie odnawia³ zasoby.
+      //
+      // Parametry:
+      //   statek_f - statek, dla którego podejmowana jest decyzja
+      //   odnawianie_zasobów_f:
+      //     false - decyzja dotyczy l¹dowania.
+      //     true - decyzja dotyczy odnawianie zasobów.
       //
 
       Result := false;
@@ -37042,7 +39094,8 @@ procedure TStatki_Form.SI_Decyduj();
       //---//if    ( not Result ) (...)
 
 
-      if not Result then
+      if    ( not Result )
+        and ( not odnawianie_zasobów_f ) then
         begin
 
           // Im d³u¿ej lata tym wiêksza szansa na l¹dowanie.
@@ -37059,7 +39112,7 @@ procedure TStatki_Form.SI_Decyduj();
           //---//if    ( statek_f_f.si__wystartowanie__czas_sekundy_i <> 0 ) (...)
 
         end;
-      //---//if not Result then
+      //---//if    ( not Result ) (...)
 
 
       if not Result then
@@ -37067,23 +39120,46 @@ procedure TStatki_Form.SI_Decyduj();
 
           l¹dowanie_prawdopodobieñstwo_l := 0;
 
-          for i_l := 0 to Length( statki_t ) - 1 do
-            if    ( statki_t[ i_l ] <> nil )
-              and ( not statki_t[ i_l ].czy_usun¹æ_statek )
-              and ( statki_t[ i_l ].czy_lotniskowiec )
-              and ( statki_t[ i_l ].punkty_¿ycia_aktualne > 0 )
-              and ( statki_t[ i_l ].id_grupa = statek_f_f.id_grupa ) then
-              begin
+          if not odnawianie_zasobów_f then
+            begin
 
+              // Decyzja dotyczy l¹dowania.
+              //
+              // Sprawdza czy w grupie jest lotniskowiec.
+              // Je¿eli w grupie nie ma lotniskowca to nie ma sensu l¹dowaæ po odnowienie zasobów.
+
+              for i_l := 0 to Length( statki_t ) - 1 do
+                if    ( statki_t[ i_l ] <> nil )
+                  and ( not statki_t[ i_l ].czy_usun¹æ_statek )
+                  and ( statki_t[ i_l ].czy_lotniskowiec )
+                  and ( statki_t[ i_l ].punkty_¿ycia_aktualne > 0 )
+                  and ( statki_t[ i_l ].id_grupa = statek_f_f.id_grupa ) then
+                  begin
+
+                    l¹dowanie_prawdopodobieñstwo_l := 1;
+                    Break;
+
+                  end;
+                //---//if    ( statki_t[ i_l ] <> nil ) (...)
+
+            end
+          else//if not odnawianie_zasobów_f then
+            begin
+
+              // Decyzja dotyczy odnawiania zasobów.
+              //
+              // Sprawdza czy jest l¹d, który odnawia punkty ¿ycia lub amunicjê.
+
+              if    (  Czas_Miêdzy_W_Sekundach( statek_f.si__p³ywanie_do_punktu__odnawianie_zasobów__rozpoczêcie_czas_sekundy_i ) > ( si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g + statek_f.si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie_modyfikator_losowy__czas_sekundy_i ) * 0.25  ) // Aby zbyt szybko nie wraca³ w tryb odnawiana zasobów ale aby móg³ siê zbli¿aæ do punktu odnawiania zasobów.
+                and (  Odnawianie_Zasobów__Punkt_Wyznacz( nil )  ) then
                 l¹dowanie_prawdopodobieñstwo_l := 1;
-                Break;
 
-              end;
-            //---//if    ( statki_t[ i_l ] <> nil ) (...)
+            end;
+          //---//if not odnawianie_zasobów_f then
 
 
           if l¹dowanie_prawdopodobieñstwo_l = 0 then
-            Exit; // Je¿eli w grupie nie ma lotniskowca to nie ma sensu l¹dowaæ po odnowienie zasobów.
+            Exit;
 
         end;
       //---//if not Result then
@@ -37096,7 +39172,16 @@ procedure TStatki_Form.SI_Decyduj();
 
           l¹dowanie_prawdopodobieñstwo_l := 100 - statek_f_f.punkty_¿ycia_procent_zosta³o;
 
-          if    ( l¹dowanie_prawdopodobieñstwo_l > 10 )
+          if    (
+                     ( // Decyzja dotyczy l¹dowania.
+                           ( not odnawianie_zasobów_f )
+                       and ( l¹dowanie_prawdopodobieñstwo_l > 10 ) // < 90 %.
+                     )
+                  or ( // Decyzja dotyczy odnawiania zasobów.
+                           ( odnawianie_zasobów_f )
+                       and ( l¹dowanie_prawdopodobieñstwo_l > 20 ) // < 80 %.
+                     )
+                )
             and (  Random( 101 ) < l¹dowanie_prawdopodobieñstwo_l  ) then
             begin
 
@@ -37104,7 +39189,7 @@ procedure TStatki_Form.SI_Decyduj();
               Exit;
 
             end;
-          //---//if    ( l¹dowanie_prawdopodobieñstwo_l > 10 ) (...)
+          //---//if    ( (...)
 
         end;
       //---//if not Result then
@@ -37128,7 +39213,16 @@ procedure TStatki_Form.SI_Decyduj();
           else//if l¹dowanie_prawdopodobieñstwo_l = -1 then
             l¹dowanie_prawdopodobieñstwo_l := 100 - l¹dowanie_prawdopodobieñstwo_l;
 
-          if    ( l¹dowanie_prawdopodobieñstwo_l > 50 )
+          if    (
+                     ( // Decyzja dotyczy l¹dowania.
+                           ( not odnawianie_zasobów_f )
+                       and ( l¹dowanie_prawdopodobieñstwo_l > 50 ) // < 50 %.
+                     )
+                  or ( // Decyzja dotyczy odnawiania zasobów.
+                           ( odnawianie_zasobów_f )
+                       and ( l¹dowanie_prawdopodobieñstwo_l > 70 ) // < 30 %.
+                     )
+                )
             and (  Random( 101 ) < l¹dowanie_prawdopodobieñstwo_l  ) then
             begin
 
@@ -37141,7 +39235,7 @@ procedure TStatki_Form.SI_Decyduj();
         end;
       //---//if not Result then
 
-    end;//---//Funkcja L¹dowanie_Decyzja() w Lotniskowiec__Zasoby_Odnawianie__Prze³adowanie().
+    end;//---//Funkcja L¹dowanie__Odnawianie_Zasobów_Decyzja() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
 
     //Funkcja Torpedy_Alarm_SprawdŸ() w SI_Aktywnoœæ_Okreœl() w SI_Decyduj().
     function Torpedy_Alarm_SprawdŸ( statek_f_f : TStatek ) : boolean;
@@ -37643,8 +39737,8 @@ procedure TStatki_Form.SI_Decyduj();
     warunki_wspólne_label_goto;
 
   var
-    ztb_l,
-    czas_przeliczenia_aktualizuj_l
+    czas_przeliczenia_aktualizuj_l,
+    wrogi_statek_pozycja_znana_l // Okreœla czy statek zna lokalizacjê jakiegoœ statku z innej grupy.
       : boolean;
     i_l,
     zti_l
@@ -37664,10 +39758,23 @@ procedure TStatki_Form.SI_Decyduj();
       statek_f.si_strzelanie_tryb := sist_Strzelaj_Jak_Chcesz;
 
 
-    if statek_f.si_aktywnoœæ in [ sia_Brak, sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
+    if statek_f.si_aktywnoœæ in [ sia_Brak, sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
       czas_przeliczenia_aktualizuj_l := Torpedy_Alarm_SprawdŸ( statek_f )
-    else//if statek_f.si_aktywnoœæ in [ sia_Brak, sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
+    else//if statek_f.si_aktywnoœæ in [ sia_Brak, sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
       czas_przeliczenia_aktualizuj_l := false;
+
+
+    wrogi_statek_pozycja_znana_l := false;
+
+    for i_l := 0 to Length( statek_f.si__statki_znane_r_t ) - 1 do
+      if statek_f.si__statki_znane_r_t[ i_l ].id_grupa__sisz <> statek_f.id_grupa then
+        begin
+
+          wrogi_statek_pozycja_znana_l := true;
+          Break;
+
+        end;
+      //---//if statek_f.si__statki_znane_r_t[ i_l ].id_grupa__sisz <> statek_f.id_grupa then
 
 
     if statek_f.si_aktywnoœæ <> sia_Walka__Torpedy_Ucieczka then
@@ -37691,7 +39798,7 @@ procedure TStatki_Form.SI_Decyduj();
                )
             or (
                      ( statek_f.si_aktywnoœæ__polecenie = sia_Samolot__Startowanie )
-                 and ( statek_f.si_aktywnoœæ in [ sia_Brak, sia_Postój, sia_Odnawianie_Zasobów ] )
+                 and ( statek_f.si_aktywnoœæ in [ sia_Brak, sia_Postój, sia_Odnawianie_Zasobów__Lotniskowiec ] )
                ) then
             begin
 
@@ -37742,19 +39849,19 @@ procedure TStatki_Form.SI_Decyduj();
 
             end
           else//if   ( (...)
-          if ( statek_f.si_aktywnoœæ = sia_Odnawianie_Zasobów ) then
+          if ( statek_f.si_aktywnoœæ = sia_Odnawianie_Zasobów__Lotniskowiec ) then
             begin
 
               if    ( statek_f.punkty_¿ycia_aktualne >= statek_f.punkty_¿ycia_maksymalne )
-                and ( Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.artyleria_t) )  )
-                and ( Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.bomba_g³êbinowa_t) )  )
-                and ( Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.dzia³a_t) )  )
-                and ( Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.je¿e_g³êbinowe_t) )  )
-                and ( Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.torpedy_wyrzutnie_t) )  ) then
+                and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.artyleria_t) )  )
+                and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.bomba_g³êbinowa_t) )  )
+                and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.dzia³a_t) )  )
+                and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.je¿e_g³êbinowe_t) )  )
+                and ( Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.torpedy_wyrzutnie_t) )  ) then
                 statek_f.si_aktywnoœæ := sia_Postój;
 
             end
-          else//if ( statek_f.si_aktywnoœæ = sia_Odnawianie_Zasobów ) then
+          else//if ( statek_f.si_aktywnoœæ = sia_Odnawianie_Zasobów__Lotniskowiec ) then
           if    (
                      ( statek_f.si_aktywnoœæ = sia_Samolot__L¹dowanie__Hamowanie )
                   or ( statek_f.si_aktywnoœæ = sia_Brak )
@@ -37767,22 +39874,22 @@ procedure TStatki_Form.SI_Decyduj();
               if    ( statek_f.czy_samolot__na_lotniskowcu )
                 and (
                          ( statek_f.punkty_¿ycia_aktualne < statek_f.punkty_¿ycia_maksymalne )
-                      or ( not Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.artyleria_t) )  )
-                      or ( not Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.bomba_g³êbinowa_t) )  )
-                      or ( not Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.dzia³a_t) )  )
-                      or ( not Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.je¿e_g³êbinowe_t) )  )
-                      or ( not Broñ_Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.torpedy_wyrzutnie_t) )  )
+                      or ( not Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.artyleria_t) )  )
+                      or ( not Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.bomba_g³êbinowa_t) )  )
+                      or ( not Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.dzia³a_t) )  )
+                      or ( not Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.je¿e_g³êbinowe_t) )  )
+                      or ( not Broñ__Amunicja_Uzupe³niona( TTorpedy_Wyrzutnia_t(statek_f.torpedy_wyrzutnie_t) )  )
                     ) then
-                statek_f.si_aktywnoœæ := sia_Odnawianie_Zasobów
+                statek_f.si_aktywnoœæ := sia_Odnawianie_Zasobów__Lotniskowiec
               else//if statek_f.czy_samolot__na_lotniskowcu then
                 statek_f.si_aktywnoœæ := sia_Postój;
 
             end
           else//if    ( statek_f.czy_samolot ) (...)
-          if    (  not ( statek_f.si_aktywnoœæ in [ sia_Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Odnawianie_Zasobów, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  )
+          if    (  not ( statek_f.si_aktywnoœæ in [ sia_Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Odnawianie_Zasobów__Lotniskowiec, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  )
             and ( not statek_f.czy_samolot__na_lotniskowcu )
             and ( statek_f.AbsolutePosition.Y > samolot_w_powietrzu_wysokoœæ_od_c )
-            and (  L¹dowanie_Decyzja( statek_f )  ) then
+            and (  L¹dowanie__Odnawianie_Zasobów_Decyzja( statek_f )  ) then
             begin
 
               // Musi mieæ odpowiedni dystans na wytracenie prêdkoœci.
@@ -37794,7 +39901,7 @@ procedure TStatki_Form.SI_Decyduj();
               Lotniskowiec__L¹dowanie__Podchodzenie__Wspó³rzêdne( statek_f, true );
 
             end
-          else//if    (  not ( statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Odnawianie_Zasobów, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  ) (...)
+          else//if    (  not ( statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Odnawianie_Zasobów__Lotniskowiec, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  ) (...)
             goto warunki_wspólne_label_goto;
 
         end
@@ -37814,7 +39921,25 @@ procedure TStatki_Form.SI_Decyduj();
           begin
 
             warunki_wspólne_label_goto:
-            if    (  not ( statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie, sia_Walka ] )  )
+            if    (  not ( statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Odnawianie_Zasobów__Lotniskowiec, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  )
+              and ( not statek_f.czy_samolot__na_lotniskowcu )
+              and (  L¹dowanie__Odnawianie_Zasobów_Decyzja( statek_f, true )  ) then
+              begin
+
+                // Okreœla czy udaæ siê na odnawianie zasobów.
+
+                //statek_f.si_aktywnoœæ := sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów; // Jest ustawiane w Odnawianie_Zasobów__Punkt_Wyznacz().
+                Odnawianie_Zasobów__Punkt_Wyznacz( statek_f );
+
+              end
+            else//if    (  not ( statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Odnawianie_Zasobów__Lotniskowiec, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  ) (...)
+            if    (
+                       (  not ( statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów__Lotniskowiec, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie, sia_Walka ] )  )
+                    or ( // Im wiêcej punktów ¿ycia tym wiêksza szansa na wejœcie w tryb walki.
+                             ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )
+                         and (  Random( 101 ) <= statek_f.punkty_¿ycia_procent_zosta³o  )
+                       )
+                  )
               and ( statek_f.si__uszkodzenia_wykryto__czas_sekundy_i <> 0 ) then
               begin
 
@@ -37840,31 +39965,40 @@ procedure TStatki_Form.SI_Decyduj();
                 //---//if    ( statek_f.czy_samolot ) (...)
 
               end
-            else//if    (  not ( statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie, sia_Walka ] )  ) (...)
-            if statek_f.si_aktywnoœæ in [ sia_Patrol, sia_Walka, sia_Walka__P³ywanie_Do_Punktu ] then
+            else//if    ( (...)
+            if Odnawianie_Zasobów__Zakoñczyæ_SprawdŸ( statek_f ) then
+              begin
+
+                // Okreœla czy zakoñczyæ tryb odnawiania zasobów.
+
+                statek_f.si__p³ywanie_do_punktu__odnawianie_zasobów__rozpoczêcie_czas_sekundy_i := Czas_Teraz_W_Sekundach(); // Aby zbyt szybko nie wraca³ w tryb odnawiana zasobów.
+                statek_f.si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie_modyfikator_losowy__czas_sekundy_i := Random( si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g ) - Round( si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g * 0.5 );
+
+                if statek_f.si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów then
+                  statek_f.si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów := false;
+
+                statek_f.si_aktywnoœæ := sia_Patrol;
+                Patrol_Punkt_Wyznacz( statek_f );
+
+              end
+            else//if Odnawianie_Zasobów__Zakoñczyæ_SprawdŸ( statek_f ) then
+            if statek_f.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_Walka, sia_Walka__P³ywanie_Do_Punktu ] then
               begin
 
                 // Aktywuje i dezaktywuje tryb walki na podstawie pozycji statków.
 
-                ztb_l := false; // Okreœla czy statek zna lokalizacjê jakiegoœ statku z innej grupy.
-
-                for i_l := 0 to Length( statek_f.si__statki_znane_r_t ) - 1 do
-                  if statek_f.si__statki_znane_r_t[ i_l ].id_grupa__sisz <> statek_f.id_grupa then
-                    begin
-
-                      ztb_l := true;
-                      Break;
-
-                    end;
-                  //---//if statek_f.si__statki_znane_r_t[ i_l ].id_grupa__sisz <> statek_f.id_grupa then
-
-
-                if    ( statek_f.si_aktywnoœæ = sia_Patrol )
-                  and ( ztb_l ) then
+                if    (
+                           ( statek_f.si_aktywnoœæ = sia_Patrol )
+                        or ( // Im wiêcej punktów ¿ycia tym wiêksza szansa n wejœcie w tryb walki.
+                                 ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )
+                             and (  Random( 101 ) <= statek_f.punkty_¿ycia_procent_zosta³o  )
+                           )
+                      )
+                  and ( wrogi_statek_pozycja_znana_l ) then
                   statek_f.si_aktywnoœæ := sia_Walka
-                else//if    ( statek_f.si_aktywnoœæ = sia_Patrol ) (...)
+                else//if    ( (...)
                 if    ( statek_f.si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu ] )
-                  and ( not ztb_l ) then
+                  and ( not wrogi_statek_pozycja_znana_l ) then
                   begin
 
                     if statek_f.si_aktywnoœæ in [ sia_Walka__P³ywanie_Do_Punktu ] then
@@ -37959,7 +40093,7 @@ procedure TStatki_Form.SI_Decyduj();
                   Walka__P³ywanie_Do_Punktu__Punkt_Wyznacz( statek_f );
 
               end;
-            //---//if statek_f.si_aktywnoœæ in [ sia_Patrol, sia_Walka, sia_Walka__P³ywanie_Do_Punktu ] then
+            //---//if statek_f.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_Walka, sia_Walka__P³ywanie_Do_Punktu ] then
 
 
             if    ( statek_f.si__uszkodzenia_wykryto__czas_sekundy_i <> 0 )
@@ -37977,7 +40111,7 @@ procedure TStatki_Form.SI_Decyduj();
         si_aktywnoœæ__polecenie__odpowiedŸ_l := '';
 
 
-        if statek_f.si_aktywnoœæ__polecenie in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Walka ] then
+        if statek_f.si_aktywnoœæ__polecenie in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Walka ] then
           begin
 
             if   ( statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__Startowanie ] )
@@ -37994,9 +40128,9 @@ procedure TStatki_Form.SI_Decyduj();
                        )
                  )
               or (
-                       ( statek_f.si_aktywnoœæ__polecenie in [ sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] )
+                       ( statek_f.si_aktywnoœæ__polecenie in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] )
                    and (
-                            ( statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__Startowanie ] )
+                            ( statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów__Lotniskowiec, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__Startowanie ] )
                          or (
                                   ( statek_f.czy_samolot )
                               and ( statek_f.si_aktywnoœæ__polecenie in [ sia_Brak, sia_Postój ] ) //???
@@ -38013,7 +40147,7 @@ procedure TStatki_Form.SI_Decyduj();
               end
             else//if   ( statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__Startowanie ] ) (...)
             if    ( statek_f.czy_samolot )
-              and ( statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów ] ) then
+              and ( statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów__Lotniskowiec ] ) then
               si_aktywnoœæ__polecenie__odpowiedŸ_l := 'Niestety, w tej chwili mam inne zadanie: (' + statek_f.Si_Aktywnoœæ_Aktualna_Nazwa() + ').'
             else//if    ( statek_f.czy_samolot ) (...)
               begin
@@ -38022,11 +40156,45 @@ procedure TStatki_Form.SI_Decyduj();
                   statek_f.Si__Walka__P³ywanie_Do_Punktu__Wartoœci_Pocz¹tkowe_Ustaw( si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy_g );
 
                 if   ( statek_f.si_aktywnoœæ <> statek_f.si_aktywnoœæ__polecenie )
-                  or ( statek_f.si_aktywnoœæ__polecenie in [ sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] ) then // Aby zaktualizowaæ wspó³rzêdne.
+                  or ( statek_f.si_aktywnoœæ__polecenie in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] ) then // Aby zaktualizowaæ wspó³rzêdne.
                   begin
 
-                    statek_f.si_aktywnoœæ := statek_f.si_aktywnoœæ__polecenie;
-                    si_aktywnoœæ__polecenie__odpowiedŸ_l := 'Potwierdzam przyjêcie zadania: ' + statek_f.Si_Aktywnoœæ_Aktualna_Nazwa( true ) + '.';
+                    if statek_f.si_aktywnoœæ__polecenie in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+                      begin
+
+                        if Odnawianie_Zasobów__Punkt_Wyznacz( statek_f ) then
+                          begin
+
+                            //statek_f.si_aktywnoœæ := statek_f.si_aktywnoœæ__polecenie; // Jest ustawiane w Odnawianie_Zasobów__Punkt_Wyznacz().
+
+                            si_aktywnoœæ__polecenie__odpowiedŸ_l :=
+                              'Potwierdzam przyjêcie zadania: ' + statek_f.Si_Aktywnoœæ_Aktualna_Nazwa( true ) + '.' +
+                              #13 + #10 +
+                              'Wspó³rzêdne x = ' + Trim(  FormatFloat( '### ### ##0.00', statek_f.si__punkt_zadany__wspó³rzêdne.X )  ) +
+                              ', z = ' + Trim(  FormatFloat( '### ### ##0.00', statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ) +
+                              ', y = ' + Trim(  FormatFloat( '### ### ##0.00', statek_f.si__punkt_zadany__wspó³rzêdne.Y )  ) +
+                              '.';
+
+                          end
+                        else//if Odnawianie_Zasobów__Punkt_Wyznacz( statek_f ) then
+                          begin
+
+                            si_aktywnoœæ__polecenie__odpowiedŸ_l :=
+                              'Niestety, lokalizacje miejsc odnawiania zasobów s¹ mi nieznane - nie mogê wykonaæ tego zadania.';
+
+                          end;
+                        //---//if Odnawianie_Zasobów__Punkt_Wyznacz( statek_f ) then
+
+                      end
+                    else//if statek_f.si_aktywnoœæ__polecenie in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+                      begin
+
+                        statek_f.si_aktywnoœæ := statek_f.si_aktywnoœæ__polecenie;
+                        si_aktywnoœæ__polecenie__odpowiedŸ_l := 'Potwierdzam przyjêcie zadania: ' + statek_f.Si_Aktywnoœæ_Aktualna_Nazwa( true ) + '.';
+
+                      end;
+                    //---//if statek_f.si_aktywnoœæ__polecenie in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+
 
                     if statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] then
                       begin
@@ -38080,7 +40248,7 @@ procedure TStatki_Form.SI_Decyduj();
             //---//if    ( statek_f.czy_samolot ) (...)
 
           end
-        else//if statek_f.si_aktywnoœæ__polecenie in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Walka ] then
+        else//if statek_f.si_aktywnoœæ__polecenie in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Postój, sia_Walka ] then
         if statek_f.si_aktywnoœæ__polecenie in [ sia_Samolot__L¹dowanie, sia_Samolot__Startowanie ] then
           begin
 
@@ -38113,7 +40281,7 @@ procedure TStatki_Form.SI_Decyduj();
                   begin
 
                     if statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Podchodzenie ] then
-                      si_aktywnoœæ__polecenie__odpowiedŸ_l := 'Podchodzê do l¹dowania.' // Zmienne ustawiane w L¹dowanie_Decyzja().
+                      si_aktywnoœæ__polecenie__odpowiedŸ_l := 'Podchodzê do l¹dowania.' // Zmienne ustawiane w L¹dowanie__Odnawianie_Zasobów_Decyzja().
                     else//if statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Podchodzenie ] then
                       si_aktywnoœæ__polecenie__odpowiedŸ_l := 'Niestety, w tej chwili nie jestem w stanie podj¹æ próby wyl¹dowania.';
 
@@ -38202,6 +40370,7 @@ procedure TStatki_Form.SI_Decyduj();
                ( dzieñ_jasnoœæ_g < 0.92 ) // 6550 - 3450
             or ( mg³a_intensywnoœæ_g > 0 )
           )
+      and ( not wrogi_statek_pozycja_znana_l )
       and (  not ( statek_f.si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] )  )
       and ( not statek_f.œwiat³a_w³¹czone ) then
       begin
@@ -38247,6 +40416,7 @@ procedure TStatki_Form.SI_Decyduj();
 
 
     if    ( dzieñ_jasnoœæ_g < 0.67 ) // 7500 - 2500
+      and ( not wrogi_statek_pozycja_znana_l )
       and (  not ( statek_f.si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] )  )
       and ( not statek_f.œwiat³a_dodatkowe_w³¹czone ) then
       begin
@@ -38293,7 +40463,7 @@ procedure TStatki_Form.SI_Decyduj();
     if    ( statek_f.si_decyduje )
       and ( statek_f.punkty_¿ycia_procent_zosta³o < 15 )
       and ( statek_f.punkty_¿ycia_procent_zosta³o > 0 )
-      and ( statek_f.si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] )
+      and ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] )
       and (  Czas_Miêdzy_W_Sekundach( statek_f.sos__czas_utworzenia_ostatniego_sekundy_i ) > sos__czas_do_ponownego_nadania_sekundy_i_c * 5  ) then
       SOS__Inicjuj( statek_f );
     //---// SOS.
@@ -38305,150 +40475,262 @@ procedure TStatki_Form.SI_Decyduj();
 
 
     {$region 'SI zagaduje.'}
-    if    (  Czas_Miêdzy_W_Sekundach( statek_f.si__zagaduje__ostatnie_sekundy_i ) > si__zagaduje_sekundy_c  )
-      and (  Random( 10 ) >= 7  ) then
+    if Czas_Miêdzy_W_Sekundach( statek_f.si__zagaduje__ostatnie_sekundy_i ) > si__zagaduje_sekundy_c + statek_f.si__zagaduje_sekundy__modyfikator_losowy_i then
       begin
 
-        pokój_rozmów_r_l.id_nadawca := statek_f.id_gracz;
-        pokój_rozmów_r_l.id_odbiorca := statek_f.id_grupa;
-        pokój_rozmów_r_l.data_czas_wys³ania := Now();
-        pokój_rozmów_r_l.odbiorca_rodzaj := pror_Grupa_Jedna;
-
-        if statek_f.si_aktywnoœæ in [ sia_Brak, sia_Postój ] then
+        if Random( 10 ) >= 7 then
           begin
 
-            case Random( 3 ) of
-                0 : pokój_rozmów_r_l.wiadomoœæ := 'Jakoœ nic siê nie dzieje.';
-                1 : pokój_rozmów_r_l.wiadomoœæ := 'Przerwa.';
-                2 : pokój_rozmów_r_l.wiadomoœæ := 'Woda sobie chlupie.';
+            pokój_rozmów_r_l.id_nadawca := statek_f.id_gracz;
+            pokój_rozmów_r_l.id_odbiorca := statek_f.id_grupa;
+            pokój_rozmów_r_l.data_czas_wys³ania := Now();
+            pokój_rozmów_r_l.odbiorca_rodzaj := pror_Grupa_Jedna;
+
+            if statek_f.si_aktywnoœæ in [ sia_Brak, sia_Postój ] then
+              begin
+
+                case Random( 3 ) of
+                    0 : pokój_rozmów_r_l.wiadomoœæ := 'Jakoœ nic siê nie dzieje.';
+                    1 : pokój_rozmów_r_l.wiadomoœæ := 'Przerwa.';
+                    2 : pokój_rozmów_r_l.wiadomoœæ := 'Woda sobie chlupie.';
+                  end;
+                //---//case Random( 3 ) of
+
+              end
+            else//if statek_f.si_aktywnoœæ in [ sia_Brak, sia_Postój ] then
+            if statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów__Lotniskowiec ] then
+              begin
+
+                case Random( 3 ) of
+                    0 : pokój_rozmów_r_l.wiadomoœæ := 'Czas na uzupe³nienie zapasów.';
+                    1 : pokój_rozmów_r_l.wiadomoœæ := 'W koñcu remont.';
+                    2 : pokój_rozmów_r_l.wiadomoœæ := 'I tego te¿ by siê przyda³o.';
+                  end;
+                //---//case Random( 3 ) of
+
+              end
+            else//if statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów__Lotniskowiec ] then
+            if statek_f.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] then
+              begin
+
+                case Random( 3 ) of
+                    0 : pokój_rozmów_r_l.wiadomoœæ := 'Dok¹dœ zmierzam.';
+                    1 : pokój_rozmów_r_l.wiadomoœæ := 'Sk¹dœ przybywam.';
+                    2 : pokój_rozmów_r_l.wiadomoœæ := 'Obserwujê.';
+                  end;
+                //---//case Random( 3 ) of
+
+              end
+            else//if statek_f.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] then
+            if statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+              begin
+
+                case Random( 3 ) of
+                    0 : pokój_rozmów_r_l.wiadomoœæ := 'Odnawiaæ zasoby swe chcê.';
+                    1 : pokój_rozmów_r_l.wiadomoœæ := 'Jakie ''Zimno''?';
+                    2 : pokój_rozmów_r_l.wiadomoœæ := 'Kryszta³ek, kryszta³ek, znalaz³ siê na pla¿y.';
+                  end;
+                //---//case Random( 3 ) of
+
+              end
+            else//if statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+            if statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie ] then
+              begin
+
+                case Random( 3 ) of
+                    0 : pokój_rozmów_r_l.wiadomoœæ := 'Ku ziemi.';
+                    1 : pokój_rozmów_r_l.wiadomoœæ := 'Powrót.';
+                    2 : pokój_rozmów_r_l.wiadomoœæ := 'Starczy tego latania.';
+                  end;
+                //---//case Random( 3 ) of
+
+              end
+            else//if statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie ] then
+            if statek_f.si_aktywnoœæ in [ sia_Samolot__Startowanie ] then
+              begin
+
+                case Random( 3 ) of
+                    0 : pokój_rozmów_r_l.wiadomoœæ := 'Wzbijam siê.';
+                    1 : pokój_rozmów_r_l.wiadomoœæ := 'I wy¿ej i wy¿ej i wy¿ej wzleæ.';
+                    2 : pokój_rozmów_r_l.wiadomoœæ := 'Do³¹czam.';
+                  end;
+                //---//case Random( 3 ) of
+
+              end
+            else//if statek_f.si_aktywnoœæ in [ sia_Samolot__Startowanie ] then
+            if statek_f.si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
+              begin
+
+                case Random( 5 ) of
+                    0 : pokój_rozmów_r_l.wiadomoœæ := 'Oj gor¹co.';
+                    1 : pokój_rozmów_r_l.wiadomoœæ := 'Wybierz cel, wyceluj, wybierz cel, wyceluj.';
+                    2 : pokój_rozmów_r_l.wiadomoœæ := 'Niech wygra lepszy.';
+
+                    3 :
+                        begin
+
+                          pokój_rozmów_r_l.wiadomoœæ := 'Zwyciê¿ymy!';
+                          pokój_rozmów_r_l.odbiorca_rodzaj := pror_Wszyscy;
+
+                        end;
+                      //---//3 :
+
+                    4 :
+                        begin
+
+                          pokój_rozmów_r_l.wiadomoœæ := 'To my zwyciê¿ymy!';
+                          pokój_rozmów_r_l.odbiorca_rodzaj := pror_Wszyscy;
+
+                        end;
+                      //---//4 :
+                  end;
+                //---//case Random( 5 ) of
+
+              end
+            else//if statek_f.si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
+              pokój_rozmów_r_l.wiadomoœæ := '(@_@)';
+
+
+            pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ + si_pokój_rozmów__znacznik_symbol__si_zagaduje_c;
+
+
+            if czy_gra_lokalna_g then
+              Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l )
+            else//if czy_gra_lokalna_g then
+              begin
+
+                Pokój_Rozmów__Wyœlij_Wiadomoœæ( pokój_rozmów_r_l );
+
+                if czy_serwer_g then
+                  if pokój_rozmów_r_l.odbiorca_rodzaj = pror_Wszyscy then
+                    Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l )
+                  else//if pokój_rozmów_r_l.odbiorca_rodzaj = pror_Wszyscy then
+                    for i_l := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
+                      if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd = serwer_peer_port_c then
+                        begin
+
+                          if   ( pokój_rozmów_r_l.id_nadawca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd )
+                            or (
+                                     ( pokój_rozmów_r_l.odbiorca_rodzaj = pror_Gracz_Jeden )
+                                 and ( pokój_rozmów_r_l.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd )
+                               )
+                            or (
+                                     ( pokój_rozmów_r_l.odbiorca_rodzaj = pror_Grupa_Jedna )
+                                 and ( pokój_rozmów_r_l.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).id_grupa__kd )
+                               ) then
+                            Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l );
+
+                          Break;
+
+                        end;
+                      //---//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd = serwer_peer_port_c then
+
               end;
-            //---//case Random( 3 ) of
+            //---//if czy_gra_lokalna_g then
 
-          end
-        else//if statek_f.si_aktywnoœæ in [ sia_Brak, sia_Postój ] then
-        if statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów ] then
-          begin
+           end;
+         //---//if Random( 10 ) >= 7 then
 
-            case Random( 3 ) of
-                0 : pokój_rozmów_r_l.wiadomoœæ := 'Czas na uzupe³nienie zapasów.';
-                1 : pokój_rozmów_r_l.wiadomoœæ := 'W koñcu remont.';
-                2 : pokój_rozmów_r_l.wiadomoœæ := 'I tego te¿ by siê przyda³o.';
-              end;
-            //---//case Random( 3 ) of
-
-          end
-        else//if statek_f.si_aktywnoœæ in [ sia_Odnawianie_Zasobów ] then
-        if statek_f.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] then
-          begin
-
-            case Random( 3 ) of
-                0 : pokój_rozmów_r_l.wiadomoœæ := 'Dok¹dœ zmierzam.';
-                1 : pokój_rozmów_r_l.wiadomoœæ := 'Sk¹dœ przybywam.';
-                2 : pokój_rozmów_r_l.wiadomoœæ := 'Obserwujê.';
-              end;
-            //---//case Random( 3 ) of
-
-          end
-        else//if statek_f.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] then
-        if statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie ] then
-          begin
-
-            case Random( 3 ) of
-                0 : pokój_rozmów_r_l.wiadomoœæ := 'Ku ziemi.';
-                1 : pokój_rozmów_r_l.wiadomoœæ := 'Powrót.';
-                2 : pokój_rozmów_r_l.wiadomoœæ := 'Starczy tego latania.';
-              end;
-            //---//case Random( 3 ) of
-
-          end
-        else//if statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie ] then
-        if statek_f.si_aktywnoœæ in [ sia_Samolot__Startowanie ] then
-          begin
-
-            case Random( 3 ) of
-                0 : pokój_rozmów_r_l.wiadomoœæ := 'Wzbijam siê.';
-                1 : pokój_rozmów_r_l.wiadomoœæ := 'I wy¿ej i wy¿ej i wy¿ej wzleæ.';
-                2 : pokój_rozmów_r_l.wiadomoœæ := 'Do³¹czam.';
-              end;
-            //---//case Random( 3 ) of
-
-          end
-        else//if statek_f.si_aktywnoœæ in [ sia_Samolot__Startowanie ] then
-        if statek_f.si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
-          begin
-
-            case Random( 5 ) of
-                0 : pokój_rozmów_r_l.wiadomoœæ := 'Oj gor¹co.';
-                1 : pokój_rozmów_r_l.wiadomoœæ := 'Wybierz cel, wyceluj, wybierz cel, wyceluj.';
-                2 : pokój_rozmów_r_l.wiadomoœæ := 'Niech wygra lepszy.';
-
-                3 :
-                    begin
-
-                      pokój_rozmów_r_l.wiadomoœæ := 'Zwyciê¿ymy!';
-                      pokój_rozmów_r_l.odbiorca_rodzaj := pror_Wszyscy;
-
-                    end;
-                  //---//3 :
-
-                4 :
-                    begin
-
-                      pokój_rozmów_r_l.wiadomoœæ := 'To my zwyciê¿ymy!';
-                      pokój_rozmów_r_l.odbiorca_rodzaj := pror_Wszyscy;
-
-                    end;
-                  //---//4 :
-              end;
-            //---//case Random( 5 ) of
-
-          end
-        else//if statek_f.si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
-          pokój_rozmów_r_l.wiadomoœæ := '(@_@)';
-
-
-        pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ + si_pokój_rozmów__znacznik_symbol__si_zagaduje_c;
-
-
-        if czy_gra_lokalna_g then
-          Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l )
-        else//if czy_gra_lokalna_g then
-          begin
-
-            Pokój_Rozmów__Wyœlij_Wiadomoœæ( pokój_rozmów_r_l );
-
-            if czy_serwer_g then
-              if pokój_rozmów_r_l.odbiorca_rodzaj = pror_Wszyscy then
-                Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l )
-              else//if pokój_rozmów_r_l.odbiorca_rodzaj = pror_Wszyscy then
-                for i_l := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
-                  if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd = serwer_peer_port_c then
-                    begin
-
-                      if   ( pokój_rozmów_r_l.id_nadawca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd )
-                        or (
-                                 ( pokój_rozmów_r_l.odbiorca_rodzaj = pror_Gracz_Jeden )
-                             and ( pokój_rozmów_r_l.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd )
-                           )
-                        or (
-                                 ( pokój_rozmów_r_l.odbiorca_rodzaj = pror_Grupa_Jedna )
-                             and ( pokój_rozmów_r_l.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).id_grupa__kd )
-                           ) then
-                        Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l );
-
-                      Break;
-
-                    end;
-                  //---//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i_l ]).identyfikator__kd = serwer_peer_port_c then
-
-          end;
-        //---//if czy_gra_lokalna_g then
 
         statek_f.si__zagaduje__ostatnie_sekundy_i := Czas_Teraz_W_Sekundach();
+        statek_f.si__zagaduje_sekundy__modyfikator_losowy_i := Random( si__zagaduje_sekundy_c );
 
       end;
-    //---//if    (  Czas_Miêdzy_W_Sekundach( statek_f.si__zagaduje__ostatnie_sekundy_i ) > si__zagaduje_sekundy_c  ) (...)
+    //---//if Czas_Miêdzy_W_Sekundach( statek_f.si__zagaduje__ostatnie_sekundy_i ) > si__zagaduje_sekundy_c + statek_f.si__zagaduje_sekundy__modyfikator_losowy_i then
     {$endregion 'SI zagaduje.'}
+
+
+    {$region 'SI zak³óca.'}
+    if    ( Zak³ócanie__Dozwolone_CheckBox.Checked )
+      and (  Czas_Miêdzy_W_Sekundach( statek_f.si__zak³óca__ostatnie_sekundy_i ) > si__zak³óca_sekundy_g + statek_f.si__zak³óca_sekundy__modyfikator_losowy_i  ) then
+      begin
+
+        if Random( 101 ) <= zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g then
+          begin
+
+            pokój_rozmów_r_l.id_nadawca := statek_f.id_gracz;
+            pokój_rozmów_r_l.odbiorca_rodzaj := pror_Gracz_Jeden;
+
+
+            for i_l := 0 to Length( statki_t ) - 1 do
+              if    ( statki_t[ i_l ] <> nil )
+                and ( statki_t[ i_l ].id_grupa <> statek_f.id_grupa )
+                and ( statki_t[ i_l ].punkty_¿ycia_aktualne > 0 )
+                and (  Random( 101 ) <= zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g  ) then
+                begin
+
+                  pokój_rozmów_r_l.id_odbiorca := statki_t[ i_l ].id_gracz;
+                  pokój_rozmów_r_l.data_czas_wys³ania := Now();
+                  pokój_rozmów_r_l.wiadomoœæ := si_pokój_rozmów__polecenie_symbol_c;
+
+                  case Random( 3 ) of
+                      0 : pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ + 'Walka elektroniczna start.';
+                      1 : pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ + 'Zak³ócam ciê.';
+                      2 : pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ + 'Wy³¹czasz siê.';
+                    end;
+                  //---//case Random( 3 ) of
+
+
+                 if statki_t[ i_l ].czy_samolot then
+                   pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ + si_pokój_rozmów__polecenie_symbol__samolot_c
+                 else//if statki_t[ i_l ].czy_samolot then
+                   if statki_t[ i_l ].czy_samolot then
+                     pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ + si_pokój_rozmów__polecenie_symbol__statek_c;
+
+
+                 pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ + si_pokój_rozmów__znacznik_symbol__si_zak³óca_c; //???
+
+
+                  if czy_gra_lokalna_g then
+                    Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l )
+                  else//if czy_gra_lokalna_g then
+                    begin
+
+                      Pokój_Rozmów__Wyœlij_Wiadomoœæ( pokój_rozmów_r_l );
+
+                      if czy_serwer_g then
+                        if pokój_rozmów_r_l.odbiorca_rodzaj = pror_Wszyscy then
+                          Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l )
+                        else//if pokój_rozmów_r_l.odbiorca_rodzaj = pror_Wszyscy then
+                          for zti_l := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
+                            if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ zti_l ]).identyfikator__kd = serwer_peer_port_c then
+                              begin
+
+                                if   ( pokój_rozmów_r_l.id_nadawca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ zti_l ]).identyfikator__kd )
+                                  or (
+                                           ( pokój_rozmów_r_l.odbiorca_rodzaj = pror_Gracz_Jeden )
+                                       and ( pokój_rozmów_r_l.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ zti_l ]).identyfikator__kd )
+                                     )
+                                  or (
+                                           ( pokój_rozmów_r_l.odbiorca_rodzaj = pror_Grupa_Jedna )
+                                       and ( pokój_rozmów_r_l.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ zti_l ]).id_grupa__kd )
+                                     ) then
+                                  Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l );
+
+                                Break;
+
+                              end;
+                            //---//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ zti_l ]).identyfikator__kd = serwer_peer_port_c then
+
+                    end;
+                  //---//if czy_gra_lokalna_g then
+
+
+                  SI__Polecenie__Zak³ócenia_Interpretuj( pokój_rozmów_r_l );
+
+                end;
+              //---//if    ( statki_t[ i_l ] <> nil ) (...)
+
+          end;
+        //---//if Random( 101 ) <= zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g then
+
+
+        statek_f.si__zak³óca__ostatnie_sekundy_i := Czas_Teraz_W_Sekundach();
+        statek_f.si__zak³óca_sekundy__modyfikator_losowy_i := Random( si__zak³óca_sekundy_g );
+
+      end;
+    //---//if    ( Zak³ócanie__Dozwolone_CheckBox.Checked ) (...)
+    {$endregion 'SI zak³óca.'}
 
 
     if not czas_przeliczenia_aktualizuj_l then
@@ -39182,8 +41464,17 @@ procedure TStatki_Form.SI_Decyduj();
         statek_f.si__samolot_zanurzenie_pu³ap__zadane := samolot_prêdkoœæ_lotu_procent_minimalny_c + statek_f.y_prymityw_najwiêksze * 4;
         Walka__P³ywanie_Do_Punktu__Punkt_Wyznacz( statek_f );
 
-      end;
-    //---//if    ( statek_f.czy_samolot ) (...)
+      end
+    else//if    ( statek_f.czy_samolot ) (...)
+    if    ( not losowe_zanurzanie_f )
+      and (
+               ( statek_f.czy_samolot )
+            or ( statek_f.czy_zanurzanie )
+          )
+      and ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )
+      and ( statek_f.si__samolot_zanurzenie_pu³ap__zadane <> statek_f.si__punkt_zadany__wspó³rzêdne.Y ) then
+      statek_f.si__samolot_zanurzenie_pu³ap__zadane := statek_f.si__punkt_zadany__wspó³rzêdne.Y;
+
 
     if    ( statek_f.czy_samolot )
       and ( not statek_f.czy_samolot__na_lotniskowcu )
@@ -39196,7 +41487,7 @@ procedure TStatki_Form.SI_Decyduj();
       //    ) then
       //and (  Abs( statek_f.zanurzenie_pu³ap__aktualne - statek_f.si__samolot_zanurzenie_pu³ap__zadane ) > 0.01 * ztsi_l  ) then
       and (
-               ( statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie ] ) // Aby podczas l¹dowania móg³ prze³¹czyæ na sia_Samolot__L¹dowanie__Hamowanie.
+               ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_Samolot__L¹dowanie ] ) // Aby podczas l¹dowania móg³ prze³¹czyæ na sia_Samolot__L¹dowanie__Hamowanie.
             or (  Abs( statek_f.zanurzenie_pu³ap__aktualne - statek_f.si__samolot_zanurzenie_pu³ap__zadane ) > 0.1 * ztsi_l  )
             or (
                      ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] )
@@ -39322,10 +41613,14 @@ procedure TStatki_Form.SI_Decyduj();
       Statek__P³ywanie_Losowe__Zanurzenie_Pu³ap( statek_f )
     else//if    ( losowe_zanurzanie_f ) (...)
     if    ( not statek_f.czy_samolot )
-      and ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] )
-      and ( statek_f.si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W = 1 ) then
+      and (
+              (
+                    ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] )
+                and ( statek_f.si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W = 1 )
+              )
+           or ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )
+         ) then
       begin
-
 
         if statek_f.zanurzenie_pu³ap__maksymalne <> 0 then
           ztsi_l := 100 * statek_f.si__samolot_zanurzenie_pu³ap__zadane / statek_f.zanurzenie_pu³ap__maksymalne
@@ -39454,6 +41749,7 @@ procedure TStatki_Form.SI_Decyduj();
          )
       or ( // Samolot gdy leci nie zwalnia przy osi¹ganiu celu chyba, ¿e l¹duje.
                ( statek_f.czy_samolot )
+           and (  not ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )  )
            and ( not statek_f.si__walka__p³ywanie_do_punktu__zbli¿anie )
            and (
                     (  not ( statek_f.si_aktywnoœæ in [ sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__L¹dowanie__Hamowanie ] )  )
@@ -39467,7 +41763,10 @@ procedure TStatki_Form.SI_Decyduj();
          ) then
       begin
 
-        if statek_f.si_aktywnoœæ in [ sia_Walka__Torpedy_Ucieczka ] then
+        // P³ynie do punktu.
+
+        //if statek_f.si_aktywnoœæ in [ sia_Walka__Torpedy_Ucieczka ] then
+        if statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_Walka__Torpedy_Ucieczka ] then
           prêdkoœæ_zadana_procent_l := 100
         else//if statek_f.si_aktywnoœæ in [ sia_Walka__Torpedy_Ucieczka ] then
           prêdkoœæ_zadana_procent_l := 75;
@@ -39550,11 +41849,18 @@ procedure TStatki_Form.SI_Decyduj();
         //prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  ) * 75   ); // Uproszczenie obliczeñ 1.
         //prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l * 75 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // Uproszczenie obliczeñ 2.
 
+
+        if statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+          ztsi_l := 100
+        else//if statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+          ztsi_l := 75;
+
         if    ( statek_f.czy_samolot )
           and ( statek_f.si_aktywnoœæ = sia_Samolot__L¹dowanie ) then
           prêdkoœæ_zadana_procent_l := samolot_prêdkoœæ_lotu_procent_minimalny_c
         else//if    ( statek_f.czy_samolot ) (...)
-          prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l * 75 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // To samo cel_odleg³oœæ__w_poziomie_l * 75.
+          //prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l * 75 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // To samo cel_odleg³oœæ__w_poziomie_l * 75.
+          prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l * ztsi_l / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // To samo cel_odleg³oœæ__w_poziomie_l * 75.
 
 
         // Aby podczas walki, gdy zbli¿a siê do celu, za bardzo nie zwalnia³.
@@ -39573,8 +41879,11 @@ procedure TStatki_Form.SI_Decyduj();
                 and (  prêdkoœæ_zadana_procent_l < samolot_prêdkoœæ_lotu_procent_minimalny_c + Abs( statek_f.si__walka__p³ywanie_do_punktu__prêdkoœæ_zadana_procent_korekta )  ) then
                 prêdkoœæ_zadana_procent_l := samolot_prêdkoœæ_lotu_procent_minimalny_c + Abs( statek_f.si__walka__p³ywanie_do_punktu__prêdkoœæ_zadana_procent_korekta );
 
-          end;
-        //---//if statek_f.si_aktywnoœæ in [ sia_Walka__P³ywanie_Do_Punktu ] then
+          end
+        else//if statek_f.si_aktywnoœæ in [ sia_Walka__P³ywanie_Do_Punktu ] then
+          if    ( statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )
+            and ( prêdkoœæ_zadana_procent_l < kolizja_oznaczanie_prêdkoœæ_procent_c + kolizja_oznaczanie_prêdkoœæ_procent_c * 0.1 ) then
+            prêdkoœæ_zadana_procent_l := kolizja_oznaczanie_prêdkoœæ_procent_c + kolizja_oznaczanie_prêdkoœæ_procent_c * 0.1;
 
 
         if    ( statek_f.czy_samolot )
@@ -39660,6 +41969,13 @@ procedure TStatki_Form.SI_Decyduj();
     //    //---//if    ( statki_t[ i_l ] <> nil ) (...)
     {$endregion 'Prêdkoœæ.'}
 
+
+    // Aby samolot nie rozbija³ siê podczas obni¿ania lotu.
+    if    ( statek_f.czy_samolot )
+      and ( statek_f.zanurzenie_pu³ap__zadane_procent <= -samolot_prêdkoœæ_lotu_procent_minimalny_c )
+      and ( statek_f.AbsolutePosition.Y < statek_f.y_prymityw_najwiêksze * statek_f.prêdkoœæ_maksymalna )
+      and ( prêdkoœæ_zadana_procent_l > samolot_prêdkoœæ_lotu_procent_minimalny_c ) then
+      prêdkoœæ_zadana_procent_l := samolot_prêdkoœæ_lotu_procent_minimalny_c;
 
 
     if    ( prêdkoœæ_zadana_procent_l <> 0 )
@@ -39984,7 +42300,7 @@ begin//Funkcja SI_Decyduj().
                 and ( zt_statek.prêdkoœæ_aktualna <> 0 ) then
                 zt_statek.Prêdkoœæ_Zadana_Procent_Ustaw( 0 )
               else//if    ( zt_statek.si_aktywnoœæ = sia_Postój ) (...)
-              if    (  not ( zt_statek.si_aktywnoœæ in [ sia_Brak, sia_Odnawianie_Zasobów, sia_Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  )
+              if    (  not ( zt_statek.si_aktywnoœæ in [ sia_Brak, sia_Odnawianie_Zasobów__Lotniskowiec, sia_Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  )
                 and (
                          (
                                ( zt_statek.si_aktywnoœæ in [ sia_Patrol ] )
@@ -40014,8 +42330,8 @@ begin//Funkcja SI_Decyduj().
                   Statek__P³ywanie_Losowe__Skrêt( zt_statek );
 
                 end
-              else//if    (  not ( zt_statek.si_aktywnoœæ in [ sia_Brak, sia_Odnawianie_Zasobów, sia_Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  ) (...)
-              if   ( zt_statek.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] )
+              else//if    (  not ( zt_statek.si_aktywnoœæ in [ sia_Brak, sia_Odnawianie_Zasobów__Lotniskowiec, sia_Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] )  ) (...)
+              if   ( zt_statek.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] )
                 or (
                          ( zt_statek.czy_lotniskowiec )
                      and ( zt_statek.id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 ) // Lotniskowiec w pierwszej kolejnoœci przyjmuje samoloty.
@@ -40023,17 +42339,25 @@ begin//Funkcja SI_Decyduj().
                 begin
 
                   if   ( zt_statek.si_aktywnoœæ in [ sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] )
-                    or ( zt_statek.czy_samolot )
+                    or (
+                             ( zt_statek.czy_samolot )
+                         and (  not ( zt_statek.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )  )
+                       )
                     or (
                              ( zt_statek.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój ] )
                          and ( zt_statek.si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W = 0 ) // Wspó³rzêdna Y nie jest okreœlona lub jest dowolna.
+                       )
+                    or (
+                             ( zt_statek.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )
+                         // Musi byæ pozycja absolutna, gdy¿ samolot mo¿e byæ 'potomkiem' lotniskowca a nie sceny.
+                         and (   GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( zt_statek.AbsolutePosition.X, 0, zt_statek.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( zt_statek.si__punkt_zadany__wspó³rzêdne.X, 0, zt_statek.si__punkt_zadany__wspó³rzêdne.Z )  ) > zt_statek.z_prymityw_odleg³oœæ * zt_statek.prêdkoœæ_maksymalna   ) // Y = 0 aby nie uwzglêdniaæ odleg³oœci w pionie.
                        ) then
                     Statek__P³ywanie_Do_Punktu( zt_statek, true )
                   else//if zt_statek.si_aktywnoœæ in [ sia_Walka__Torpedy_Ucieczka ] then
                     Statek__P³ywanie_Do_Punktu( zt_statek );
 
                 end;
-              //---//if   ( zt_statek.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] ) (...)
+              //---//if   ( zt_statek.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] ) (...)
 
             end;
           //---//if   ( zt_statek.si_decyduje ) (...)
@@ -40048,10 +42372,10 @@ begin//Funkcja SI_Decyduj().
 
 end;//---//Funkcja SI_Decyduj().
 
-//Funkcja SI__Polecenie_Interpretuj().
-function TStatki_Form.SI__Polecenie_Interpretuj( const pokój_rozmów_r_f : TPokój_Rozmów_r ) : boolean;
+//Funkcja SI__Polecenie__Zak³ócenia_Interpretuj().
+function TStatki_Form.SI__Polecenie__Zak³ócenia_Interpretuj( const pokój_rozmów_r_f : TPokój_Rozmów_r ) : boolean;
 
-  //Funkcja Liczba_Odczytaj() w SI__Polecenie_Interpretuj().
+  //Funkcja Liczba_Odczytaj() w SI__Polecenie__Zak³ócenia_Interpretuj().
   function Liczba_Odczytaj( var napis_f : string; var liczba_f : single ) : boolean;
   var
     i_l : integer;
@@ -40095,9 +42419,9 @@ function TStatki_Form.SI__Polecenie_Interpretuj( const pokój_rozmów_r_f : TPokój
     end;
     //---//try
 
-  end;//---//Funkcja Liczba_Odczytaj() w SI__Polecenie_Interpretuj().
+  end;//---//Funkcja Liczba_Odczytaj() w SI__Polecenie__Zak³ócenia_Interpretuj().
 
-  //Funkcja Czy_Gracz_Posiada_Samolot() w SI__Polecenie_Interpretuj().
+  //Funkcja Czy_Gracz_Posiada_Samolot() w SI__Polecenie__Zak³ócenia_Interpretuj().
   function Czy_Gracz_Posiada_Samolot( const id_gracz_f : integer; var indeks_statku_pytaj¹cego_f : integer ) : boolean;
   var
     i_l : integer;
@@ -40131,10 +42455,10 @@ function TStatki_Form.SI__Polecenie_Interpretuj( const pokój_rozmów_r_f : TPokój
         end;
       //---//if    ( statki_t[ i_l ] <> nil ) (...)
 
-  end;//---//Funkcja Czy_Gracz_Posiada_Samolot() w SI__Polecenie_Interpretuj().
+  end;//---//Funkcja Czy_Gracz_Posiada_Samolot() w SI__Polecenie__Zak³ócenia_Interpretuj().
 
-  //Funkcja Wyœwietl__Wyœlij_Wiadomoœæ() w SI__Polecenie_Interpretuj().
-  procedure Wyœwietl__Wyœlij_Wiadomoœæ( const tcp_klienci_lista__serwer_indeks_f : integer; const pokój_rozmów_r_f_f : TPokój_Rozmów_r );
+  //Funkcja Wyœwietl__Wyœlij_Wiadomoœæ() w SI__Polecenie__Zak³ócenia_Interpretuj().
+  procedure Wyœwietl__Wyœlij_Wiadomoœæ( const tcp_klienci_lista__serwer_indeks_f : integer; const pokój_rozmów_r_f_f : TPokój_Rozmów_r; const dopuszczaj_wys³anie_wiadomoœci_do_siebie_f : boolean = false );
   begin
 
     if czy_gra_lokalna_g then
@@ -40142,24 +42466,65 @@ function TStatki_Form.SI__Polecenie_Interpretuj( const pokój_rozmów_r_f : TPokój
     else//if czy_gra_lokalna_g then
       begin
 
-        if tcp_klienci_lista__serwer_indeks_f <> -99 then
-          if   ( pokój_rozmów_r_f_f.id_nadawca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ tcp_klienci_lista__serwer_indeks_f ]).identyfikator__kd )
-            or (
-                     ( pokój_rozmów_r_f_f.odbiorca_rodzaj = pror_Gracz_Jeden )
-                 and ( pokój_rozmów_r_f_f.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ tcp_klienci_lista__serwer_indeks_f ]).identyfikator__kd )
-               )
-            or (
-                     ( pokój_rozmów_r_f_f.odbiorca_rodzaj = pror_Grupa_Jedna )
-                 and ( pokój_rozmów_r_f_f.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ tcp_klienci_lista__serwer_indeks_f ]).id_grupa__kd )
-               ) then
-            Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_f_f );
+        if   ( pokój_rozmów_r_f_f.odbiorca_rodzaj = pror_Wszyscy )
+          or (
+                   ( tcp_klienci_lista__serwer_indeks_f <> -99 )
+               and (
+                        ( pokój_rozmów_r_f_f.id_nadawca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ tcp_klienci_lista__serwer_indeks_f ]).identyfikator__kd )
+                     or (
+                              ( pokój_rozmów_r_f_f.odbiorca_rodzaj = pror_Gracz_Jeden )
+                          and ( pokój_rozmów_r_f_f.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ tcp_klienci_lista__serwer_indeks_f ]).identyfikator__kd )
+                        )
+                     or (
+                              ( pokój_rozmów_r_f_f.odbiorca_rodzaj = pror_Grupa_Jedna )
+                          and ( pokój_rozmów_r_f_f.id_odbiorca = TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ tcp_klienci_lista__serwer_indeks_f ]).id_grupa__kd )
+                        )
+                   )
+
+             ) then
+          Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_f_f );
 
         Pokój_Rozmów__Wyœlij_Wiadomoœæ( pokój_rozmów_r_f_f );
 
       end;
     //---//if czy_gra_lokalna_g then
 
-  end;//---//Funkcja Wyœwietl__Wyœlij_Wiadomoœæ() w SI__Polecenie_Interpretuj().
+  end;//---//Funkcja Wyœwietl__Wyœlij_Wiadomoœæ() w SI__Polecenie__Zak³ócenia_Interpretuj().
+
+  //Funkcja Zak³ócenie_Punkty_¯ycia_Odejmij() w SI__Polecenie__Zak³ócenia_Interpretuj().
+  procedure Zak³ócenie_Punkty_¯ycia_Odejmij( const statek_f : TStatek );
+  var
+    zti_l : integer;
+    ztr_l : real;
+  begin
+
+    // Obni¿a punkty ¿ycia o procent aktualnych punktów ¿ycia.
+
+    if   ( statek_f = nil )
+      or (  not Assigned( statek_f )  )
+      or (  Random( 101 ) > 10  ) then
+      Exit;
+
+    //ztr_l := statek_f.punkty_¿ycia_aktualne * 10 * 0.01;
+    ztr_l := statek_f.punkty_¿ycia_aktualne * 0.1; // Uproszczone obliczenia.
+
+    statek_f.Punkty_¯ycia__Zmieñ( -ztr_l );
+
+
+    zti_l := Gra_Statystyki_R_Identyfikator_ZnajdŸ( statek_f.id_gracz );
+
+    if zti_l >= 0 then
+    begin
+
+      gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane__z_zak³óceñ__gs := gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane__z_zak³óceñ__gs + ztr_l;
+
+    end;
+    //---//if zti_l >= 0 then
+
+  end;//---//Funkcja Zak³ócenie_Punkty_¯ycia_Odejmij() w SI__Polecenie__Zak³ócenia_Interpretuj().
+
+label
+  zak³ócanie_próba_nieudana_label_goto;
 
 var
   ztb,
@@ -40184,10 +42549,11 @@ var
     : string;
   pokój_rozmów_odpowiedŸ_r_l : TPokój_Rozmów_r;
   si_strzelanie_tryb_kopia_l : TSi_Strzelanie_Tryb;
-begin//Funkcja SI__Polecenie_Interpretuj().
+begin//Funkcja SI__Polecenie__Zak³ócenia_Interpretuj().
 
   //
-  // Funkcja sprawdza czy w napisie znajduje siê polecenie dla SI i je interpretuje.
+  // Funkcja sprawdza czy w napisie znajduje siê polecenie dla SI i je interpretuje,
+  // obs³uguje próby zak³ócania statków.
   //
   // Zwraca prawdê gdy w napisie znajduje siê polecenie dla SI.
   //
@@ -40217,8 +42583,14 @@ begin//Funkcja SI__Polecenie_Interpretuj().
       end;
     //---//if    ( statki_t[ i ] <> nil ) (...)
 
-  if id_grupa__nadawca_l = -99 then // Nie uda³o siê okreœliæ id_grupa nadawcy.
+  if id_grupa__nadawca_l = -99 then // Nie uda³o siê okreœliæ id_grupa nadawcy. Mo¿e byæ to klient, który nie uczestniczy w grze.
     Exit;
+
+
+  for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
+    if    ( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd = pokój_rozmów_r_f.id_nadawca )
+      and ( not TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).w_grze__kd ) then
+      Exit; // Klient, który nie uczestniczy w grze nie mo¿e rozmawiaæ z SI.
 
 
   id_gracz_statku_pytanego_l := Unassigned();
@@ -40533,14 +42905,17 @@ begin//Funkcja SI__Polecenie_Interpretuj().
 
   for i := 0 to Length( statki_t ) - 1 do
     if    ( statki_t[ i ] <> nil )
-      and ( // Tylko statki aktualnie kierowane przez SI.
-               ( statki_t[ i ].si_decyduje )
+      and (    ( Zak³ócanie__Graczy_Nie_SI_Dozwolone_CheckBox.Checked )
+               // Tylko statki aktualnie kierowane przez SI.
+            or ( statki_t[ i ].si_decyduje )
             or ( statki_t[ i ].si__statek_gracza__p³ywa )
             or (  Pos( pokój_rozmów__si_polecenie__l¹dowanie__przerwij_c, si_polecenie_l ) = 1  ) // To polecenie dotyczy wszystkich statków aby wyzerowaæ wartoœci zmiennych.
           ) then
       begin
 
         // Je¿eli odbiorc¹ wiadomoœci jest statek kierowany przez SI.
+        // Mo¿na zak³ócaæ graczy.
+        // Zerowanie wartoœci zmiennych.
 
         if   (
                    ( id_gracz_statku_pytanego_l = Unassigned() )
@@ -40613,11 +42988,11 @@ begin//Funkcja SI__Polecenie_Interpretuj().
                             )
                        )
                    and (
-                            ( // Polecenie dotyczy samolotu ale grasz nie posiada samolotu.
+                            ( // Polecenie dotyczy samolotu ale gracz nie posiada samolotu.
                                   ( polecenia_dla__samolotu_l )
                               and ( not sprawdzany_gracz_posiada__samolot_l )
                             )
-                         or ( // Polecenie dotyczy statku ale grasz nie posiada statku.
+                         or ( // Polecenie dotyczy statku ale gracz nie posiada statku.
                                   ( polecenia_dla__statku_l )
                               and ( not sprawdzany_gracz_posiada__statek_l )
                             )
@@ -40647,788 +43022,1030 @@ begin//Funkcja SI__Polecenie_Interpretuj().
                 if statki_t[ i ].id_grupa <> id_grupa__nadawca_l then
                   begin
 
-                    pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := statki_t[ i ].id_grupa;
-                    pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
-                    pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Grupa_Jedna;
-                    pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
-                      'Próbuje mnie zak³ócaæ (' + si_polecenie_l +').';
+                    {$region 'Próba zak³ócania statku.'}
+                    // Polecenie wys³ane tylko do jednego gracza (je¿eli ma lotniskowiec i samolot to tylko do wskazanego statku).
+                    if    ( id_gracz_statku_pytanego_l = statki_t[ i ].id_gracz )
+                      and ( pokój_rozmów_r_f.odbiorca_rodzaj = pror_Gracz_Jeden )
+                      and (
+                               // Polecenie nie dotyczy samolotu ani statku i gracz posiada tylko samolot albo tylko statek.
+                               (
+                                     ( not polecenia_dla__samolotu_l )
+                                 and ( not polecenia_dla__statku_l )
+                                 and ( not sprawdzany_gracz_posiada__samolot_l )
+                                 and ( sprawdzany_gracz_posiada__statek_l )
+                               )
+                            or (
+                                     ( not polecenia_dla__samolotu_l )
+                                 and ( not polecenia_dla__statku_l )
+                                 and ( sprawdzany_gracz_posiada__samolot_l )
+                                 and ( not sprawdzany_gracz_posiada__statek_l )
+                               )
 
-                    Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l );
-
-
-                    pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := pokój_rozmów_r_f.id_nadawca;
-                    pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
-                    pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Gracz_Jeden;
-
-                    case Random( 3 ) of
-                        0 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
-                            'Próbuj dalej, powodzenia ¿yczê.';
-
-                        1 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
-                            'Aaa, nie przejmiesz mnie.';
-
-                        2 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
-                            'Zacna próba Sauronie.';
-                      end;
-                    //---//case Random( 3 ) of
-
-                    Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l );
-
-                  end
-                else//if statki_t[ i ].id_grupa <> id_grupa__nadawca_l then
-                  begin
-
-                    pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := statki_t[ i ].id_grupa;
-                    pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
-                    pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Grupa_Jedna;
-                    pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
-                      'Wys³a³ polecenie: ' + si_polecenie_kopia_dla_potwierdzenia_l + '.' + si_pokój_rozmów__znacznik_symbol__wys³a³_polecenie_c;
-
-                    Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l );
-
-
-                    odpowiedŸ_l := '';
-
-                    {$region 'si_aktywnoœæ.'}
-                    if si_polecenie_l = pokój_rozmów__si_polecenie__jak_tam_c then
+                               // Polecenie dotyczy tylko samolotu albo tylko statku i gracz posiada samolot i statek.
+                            or (
+                                     ( polecenia_dla__samolotu_l )
+                                 and ( not polecenia_dla__statku_l )
+                                 and ( sprawdzany_gracz_posiada__samolot_l )
+                               )
+                            or (
+                                     ( not polecenia_dla__samolotu_l )
+                                 and ( polecenia_dla__statku_l )
+                                 and ( sprawdzany_gracz_posiada__statek_l )
+                               )
+                          ) then
                       begin
 
-                        if statki_t[ i ].si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] then
+                        if Czas_Miêdzy_W_Sekundach( statki_t[ i ].zak³ócanie__czas_próba_ostatnia_sekundy_i ) >= zak³ócanie__czas_do_ponownej_próby_sekundy_g then
                           begin
 
-                            case Random( 4 ) of
-                                0 : odpowiedŸ_l := 'P³ywam sobie.';
-                                1 : odpowiedŸ_l := 'Jakoœ leci.';
-                                2 : odpowiedŸ_l := 'Poma³u naprzód.';
-                                3 : odpowiedŸ_l := 'A, sobie p³ywam.';
-                              end;
-                            //---//case Random( 3 ) of
+                            statki_t[ i ].zak³ócanie__czas_próba_ostatnia_sekundy_i := Czas_Teraz_W_Sekundach();
 
-                          end
-                        else//if statki_t[ i ].si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] then
-                        if statki_t[ i ].si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
-                          begin
 
-                            case Random( 3 ) of
-                                0 : odpowiedŸ_l := 'Widzê ich.';
-                                1 : odpowiedŸ_l := 'Strzelaj¹ do mnie.';
-                                2 : odpowiedŸ_l := 'Potyczka.';
-                              end;
-                            //---//case Random( 3 ) of
+                            // Je¿eli gracz ma statek i samolot to dodaje dopisek informuj¹cy, ¿e wiadomoœæ wys³a³ samolot.
+                            if statki_t[ i ].czy_samolot then
+                              odpowiedŸ_l := odpowiedŸ_l +
+                                Trim( si_pokój_rozmów__polecenie_symbol__samolot_c ) + ' ';
 
-                          end
-                        else//if statki_t[ i ].si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
-                          //sia_Brak, sia_Odnawianie_Zasobów, sia_Postój,
-                          case Random( 3 ) of
-                              0 : odpowiedŸ_l := 'Có¿.';
-                              1 : odpowiedŸ_l := 'Hmm...';
-                              2 : odpowiedŸ_l := 'Coœ tam jakoœ tam.';
-                            end;
-                          //---//case Random( 3 ) of
 
-                      end
-                    else//if si_polecenie_l = pokój_rozmów__si_polecenie__jak_tam_c then
-                    if Pos( pokój_rozmów__si_polecenie__l¹dowanie__przerwij_c, si_polecenie_l ) = 1 then
-                      begin
+                            pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := statki_t[ i ].id_grupa;
+                            pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
+                            pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Grupa_Jedna;
+                            pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                              //'Próbuje mnie zak³ócaæ (' + si_polecenie_l + ').';
+                              'Próbuje mnie zak³ócaæ (' + StringReplace( si_polecenie_l, si_pokój_rozmów__znacznik_symbol__si_zak³óca_c, '', [ rfReplaceAll ] ) + ').';
 
-                        if not statki_t[ i ].czy_samolot then
-                          begin
+                            if pokój_rozmów_odpowiedŸ_r_l.id_nadawca <= si_peer_port_c then
+                              pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ + si_pokój_rozmów__znacznik_symbol__si_zak³óca_c;
 
-                            case Random( 3 ) of
-                                0 : odpowiedŸ_l := 'Nie jestem samolotem ale mogê nie l¹dowaæ.';
-                                1 : odpowiedŸ_l := 'Jak to sobie wyobra¿asz.';
-                                2 : odpowiedŸ_l := 'Nic z tego.';
-                              end;
-                            //---//case Random( 3 ) of
+                            Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l );
 
-                          end
-                        else//if not statki_t[ i ].czy_samolot then
-                          if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = -99 then
-                            begin
 
-                              case Random( 3 ) of
-                                  0 : odpowiedŸ_l := 'Nigdzie nie zamierzam l¹dowaæ.';
-                                  1 : odpowiedŸ_l := 'Wzbijam siê - o co pytasz.';
-                                  2 : odpowiedŸ_l := 'Spoko, jeœli kiedyœ to w sumie czemu nie.';
-                                end;
-                              //---//case Random( 3 ) of
-
-                            end
-                          else//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = -99 then
-                            if    ( statki_t[ i ].czy_samolot )
-                              and ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 )
-                              and (  not ( statki_t[ i ].si_aktywnoœæ in [ sia_Samolot__L¹dowanie__Hamowanie ] )  ) then
+                            if Random( 101 ) <= zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g then
                               begin
 
-                                ztb := false;
-                                zti := statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie;
+                                // Zak³ócanie udane.
+
+                                statki_t[ i ].Uszkodzenia_Dodaj();
+                                Zak³ócenie_Punkty_¯ycia_Odejmij( statki_t[ i ] );
+
+
+                                pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
+                                pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Wszyscy;
+
+                                case Random( 3 ) of
+                                    0 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'Tracê kontrolê!';
+
+                                    1 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'System nieaktywny.';
+
+                                    2 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'Zak³ócaj¹ mnie.';
+                                  end;
+                                //---//case Random( 3 ) of
+
+                                //if pokój_rozmów_odpowiedŸ_r_l.id_nadawca <= si_peer_port_c then
+                                //  pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ + si_pokój_rozmów__znacznik_symbol__si_zak³óca_c; //???
+
+                                Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l );
+
+
+                                zti := Gra_Statystyki_R_Identyfikator_ZnajdŸ( pokój_rozmów_r_f.id_nadawca );
+
+                                if zti >= 0 then
+                                  begin
+
+                                    gra_statystyki_r_t[ zti ].zak³ócenia__udane__gs := gra_statystyki_r_t[ zti ].zak³ócenia__udane__gs + 1;
+
+                                  end;
+                                //---//if zti >= 0 then
+
+                              end
+                            else//if Random( 101 ) <= zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g then
+                              begin
+
+                                // Zak³ócanie nieudane.
+
+                                pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := pokój_rozmów_r_f.id_nadawca;
+                                pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
+                                pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Gracz_Jeden;
+
+                                case Random( 3 ) of
+                                    0 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'Próbuj dalej, powodzenia ¿yczê.';
+
+                                    1 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'Aaa, nie przejmiesz mnie.';
+
+                                    2 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'Zacna próba Sauronie.';
+                                  end;
+                                //---//case Random( 3 ) of
+
+                                if pokój_rozmów_odpowiedŸ_r_l.id_nadawca <= si_peer_port_c then
+                                  pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ + si_pokój_rozmów__znacznik_symbol__si_zak³óca_c;
+
+                                Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l, true );
+
+
+                                goto zak³ócanie_próba_nieudana_label_goto;
+
+                              end;
+                            //---//if Random( 101 ) <= zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g then
+
+                          end
+                        else//if Czas_Miêdzy_W_Sekundach( statki_t[ i ].zak³ócanie__czas_próba_ostatnia_sekundy_i ) >= zak³ócanie__czas_do_ponownej_próby_sekundy_g then
+                          begin
+
+                            // Zak³ócanie nieudane.
+
+                            // Wylicza uszkodzenia dla gracza, który próbowa³ zak³ócaæ.
+
+                            zak³ócanie_próba_nieudana_label_goto:
+                            if Random( 101 ) <= zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g then
+                              begin
+
+                                // Sprawdza ile statków ma gracz.
+                                zti := 0;
 
                                 for j := 0 to Length( statki_t ) - 1 do
                                   if    ( statki_t[ j ] <> nil )
                                     and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca )
-                                    and ( statki_t[ j ].czy_lotniskowiec )
-                                    and ( statki_t[ j ].id_statek = zti ) then
+                                    and ( statki_t[ j ].punkty_¿ycia_aktualne > 0 ) then
+                                    inc( zti );
+                                //---// Sprawdza ile statków ma gracz.
+
+                                // Je¿eli gracz ma kilka statków to losuje statek.
+                                zti := Random( zti ) + 1;
+
+                                for j := 0 to Length( statki_t ) - 1 do
+                                  if    ( statki_t[ j ] <> nil )
+                                    and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca )
+                                    and ( statki_t[ j ].punkty_¿ycia_aktualne > 0 ) then
                                     begin
 
-                                      ztb := true; // Znalaz³ lotniskowiec, na którym l¹dowaæ mia³ dany samolot.
+                                      dec( zti );
 
-                                      statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
-                                      // Aby samolot wybra³ nowy punkt patrolu.
-                                      statki_t[ i ].si_aktywnoœæ := sia_Brak;
-                                      statki_t[ i ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
+                                      if zti <= 0 then
+                                        begin
 
-
-                                      statki_t[ j ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
-                                      statki_t[ j ].si__lotniskowiec__l¹dowanie__kurs_aktualny := false;
-                                      // Aby lotniskowiec wybra³ nowy punkt patrolu.
-                                      statki_t[ j ].si_aktywnoœæ := sia_Brak;
-                                      statki_t[ j ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
+                                          statki_t[ j ].Uszkodzenia_Dodaj();
+                                          Zak³ócenie_Punkty_¯ycia_Odejmij( statki_t[ j ] );
 
 
-                                      odpowiedŸ_l := 'Przyj¹³em - przerywam l¹dowanie.';
+                                          zti := Gra_Statystyki_R_Identyfikator_ZnajdŸ( statki_t[ j ].id_gracz );
 
-                                      Break;
+                                          if zti >= 0 then
+                                            begin
+
+                                              gra_statystyki_r_t[ zti ].zak³ócenia__odbite__w³asne__gs := gra_statystyki_r_t[ zti ].zak³ócenia__odbite__w³asne__gs + 1;
+
+                                            end;
+                                          //---//if zti >= 0 then
+
+                                          Break;
+
+                                        end;
+                                      //---//if zti <= 0 then
 
                                     end;
-                                  //---//if    ( statki_t[ i_l ] <> nil ) (...)
+                                  //---//if    ( statki_t[ j ] <> nil ) (...)
+                                //---// Je¿eli gracz ma kilka statków to losuje statek.
 
 
-                                // Gdyby kilka samolotów l¹dowa³o na tym samym lotniskowcu.
-                                if ztb then
+                                pokój_rozmów_odpowiedŸ_r_l.id_nadawca := statki_t[ i ].id_gracz;
+                                pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := pokój_rozmów_r_f.id_nadawca;
+                                pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
+                                pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Wszyscy;
+
+                                case Random( 3 ) of
+                                    0 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'Dobrze ci tak.';
+
+                                    1 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'Zak³ócanie systemów odbite.';
+
+                                    2 : pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                                        'Siebie zak³ócasz…?';
+                                  end;
+                                //---//case Random( 3 ) of
+
+                                if pokój_rozmów_odpowiedŸ_r_l.id_nadawca <= si_peer_port_c then
+                                  pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ + si_pokój_rozmów__znacznik_symbol__si_zak³óca_c;
+
+                                Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l, true );
+
+
+                                zti := Gra_Statystyki_R_Identyfikator_ZnajdŸ( statki_t[ i ].id_gracz );
+
+                                if zti >= 0 then
+                                  begin
+
+                                    gra_statystyki_r_t[ zti ].zak³ócenia__odbite__cudze__gs := gra_statystyki_r_t[ zti ].zak³ócenia__odbite__cudze__gs + 1;
+
+                                  end;
+                                //---//if zti >= 0 then
+
+                              end;
+                            //---//if Random( 101 ) <= zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g then
+
+
+                            zti := Gra_Statystyki_R_Identyfikator_ZnajdŸ( pokój_rozmów_r_f.id_nadawca );
+
+                            if zti >= 0 then
+                              begin
+
+                                gra_statystyki_r_t[ zti ].zak³ócenia__nieudane__gs := gra_statystyki_r_t[ zti ].zak³ócenia__nieudane__gs + 1;
+
+                              end;
+                            //---//if zti >= 0 then
+
+                          end;
+                        //---//if Czas_Miêdzy_W_Sekundach( statki_t[ i ].zak³ócanie__czas_próba_ostatnia_sekundy_i ) >= zak³ócanie__czas_do_ponownej_próby_sekundy_g then
+
+                      end;
+                    //---//if    ( id_gracz_statku_pytanego_l = statki_t[ i ].id_gracz ) (...)
+                    {$endregion 'Próba zak³ócania statku.'}
+
+                  end
+                else//if statki_t[ i ].id_grupa <> id_grupa__nadawca_l then
+                  if   ( statki_t[ i ].si_decyduje ) // Tylko statki aktualnie kierowane przez SI.
+                    or ( statki_t[ i ].si__statek_gracza__p³ywa )
+                    or (  Pos( pokój_rozmów__si_polecenie__l¹dowanie__przerwij_c, si_polecenie_l ) = 1  ) then // To polecenie dotyczy wszystkich statków aby wyzerowaæ wartoœci zmiennych.
+                    begin
+
+                      pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := statki_t[ i ].id_grupa;
+                      pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
+                      pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Grupa_Jedna;
+                      pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l +
+                        'Wys³a³ polecenie: ' + si_polecenie_kopia_dla_potwierdzenia_l + '.' + si_pokój_rozmów__znacznik_symbol__wys³a³_polecenie_c;
+
+                      Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l );
+
+
+                      odpowiedŸ_l := '';
+
+                      {$region 'si_aktywnoœæ.'}
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__jak_tam_c then
+                        begin
+
+                          if statki_t[ i ].si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] then
+                            begin
+
+                              case Random( 4 ) of
+                                  0 : odpowiedŸ_l := 'P³ywam sobie.';
+                                  1 : odpowiedŸ_l := 'Jakoœ leci.';
+                                  2 : odpowiedŸ_l := 'Poma³u naprzód.';
+                                  3 : odpowiedŸ_l := 'A, sobie p³ywam.';
+                                end;
+                              //---//case Random( 3 ) of
+
+                            end
+                          else//if statki_t[ i ].si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_P³ywanie_Do_Punktu__Postój, sia_Samolot__L¹dowanie, sia_Samolot__L¹dowanie__Hamowanie, sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__Startowanie ] then
+                          if statki_t[ i ].si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+                            begin
+
+                              case Random( 4 ) of
+                                  0 : odpowiedŸ_l := 'Szukam artefaktu.';
+                                  1 : odpowiedŸ_l := 'Szukam kryszta³u.';
+                                  2 : odpowiedŸ_l := 'Niebo staje siê zielone i panuje absolutna cisza.';
+                                  3 : odpowiedŸ_l := 'Ale ch³ód.';
+                                end;
+                              //---//case Random( 3 ) of
+
+                            end
+                          else//if statki_t[ i ].si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
+                          if statki_t[ i ].si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
+                            begin
+
+                              case Random( 3 ) of
+                                  0 : odpowiedŸ_l := 'Widzê ich.';
+                                  1 : odpowiedŸ_l := 'Strzelaj¹ do mnie.';
+                                  2 : odpowiedŸ_l := 'Potyczka.';
+                                end;
+                              //---//case Random( 3 ) of
+
+                            end
+                          else//if statki_t[ i ].si_aktywnoœæ in [ sia_Walka, sia_Walka__P³ywanie_Do_Punktu, sia_Walka__Torpedy_Ucieczka ] then
+                            //sia_Brak, sia_Odnawianie_Zasobów__Lotniskowiec, sia_Postój,
+                            case Random( 3 ) of
+                                0 : odpowiedŸ_l := 'Có¿.';
+                                1 : odpowiedŸ_l := 'Hmm...';
+                                2 : odpowiedŸ_l := 'Coœ tam jakoœ tam.';
+                              end;
+                            //---//case Random( 3 ) of
+
+                        end
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__jak_tam_c then
+                      if Pos( pokój_rozmów__si_polecenie__l¹dowanie__przerwij_c, si_polecenie_l ) = 1 then
+                        begin
+
+                          if not statki_t[ i ].czy_samolot then
+                            begin
+
+                              case Random( 3 ) of
+                                  0 : odpowiedŸ_l := 'Nie jestem samolotem ale mogê nie l¹dowaæ.';
+                                  1 : odpowiedŸ_l := 'Jak to sobie wyobra¿asz.';
+                                  2 : odpowiedŸ_l := 'Nic z tego.';
+                                end;
+                              //---//case Random( 3 ) of
+
+                            end
+                          else//if not statki_t[ i ].czy_samolot then
+                            if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = -99 then
+                              begin
+
+                                case Random( 3 ) of
+                                    0 : odpowiedŸ_l := 'Nigdzie nie zamierzam l¹dowaæ.';
+                                    1 : odpowiedŸ_l := 'Wzbijam siê - o co pytasz.';
+                                    2 : odpowiedŸ_l := 'Spoko, jeœli kiedyœ to w sumie czemu nie.';
+                                  end;
+                                //---//case Random( 3 ) of
+
+                              end
+                            else//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = -99 then
+                              if    ( statki_t[ i ].czy_samolot )
+                                and ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 )
+                                and (  not ( statki_t[ i ].si_aktywnoœæ in [ sia_Samolot__L¹dowanie__Hamowanie ] )  ) then
+                                begin
+
+                                  ztb := false;
+                                  zti := statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie;
+
                                   for j := 0 to Length( statki_t ) - 1 do
                                     if    ( statki_t[ j ] <> nil )
-                                      and ( statki_t[ j ].czy_samolot )
-                                      and ( statki_t[ j ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = zti ) then
+                                      and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca )
+                                      and ( statki_t[ j ].czy_lotniskowiec )
+                                      and ( statki_t[ j ].id_statek = zti ) then
                                       begin
+
+                                        ztb := true; // Znalaz³ lotniskowiec, na którym l¹dowaæ mia³ dany samolot.
 
                                         statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
                                         // Aby samolot wybra³ nowy punkt patrolu.
                                         statki_t[ i ].si_aktywnoœæ := sia_Brak;
                                         statki_t[ i ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
 
+
+                                        statki_t[ j ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
+                                        statki_t[ j ].si__lotniskowiec__l¹dowanie__kurs_aktualny := false;
+                                        // Aby lotniskowiec wybra³ nowy punkt patrolu.
+                                        statki_t[ j ].si_aktywnoœæ := sia_Brak;
+                                        statki_t[ j ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
+
+
+                                        odpowiedŸ_l := 'Przyj¹³em - przerywam l¹dowanie.';
+
+                                        Break;
+
                                       end;
                                     //---//if    ( statki_t[ i_l ] <> nil ) (...)
 
-                              end;
-                            //---//if not statki_t[ i ].czy_lotniskowiec then
 
-                      end
-                    else//if Pos( pokój_rozmów__si_polecenie__l¹dowanie__przerwij_c, si_polecenie_l ) = 1 then
-                    if Pos( pokój_rozmów__si_polecenie__l¹dowanie__rezygnacja_c, si_polecenie_l ) = 1 then
-                      begin
-
-                        if not statki_t[ i ].czy_lotniskowiec then
-                          begin
-
-                            case Random( 3 ) of
-                                0 : odpowiedŸ_l := 'Nie jestem lotniskowcem ale dobra.';
-                                1 : odpowiedŸ_l := 'Co tylko tam chcesz.';
-                                2 : odpowiedŸ_l := 'To i tak nie by³ dobry pomys³.';
-                              end;
-                            //---//case Random( 3 ) of
-
-                          end
-                        else//if not statki_t[ i ].czy_lotniskowiec then
-                          begin
-
-                            if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
-                              begin
-
-                                // zti - tutaj jako indeks statku pytaj¹cego.
-
-                                if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> zti then
-                                  begin
-
-                                    case Random( 3 ) of
-                                        0 : odpowiedŸ_l := 'To chyba nie do mnie.';
-                                        1 : odpowiedŸ_l := 'Jak uwa¿asz.';
-                                        2 : odpowiedŸ_l := 'Nie rozpraszaj mnie.';
-                                      end;
-                                    //---//case Random( 3 ) of
-
-                                  end
-                                else//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> zti then
-                                  begin
-
-                                    statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
-                                    statki_t[ i ].si__lotniskowiec__l¹dowanie__kurs_aktualny := false;
-                                    // Aby lotniskowiec wybra³ nowy punkt patrolu.
-                                    statki_t[ i ].si_aktywnoœæ := sia_Brak;
-                                    statki_t[ i ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
-
-                                    if    ( zti >= 0 )
-                                      and (  zti <= Length( statki_t ) - 1  )
-                                      and ( statki_t[ zti ] <> nil ) then
-                                      begin
-
-                                        statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
-
-                                        if    ( statki_t[ zti ].si__statek_gracza__p³ywa )
-                                          and ( statki_t[ zti ].si_aktywnoœæ in [ sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__L¹dowanie ] ) then
-                                          begin
-
-                                            // Aby samolot wybra³ nowy punkt patrolu.
-                                            statki_t[ zti ].si_aktywnoœæ := sia_Brak;
-                                            statki_t[ zti ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
-
-                                          end;
-                                        //---//if    ( statki_t[ zti ].si__statek_gracza__p³ywa ) (...)
-
-                                      end;
-                                    //---//if    ( zti >= 0 ) (...)
-
-                                    odpowiedŸ_l := 'Przyj¹³em - rezygnacja z l¹dowania.';
-
-                                  end;
-                                //---//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> zti then
-
-                              end
-                            else//if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
-                              begin
-
-                                case Random( 3 ) of
-                                    0 : odpowiedŸ_l := 'Nie jesteœ nawet samolotem.';
-                                    1 : odpowiedŸ_l := 'Umiesz lataæ?';
-                                    2 : odpowiedŸ_l := 'Tak jakby ''nie''.';
-                                  end;
-                                //---//case Random( 3 ) of
-
-                              end;
-                            //---//if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
-
-                          end;
-                        //---//if not statki_t[ i ].czy_lotniskowiec then
-
-                      end
-                    else//if Pos( pokój_rozmów__si_polecenie__l¹dowanie__rezygnacja_c, si_polecenie_l ) = 1 then
-                    if   (  Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_aktualny_c, si_polecenie_l ) = 1  )
-                      or (  Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_standardowy_c, si_polecenie_l ) = 1  ) then
-                      begin
-
-                        if id_gracz_statku_pytanego_l <> Unassigned() then
-                          begin
-
-                            if statki_t[ i ].id_gracz = id_gracz_statku_pytanego_l then
-                              begin
-
-                                // Sprawdza czy adresat posiada lotniskowiec.
-                                ztb := false;
-
-                                if not statki_t[ i ].czy_lotniskowiec then
-                                  begin
-
+                                  // Gdyby kilka samolotów l¹dowa³o na tym samym lotniskowcu.
+                                  if ztb then
                                     for j := 0 to Length( statki_t ) - 1 do
                                       if    ( statki_t[ j ] <> nil )
-                                        and ( statki_t[ j ].id_gracz = id_gracz_statku_pytanego_l )
-                                        and ( statki_t[ j ].czy_samolot ) then
+                                        and ( statki_t[ j ].czy_samolot )
+                                        and ( statki_t[ j ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = zti ) then
                                         begin
 
-                                          ztb := true;
-                                          Break;
+                                          statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
+                                          // Aby samolot wybra³ nowy punkt patrolu.
+                                          statki_t[ i ].si_aktywnoœæ := sia_Brak;
+                                          statki_t[ i ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
 
                                         end;
-                                      //---//if    ( statki_t[ j ] <> nil ) (...)
+                                      //---//if    ( statki_t[ i_l ] <> nil ) (...)
 
-                                  end;
-                                //---//if not statki_t[ i ].czy_lotniskowiec then
-                                //---// Sprawdza czy adresat posiada lotniskowiec.
+                                end;
+                              //---//if not statki_t[ i ].czy_lotniskowiec then
 
+                        end
+                      else//if Pos( pokój_rozmów__si_polecenie__l¹dowanie__przerwij_c, si_polecenie_l ) = 1 then
+                      if Pos( pokój_rozmów__si_polecenie__l¹dowanie__rezygnacja_c, si_polecenie_l ) = 1 then
+                        begin
 
-                                if    ( not statki_t[ i ].czy_lotniskowiec )
-                                  and ( not ztb ) then
-                                  begin
-
-                                    // Adresat nie posiada lotniskowca.
-
-                                    case Random( 6 ) of
-                                        0 : odpowiedŸ_l := 'Nie jestem lotniskowcem, powtarzam, nie jestem lotniskowcem.';
-                                        1 : odpowiedŸ_l := 'Nie mam w zwyczaju przyjmowaæ samolotów.';
-                                        2 : odpowiedŸ_l := 'Funkcjonalnoœæ niedostêpna.';
-                                        3 : odpowiedŸ_l := 'Jak sobie to wyobra¿asz?';
-                                        4 : odpowiedŸ_l := 'PotwierdŸ, tu nie lotniskowiec.';
-                                        5 : odpowiedŸ_l := 'Zapytaj kogoœ innego.';
-                                      end;
-                                    //---//case Random( 6 ) of
-
-                                  end
-                                else//if    ( not statki_t[ i ].czy_lotniskowiec ) (...)
-                                  if statki_t[ i ].czy_lotniskowiec then
-                                    begin
-
-                                      if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
-                                        begin
-
-                                          // zti - tutaj jako indeks statku pytaj¹cego.
-
-                                          if    ( zti >= 0 )
-                                            and (  zti <= Length( statki_t ) - 1  )
-                                            and ( statki_t[ zti ] <> nil )
-                                            and ( not statki_t[ zti ].czy_usun¹æ_statek )
-                                            and ( statki_t[ zti ].punkty_¿ycia_aktualne > 0 )
-                                            and ( not statki_t[ i ].czy_usun¹æ_statek )
-                                            and ( statki_t[ i ].punkty_¿ycia_aktualne > 0 ) then
-                                            begin
-
-                                              if    ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> -99 )
-                                                and ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> statki_t[ zti ].id_statek ) then
-                                                begin
-
-                                                  odpowiedŸ_l := 'Odmawiam, mam zajêty pok³ad.';
-
-                                                end
-                                              else//if    ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> -99 ) (...)
-                                              if    ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> -99 )
-                                                and ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie = statki_t[ zti ].id_statek ) then
-                                                begin
-
-                                                  odpowiedŸ_l := 'Wskazania mówi¹, ¿e ju¿ wyl¹dowa³eœ u mnie.';
-
-                                                end
-                                              else//if    ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> -99 ) (...)
-                                              if    ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 )
-                                                and ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> statki_t[ zti ].id_statek ) then
-                                                begin
-
-                                                  odpowiedŸ_l := 'Odmawiam, musisz poczekaæ na swoj¹ kolej.';
-
-                                                end
-                                              else//if    ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 ) (...)
-                                              if    ( statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 )
-                                                and ( statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> statki_t[ i ].id_statek ) then
-                                                begin
-
-                                                  odpowiedŸ_l := 'Oczekuj¹ Ciebie na innym lotniskowcu.';
-
-                                                end
-                                              else//if    ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 ) (...)
-                                              if   (
-                                                         ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 )
-                                                     and ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = statki_t[ zti ].id_statek )
-                                                   )
-                                                or ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = -99 ) then
-                                                begin
-
-                                                  if statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> statki_t[ i ].id_statek then
-                                                    statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := statki_t[ i ].id_statek;
-
-                                                  if Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_aktualny_c, si_polecenie_l ) = 1 then
-                                                    statki_t[ i ].si__lotniskowiec__l¹dowanie__kurs_aktualny := true
-                                                  else//if Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_aktualny_c, si_polecenie_l ) = 1 then
-                                                    statki_t[ i ].si__lotniskowiec__l¹dowanie__kurs_aktualny := false;
-
-
-                                                  if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = statki_t[ zti ].id_statek then
-                                                    odpowiedŸ_l := 'Potwierdzam zgodê'
-                                                  else//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = statki_t[ zti ].id_statek then
-                                                    begin
-
-                                                      statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := statki_t[ zti ].id_statek;
-
-                                                      odpowiedŸ_l := 'Zgoda';
-
-                                                    end;
-                                                  //---//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = statki_t[ zti ].id_statek then
-
-
-                                                  if    ( statki_t[ zti ].si__statek_gracza__p³ywa )
-                                                    and ( statki_t[ zti ].si_aktywnoœæ <> sia_Samolot__L¹dowanie__Podchodzenie ) then
-                                                    begin
-
-                                                      statki_t[ zti ].si_aktywnoœæ := sia_Samolot__L¹dowanie__Podchodzenie;
-                                                      statki_t[ zti ].samolot__l¹dowanie__podchodzenie_krok := l¹dowanie__podchodzenie_kroki_iloœæ_c;
-                                                      statki_t[ zti ].si__cel_odleg³oœæ := -1;
-
-                                                    end;
-                                                  //---//if    ( statki_t[ zti ].si__statek_gracza__p³ywa ) (...)
-
-
-                                                  odpowiedŸ_l := odpowiedŸ_l +
-                                                    ' na l¹dowanie.' +
-                                                    #13 + #10 +
-                                                    'Kieruj siê na x = ' +
-                                                    Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.X )  ) +
-                                                    ', z = ' + Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.Z )  ) +
-                                                    ',' +
-                                                    #13 + #10 +
-                                                    'odleg³oœæ = ' + Trim(   FormatFloat(  '### ### ##0.00', statki_t[ i ].DistanceTo( statki_t[ zti ] )  )   ) + '.';
-
-                                                end;
-                                              //---//if   ( (...)
-
-                                            end
-                                          else//if    ( j >= 0 ) (...)
-                                            odpowiedŸ_l := 'Jakieœ zak³ócenia.';
-
-                                        end
-                                      else//if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
-                                        begin
-
-                                          case Random( 3 ) of
-                                              0 : odpowiedŸ_l := 'Nie jesteœ przecie¿ samolotem.';
-                                              1 : odpowiedŸ_l := 'Poleæ to siê zastanowiê.';
-                                              2 : odpowiedŸ_l := 'Je¿eli wzlecisz.';
-                                            end;
-                                          //---//case Random( 3 ) of
-
-                                        end;
-                                      //---//if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
-
-                                    end;
-                                  //---//if statki_t[ i ].czy_lotniskowiec then
-
-                              end;
-                            //---//if statki_t[ i ].id_gracz = id_gracz_statku_pytanego_l then
-                            //else
-                            // W pêtli powinien trafiæ na statek, którego dotyczy pytanie.
-
-                          end
-                        else//if id_gracz_statku_pytanego_l <> Unassigned() then
-                          odpowiedŸ_l := 'Nie uda³o siê zidentyfikowaæ do kogo zosta³o wys³ane polecenie.';
-
-                      end
-                    else//if   (  Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_aktualny_c, si_polecenie_l ) = 1  ) (...)
-                    if si_polecenie_l = pokój_rozmów__si_polecenie__si_aktywnoœæ_podaj_c then
-                      begin
-
-                        odpowiedŸ_l := '¯ycie: ' + Trim(  FormatFloat( '### ### ##0', statki_t[ i ].punkty_¿ycia_aktualne )  ) + ' / ' + Trim(  FormatFloat( '### ### ##0', statki_t[ i ].punkty_¿ycia_maksymalne )  ) + ' (' + Trim(  FormatFloat( '### ### ##0', statki_t[ i ].punkty_¿ycia_procent_zosta³o )  ) + '%)';
-
-                        odpowiedŸ_l := odpowiedŸ_l +
-                          #13 + #10 + 'Aktualna aktywnoœæ: ' + statki_t[ i ].Si_Aktywnoœæ_Aktualna_Nazwa() + '.';
-
-                        //if statki_t[ i ].si_aktywnoœæ__polecenie <> sia_Brak then
-                          odpowiedŸ_l := odpowiedŸ_l +
-                            #13 + #10 + 'Aktywnoœæ analizowana: ' + statki_t[ i ].Si_Aktywnoœæ_Aktualna_Nazwa( true ) + '.';
-
-                        odpowiedŸ_l := odpowiedŸ_l +
-                          #13 + #10 + 'Tryb strzelania: ' + statki_t[ i ].Si_Strzelanie_Tryb_Aktualny_Nazwa() + '.';
-
-                        odpowiedŸ_l := odpowiedŸ_l +
-                          #13 + #10 +
-                          'Pozycja x = ' +
-                          Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.X )  ) +
-                          ', z = ' + Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.Z )  );
-
-                        if   ( statki_t[ i ].czy_samolot )
-                          or ( statki_t[ i ].czy_zanurzanie ) then
-                          odpowiedŸ_l := odpowiedŸ_l +
-                            ', y = ' + Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.Y )  );
-
-
-                        for j := 0 to Length( statki_t ) - 1 do
-                          if    ( statki_t[ j ] <> nil )
-                            and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca ) then
+                          if not statki_t[ i ].czy_lotniskowiec then
                             begin
 
-                              odpowiedŸ_l := odpowiedŸ_l +
-                                ',' +
-                                #13 + #10 +
-                                'odleg³oœæ = ' + Trim(   FormatFloat(  '### ### ##0.00', statki_t[ i ].DistanceTo( statki_t[ j ] )  )   );
+                              case Random( 3 ) of
+                                  0 : odpowiedŸ_l := 'Nie jestem lotniskowcem ale dobra.';
+                                  1 : odpowiedŸ_l := 'Co tylko tam chcesz.';
+                                  2 : odpowiedŸ_l := 'To i tak nie by³ dobry pomys³.';
+                                end;
+                              //---//case Random( 3 ) of
 
-                              if statki_t[ j ].czy_samolot then
-                                odpowiedŸ_l := odpowiedŸ_l +
-                                  si_pokój_rozmów__polecenie_symbol__samolot_c;
+                            end
+                          else//if not statki_t[ i ].czy_lotniskowiec then
+                            begin
+
+                              if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
+                                begin
+
+                                  // zti - tutaj jako indeks statku pytaj¹cego.
+
+                                  if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> zti then
+                                    begin
+
+                                      case Random( 3 ) of
+                                          0 : odpowiedŸ_l := 'To chyba nie do mnie.';
+                                          1 : odpowiedŸ_l := 'Jak uwa¿asz.';
+                                          2 : odpowiedŸ_l := 'Nie rozpraszaj mnie.';
+                                        end;
+                                      //---//case Random( 3 ) of
+
+                                    end
+                                  else//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> zti then
+                                    begin
+
+                                      statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
+                                      statki_t[ i ].si__lotniskowiec__l¹dowanie__kurs_aktualny := false;
+                                      // Aby lotniskowiec wybra³ nowy punkt patrolu.
+                                      statki_t[ i ].si_aktywnoœæ := sia_Brak;
+                                      statki_t[ i ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
+
+                                      if    ( zti >= 0 )
+                                        and (  zti <= Length( statki_t ) - 1  )
+                                        and ( statki_t[ zti ] <> nil ) then
+                                        begin
+
+                                          statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
+
+                                          if    ( statki_t[ zti ].si__statek_gracza__p³ywa )
+                                            and ( statki_t[ zti ].si_aktywnoœæ in [ sia_Samolot__L¹dowanie__Podchodzenie, sia_Samolot__L¹dowanie ] ) then
+                                            begin
+
+                                              // Aby samolot wybra³ nowy punkt patrolu.
+                                              statki_t[ zti ].si_aktywnoœæ := sia_Brak;
+                                              statki_t[ zti ].si__aktywnoœæ__okreœlenie_ostatnie_sekundy_i := 0;
+
+                                            end;
+                                          //---//if    ( statki_t[ zti ].si__statek_gracza__p³ywa ) (...)
+
+                                        end;
+                                      //---//if    ( zti >= 0 ) (...)
+
+                                      odpowiedŸ_l := 'Przyj¹³em - rezygnacja z l¹dowania.';
+
+                                    end;
+                                  //---//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> zti then
+
+                                end
+                              else//if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
+                                begin
+
+                                  case Random( 3 ) of
+                                      0 : odpowiedŸ_l := 'Nie jesteœ nawet samolotem.';
+                                      1 : odpowiedŸ_l := 'Umiesz lataæ?';
+                                      2 : odpowiedŸ_l := 'Tak jakby ''nie''.';
+                                    end;
+                                  //---//case Random( 3 ) of
+
+                                end;
+                              //---//if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
 
                             end;
-                          //---//if    ( statki_t[ j ] <> nil ) (...)
+                          //---//if not statki_t[ i ].czy_lotniskowiec then
 
-                        odpowiedŸ_l := odpowiedŸ_l + '.';
+                        end
+                      else//if Pos( pokój_rozmów__si_polecenie__l¹dowanie__rezygnacja_c, si_polecenie_l ) = 1 then
+                      if   (  Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_aktualny_c, si_polecenie_l ) = 1  )
+                        or (  Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_standardowy_c, si_polecenie_l ) = 1  ) then
+                        begin
 
-                      end
-                    else//if si_polecenie_l = pokój_rozmów__si_polecenie__si_aktywnoœæ_podaj_c then
-                    if si_polecenie_l = pokój_rozmów__si_polecenie__sia_sia_Brak_c then
-                      begin
+                          if id_gracz_statku_pytanego_l <> Unassigned() then
+                            begin
 
-                        statki_t[ i ].si_aktywnoœæ__polecenie := sia_Brak;
+                              if statki_t[ i ].id_gracz = id_gracz_statku_pytanego_l then
+                                begin
 
-                      end
-                    else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_sia_Brak_c then
-                    if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Patrol_c then
-                      begin
+                                  // Sprawdza czy adresat posiada lotniskowiec.
+                                  ztb := false;
 
-                        statki_t[ i ].si_aktywnoœæ__polecenie := sia_Patrol;
+                                  if not statki_t[ i ].czy_lotniskowiec then
+                                    begin
 
-                      end
-                    else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Patrol_c then
-                    if Pos( pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Mnie_c, si_polecenie_l ) = 1 then
-                      begin
+                                      for j := 0 to Length( statki_t ) - 1 do
+                                        if    ( statki_t[ j ] <> nil )
+                                          and ( statki_t[ j ].id_gracz = id_gracz_statku_pytanego_l )
+                                          and ( statki_t[ j ].czy_samolot ) then
+                                          begin
 
-                        ztb := false;
+                                            ztb := true;
+                                            Break;
 
-                        // Wyszukuje statek, który jest nadawc¹ polecenia.
-                        for j := 0 to Length( statki_t ) - 1 do
-                          if    ( statki_t[ j ] <> nil )
-                            and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca )
-                            and ( // Je¿eli gracz pytaj¹cy ma statek i samolot to rozró¿nia czy polecenie dotyczy statku czy samolotu.
-                                     (
-                                           ( polecenia_od__samolotu_l )
-                                       and ( statki_t[ j ].czy_samolot )
+                                          end;
+                                        //---//if    ( statki_t[ j ] <> nil ) (...)
+
+                                    end;
+                                  //---//if not statki_t[ i ].czy_lotniskowiec then
+                                  //---// Sprawdza czy adresat posiada lotniskowiec.
+
+
+                                  if    ( not statki_t[ i ].czy_lotniskowiec )
+                                    and ( not ztb ) then
+                                    begin
+
+                                      // Adresat nie posiada lotniskowca.
+
+                                      case Random( 6 ) of
+                                          0 : odpowiedŸ_l := 'Nie jestem lotniskowcem, powtarzam, nie jestem lotniskowcem.';
+                                          1 : odpowiedŸ_l := 'Nie mam w zwyczaju przyjmowaæ samolotów.';
+                                          2 : odpowiedŸ_l := 'Funkcjonalnoœæ niedostêpna.';
+                                          3 : odpowiedŸ_l := 'Jak sobie to wyobra¿asz?';
+                                          4 : odpowiedŸ_l := 'PotwierdŸ, tu nie lotniskowiec.';
+                                          5 : odpowiedŸ_l := 'Zapytaj kogoœ innego.';
+                                        end;
+                                      //---//case Random( 6 ) of
+
+                                    end
+                                  else//if    ( not statki_t[ i ].czy_lotniskowiec ) (...)
+                                    if statki_t[ i ].czy_lotniskowiec then
+                                      begin
+
+                                        if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
+                                          begin
+
+                                            // zti - tutaj jako indeks statku pytaj¹cego.
+
+                                            if    ( zti >= 0 )
+                                              and (  zti <= Length( statki_t ) - 1  )
+                                              and ( statki_t[ zti ] <> nil )
+                                              and ( not statki_t[ zti ].czy_usun¹æ_statek )
+                                              and ( statki_t[ zti ].punkty_¿ycia_aktualne > 0 )
+                                              and ( not statki_t[ i ].czy_usun¹æ_statek )
+                                              and ( statki_t[ i ].punkty_¿ycia_aktualne > 0 ) then
+                                              begin
+
+                                                if    ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> -99 )
+                                                  and ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> statki_t[ zti ].id_statek ) then
+                                                  begin
+
+                                                    odpowiedŸ_l := 'Odmawiam, mam zajêty pok³ad.';
+
+                                                  end
+                                                else//if    ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> -99 ) (...)
+                                                if    ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> -99 )
+                                                  and ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie = statki_t[ zti ].id_statek ) then
+                                                  begin
+
+                                                    odpowiedŸ_l := 'Wskazania mówi¹, ¿e ju¿ wyl¹dowa³eœ u mnie.';
+
+                                                  end
+                                                else//if    ( statki_t[ i ].id_statek__lotniskowiec__ma_samolot_na_pok³adzie <> -99 ) (...)
+                                                if    ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 )
+                                                  and ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> statki_t[ zti ].id_statek ) then
+                                                  begin
+
+                                                    odpowiedŸ_l := 'Odmawiam, musisz poczekaæ na swoj¹ kolej.';
+
+                                                  end
+                                                else//if    ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 ) (...)
+                                                if    ( statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 )
+                                                  and ( statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> statki_t[ i ].id_statek ) then
+                                                  begin
+
+                                                    odpowiedŸ_l := 'Oczekuj¹ Ciebie na innym lotniskowcu.';
+
+                                                  end
+                                                else//if    ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 ) (...)
+                                                if   (
+                                                           ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> -99 )
+                                                       and ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = statki_t[ zti ].id_statek )
+                                                     )
+                                                  or ( statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = -99 ) then
+                                                  begin
+
+                                                    if statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie <> statki_t[ i ].id_statek then
+                                                      statki_t[ zti ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := statki_t[ i ].id_statek;
+
+                                                    if Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_aktualny_c, si_polecenie_l ) = 1 then
+                                                      statki_t[ i ].si__lotniskowiec__l¹dowanie__kurs_aktualny := true
+                                                    else//if Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_aktualny_c, si_polecenie_l ) = 1 then
+                                                      statki_t[ i ].si__lotniskowiec__l¹dowanie__kurs_aktualny := false;
+
+
+                                                    if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = statki_t[ zti ].id_statek then
+                                                      odpowiedŸ_l := 'Potwierdzam zgodê'
+                                                    else//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = statki_t[ zti ].id_statek then
+                                                      begin
+
+                                                        statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := statki_t[ zti ].id_statek;
+
+                                                        odpowiedŸ_l := 'Zgoda';
+
+                                                      end;
+                                                    //---//if statki_t[ i ].id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie = statki_t[ zti ].id_statek then
+
+
+                                                    if    ( statki_t[ zti ].si__statek_gracza__p³ywa )
+                                                      and ( statki_t[ zti ].si_aktywnoœæ <> sia_Samolot__L¹dowanie__Podchodzenie ) then
+                                                      begin
+
+                                                        statki_t[ zti ].si_aktywnoœæ := sia_Samolot__L¹dowanie__Podchodzenie;
+                                                        statki_t[ zti ].samolot__l¹dowanie__podchodzenie_krok := l¹dowanie__podchodzenie_kroki_iloœæ_c;
+                                                        statki_t[ zti ].si__cel_odleg³oœæ := -1;
+
+                                                      end;
+                                                    //---//if    ( statki_t[ zti ].si__statek_gracza__p³ywa ) (...)
+
+
+                                                    odpowiedŸ_l := odpowiedŸ_l +
+                                                      ' na l¹dowanie.' +
+                                                      #13 + #10 +
+                                                      'Kieruj siê na x = ' +
+                                                      Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.X )  ) +
+                                                      ', z = ' + Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.Z )  ) +
+                                                      ',' +
+                                                      #13 + #10 +
+                                                      'odleg³oœæ = ' + Trim(   FormatFloat(  '### ### ##0.00', statki_t[ i ].DistanceTo( statki_t[ zti ] )  )   ) + '.';
+
+                                                  end;
+                                                //---//if   ( (...)
+
+                                              end
+                                            else//if    ( j >= 0 ) (...)
+                                              odpowiedŸ_l := 'Jakieœ zak³ócenia.';
+
+                                          end
+                                        else//if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
+                                          begin
+
+                                            case Random( 3 ) of
+                                                0 : odpowiedŸ_l := 'Nie jesteœ przecie¿ samolotem.';
+                                                1 : odpowiedŸ_l := 'Poleæ to siê zastanowiê.';
+                                                2 : odpowiedŸ_l := 'Je¿eli wzlecisz.';
+                                              end;
+                                            //---//case Random( 3 ) of
+
+                                          end;
+                                        //---//if Czy_Gracz_Posiada_Samolot( pokój_rozmów_r_f.id_nadawca, zti ) then
+
+                                      end;
+                                    //---//if statki_t[ i ].czy_lotniskowiec then
+
+                                end;
+                              //---//if statki_t[ i ].id_gracz = id_gracz_statku_pytanego_l then
+                              //else
+                              // W pêtli powinien trafiæ na statek, którego dotyczy pytanie.
+
+                            end
+                          else//if id_gracz_statku_pytanego_l <> Unassigned() then
+                            odpowiedŸ_l := 'Nie uda³o siê zidentyfikowaæ do kogo zosta³o wys³ane polecenie.';
+
+                        end
+                      else//if   (  Pos( pokój_rozmów__si_polecenie__l¹dowanie__zezwolenie_proœba__kurs_aktualny_c, si_polecenie_l ) = 1  ) (...)
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__si_aktywnoœæ_podaj_c then
+                        begin
+
+                          odpowiedŸ_l := '¯ycie: ' + Trim(  FormatFloat( '### ### ##0', statki_t[ i ].punkty_¿ycia_aktualne )  ) + ' / ' + Trim(  FormatFloat( '### ### ##0', statki_t[ i ].punkty_¿ycia_maksymalne )  ) + ' (' + Trim(  FormatFloat( '### ### ##0', statki_t[ i ].punkty_¿ycia_procent_zosta³o )  ) + '%)';
+
+                          odpowiedŸ_l := odpowiedŸ_l +
+                            #13 + #10 + 'Aktualna aktywnoœæ: ' + statki_t[ i ].Si_Aktywnoœæ_Aktualna_Nazwa() + '.';
+
+                          //if statki_t[ i ].si_aktywnoœæ__polecenie <> sia_Brak then
+                            odpowiedŸ_l := odpowiedŸ_l +
+                              #13 + #10 + 'Aktywnoœæ analizowana: ' + statki_t[ i ].Si_Aktywnoœæ_Aktualna_Nazwa( true ) + '.';
+
+                          odpowiedŸ_l := odpowiedŸ_l +
+                            #13 + #10 + 'Tryb strzelania: ' + statki_t[ i ].Si_Strzelanie_Tryb_Aktualny_Nazwa() + '.';
+
+                          odpowiedŸ_l := odpowiedŸ_l +
+                            #13 + #10 +
+                            'Pozycja x = ' +
+                            Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.X )  ) +
+                            ', z = ' + Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.Z )  );
+
+                          if   ( statki_t[ i ].czy_samolot )
+                            or ( statki_t[ i ].czy_zanurzanie ) then
+                            odpowiedŸ_l := odpowiedŸ_l +
+                              ', y = ' + Trim(  FormatFloat( '### ### ##0.00', statki_t[ i ].AbsolutePosition.Y )  );
+
+
+                          for j := 0 to Length( statki_t ) - 1 do
+                            if    ( statki_t[ j ] <> nil )
+                              and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca ) then
+                              begin
+
+                                odpowiedŸ_l := odpowiedŸ_l +
+                                  ',' +
+                                  #13 + #10 +
+                                  'odleg³oœæ = ' + Trim(   FormatFloat(  '### ### ##0.00', statki_t[ i ].DistanceTo( statki_t[ j ] )  )   );
+
+                                // Je¿eli gracz ma statek i samolot to dodaje dopisek informuj¹cy, ¿e wiadomoœæ wys³a³ samolot.
+                                if statki_t[ j ].czy_samolot then
+                                  odpowiedŸ_l := odpowiedŸ_l +
+                                    si_pokój_rozmów__polecenie_symbol__samolot_c;
+
+                              end;
+                            //---//if    ( statki_t[ j ] <> nil ) (...)
+
+                          odpowiedŸ_l := odpowiedŸ_l + '.';
+
+                        end
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__si_aktywnoœæ_podaj_c then
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__sia_sia_Brak_c then
+                        begin
+
+                          statki_t[ i ].si_aktywnoœæ__polecenie := sia_Brak;
+
+                        end
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_sia_Brak_c then
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Patrol_c then
+                        begin
+
+                          statki_t[ i ].si_aktywnoœæ__polecenie := sia_Patrol;
+
+                        end
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Patrol_c then
+                      if Pos( pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Mnie_c, si_polecenie_l ) = 1 then
+                        begin
+
+                          ztb := false;
+
+                          // Wyszukuje statek, który jest nadawc¹ polecenia.
+                          for j := 0 to Length( statki_t ) - 1 do
+                            if    ( statki_t[ j ] <> nil )
+                              and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca )
+                              and ( // Je¿eli gracz pytaj¹cy ma statek i samolot to rozró¿nia czy polecenie dotyczy statku czy samolotu.
+                                       (
+                                             ( polecenia_od__samolotu_l )
+                                         and ( statki_t[ j ].czy_samolot )
+                                       )
+                                    or (
+                                             ( polecenia_od__statku_l )
+                                         and ( not statki_t[ j ].czy_samolot )
+                                       )
+                                    or (
+                                             ( not polecenia_od__samolotu_l )
+                                         and ( not polecenia_od__statku_l  )
+                                       )
+                                  ) then
+                              begin
+
+                                zti := j; // Indeks statku pytaj¹cego.
+                                ztb := true;
+                                Break;
+
+                              end;
+                            //---//if    ( statki_t[ j ] <> nil ) (...)
+                          //---// Wyszukuje statek, który jest nadawc¹ polecenia.
+
+                          if not ztb then
+                            begin
+
+                              // Je¿eli nie uda³o siê precyzyjnie ustaliæ czy statek czy samolot to wyszukuje bez rozró¿niania.
+
+                              for j := 0 to Length( statki_t ) - 1 do
+                                if    ( statki_t[ j ] <> nil )
+                                  and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca ) then
+                                  begin
+
+                                    zti := j; // Indeks statku pytaj¹cego.
+                                    ztb := true;
+                                    Break;
+
+                                  end;
+                                //---//if    ( statki_t[ j ] <> nil ) (...)
+
+                            end;
+                          //---//if not ztb then
+
+
+                          if    ( ztb )
+                            and ( zti >= 0 )
+                            and (  zti <= Length( statki_t ) - 1  )
+                            and ( statki_t[ zti ] <> nil )
+                            and (
+                                     ( // Polecenie skierowane do samolotów.
+                                           ( polecenia_dla__samolotu_l )
+                                       and ( statki_t[ i ].czy_samolot )
                                      )
-                                  or (
-                                           ( polecenia_od__statku_l )
-                                       and ( not statki_t[ j ].czy_samolot )
+                                  or ( // Polecenie skierowane do statków.
+                                           ( polecenia_dla__statku_l )
+                                       and ( not statki_t[ i ].czy_samolot )
                                      )
-                                  or (
-                                           ( not polecenia_od__samolotu_l )
-                                       and ( not polecenia_od__statku_l  )
+                                  or ( // Polecenie nie precyzuje do kogo jest skierowane (do wszystkiego).
+                                           ( not polecenia_dla__samolotu_l )
+                                       and ( not polecenia_dla__statku_l )
                                      )
                                 ) then
                             begin
 
-                              zti := j; // Indeks statku pytaj¹cego.
-                              ztb := true;
-                              Break;
+                              statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne := statki_t[ zti ].AbsolutePosition;
 
-                            end;
-                          //---//if    ( statki_t[ j ] <> nil ) (...)
-                        //---// Wyszukuje statek, który jest nadawc¹ polecenia.
+                              if statki_t[ zti ].prêdkoœæ_zadana_procent >= 0 then
+                                j := -1 // Za statkiem.
+                              else//if statki_t[ zti ].prêdkoœæ_zadana_procent >= 0 then
+                                j := 1; // Przed statkiem.
 
-                        if not ztb then
-                          begin
-
-                            // Je¿eli nie uda³o siê precyzyjnie ustaliæ czy statek czy samolot to wyszukuje bez rozró¿niania.
-
-                            for j := 0 to Length( statki_t ) - 1 do
-                              if    ( statki_t[ j ] <> nil )
-                                and ( statki_t[ j ].id_gracz = pokój_rozmów_r_f.id_nadawca ) then
-                                begin
-
-                                  zti := j; // Indeks statku pytaj¹cego.
-                                  ztb := true;
-                                  Break;
-
-                                end;
-                              //---//if    ( statki_t[ j ] <> nil ) (...)
-
-                          end;
-                        //---//if not ztb then
+                              GLVectorGeometry.AddVector
+                                (
+                                  statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne,
+                                  GLVectorGeometry.VectorScale
+                                    (
+                                      GLVectorGeometry.VectorMake( statki_t[ zti ].AbsoluteDirection.X, 0, statki_t[ zti ].AbsoluteDirection.Z ),
+                                      j * 3 * ( statki_t[ i ].z_prymityw_odleg³oœæ + statki_t[ zti ].z_prymityw_odleg³oœæ )
+                                    )
+                                );
 
 
-                        if    ( ztb )
-                          and ( zti >= 0 )
-                          and (  zti <= Length( statki_t ) - 1  )
-                          and ( statki_t[ zti ] <> nil )
-                          and (
-                                   ( // Polecenie skierowane do samolotów.
-                                         ( polecenia_dla__samolotu_l )
+                              if   (
+                                         ( statki_t[ zti ].czy_samolot )
                                      and ( statki_t[ i ].czy_samolot )
                                    )
-                                or ( // Polecenie skierowane do statków.
-                                         ( polecenia_dla__statku_l )
-                                     and ( not statki_t[ i ].czy_samolot )
-                                   )
-                                or ( // Polecenie nie precyzuje do kogo jest skierowane (do wszystkiego).
-                                         ( not polecenia_dla__samolotu_l )
-                                     and ( not polecenia_dla__statku_l )
-                                   )
-                              ) then
-                          begin
+                                or (
+                                          ( statki_t[ zti ].czy_zanurzanie )
+                                      and ( statki_t[ i ].czy_zanurzanie )
+                                    ) then
+                                begin
 
-                            statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne := statki_t[ zti ].AbsolutePosition;
+                                  statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W := 1;
 
-                            if statki_t[ zti ].prêdkoœæ_zadana_procent >= 0 then
-                              j := -1 // Za statkiem.
-                            else//if statki_t[ zti ].prêdkoœæ_zadana_procent >= 0 then
-                              j := 1; // Przed statkiem.
+                                  if statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y < 0 then
+                                    statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y := -statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y;
 
-                            GLVectorGeometry.AddVector
-                              (
-                                statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne,
-                                GLVectorGeometry.VectorScale
-                                  (
-                                    GLVectorGeometry.VectorMake( statki_t[ zti ].AbsoluteDirection.X, 0, statki_t[ zti ].AbsoluteDirection.Z ),
-                                    j * 3 * ( statki_t[ i ].z_prymityw_odleg³oœæ + statki_t[ zti ].z_prymityw_odleg³oœæ )
-                                  )
-                              );
+                                end
+                              else//if   ( (...)
+                                statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W := 0; // Wspó³rzêdna Y nie jest okreœlona lub jest dowolna.
 
 
-                            if   (
-                                       ( statki_t[ zti ].czy_samolot )
-                                   and ( statki_t[ i ].czy_samolot )
-                                 )
-                              or (
-                                        ( statki_t[ zti ].czy_zanurzanie )
-                                    and ( statki_t[ i ].czy_zanurzanie )
-                                  ) then
-                              begin
+                              if Pos( pokój_rozmów__si_polecenie__sia_Postój_c, si_polecenie_l ) > 1 then
+                                statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Postój
+                              else//if Pos( pokój_rozmów__si_polecenie__sia_Postój_c, si_polecenie_l ) > 1 then
+                                statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Patrol;
 
-                                statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W := 1;
+                            end
+                          else//if    ( ztb ) (...)
+                            odpowiedŸ_l := 'Nie uda³o siê odnaleŸæ statku nadawcy polecenia.';
 
-                                if statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y < 0 then
-                                  statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y := -statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y;
+                        end
+                      else//if Pos( pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Mnie_c, si_polecenie_l ) = 1 then
+                      if Pos( pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu_c, si_polecenie_l ) = 1 then
+                        begin
 
-                              end
-                            else//if   ( (...)
-                              statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W := 0; // Wspó³rzêdna Y nie jest okreœlona lub jest dowolna.
+                          zts := si_polecenie_l;
+                          zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
+                          zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
 
-
-                            if Pos( pokój_rozmów__si_polecenie__sia_Postój_c, si_polecenie_l ) > 1 then
-                              statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Postój
-                            else//if Pos( pokój_rozmów__si_polecenie__sia_Postój_c, si_polecenie_l ) > 1 then
-                              statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Patrol;
-
-                          end
-                        else//if    ( ztb ) (...)
-                          odpowiedŸ_l := 'Nie uda³o siê odnaleŸæ statku nadawcy polecenia.';
-
-                      end
-                    else//if Pos( pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Mnie_c, si_polecenie_l ) = 1 then
-                    if Pos( pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu_c, si_polecenie_l ) = 1 then
-                      begin
-
-                        zts := si_polecenie_l;
-                        zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-                        zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
-                        if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.X ) then
-                          begin
-
-                            if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Z ) then
-                              begin
-
-                                if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y ) then
-                                  begin
-
-                                    statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W := 1;
-
-                                    if statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y < 0 then
-                                      odpowiedŸ_l := 'Wspó³rzêdna y jako wartoœæ zanurzenia, pu³apu powinna byæ nieujemna.';
-
-                                  end
-                                else//if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y ) then
-                                  statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W := 0; // Wspó³rzêdna Y nie jest okreœlona lub jest dowolna.
-
-
-                                if Pos( pokój_rozmów__si_polecenie__sia_Postój_c, si_polecenie_l ) > 1 then
-                                  statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Postój
-                                else//if Pos( pokój_rozmów__si_polecenie__sia_Postój_c, si_polecenie_l ) > 1 then
-                                  statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Patrol;
-
-                              end
-                            else//if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Z ) then
-                              odpowiedŸ_l := 'Nie uda³o siê odczytaæ sk³adowej wspó³rzêdnych z.';
-
-                          end
-                        else//if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.X ) then
-                          odpowiedŸ_l := 'Nie uda³o siê odczytaæ sk³adowej wspó³rzêdnych x.';
-
-                      end
-                    else//if Pos( pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu_c, si_polecenie_l ) = 1 then
-                    if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Postój_c then
-                      begin
-
-                        statki_t[ i ].si_aktywnoœæ__polecenie := sia_Postój;
-
-                      end
-                    else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Postój_c then
-                    if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Samolot__L¹dowanie_c then
-                      begin
-
-                        statki_t[ i ].si_aktywnoœæ__polecenie := sia_Samolot__L¹dowanie;
-
-                      end
-                    else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Samolot__L¹dowanie_c then
-                    if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Samolot__Startowanie_c then
-                      begin
-
-                        statki_t[ i ].si_aktywnoœæ__polecenie := sia_Samolot__Startowanie;
-
-                      end
-                    else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Samolot__Startowanie_c then
-                    if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Walka_c then
-                      begin
-
-                        statki_t[ i ].si_aktywnoœæ__polecenie := sia_Walka;
-
-                      end
-                    {$endregion 'si_aktywnoœæ.'}
-                    else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Walka_c then
-                      begin
-
-                        {$region 'si_strzelanie_tryb.'}
-                        si_strzelanie_tryb_kopia_l := statki_t[ i ].si_strzelanie_tryb;
-
-                        if Pos( pokój_rozmów__si_polecenie__sist_Brak_c, si_polecenie_l ) = 1 then
-                          begin
-
-                            statki_t[ i ].si_strzelanie_tryb := sist_Brak;
-                            statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
-
-                          end
-                        else//if Pos( pokój_rozmów__si_polecenie__sist_Brak_c, si_polecenie_l ) = 1 then
-                        if Pos( pokój_rozmów__si_polecenie__sist_Celuj_Tylko_c, si_polecenie_l ) = 1 then
-                          begin
-
-                            statki_t[ i ].si_strzelanie_tryb := sist_Celuj_Tylko;
-                            statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
-
-                          end
-                        else//if Pos( pokój_rozmów__si_polecenie__sist_Celuj_Tylko_c, si_polecenie_l ) = 1 then
-                        if Pos( pokój_rozmów__si_polecenie__sist_Nie_Celuj_Nie_Strzelaj_c, si_polecenie_l ) = 1 then
-                          begin
-
-                            statki_t[ i ].si_strzelanie_tryb := sist_Nie_Celuj_Nie_Strzelaj;
-                            statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
-
-                          end
-                        else//if Pos( pokój_rozmów__si_polecenie__sist_Nie_Celuj_Nie_Strzelaj_c, si_polecenie_l ) = 1 then
-                        if Pos( pokój_rozmów__si_polecenie__sist_Odpowiedz_Ogniem_c, si_polecenie_l ) = 1 then
-                          begin
-
-                            statki_t[ i ].si_strzelanie_tryb := sist_Odpowiedz_Ogniem;
-                            statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
-
-                          end
-                        else//if Pos( pokój_rozmów__si_polecenie__sist_Odpowiedz_Ogniem_c, si_polecenie_l ) = 1 then
-                        if Pos( pokój_rozmów__si_polecenie__sist_Strzelaj_Jak_Chcesz_c, si_polecenie_l ) = 1 then
-                          begin
-
-                            statki_t[ i ].si_strzelanie_tryb := sist_Strzelaj_Jak_Chcesz;
-                            statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
-
-                          end;
-                        //---//if Pos( pokój_rozmów__si_polecenie__sist_Strzelaj_Jak_Chcesz_c, si_polecenie_l ) = 1 then
-
-
-                        if si_strzelanie_tryb_kopia_l <> statki_t[ i ].si_strzelanie_tryb then
-                          odpowiedŸ_l := 'Potwierdzam tryb strzelania: ' + statki_t[ i ].Si_Strzelanie_Tryb_Aktualny_Nazwa() + '.';
-                        {$endregion 'si_strzelanie_tryb.'}
-
-                      end;
-                    //---//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Walka_c then
-
-
-                    if Trim( odpowiedŸ_l ) <> '' then
-                      begin
-
-                        for j := 0 to Length( statki_t ) - 1 do
-                          if    ( statki_t[ j ] <> nil )
-                            and ( statki_t[ j ].id_gracz = statki_t[ i ].id_gracz )
-                            and ( statki_t[ j ].id_statek <> statki_t[ i ].id_statek )
-                            and ( statki_t[ i ].czy_samolot ) then
+                          if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.X ) then
                             begin
 
-                              // Je¿eli gracz ma statek i samolot to dodaje dopisek informuj¹cy, ¿e wiadomoœæ wys³a³ samolot.
+                              if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Z ) then
+                                begin
 
-                              odpowiedŸ_l :=
-                                si_pokój_rozmów__polecenie_symbol__samolot_c + ' ' +
-                                odpowiedŸ_l;
+                                  if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y ) then
+                                    begin
 
-                              Break;
+                                      statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W := 1;
+
+                                      if statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y < 0 then
+                                        odpowiedŸ_l := 'Wspó³rzêdna y jako wartoœæ zanurzenia, pu³apu powinna byæ nieujemna.';
+
+                                    end
+                                  else//if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Y ) then
+                                    statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.W := 0; // Wspó³rzêdna Y nie jest okreœlona lub jest dowolna.
+
+
+                                  if Pos( pokój_rozmów__si_polecenie__sia_Postój_c, si_polecenie_l ) > 1 then
+                                    statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Postój
+                                  else//if Pos( pokój_rozmów__si_polecenie__sia_Postój_c, si_polecenie_l ) > 1 then
+                                    statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Patrol;
+
+                                end
+                              else//if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.Z ) then
+                                odpowiedŸ_l := 'Nie uda³o siê odczytaæ sk³adowej wspó³rzêdnych z.';
+
+                            end
+                          else//if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.X ) then
+                            odpowiedŸ_l := 'Nie uda³o siê odczytaæ sk³adowej wspó³rzêdnych x.';
+
+                        end
+                      else//if Pos( pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu_c, si_polecenie_l ) = 1 then
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów then
+                        begin
+
+                          statki_t[ i ].si_aktywnoœæ__polecenie := sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów;
+
+                        end
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów then
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Postój_c then
+                        begin
+
+                          statki_t[ i ].si_aktywnoœæ__polecenie := sia_Postój;
+
+                        end
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Postój_c then
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Samolot__L¹dowanie_c then
+                        begin
+
+                          statki_t[ i ].si_aktywnoœæ__polecenie := sia_Samolot__L¹dowanie;
+
+                        end
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Samolot__L¹dowanie_c then
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Samolot__Startowanie_c then
+                        begin
+
+                          statki_t[ i ].si_aktywnoœæ__polecenie := sia_Samolot__Startowanie;
+
+                        end
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Samolot__Startowanie_c then
+                      if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Walka_c then
+                        begin
+
+                          statki_t[ i ].si_aktywnoœæ__polecenie := sia_Walka;
+
+                        end
+                      {$endregion 'si_aktywnoœæ.'}
+                      else//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Walka_c then
+                        begin
+
+                          {$region 'si_strzelanie_tryb.'}
+                          si_strzelanie_tryb_kopia_l := statki_t[ i ].si_strzelanie_tryb;
+
+                          if Pos( pokój_rozmów__si_polecenie__sist_Brak_c, si_polecenie_l ) = 1 then
+                            begin
+
+                              statki_t[ i ].si_strzelanie_tryb := sist_Brak;
+                              statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
+
+                            end
+                          else//if Pos( pokój_rozmów__si_polecenie__sist_Brak_c, si_polecenie_l ) = 1 then
+                          if Pos( pokój_rozmów__si_polecenie__sist_Celuj_Tylko_c, si_polecenie_l ) = 1 then
+                            begin
+
+                              statki_t[ i ].si_strzelanie_tryb := sist_Celuj_Tylko;
+                              statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
+
+                            end
+                          else//if Pos( pokój_rozmów__si_polecenie__sist_Celuj_Tylko_c, si_polecenie_l ) = 1 then
+                          if Pos( pokój_rozmów__si_polecenie__sist_Nie_Celuj_Nie_Strzelaj_c, si_polecenie_l ) = 1 then
+                            begin
+
+                              statki_t[ i ].si_strzelanie_tryb := sist_Nie_Celuj_Nie_Strzelaj;
+                              statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
+
+                            end
+                          else//if Pos( pokój_rozmów__si_polecenie__sist_Nie_Celuj_Nie_Strzelaj_c, si_polecenie_l ) = 1 then
+                          if Pos( pokój_rozmów__si_polecenie__sist_Odpowiedz_Ogniem_c, si_polecenie_l ) = 1 then
+                            begin
+
+                              statki_t[ i ].si_strzelanie_tryb := sist_Odpowiedz_Ogniem;
+                              statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
+
+                            end
+                          else//if Pos( pokój_rozmów__si_polecenie__sist_Odpowiedz_Ogniem_c, si_polecenie_l ) = 1 then
+                          if Pos( pokój_rozmów__si_polecenie__sist_Strzelaj_Jak_Chcesz_c, si_polecenie_l ) = 1 then
+                            begin
+
+                              statki_t[ i ].si_strzelanie_tryb := sist_Strzelaj_Jak_Chcesz;
+                              statki_t[ i ].Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
 
                             end;
-                          //---//if    ( statki_t[ j ] <> nil ) (...)
+                          //---//if Pos( pokój_rozmów__si_polecenie__sist_Strzelaj_Jak_Chcesz_c, si_polecenie_l ) = 1 then
 
-                        pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := pokój_rozmów_r_f.id_nadawca;
-                        pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
-                        pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Gracz_Jeden;
-                        pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l;
-                        Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l );
 
-                      end;
-                    //---//if Trim( odpowiedŸ_l ) <> '' then
+                          if si_strzelanie_tryb_kopia_l <> statki_t[ i ].si_strzelanie_tryb then
+                            odpowiedŸ_l := 'Potwierdzam tryb strzelania: ' + statki_t[ i ].Si_Strzelanie_Tryb_Aktualny_Nazwa() + '.';
+                          {$endregion 'si_strzelanie_tryb.'}
 
-                  end;
-                //---//if statki_t[ i ].id_grupa <> id_grupa__nadawca_l then
+                        end;
+                      //---//if si_polecenie_l = pokój_rozmów__si_polecenie__sia_Walka_c then
+
+
+                      if Trim( odpowiedŸ_l ) <> '' then
+                        begin
+
+                          for j := 0 to Length( statki_t ) - 1 do
+                            if    ( statki_t[ j ] <> nil )
+                              and ( statki_t[ j ].id_gracz = statki_t[ i ].id_gracz )
+                              and ( statki_t[ j ].id_statek <> statki_t[ i ].id_statek )
+                              and ( statki_t[ i ].czy_samolot ) then
+                              begin
+
+                                // Je¿eli gracz ma statek i samolot to dodaje dopisek informuj¹cy, ¿e wiadomoœæ wys³a³ samolot.
+
+                                odpowiedŸ_l :=
+                                  si_pokój_rozmów__polecenie_symbol__samolot_c + ' ' +
+                                  odpowiedŸ_l;
+
+                                Break;
+
+                              end;
+                            //---//if    ( statki_t[ j ] <> nil ) (...)
+
+                          pokój_rozmów_odpowiedŸ_r_l.id_odbiorca := pokój_rozmów_r_f.id_nadawca;
+                          pokój_rozmów_odpowiedŸ_r_l.data_czas_wys³ania := Now();
+                          pokój_rozmów_odpowiedŸ_r_l.odbiorca_rodzaj := pror_Gracz_Jeden;
+                          pokój_rozmów_odpowiedŸ_r_l.wiadomoœæ := odpowiedŸ_l;
+                          Wyœwietl__Wyœlij_Wiadomoœæ( tcp_klienci_lista__serwer_indeks_l, pokój_rozmów_odpowiedŸ_r_l );
+
+                        end;
+                      //---//if Trim( odpowiedŸ_l ) <> '' then
+
+                    end;
+                  //---//if   ( statki_t[ i ].si_decyduje ) (...)
 
               end;
             //---//if   ( (...)
@@ -41439,7 +44056,7 @@ begin//Funkcja SI__Polecenie_Interpretuj().
       end;
     //---//if    ( statki_t[ i ] <> nil ) (...)
 
-end;//---//Funkcja SI__Polecenie_Interpretuj().
+end;//---//Funkcja SI__Polecenie__Zak³ócenia_Interpretuj().
 
 //Funkcja SI__Statek_Gracza__Sterowanie_Ustaw().
 procedure TStatki_Form.SI__Statek_Gracza__Sterowanie_Ustaw( const statek_f : TStatek; const si__statek_gracza__p³ywa_poprzednia_wartoœæ_f : boolean; const si__statek_gracza__strzela_poprzednia_wartoœæ_f : TSi__Statek_Gracza__Strzela );
@@ -41455,6 +44072,8 @@ begin
 
   if statek_f.si__statek_gracza__p³ywa <> si__statek_gracza__p³ywa_poprzednia_wartoœæ_f then
     begin
+
+      si__statek_gracza__strzela_kopia := statek_f.si__statek_gracza__strzela; // Dodatkowa kopia, gdy¿ wartoœæ si__statek_gracza__strzela jest nadpisywana w Si_Wartoœci_Pocz¹tkowe_Ustaw() i potem zamiast wybran¹ wartoœæ ustawia domyœln¹.
 
       statek_f.Si_Wartoœci_Pocz¹tkowe_Ustaw( true, false );
 
@@ -41569,14 +44188,16 @@ begin
         and ( not statek_f.si__statek_gracza__p³ywa ) then
         statek_f.lotniskowiec__gotowy_na_przyjêcie_samolotu := true;
 
-    end;
-  //---//if statek_f.si__statek_gracza__p³ywa <> si__statek_gracza__p³ywa_poprzednia_wartoœæ_f then
+    end
+  else//if statek_f.si__statek_gracza__p³ywa <> si__statek_gracza__p³ywa_poprzednia_wartoœæ_f then
+    si__statek_gracza__strzela_kopia := sisgs_Brak;
 
 
   if statek_f.si__statek_gracza__strzela <> si__statek_gracza__strzela_poprzednia_wartoœæ_f then
     begin
 
-      si__statek_gracza__strzela_kopia := statek_f.si__statek_gracza__strzela;
+      if si__statek_gracza__strzela_kopia = sisgs_Brak then
+        si__statek_gracza__strzela_kopia := statek_f.si__statek_gracza__strzela;
 
       statek_f.Si_Wartoœci_Pocz¹tkowe_Ustaw( false, true );
 
@@ -41746,10 +44367,16 @@ begin
   if not czy_amunicja_zneutralizowana_f then
     begin
 
+      //if pokój_rozmów_r_l.id_nadawca = pokój_rozmów_r_l.id_odbiorca then
+      //  pokój_rozmów_r_l.wiadomoœæ := 'Samotrafienie'
+      //else//if pokój_rozmów_r_l.id_nadawca = pokój_rozmów_r_l.id_odbiorca then
+      //  pokój_rozmów_r_l.wiadomoœæ := 'Trafienie';
+
+      pokój_rozmów_r_l.wiadomoœæ := 'Otrzymano obra¿enia';
+
       if pokój_rozmów_r_l.id_nadawca = pokój_rozmów_r_l.id_odbiorca then
-        pokój_rozmów_r_l.wiadomoœæ := 'Samotrafienie'
-      else//if pokój_rozmów_r_l.id_nadawca = pokój_rozmów_r_l.id_odbiorca then
-        pokój_rozmów_r_l.wiadomoœæ := 'Trafienie';
+        pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ +
+          ' (od siebie)';
 
       pokój_rozmów_r_l.wiadomoœæ := pokój_rozmów_r_l.wiadomoœæ +
         ' ' + Trim(  FormatFloat( '### ### ##0.000', obra¿enia_f )  ) +
@@ -41800,6 +44427,14 @@ begin
   //---//if    ( czy_amunicja_zneutralizowana_f ) (...)
 
 end;//---//Funkcja Trafienie_Nazwa_Wyœwietl().
+
+//Funkcja WaterPhase().
+function TStatki_Form.WaterPhase( const px_f, py_f : single ) : single;
+begin
+
+  Result := Gra_GLCadencer.CurrentTime * 1 + px_f * 0.16 + py_f * 0.09;
+
+end;//---//Funkcja WaterPhase().
 
 //Funkcja Komunikacja_Rekord_Testowy_Obs³uga().
 procedure TStatki_Form.Komunikacja_Rekord_Testowy_Obs³uga( const tylko_wyœwietl_f : boolean = true );
@@ -41873,30 +44508,37 @@ begin
   oczekiwanie_na__naprawienie_elementu__czas_sekundy_g := 30;
   oczekiwanie_na__odnowienie_statku__czas_sekundy_g := 45;
   pokój_rozmów__zmiana_szerokoœci__aktywnoœæ_g := false;
+  radar_panel__wielkoœæ_procent_okna_g := 25;
   si__lot_trwanie_do_l¹dowania__czas_sekundy_g := 300;
+  si__p³ywanie_do_punktu__odnawianie_zasobów__trwanie__czas_sekundy_g := 30;
   si__uszkodzenia_wykryto__trwanie__czas_sekundy_g := 60;
   si__walka__p³ywanie_do_punktu__trwanie__czas_sekundy_g := 30;
+  si__zak³óca_sekundy_g := 60;
+  zak³ócanie__czas_do_ponownej_próby_sekundy_g := 15;
+  zak³ócenie__prawdopodobieñstwo_sukcesu_procent_g := 30;
 
   dzieñ_jasnoœæ_g := 1;
   mg³a_intensywnoœæ_g := 0;
 
   gracz_tryb_g := gt_Statek;
 
-  pokój_rozmów__zmiana_szerokoœci__szerokoœæ_pocz¹tkowa_g := 0;
-  pokój_rozmów__zmiana_szerokoœci__wysokoœæ_pocz¹tkowa_g := 0;
-  pokój_rozmów__zmiana_szerokoœci__x_pocz¹tkowy_g := 0;
-  pokój_rozmów__zmiana_szerokoœci__y_pocz¹tkowy_g := 0;
-
-  l¹d_definicja_g := '';
+  fale__obszar_ograniczenie_g := 1016;
+  fale__wysokoœæ_bazowa_g := 6;
+  fale__wysokoœæ_bazowa__serwer_g := fale__wysokoœæ_bazowa_g;
 
   kamera_indeks_amunicji := 0;
   kamera_ustawienie_kopia__kamera_tryb_g := kt_Brak;
   kamera_ustawienie_kopia__ogniskowa_g := -99;
   kamera_radar__y_domyœlne_g := 2;
   kamera_szybkoœæ_ruchu_g := 1;
+  l¹d_definicja_g := '';
   l¹d_nazwa_numer_g := 0;
   //moment_wciœniêcia_klawisza := Now();
   pokój_rozmów_ostatnia_wiadomoœæ_wys³ana_data_czas_g := 0;
+  pokój_rozmów__zmiana_szerokoœci__szerokoœæ_pocz¹tkowa_g := 0;
+  pokój_rozmów__zmiana_szerokoœci__wysokoœæ_pocz¹tkowa_g := 0;
+  pokój_rozmów__zmiana_szerokoœci__x_pocz¹tkowy_g := 0;
+  pokój_rozmów__zmiana_szerokoœci__y_pocz¹tkowy_g := 0;
   radar__rysowanie__l¹d__ostatnie_wywo³anie_g := 0;
 
 
@@ -41915,6 +44557,10 @@ begin
 
   napis_odœwie¿_zegar_pozorny_r.oczekiwanie_milisekundy := 300;
   napis_odœwie¿_zegar_pozorny_r.ostatnie_wywo³anie := 0;
+
+  page_control_1_active_page_kopia_tab_sheet_g := nil;
+  page_control_1_szerokoœæ_kopia_g := 0;
+  page_control_1_szerokoœæ_pocz¹tkowa_g := PageControl1.Width;
 
   radar_zegar_pozorny_r.oczekiwanie_milisekundy := 1000;
   radar_zegar_pozorny_r.w³¹czony := false;
@@ -41963,6 +44609,29 @@ begin
   Radar_T³o_GLPlane.Width := Woda_Góra_GLPlane.Width;
   Radar_GLLightSource.Position.Y := Radar_T³o_GLPlane.Height * 10; // T³o radaru robi siê bardzo ciemne przy du¿ych rozmiarach mapy.
 
+  {$region 'Celownik ekranowy.'}
+  Celownik_Ekranowy__Góra_GLHUDSprite.Material.BlendingMode := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.BlendingMode;
+  Celownik_Ekranowy__Góra_GLHUDSprite.Material.FrontProperties.Ambient := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Ambient;
+  Celownik_Ekranowy__Góra_GLHUDSprite.Material.FrontProperties.Diffuse := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse;
+  Celownik_Ekranowy__Góra_GLHUDSprite.Material.FrontProperties.Emission := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Emission;
+  Celownik_Ekranowy__Góra_GLHUDSprite.Material.MaterialOptions := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.MaterialOptions;
+  Celownik_Ekranowy__Góra_GLHUDSprite.Pickable := Celownik_Ekranowy__Dó³_GLHUDSprite.Pickable;
+
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Material.BlendingMode := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.BlendingMode;
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Material.FrontProperties.Ambient := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Ambient;
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Material.FrontProperties.Diffuse := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse;
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Material.FrontProperties.Emission := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Emission;
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Material.MaterialOptions := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.MaterialOptions;
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Pickable := Celownik_Ekranowy__Dó³_GLHUDSprite.Pickable;
+
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Material.BlendingMode := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.BlendingMode;
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Material.FrontProperties.Ambient := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Ambient;
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Material.FrontProperties.Diffuse := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse;
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Material.FrontProperties.Emission := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Emission;
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Material.MaterialOptions := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.MaterialOptions;
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Pickable := Celownik_Ekranowy__Dó³_GLHUDSprite.Pickable;
+  {$endregion 'Celownik ekranowy.'}
+
   Gracz_Nazwa_Edit.MaxLength := SizeOf( TWieloosobowe_String ) - 1;
   Pokój_Rozmów__Wiadomoœæ_Edit.MaxLength := SizeOf( TWieloosobowe_String ) - 1;
 
@@ -41997,6 +44666,19 @@ begin
         'Id gracza lub nazwa gracza mo¿e byæ poprzedzone spacj¹, po nim mo¿e byæ kropka.' +
         #13 +
         'W pierwszej kolejnoœci jest sprawdzany adresat wybrany w polu ''Wyœlij do''.' +
+        #13 +
+        #13 +
+        'Próby zak³ócenia wrogiego statku.' +
+        #13 +
+        'Nale¿y wys³aæ jakikolwiek komunikat zgodny z konwencj¹ ''polecenie dla SI''.' +
+        #13 +
+        'Komunikat musi byæ wys³any do jednego gracza. Je¿eli gracz ma statek i samolot nale¿y sprecyzowaæ czy jest wysy³any do statku czy samolotu.' +
+        #13 +
+        'Kolejna próba zak³ócania mo¿e byæ skuteczna dopiero po pewnym czasie (sekund: ' + Trim(  FormatFloat( '### ### ##0', zak³ócanie__czas_do_ponownej_próby_sekundy_g )  ) + ').' +
+        #13 +
+        'Nieudane zak³ócanie mo¿e uszkodziæ statek, który próbowa³ zak³ócaæ (w tym przypadku nie jest uwzglêdniany czas miêdzy próbami zak³ócania).' +
+        #13 +
+        'W wyniku zak³ócania na jakiœ czas mog¹ przestaæ dzia³aæ pewne systemy statku oraz powstaæ obra¿enia.' +
         #13 +
         #13 +
         'Przyk³ady:' +
@@ -42052,6 +44734,10 @@ begin
 
   inc( zti );
   SetLength( pokój_rozmów__si_polecenia_t, zti );
+  pokój_rozmów__si_polecenia_t[ zti - 1 ] := pokój_rozmów__si_polecenie__sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów;
+
+  inc( zti );
+  SetLength( pokój_rozmów__si_polecenia_t, zti );
   pokój_rozmów__si_polecenia_t[ zti - 1 ] := pokój_rozmów__si_polecenie__sia_Postój_c;
 
   inc( zti );
@@ -42102,6 +44788,7 @@ begin
   {$endregion 'Pokój rozmów polecenia dla SI.'}
 
   punkt_naprowadzaj__na_lotniskowiec__okreœlenie_ostatnie_sekundy_i := -punkt_naprowadzaj__na_lotniskowiec__okreœlenie_sekundy_c;
+  radar__przyciski_panel__ukrywanie__odliczanie_pocz¹tek_czas_sekundy_i := -1;
 
   {$region 'Ustawia wartoœci automatycznych zmian intensywnoœci.'}
   Zmieniaj_Automatycznie__Mg³a__Do_SpinEdit.MinValue := Mg³a_SpinEdit.MinValue;
@@ -42259,7 +44946,7 @@ begin
 
   Informacje_Dodatkowe_GLAsyncTimer.Enabled := false;
   radar_zegar_pozorny_r.w³¹czony := true;
-  Radar_Skala_SpinEdit.Tag := Radar_Skala_SpinEdit.Value;
+  radar__skala_spinedit__value__poprzednia_wartoœæ_g := Radar__Skala_SpinEdit.Value;
 
 
   Gracze_Lista_Odœwie¿();
@@ -42289,20 +44976,23 @@ begin
   //Elementy_Gry_Przygotuj();
 
   Self.WindowState := wsMaximized;
+  window_state_kopia_g := Self.WindowState;
 
 
   {$IFDEF DEBUG}
-  PageControl1.ActivePage := Gra_TabSheet; //Gra_TabSheet Wieloosobowe_TabSheet Ustawienia_TabSheet Pozosta³e_TabSheet Statystyki_TabSheet Klawiatura_Konfiguracja_TabSheet Log_TabSheet
+  PageControl1.ActivePage := Ustawienia_TabSheet; //Gra_TabSheet Wieloosobowe_TabSheet Ustawienia_TabSheet Pozosta³e_TabSheet Statystyki_TabSheet Klawiatura_Konfiguracja_TabSheet Log_TabSheet
   {$ELSE DEBUG}
-  //???
+  //????
   Button1.Visible := false;
   PageControl1.ActivePage := Gra_TabSheet; //Wieloosobowe_TabSheet
   Wieloosobowe__Pod³¹cz_BitBtnClick( Sender ); // Mo¿e nowym osob¹ bêdzie ³atwiej rozpocz¹æ grê.
   {$ENDIF}
 
+  //Morze_Wzburzenie_SpinEditChange( Sender ); // Aby ustawiæ parametry fal. // Jest w Ustawienia_Plik().
 
   Statek__Utwórz_BitBtnClick( nil );
   Kamera_Prze³¹cz( kt_Za_Statkiem );
+
 
   {$IFDEF DEBUG}
   //???
@@ -42417,7 +45107,7 @@ var
   zti : integer;
 begin
 
-  Radar_Panel.Height := Round( Gra_GLSceneViewer.Height * Radar_Panel.Tag * 0.01 );
+  Radar_Panel.Height := Round( Gra_GLSceneViewer.Height * radar_panel__wielkoœæ_procent_okna_g * 0.01 );
   Radar_Panel.Top := Gra_GLSceneViewer.Height - Radar_Panel.Height;
 
   Radar_Panel.Width := Radar_Panel.Height;
@@ -42723,46 +45413,7 @@ begin
   Punkt_Naprowadzaj__Na_Lotniskowiec();
   Punkt_Naprowadzaj();
 
-
-  //statek_gracza.artyleria_t[ 0 ].Podniesienie_Zadane_Zmieñ(); //???
-  //statek_gracza.artyleria_t[ 0 ].Podniesienie_Kierunek_Zmieñ( Celowanie_Precyzja_Podniesienie_SpinEdit.Value ); //???
-
-//  GLLines1.Nodes[ 1 ].X := -Gra_GLCamera.AbsoluteDirection.X;
-//  GLLines1.Nodes[ 1 ].Z := -Gra_GLCamera.AbsoluteDirection.Z;
-
-  //GLLines3.Nodes[ 1 ].X := statek_gracza.AbsoluteDirection.X;
-  //GLLines3.Nodes[ 1 ].Z := statek_gracza.AbsoluteDirection.Z;
-
-
-//  GLLines1.Nodes[ 1 ].Y := 1 + Gra_GLCamera.AbsoluteDirection.Y;
-//  GLLines1.Nodes[ 1 ].Z := -Gra_GLCamera.AbsoluteDirection.Z;
-
-  //GLLines3.Nodes[ 1 ].AsAffineVector := Celownicza_GLSphere.Position.AsAffineVector;
-
-
-//  Wieloosobowe_Statki_Parametry_Odczytaj();
-//  Wieloosobowe_Statki_Parametry_Ustaw();
-
-
-  //Wieloosobowe_Amunicja_Parametry_Odczytaj();
-  //Wieloosobowe_Amunicja_Parametry_Ustaw();
-
-
-
-  //GLCylinder1.AbsoluteDirection := Gra_GLCamera.AbsoluteDirection;
-  //GLCylinder1.Up := Gra_GLCamera.Up;
-
-  //GLArrowLine_¯ó³ta.Direction := statki_t[ 0 ].torpedy_wyrzutnie_t[ 0 ].lufy_t[ 0 ].Direction;
-  //if    (  Length( statki_t ) > 0  )
-  //  and (  Length( statki_t[ 0 ].torpedy_wyrzutnie_t ) > 0  ) then
-  //  GLArrowLine_Zielona.Direction.AsVector := statki_t[ 0 ].torpedy_wyrzutnie_t[ 0 ].lufy_t[ 0 ].AbsoluteDirection;
-  //
-  //if amunicja_wystrzelona_list.Count > 0 then
-  //  GLArrowLine_¯ó³ta.Direction.AsVector := TAmunicja(amunicja_wystrzelona_list[ 0 ]).korpus_ustawienie_pocz¹tkowe_dummy.AbsoluteDirection;
-
-//X_Lewo_GLCube.AbsoluteDirection := VectorSubtract( Gra_GLCamera.AbsoluteDirection, X_Lewo_GLCube.AbsolutePosition );
-
-//  Caption := FloatToStr( deltaTime );
+  Radar_Panel_Ukrywanie();
 
 end;//---//Gra_GLCadencerProgress().
 
@@ -42776,17 +45427,17 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
     procedure Kolizja_Statek_Statek_Przelicz( statek_1_f, statek_2_f : TStatek; gl_base_scene_object_1_f, gl_base_scene_object_2_f : TGLBaseSceneObject );
 
       //Funkcja Korekta_O_Wielkoœæ_Statku() w Kolizja_Statek_Statek_Przelicz() w Oznacz_Kolizjê() w Gra_GLCollisionManagerCollision().
-      function Korekta_O_Wielkoœæ_Statku( statek_1__f, statek_2__f : TStatek ) : real;
+      function Korekta_O_Wielkoœæ_Statku( statek_1_f_f, statek_2_f_f : TStatek ) : real;
       begin
 
         // Uwzglêdnia ró¿nicê wielkoœci statków na podstawie punktów ¿ycia.
 
-        if statek_1__f.punkty_¿ycia_maksymalne <> 0 then
-          Result := statek_1__f.punkty_¿ycia_maksymalne
-        else//if statek_1__f.punkty_¿ycia_maksymalne <> 0 then
+        if statek_1_f_f.punkty_¿ycia_maksymalne <> 0 then
+          Result := statek_1_f_f.punkty_¿ycia_maksymalne
+        else//if statek_1_f_f.punkty_¿ycia_maksymalne <> 0 then
           Result := 1;
 
-        Result := statek_2__f.punkty_¿ycia_maksymalne / Result;
+        Result := statek_2_f_f.punkty_¿ycia_maksymalne / Result;
 
         if Result > 10 then
           Result := 10
@@ -42955,14 +45606,14 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
           if zti_l >= 0 then
             begin
 
-              gra_statystyki_r_t[ zti_l ].taranowania_iloœæ := gra_statystyki_r_t[ zti_l ].taranowania_iloœæ + 1;
-              gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie := gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie - ztr_l; // Wartoœæ jest ujemna.
+              gra_statystyki_r_t[ zti_l ].taranowania_iloœæ__gs := gra_statystyki_r_t[ zti_l ].taranowania_iloœæ__gs + 1;
+              gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie__gs := gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie__gs - ztr_l; // Wartoœæ jest ujemna.
 
               if statek_1_f.id_grupa = statek_2_f.id_grupa then
                 begin
 
-                  gra_statystyki_r_t[ zti_l ].taranowania_iloœæ_sojuszników := gra_statystyki_r_t[ zti_l ].taranowania_iloœæ_sojuszników + 1;
-                  gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie_sojusznikom := gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie_sojusznikom - ztr_l; // Wartoœæ jest ujemna.
+                  gra_statystyki_r_t[ zti_l ].taranowania_iloœæ_sojuszników__gs := gra_statystyki_r_t[ zti_l ].taranowania_iloœæ_sojuszników__gs + 1;
+                  gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie_sojusznikom__gs := gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie_sojusznikom__gs - ztr_l; // Wartoœæ jest ujemna.
 
                 end;
               //---//if statek_1_f.id_grupa = statek_2_f.id_grupa then
@@ -42971,10 +45622,10 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                 and ( statek_2_f.punkty_¿ycia_aktualne <= 0 ) then
                 begin
 
-                  gra_statystyki_r_t[ zti_l ].zatopienia := gra_statystyki_r_t[ zti_l ].zatopienia + 1;
+                  gra_statystyki_r_t[ zti_l ].zatopienia__gs := gra_statystyki_r_t[ zti_l ].zatopienia__gs + 1;
 
                   if statek_1_f.id_grupa = statek_2_f.id_grupa then
-                    gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników := gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników + 1;
+                    gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs + 1;
 
                 end;
               //---//if    ( punkty_¿ycia_kopia_l_l > 0 ) (...)
@@ -43024,7 +45675,7 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
 
           // Wpisuje obra¿anie otrzymane przez statek pierwszy.
           if zti_l >= 0 then
-            gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane := gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane - ztr_l; // Wartoœæ jest ujemna.
+            gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane__gs := gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane__gs - ztr_l; // Wartoœæ jest ujemna.
 
 
           zti_l := Gra_Statystyki_R_Identyfikator_ZnajdŸ( statek_2_f.id_gracz );
@@ -43032,14 +45683,14 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
           if zti_l >= 0 then
             begin
 
-              gra_statystyki_r_t[ zti_l ].taranowania_iloœæ := gra_statystyki_r_t[ zti_l ].taranowania_iloœæ + 1;
-              gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie := gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie - ztr_l; // Wartoœæ jest ujemna.
+              gra_statystyki_r_t[ zti_l ].taranowania_iloœæ__gs := gra_statystyki_r_t[ zti_l ].taranowania_iloœæ__gs + 1;
+              gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie__gs := gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie__gs - ztr_l; // Wartoœæ jest ujemna.
 
               if statek_1_f.id_grupa = statek_2_f.id_grupa then
                 begin
 
-                  gra_statystyki_r_t[ zti_l ].taranowania_iloœæ_sojuszników := gra_statystyki_r_t[ zti_l ].taranowania_iloœæ_sojuszników + 1;
-                  gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie_sojusznikom := gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie_sojusznikom - ztr_l; // Wartoœæ jest ujemna.
+                  gra_statystyki_r_t[ zti_l ].taranowania_iloœæ_sojuszników__gs := gra_statystyki_r_t[ zti_l ].taranowania_iloœæ_sojuszników__gs + 1;
+                  gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie_sojusznikom__gs := gra_statystyki_r_t[ zti_l ].obra¿enia_zadane__taranowanie_sojusznikom__gs - ztr_l; // Wartoœæ jest ujemna.
 
                 end;
               //---//if statek_1_f.id_grupa = statek_2_f.id_grupa then
@@ -43048,17 +45699,17 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                 and ( statek_1_f.punkty_¿ycia_aktualne <= 0 ) then
                 begin
 
-                  gra_statystyki_r_t[ zti_l ].zatopienia := gra_statystyki_r_t[ zti_l ].zatopienia + 1;
+                  gra_statystyki_r_t[ zti_l ].zatopienia__gs := gra_statystyki_r_t[ zti_l ].zatopienia__gs + 1;
 
                   if statek_1_f.id_grupa = statek_2_f.id_grupa then
-                    gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników := gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników + 1;
+                    gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs + 1;
 
                 end;
               //---//if    ( punkty_¿ycia_kopia_l_l > 0 ) (...)
 
 
               // Wpisuje obra¿anie otrzymane przez statek drugi.
-              gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane := gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane - ztr_kopia; // Wartoœæ jest ujemna.
+              gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane__gs := gra_statystyki_r_t[ zti_l ].obra¿enia_otrzymane__gs - ztr_kopia; // Wartoœæ jest ujemna.
 
             end;
           //---//if zti_l >= 0 then
@@ -43215,11 +45866,15 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
         //   prawdopodobieñstwo_uszkodzenia_f - szansa, ¿e element zostanie uszkodzony, domyœlnie 50%.
         //
 
-        Result := Random( 100 ) + 1 <= prawdopodobieñstwo_uszkodzenia_f * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_f; // Je¿eli amunicja trafia w coœ poza swoim skutecznym zasiêgiem to szansa na uszkodzenie jest odpowiednio mniejsza.
+        Result := Random( 101 ) <= prawdopodobieñstwo_uszkodzenia_f * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_f; // Je¿eli amunicja trafia w coœ poza swoim skutecznym zasiêgiem to szansa na uszkodzenie jest odpowiednio mniejsza.
 
       end;//---//Funkcja Uszkodzenie_Prawdopodobieñstwo() w Element_Uszkodzenie_Ustaw() w Oznacz_Kolizjê() w Gra_GLCollisionManagerCollision().
 
     begin//Funkcja Element_Uszkodzenie_Ustaw() w Oznacz_Kolizjê() w Gra_GLCollisionManagerCollision().
+
+      // Zmodyfikuje ten element, w który nast¹pi³o trafienie.
+
+      // To samo w TStatek.Uszkodzenia_Dodaj(), TStatki_Form.Element_Uszkodzenie_Ustaw() w Oznacz_Kolizjê() w Gra_GLCollisionManagerCollision().
 
       if pointer_f = nil then
         Exit
@@ -43300,6 +45955,9 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
     end;//---//Funkcja Si_Kolizja_Ustaw() w Oznacz_Kolizjê() w Gra_GLCollisionManagerCollision().
 
   var
+    czy_odnawianie_zasobów_l,
+    odnawianie_zasobów__statystyki_zliczono // Je¿eli jednoczeœnie podczas odnawiania zasobów odnowi punkty ¿ycia i amunicjê to liczy siê to jako jedno odnowienie.
+      : boolean;
     zti : integer;
     ztr,
     punkty_¿ycia_kopia_l
@@ -43469,11 +46127,11 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                     if zti >= 0 then
                       begin
 
-                        gra_statystyki_r_t[ zti ].obra¿enia_otrzymane := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane - ztr; // Wartoœæ jest ujemna.
+                        gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__gs := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__gs - ztr; // Wartoœæ jest ujemna.
 
                         if    ( TAmunicja(object_1_f.Owner).statek <> nil )
                           and ( TAmunicja(object_1_f.Owner).statek.id_grupa = zt_statek.id_grupa ) then
-                          gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__od_sojuszników := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__od_sojuszników - ztr; // Wartoœæ jest ujemna.
+                          gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__od_sojuszników__gs := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__od_sojuszników__gs - ztr; // Wartoœæ jest ujemna.
 
                       end;
                     //---//if zti >= 0 then
@@ -43484,12 +46142,12 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                     if zti >= 0 then
                       begin
 
-                        gra_statystyki_r_t[ zti ].trafienia := gra_statystyki_r_t[ zti ].trafienia + 1;
-                        gra_statystyki_r_t[ zti ].obra¿enia_zadane__amunicja := gra_statystyki_r_t[ zti ].obra¿enia_zadane__amunicja - ztr; // Wartoœæ jest ujemna.
+                        gra_statystyki_r_t[ zti ].trafienia__gs := gra_statystyki_r_t[ zti ].trafienia__gs + 1;
+                        gra_statystyki_r_t[ zti ].obra¿enia_zadane__amunicja__gs := gra_statystyki_r_t[ zti ].obra¿enia_zadane__amunicja__gs - ztr; // Wartoœæ jest ujemna.
 
                         if    ( TAmunicja(object_1_f.Owner).statek <> nil )
                           and ( TAmunicja(object_1_f.Owner).statek.id_grupa = zt_statek.id_grupa ) then
-                          gra_statystyki_r_t[ zti ].obra¿enia_zadane__amunicja_sojusznikom := gra_statystyki_r_t[ zti ].obra¿enia_zadane__amunicja_sojusznikom - ztr; // Wartoœæ jest ujemna.
+                          gra_statystyki_r_t[ zti ].obra¿enia_zadane__amunicja_sojusznikom__gs := gra_statystyki_r_t[ zti ].obra¿enia_zadane__amunicja_sojusznikom__gs - ztr; // Wartoœæ jest ujemna.
 
                       end;
                     //---//if zti >= 0 then
@@ -43502,11 +46160,11 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                         if zti >= 0 then
                           begin
 
-                            gra_statystyki_r_t[ zti ].zatopienia := gra_statystyki_r_t[ zti ].zatopienia + 1;
+                            gra_statystyki_r_t[ zti ].zatopienia__gs := gra_statystyki_r_t[ zti ].zatopienia__gs + 1;
 
                             if    ( TAmunicja(object_1_f.Owner).statek <> nil )
                               and ( TAmunicja(object_1_f.Owner).statek.id_grupa = zt_statek.id_grupa ) then
-                              gra_statystyki_r_t[ zti ].zatopienia_sojuszników := gra_statystyki_r_t[ zti ].zatopienia_sojuszników + 1;
+                              gra_statystyki_r_t[ zti ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti ].zatopienia_sojuszników__gs + 1;
 
                           end;
                         //---//if zti >= 0 then
@@ -43623,8 +46281,8 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                                 if zti >= 0 then
                                   begin
 
-                                    gra_statystyki_r_t[ zti ].obra¿enia_otrzymane := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane + ztr;
-                                    gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__z_kolizji := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__z_kolizji + ztr;
+                                    gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__gs := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__gs + ztr;
+                                    gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__z_kolizji__gs := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__z_kolizji__gs + ztr;
 
                                   end;
                                 //---//if zti >= 0 then
@@ -43695,10 +46353,15 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                 if zt_statek.czy_samolot then
                   zt_statek.prêdkoœæ_przyspieszanie__kolizja_spowolnienie := true;
 
+                czy_odnawianie_zasobów_l :=
+                     (  Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie( TGLCustomSceneObject(object_2_f) ) > 0  )
+                  or (  Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( TGLCustomSceneObject(object_2_f) ) < 0  );
+
 
                 if    (
                            (  Abs( zt_statek.prêdkoœæ_aktualna_procent__wzglêdny ) > kolizja_oznaczanie_prêdkoœæ_procent_c  )
                         or ( zt_statek.grawitacja_opadanie_szybkoœæ_aktualna <> 0 )
+                        //or ( czy_odnawianie_zasobów_l ) // Aby odnawiaæ zasoby statek powinien siê poruszaæ.
                       )
                   and (   not Statki_Kolizja_Oznaczenie_SprawdŸ(  zt_statek.kolizja_oznaczenie_string_list, Wyglad_Elementy.Identyfikator_Elementu( TGLCustomSceneObject(object_2_f) )  )   ) then
                   begin
@@ -43709,25 +46372,32 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
 
 
                     if   ( not zt_statek.czy_samolot )
+                      //or ( czy_odnawianie_zasobów_l )
                       or (
                                ( zt_statek.czy_samolot )
-                           and (  Abs( zt_statek.prêdkoœæ_aktualna_procent__wzglêdny ) >= samolot_prêdkoœæ_lotu_procent_minimalny_c + samolot_prêdkoœæ_lotu_procent_minimalny_tolerancja_c  )
+                           and (
+                                    (  Abs( zt_statek.prêdkoœæ_aktualna_procent__wzglêdny ) >= samolot_prêdkoœæ_lotu_procent_minimalny_c + samolot_prêdkoœæ_lotu_procent_minimalny_tolerancja_c  )
+                                 or ( czy_odnawianie_zasobów_l ) // Sprawdzenie prêdkoœci minimalnej jest wy¿ej.
+                               )
                          ) then
                       begin
 
                         Trafienia_Efekt__Utwórz_Jeden( Gra_Obiekty_GLDummyCube, er_Trafienie_L¹d__Bez_Obra¿eñ, object_1_f.AbsolutePosition.X, object_1_f.AbsolutePosition.Y, object_1_f.AbsolutePosition.Z, nil, -1, -1 );
 
+                        odnawianie_zasobów__statystyki_zliczono := false;
+
 
                         if object_2_f.Name = Dno_Kolizje_GLCube.Name then
                           ztr := 100
                         else//object_2_f.Name = Dno_Kolizje_GLCube.Name
-                          ztr := Wyglad_Elementy.Kolizja_Wp³yw_Obra¿enia( TGLCustomSceneObject(object_2_f) );
+                          ztr := Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( TGLCustomSceneObject(object_2_f) );
 
 
                         if    ( ztr <> 0 )
                           and (
                                    (  Abs( zt_statek.prêdkoœæ_aktualna_procent__wzglêdny ) > kolizja_oznaczanie_prêdkoœæ_procent_c  )
                                 or ( zt_statek.grawitacja_opadanie_szybkoœæ_aktualna <> 0 )
+                                //or ( czy_odnawianie_zasobów_l )
                               ) then
                           begin
 
@@ -43742,16 +46412,34 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                             //if ztr > 0 then
                             //  Trafienia_Efekt__Utwórz_Jeden( zt_statek, er_Trafienie_L¹d__Obra¿enia, zt_statek.AbsoluteToLocal( object_1_f.AbsolutePosition ).X, zt_statek.AbsoluteToLocal( object_1_f.AbsolutePosition ).Y, zt_statek.AbsoluteToLocal( object_1_f.AbsolutePosition ).Z, nil, -1, -1 );
 
-                            ztr :=
-                                zt_statek.punkty_¿ycia_maksymalne
-                              * Abs( zt_statek.prêdkoœæ_aktualna_procent__wzglêdny ) // Wp³yw prêdkoœci (procentowej) statku na obra¿enia [wytrzyma³oœæ statku].
-                              * ztr * 0.01 // Koryguje iloœæ obra¿eñ o wp³yw kolizji l¹du [wspó³czynnik].
-                              * 0.01; // [Wytrzyma³oœæ statku * wspó³czynnik] / 100 (aby uzyskaæ modyfikacje procentow¹)
+                            if ztr > 0 then
+                              begin
+
+                                // Kolizja z l¹dem.
+
+                                ztr :=
+                                    zt_statek.punkty_¿ycia_maksymalne
+                                  * Abs( zt_statek.prêdkoœæ_aktualna_procent__wzglêdny ) // Wp³yw prêdkoœci (procentowej) statku na obra¿enia [wytrzyma³oœæ statku].
+                                  * ztr * 0.01 // Koryguje iloœæ obra¿eñ o wp³yw kolizji l¹du [wspó³czynnik].
+                                  * 0.01; // [Wytrzyma³oœæ statku * wspó³czynnik] / 100 (aby uzyskaæ modyfikacjê procentow¹)
 
 
-                            if    ( zt_statek.czy_samolot )
-                              and (  Abs( zt_statek.prêdkoœæ_aktualna_procent__wzglêdny ) >= samolot_prêdkoœæ_lotu_procent_minimalny_c  ) then
-                              ztr := ztr * 2;
+                                if    ( zt_statek.czy_samolot )
+                                  and (  Abs( zt_statek.prêdkoœæ_aktualna_procent__wzglêdny ) >= samolot_prêdkoœæ_lotu_procent_minimalny_c  ) then
+                                  ztr := ztr * 2;
+
+                              end
+                            else//if ztr > 0 then
+                              begin
+
+                                // Odnawianie zasobów.
+
+                                ztr :=
+                                    zt_statek.punkty_¿ycia_maksymalne
+                                  * ztr * 0.01; //  / 100 (aby uzyskaæ modyfikacjê procentow¹).
+
+                              end;
+                            //---//if ztr > 0 then
 
 
                             if not zt_statek.grawitacja_opadanie_obra¿enia_naliczono then
@@ -43805,20 +46493,96 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                                     if zti >= 0 then
                                       begin
 
-                                        gra_statystyki_r_t[ zti ].obra¿enia_otrzymane := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane + ztr;
-                                        gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__z_kolizji := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__z_kolizji + ztr;
+                                        gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__gs := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__gs + ztr;
+                                        gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__z_kolizji__gs := gra_statystyki_r_t[ zti ].obra¿enia_otrzymane__z_kolizji__gs + ztr;
+
+                                      end;
+                                    //---//if zti >= 0 then
+
+                                  end
+                                else//if ztr > 0 then
+                                if    ( ztr < 0 ) // ztr jest ujemne gdy l¹d leczy.
+                                  and ( zt_statek.punkty_¿ycia_aktualne > 0 )
+                                  and ( punkty_¿ycia_kopia_l < zt_statek.punkty_¿ycia_maksymalne ) then // Zlicza statystyki tylko gdy odnowione zosta³y punkty ¿ycia.
+                                  begin
+
+                                    odnawianie_zasobów__statystyki_zliczono := true;
+
+                                    zti := Gra_Statystyki_R_Identyfikator_ZnajdŸ( zt_statek.id_gracz );
+
+                                    if zti >= 0 then
+                                      begin
+
+                                        gra_statystyki_r_t[ zti ].odnawianie_zasobów_iloœæ_razy__gs := gra_statystyki_r_t[ zti ].odnawianie_zasobów_iloœæ_razy__gs + 1;
 
                                       end;
                                     //---//if zti >= 0 then
 
                                   end;
-                                //---//if ztr > 0 then
+                                //---//if    ( ztr < 0 ) (...)
 
                               end;
                             //---//if ztr > 0 then
 
                           end;
                         //---//if    ( ztr <> 0 ) (...)
+
+
+                        ztr := Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie( TGLCustomSceneObject(object_2_f) );
+
+                        if    ( zt_statek.punkty_¿ycia_aktualne > 0 )
+                          and ( ztr > 0 ) then
+                          begin
+
+                            //zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.artyleria_t), ztr );
+                            //zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.bomba_g³êbinowa_t), ztr );
+                            //zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.dzia³a_t), ztr );
+                            //zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.je¿e_g³êbinowe_t), ztr );
+                            //zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.torpedy_wyrzutnie_t), ztr );
+
+                            zti := 0; // Tutaj jako sprawdzenie czy coœ zosta³o odnowione.
+
+                            if    (  zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.artyleria_t), ztr )  )
+                              and ( zti = 0 ) then
+                              zti := 1;
+
+                            if    (  zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.bomba_g³êbinowa_t), ztr )  )
+                              and ( zti = 0 ) then
+                              zti := 1;
+
+                            if    (  zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.dzia³a_t), ztr )  )
+                              and ( zti = 0 ) then
+                              zti := 1;
+
+                            if    (  zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.je¿e_g³êbinowe_t), ztr )  )
+                              and ( zti = 0 ) then
+                              zti := 1;
+
+                            if    (  zt_statek.Broñ__Amunicja_Uzupe³nij( TTorpedy_Wyrzutnia_t(zt_statek.torpedy_wyrzutnie_t), ztr )  )
+                              and ( zti = 0 ) then
+                              zti := 1;
+
+
+                            if    ( not odnawianie_zasobów__statystyki_zliczono )
+                              and ( zti <> 0 ) then // Zlicza statystyki tylko gdy odnowiona zosta³a amunicja.
+                              begin
+
+                                zti := Gra_Statystyki_R_Identyfikator_ZnajdŸ( zt_statek.id_gracz );
+
+                                if zti >= 0 then
+                                  begin
+
+                                    gra_statystyki_r_t[ zti ].odnawianie_zasobów_iloœæ_razy__gs := gra_statystyki_r_t[ zti ].odnawianie_zasobów_iloœæ_razy__gs + 1;
+
+                                  end;
+                                //---//if zti >= 0 then
+
+                              end;
+                            //---//if    ( not odnawianie_zasobów__statystyki_zliczono ) (...)
+
+                          end;
+                        //---//if    ( zt_statek.punkty_¿ycia_aktualne > 0 ) (...)
+
                       end;
                     //---//if   ( not zt_statek.czy_samolot )
 
@@ -43833,7 +46597,7 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                     if object_2_f.Name = Dno_Kolizje_GLCube.Name then
                       zt_statek.prêdkoœæ__kolizja_zwalnianie := 100
                     else//object_2_f.Name = Dno_Kolizje_GLCube.Name
-                      zt_statek.prêdkoœæ__kolizja_zwalnianie := Wyglad_Elementy.Kolizja_Wp³yw_Prêdkoœæ( TGLCustomSceneObject(object_2_f) );
+                      zt_statek.prêdkoœæ__kolizja_zwalnianie := Wyglad_Elementy.Kolizja_Wp³yw__Prêdkoœæ( TGLCustomSceneObject(object_2_f) );
 
 
                     zt_statek.zanurzenie_pu³ap__kolizja_zwalnianie := zt_statek.prêdkoœæ__kolizja_zwalnianie;
@@ -43849,7 +46613,24 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
             //---//if zt_statek.statki_rozstawianie_status = srs_Rozstawianie_Kolizja_SprawdŸ then
 
 
-            Si_Kolizja_Ustaw( zt_statek );
+            if    (  Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie( TGLCustomSceneObject(object_2_f) ) <= 0  )
+              and (  Wyglad_Elementy.Kolizja_Wp³yw__Obra¿enia( TGLCustomSceneObject(object_2_f) ) >= 0  ) then
+              Si_Kolizja_Ustaw( zt_statek ) // Kolizja nast¹pi³a z l¹dem, który nie odnawia amunicji ani punktów ¿ycia.
+             else//if    (  Wyglad_Elementy.Kolizja_Wp³yw__Amunicja_Uzupe³nianie( TGLCustomSceneObject(object_2_f) ) <= 0  ) (...)
+               if    ( zt_statek.czy_samolot )
+                 and ( not zt_statek.si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów )
+                 and (
+                          ( zt_statek.si_decyduje )
+                       or ( zt_statek.si__statek_gracza__p³ywa )
+                     ) then
+                 zt_statek.si__kolizja__samolot__p³ywanie_do_punktu__odnawianie_zasobów := true
+               else//if    ( zt_statek.czy_samolot ) (...)
+                 if    ( not zt_statek.czy_samolot )
+                   and (
+                            ( zt_statek.si_decyduje )
+                         or ( zt_statek.si__statek_gracza__p³ywa )
+                       ) then
+                   zt_statek.si__p³ywanie_do_punktu__odnawianie_zasobów__rozpoczêcie_czas_sekundy_i := Czas_Teraz_W_Sekundach(); // Gdy ju¿ odnawia zasoby to aby nie przerywa³.
 
           end;
         //---//if zt_statek <> nil then
@@ -44073,6 +46854,235 @@ begin//Gra_GLCollisionManagerCollision().
 
 end;//---//Gra_GLCollisionManagerCollision().
 
+//Fale_CheckBoxClick().
+procedure TStatki_Form.Fale_CheckBoxClick( Sender: TObject );
+var
+  fale__wysokoœæ_bazowa_l : single;
+begin
+
+  Fale_GLTerrainRenderer.Visible := Fale_CheckBox.Checked;
+
+  // Obszar falowania jest zbyt ma³y ze wzglêdu na wydajnoœæ.
+  //Woda_Góra_GLPlane.Visible := not Fale_CheckBox.Checked;
+  //Woda_Dó³_GLPlane.Visible := not Fale_CheckBox.Checked;
+
+  if Fale_CheckBox.Checked then
+    begin
+
+      if czy_klient_g then
+        fale__wysokoœæ_bazowa_l := fale__wysokoœæ_bazowa__serwer_g
+      else//if czy_klient_g then
+        fale__wysokoœæ_bazowa_l := fale__wysokoœæ_bazowa_g;
+
+      Woda_Góra_GLPlane.Position.Y := -fale__wysokoœæ_bazowa_l * 0.05; // Z wiêkszej odleg³oœci p³aszczyzna migocze pod falami.
+      //Woda_Góra_GLPlane.Position.Y := fale__woda_poziom_g - fale__fala_wysokoœæ_g * 0.01;
+      
+    end
+  else//if Fale_CheckBox.Checked then
+    Woda_Góra_GLPlane.Position.Y := 0;
+
+
+  Woda_Dó³_GLPlane.Position.Y := Woda_Góra_GLPlane.Position.Y;
+
+end;//---//Fale_CheckBoxClick().
+
+//Fale_GLTerrainRendererGetTerrainBounds().
+procedure TStatki_Form.Fale_GLTerrainRendererGetTerrainBounds( var l, t, r, b: Single );
+begin
+
+  // Dla du¿ych wartoœci GLCamera.DepthOfView ( > 100 ) bardzo wolno siê 'inicjuje'.
+
+  if l < -fale__obszar_ograniczenie_g then
+    begin
+
+      l := -fale__obszar_ograniczenie_g;
+      t := -l + 16;
+      b := l;
+      r := t;
+
+    end;
+  //---//if l < -fale__obszar_ograniczenie_g then
+
+end;//---//Fale_GLTerrainRendererGetTerrainBounds().
+
+//Fale_GLTerrainRendererHeightDataPostRender().
+procedure TStatki_Form.Fale_GLTerrainRendererHeightDataPostRender( var rci: TGLRenderContextInfo; var HeightDatas: TList );
+const
+  cWaterOpaqueDepth = 2000;
+
+  r = 1; // 0.75
+  g = 1; // 0.75
+  b = 1;
+
+var
+  x,
+  y,
+  s2
+    : integer;
+  t : single;
+  hd : TGLHeightData; //uses GLHeightData.
+
+  //Funkcja IssuePoint() w Fale_GLTerrainRendererHeightDataPostRender().
+  procedure IssuePoint( rx_f, ry_f: integer );
+  var
+    px,
+    py
+      : single;
+    alpha,
+    colorRatio,
+    ca,
+    sa
+      : single;
+  begin
+
+    px := x + rx_f + s2;
+    py := y + ry_f + s2;
+
+    if hd.DataState = hdsNone then
+      begin
+
+        alpha := 1;
+
+      end
+    else//if hd.DataState = hdsNone then
+      begin
+
+        alpha := (  fale__woda_poziom_g - hd.SmallIntHeight( rx_f, ry_f )  ) * ( 1 / cWaterOpaqueDepth );
+        alpha := GLVectorGeometry.ClampValue( alpha, 0.5, 1 ); //uses GLVectorGeometry.
+
+      end;
+    //---//if hd.DataState = hdsNone then
+
+    Math.SinCos(  WaterPhase( px, py ), sa, ca  ); //uses Math.
+    colorRatio := 1 - alpha * 0.1;
+    Winapi.OpenGL.glColor4f( r * colorRatio, g * colorRatio, b, alpha ); //uses Winapi.OpenGL.
+    Winapi.OpenGL.glTexCoord2f( px * 0.01 + 0.002 * sa, py * 0.01 + 0.0022 * ca - t * 0.002 ); //uses Winapi.OpenGL.
+    Winapi.OpenGL.glVertex3f( px, py, fale__woda_poziom_g + fale__fala_wysokoœæ_g * sa ); //uses Winapi.OpenGL.
+
+  end;//---//Funkcja IssuePoint() w Fale_GLTerrainRendererHeightDataPostRender().
+
+var
+  i,
+  s
+    : integer;
+begin//Fale_GLTerrainRendererHeightDataPostRender().
+
+  //TGLRenderContextInfo
+  //uses GLRenderContextInfo.
+
+  t := Gra_GLCadencer.CurrentTime;
+
+  Fale_GLMaterialLibrary.ApplyMaterial( 'Woda', rci );
+
+  repeat // not Fale_GLMaterialLibrary.UnApplyMaterial( rci );
+    begin
+
+      if Gra_GLCamera.AbsolutePosition.Y < 0 then
+        rci.GLStates.InvertGLFrontFace();
+
+      rci.GLStates.Disable( stLighting );
+      rci.GLStates.Disable( stNormalize );
+      rci.GLStates.SetStencilFunc( cfAlways, 1, 255 );
+      rci.GLStates.StencilWriteMask := 255;
+      rci.GLStates.Enable( stStencilTest );
+      rci.GLStates.SetStencilOp( soKeep, soKeep, soReplace );
+
+      glNormal3f( 0, 0, 1 );
+
+      for i := 0 to heightDatas.Count - 1 do
+        begin
+
+          hd := TGLHeightData( heightDatas.List[ i ] );
+
+          if    ( hd.DataState = hdsReady )
+            and ( hd.HeightMin > fale__woda_poziom_g ) then
+          //if (hd.DataState = hdsReady) and (hd.HeightMin > -10000) then
+            Continue;
+
+          x := hd.XLeft;
+          y := hd.YTop;
+          s := hd.Size - 1;
+          s2 := s div 2;
+          glBegin( GL_TRIANGLE_FAN );
+          IssuePoint( s2, s2 );
+          IssuePoint( 0, 0 );
+          IssuePoint( s2, 0 );
+          IssuePoint( s, 0 );
+          IssuePoint( s, s2 );
+          IssuePoint( s, s );
+          IssuePoint( s2, s );
+          IssuePoint( 0, s );
+          IssuePoint( 0, s2 );
+          IssuePoint( 0, 0 );
+          glEnd;
+
+        end;
+      //---//for i := 0 to heightDatas.Count - 1 do
+
+      rci.GLStates.SetStencilOp( soKeep, soKeep, soKeep ); //uses GLState.
+      rci.GLStates.Disable( stStencilTest ); //uses GLState.
+
+
+      if Gra_GLCamera.AbsolutePosition.Y < 0 then
+        rci.GLStates.InvertGLFrontFace();
+
+    end
+  until not Fale_GLMaterialLibrary.UnApplyMaterial( rci );
+
+end;//---//Fale_GLTerrainRendererHeightDataPostRender().
+
+//Fale_GLCustomHDSStartPreparingData().
+procedure TStatki_Form.Fale_GLCustomHDSStartPreparingData( HeightData: TGLHeightData );
+var
+  i,
+  j,
+  n
+    : integer;
+  offset : TTexPoint;
+  htfHD : TGLHeightData;
+begin
+
+  htfHD := Fale_GLHeightTileFileHDS.GetData( heightData.XLeft, heightData.YTop, heightData.Size, heightData.DataType );
+
+  if htfHD.DataState = hdsNone then //or (htfHD.HeightMax<=woda_poziom_c-cWaterOpaqueDepth) then
+    heightData.DataState := hdsNone
+  else//if htfHD.DataState = hdsNone then
+    begin
+
+      i := ( heightData.XLeft div 128 );
+      j := ( heightData.YTop div 128 );
+
+      if    ( Cardinal( i ) < 4 )
+        and ( Cardinal( j ) < 4 ) then
+        begin
+
+          heightData.MaterialName := format( 'Tex_%d_%d.bmp', [ i, j ] );
+          heightData.TextureCoordinatesMode := tcmLocal;
+          n := (  ( heightData.XLeft div 32 ) and 3  );
+          offset.S := n * 0.25;
+          n := (  ( heightData.YTop div 32 ) and 3  );
+          offset.T := -n * 0.25;
+          heightData.TextureCoordinatesOffset := offset;
+          heightData.TextureCoordinatesScale := TexPointMake( 0.25, 0.25 );
+          heightData.DataType := hdtSmallInt;
+          htfHD.DataType := hdtSmallInt;
+          heightData.Allocate( hdtSmallInt );
+          Move( htfHD.SmallIntData^, heightData.SmallIntData^, htfHD.DataSize );
+          heightData.DataState := hdsReady;
+          heightData.HeightMin := htfHD.HeightMin;
+          heightData.HeightMax := htfHD.HeightMax;
+
+        end
+      else//if    ( Cardinal( i ) < 4 ) (...)
+        heightData.DataState := hdsNone
+
+    end;
+  //---//if htfHD.DataState = hdsNone then
+
+  Fale_GLHeightTileFileHDS.Release( htfHD );
+
+end;//---//Fale_GLCustomHDSStartPreparingData().
+
 //Statek_Parametry_Ustaw().
 procedure TStatki_Form.Statek_Parametry_Ustaw( Sender: TObject );
 var
@@ -44119,8 +47129,9 @@ begin
 
   zt_statek.celownicze_linie_unoœ := Celownicze_Linie_Unoœ_CheckBox.Checked;
 
-  zt_statek.celowanie_precyzja__obrót := Celowanie_Precyzja_Obrót_SpinEdit.Value;
-  zt_statek.celowanie_precyzja__podniesienie := Celowanie_Precyzja_Podniesienie_SpinEdit.Value;
+  //zt_statek.celowanie_precyzja__falowanie_niwelowanie := Celowanie_Precyzja__Falowanie_Niwelowanie_SpinEdit.Value;
+  zt_statek.celowanie_precyzja__obrót := Celowanie_Precyzja__Obrót_SpinEdit.Value;
+  zt_statek.celowanie_precyzja__podniesienie := Celowanie_Precyzja__Podniesienie_SpinEdit.Value;
 
   czy_œwiat³a_w³¹czone_zmiana := zt_statek.œwiat³a_w³¹czone <> Œwiat³a_CheckBox.Checked;
   zt_statek.œwiat³a_w³¹czone := Œwiat³a_CheckBox.Checked;
@@ -44201,43 +47212,73 @@ var
   zti : integer;
 begin
 
-  if PageControl1.ActivePage = Klawiatura_Konfiguracja_TabSheet then
+  if   (
+             ( PageControl1.ActivePage = Klawiatura_Konfiguracja_TabSheet )
+         and ( Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked )
+       )
+    or (
+            ( PageControl1.ActivePage = Statystyki_TabSheet )
+        and ( Statystyki__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked )
+       ) then
     begin
 
-      // Przy zmianie zak³adki na Klawiatura_Konfiguracja_TabSheet zapamiêtuje aktualny rozmiar i zwiêksza szerokoœæ.
+      // Przy zmianie zak³adki na Klawiatura_Konfiguracja_TabSheet, Statystyki_TabSheet zapamiêtuje aktualny rozmiar i zwiêksza szerokoœæ.
 
-      if Self.Width >= 1050 then
-        zti := 1000
-      else//if Self.Width >= 1050 then
       if Self.Width >= 400 then
-        zti := Self.Width - 50;
+        zti := Self.Width - 50
+      else//if Self.Width >= 400 then
+        zti := 0;
 
-      if    ( Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked )
+      if    (
+                 (
+                       ( PageControl1.ActivePage = Klawiatura_Konfiguracja_TabSheet )
+                   and ( Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked )
+                 )
+              or (
+                       ( PageControl1.ActivePage = Statystyki_TabSheet )
+                   and ( Statystyki__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked )
+                 )
+            )
+        and ( zti > 0 )
         and ( PageControl1.Width < zti ) then
         begin
 
-          Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Tag := PageControl1.Width;
-
+          page_control_1_szerokoœæ_kopia_g := PageControl1.Width;
           PageControl1.Width := zti;
 
         end;
-      //---//if    ( Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked ) (...)
+      //---//if    ( (...)
 
     end
-  else//if PageControl1.ActivePage = Klawiatura_Konfiguracja_TabSheet then
+  else//if   ( (...)
     begin
 
-      // Przy zmianie zak³adki na inna ni¿ Klawiatura_Konfiguracja_TabSheet przywraca poprzedni¹ szerokoœæ.
+      // Przy zmianie zak³adki na inna ni¿ Klawiatura_Konfiguracja_TabSheet, Statystyki_TabSheet przywraca poprzedni¹ szerokoœæ.
 
-      if    ( Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked )
-        and ( Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Tag > 0 ) then
-        PageControl1.Width := Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Tag;
+      if    (
+                 (
+                       ( page_control_1_active_page_kopia_tab_sheet_g = Klawiatura_Konfiguracja_TabSheet )
+                   and ( Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked )
+                 )
+              or (
+                       ( page_control_1_active_page_kopia_tab_sheet_g = Statystyki_TabSheet )
+                   and ( Statystyki__Rozmiar_Zak³adki_Poszerz_CheckBox.Checked )
+                 )
+            )
+        and ( page_control_1_szerokoœæ_kopia_g > 0 ) then
+        begin
 
+          PageControl1.Width := page_control_1_szerokoœæ_kopia_g;
+          page_control_1_szerokoœæ_kopia_g := 0;
 
-      Klawiatura_Konfiguracja__Rozmiar_Zak³adki_Poszerz_CheckBox.Tag := 0;
+        end;
+      //---//if    ( (...)
 
     end;
-  //---//if PageControl1.ActivePage = Klawiatura_Konfiguracja_TabSheet then
+  //---//if   ( (...)
+
+
+  page_control_1_active_page_kopia_tab_sheet_g := PageControl1.ActivePage;
 
 end;//---//PageControl1Change().
 
@@ -44281,7 +47322,8 @@ begin
 
   if   ( L¹d_ComboBox.Items.Count < 0 )
     or ( L¹d_ComboBox.ItemIndex < 0 )
-    or (  L¹d_ComboBox.ItemIndex > Length( l¹dy_lista_t ) - 1  ) then
+    or (  L¹d_ComboBox.ItemIndex > Length( l¹dy_lista_t ) - 1  )
+    or ( not L¹d_ComboBox.Enabled ) then // Aby nie zmieniaæ mapy gdy nie jest to wskazane (np. wczytanie ustawieñ podczas gry).
     Exit;
 
 
@@ -44292,6 +47334,23 @@ begin
   L¹d_Utwórz( L¹d_ComboBox.ItemIndex );
 
 end;//---//L¹d_ComboBoxChange().
+
+//Log_MemoKeyDown().
+procedure TStatki_Form.Log_MemoKeyDown( Sender: TObject; var Key: Word; Shift: TShiftState );
+begin
+
+  // A.
+  if    ( ssCtrl in Shift )
+    and ( Key = 65 ) then
+    begin
+
+      Key := 0;
+      Log_Memo.SelectAll();
+
+    end;
+  //---//if    ( ssCtrl in Shift ) (...)
+
+end;//---//Log_MemoKeyDown().
 
 //Statek__Wczytaj_Listê_BitBtnClick().
 procedure TStatki_Form.Statek__Wczytaj_Listê_BitBtnClick( Sender: TObject );
@@ -44335,7 +47394,7 @@ begin
   zti := Length( statki_t );
   SetLength( statki_t, zti + 1 );
 
-  statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, 0, 0, Statek_Odczytaj_Schemat( Statek_ComboBox.ItemIndex ), prymitywy_lista_t  );
+  statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, 0, 0, Statek_Odczytaj_Schemat( Statek_ComboBox.ItemIndex ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal()  );
   statki_t[ zti ].id_grupa := Gracz_Grupa_SpinEdit.Value; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek. Aby u klienta w³asny pasek punktów ¿ycia nie by³ czerwony.
   statki_t[ zti ].id_statek_schemat := Statek_ComboBox.ItemIndex; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek.
   statki_t[ zti ].Wygl¹d_Elementy__Noc_Zmieñ( dzieñ_jasnoœæ_g );
@@ -44359,7 +47418,7 @@ begin
           zti := Length( statki_t );
           SetLength( statki_t, zti + 1 );
 
-          statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, 0, 100, zts, prymitywy_lista_t  );
+          statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, 0, 100, zts, prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal()  );
           statki_t[ zti ].id_grupa := Gracz_Grupa_SpinEdit.Value; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek. Aby u klienta w³asny pasek punktów ¿ycia nie by³ czerwony.
           statki_t[ zti ].id_statek_schemat := Statek__Samolot_Odczytaj_Schemat_Indeks( Statek__Samolot_ComboBox.Items[ Statek__Samolot_ComboBox.ItemIndex ] ); // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek.
           statki_t[ zti ].gracz__nazwa.Text := '^ ' + statki_t[ zti ].gracz__nazwa.Text + ' ^';
@@ -44405,9 +47464,7 @@ begin
   //---//if czy_klient_g then
 
 
-  // Podczas tworzenia statków bêdzie utrudnia³o.
-  //Statki_Rozstaw( statek_gracza ); //???
-  //Kamera_Prze³¹cz( kt_Za_Statkiem ); //???
+  Statki__Punkty_¯ycia_WskaŸnik__Efekty_Tryb_Ustaw();
 
 end;//---//Statek__Utwórz_BitBtnClick().
 
@@ -44460,7 +47517,8 @@ begin
 
   if   ( Statek_ComboBox.Items.Count < 0 )
     or ( Statek_ComboBox.ItemIndex < 0 )
-    or (  Statek_ComboBox.ItemIndex > Length( statki_lista_t ) - 1  ) then
+    or (  Statek_ComboBox.ItemIndex > Length( statki_lista_t ) - 1  )
+    or ( not Statek_ComboBox.Enabled ) then // Aby nie zmieniaæ statku gdy nie jest to wskazane (np. wczytanie ustawieñ podczas gry).
     Exit;
 
 
@@ -44759,7 +47817,7 @@ begin
     or ( czy_serwer_g ) then
     begin
 
-      for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do //??? Potem odkomentowaæ.
+      for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
         begin
 
           if not TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).gotowy__kd then
@@ -44775,6 +47833,10 @@ begin
 
         end;
       //---//for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
+
+
+      for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
+        TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).w_grze__kd := true;
 
 
       SetLength( gra_statystyki_r_t, 0 );
@@ -44833,8 +47895,15 @@ begin
 
           Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__odbierz__l¹d__definicja_c, -99, '' );
 
+          Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__gracz_lista_odœwie¿_c, -99, '' );
+
         end;
       //---//if czy_serwer_g then
+
+
+      Gracze_Lista_Odœwie¿();
+
+      // Odœwie¿anie w tym miejscu nie pokazuje aktualnego peer_port_udp__kd.
 
     end;
   //---//if   ( czy_gra_lokalna_g ) (...)
@@ -44863,6 +47932,8 @@ end;//---//Gra_Rozpocznij_BitBtnClick().
 
 //Gra_Zakoñcz_BitBtnClick().
 procedure TStatki_Form.Gra_Zakoñcz_BitBtnClick( Sender: TObject );
+var
+  i : integer;
 begin
 
   Serwer_Wysy³a_Timer.Enabled := false;
@@ -44871,6 +47942,10 @@ begin
   if   ( czy_serwer_g )
     or ( czy_gra_lokalna_g ) then
     begin
+
+      for i := 0 to tcp_klienci_lista_g.klienci_lista_list.Count - 1 do
+        TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).w_grze__kd := false;
+
 
       Interfejs_Aktywnoœæ_Ustaw__Schemat_Samolot_Zmieñ( false );
 
@@ -44926,6 +48001,15 @@ begin
   SI__Samolot_Gracza__L¹duj_Na_Lotniskowcu_Gracza_Button.Enabled := SI__P³ywa__Samolot_Gracza_CheckBox.Enabled;
 
 end;//---//Gra_Zakoñcz_BitBtnClick().
+
+//Gra_Pauza_ButtonClick().
+procedure TStatki_Form.Gra_Pauza_ButtonClick( Sender: TObject );
+begin
+
+  if not czy_klient_g then
+    Pauza( not czy_pauza_g );
+
+end;//---//Gra_Pauza_ButtonClick().
 
 //Gra_Wspó³czynnik_Prêdkoœci_SpinEditChange().
 procedure TStatki_Form.Gra_Wspó³czynnik_Prêdkoœci_SpinEditChange( Sender: TObject );
@@ -45124,6 +48208,7 @@ begin
   if czy_klient_g then
     begin
 
+      Gra_Pauza_Button.Enabled := false;
       Gra_Rozpocznij_BitBtn.Enabled := false;
       Gra_Zakoñcz_BitBtn.Enabled := false;
       Gracze_Lista_Roz³¹cz_Gracza_BitBtn.Enabled := false;
@@ -45202,7 +48287,9 @@ begin
       //---//if    ( IdTCPClient1.Connected ) (...)
 
 
-      Gracz_Nazwa_Edit.Text := Gracz_Nazwa_Edit.Text + 'k'; //???
+      {$IFDEF DEBUG}
+      Gracz_Nazwa_Edit.Text := Gracz_Nazwa_Edit.Text + 'k';
+      {$ENDIF}
 
     end;
   //---//if czy_klient_g then
@@ -45219,6 +48306,7 @@ begin
   Klient_IdUDP_Czyta_Timer.Enabled := false;
   Klient_Wysy³a_Timer.Enabled := false;
 
+  Gra_Pauza_Button.Enabled := true;
   Gra_Rozpocznij_BitBtn.Enabled := true;
   Gra_Zakoñcz_BitBtn.Enabled := true;
 
@@ -45661,7 +48749,7 @@ begin
   if Pe³ny_Ekran_CheckBox.Checked then
     begin
 
-      Pe³ny_Ekran_CheckBox.Tag := integer(wsMaximized);
+      window_state_kopia_g := Self.WindowState;
 
       Self.BorderStyle := bsNone;
       Self.WindowState := wsMaximized;
@@ -45687,7 +48775,7 @@ begin
   else//if Pe³ny_Ekran_CheckBox.Checked then
     begin
 
-      Self.WindowState := System.UITypes.TWindowState(Pe³ny_Ekran_CheckBox.Tag);
+      Self.WindowState := window_state_kopia_g;
       Self.BorderStyle := bsSizeable;
 
 
@@ -45702,6 +48790,9 @@ begin
 
     end;
   //---//if Pe³ny_Ekran_CheckBox.Checked then
+
+
+  Pe³ny_Ekran__Znikaj¹ce_Elementy_Widocznoœæ_Ustaw();
 
 end;//---//Pe³ny_Ekran_CheckBoxClick().
 
@@ -45840,7 +48931,7 @@ begin
 
               Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l );
 
-              SI__Polecenie_Interpretuj( pokój_rozmów_r_l );
+              SI__Polecenie__Zak³ócenia_Interpretuj( pokój_rozmów_r_l );
 
               //if pokój_rozmów_r_l.odbiorca_rodzaj = pror_Wszyscy then
               //  Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__odbierz__rekord_pokój_rozmów_r_c, -99, '', pokój_rozmów_r_l )
@@ -45882,7 +48973,7 @@ begin
 
                   Pokój_Rozmów__Wyœwietl_Wiadomoœæ( pokój_rozmów_r_l );
 
-                  SI__Polecenie_Interpretuj( pokój_rozmów_r_l );
+                  SI__Polecenie__Zak³ócenia_Interpretuj( pokój_rozmów_r_l );
 
                 end;
               //---//if czy_gra_lokalna_g then
@@ -46908,7 +49999,7 @@ begin
     //---//if TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd <= si_peer_port_c then
 
 
- //Gracze_Lista_Roz³¹cz( zt_tcp_klient_dane.peer_port_tcp ); usuwac wszystkoch graczy //???
+  //Gracze_Lista_Roz³¹cz( zt_tcp_klient_dane.peer_port_tcp ); // Usuwa wszystkich graczy. //???
 
 
   Gracze_Lista_Odœwie¿();
@@ -47651,6 +50742,15 @@ begin
 
 end;//---//ScrollBoxMouseWheel().
 
+//Wspó³czynniki_Inne_Click().
+procedure TStatki_Form.Wspó³czynniki_Inne_Click( Sender: TObject );
+begin
+
+  if czy_serwer_g then
+    Wieloosobowe__Strumieñ_Wyœlij( wieloosobowe__komenda__gra__wspó³czynniki_inne_c, -99, '' );
+
+end;//---//Wspó³czynniki_Inne_Click().
+
 //Ustawienia_Zapisz_ButtonClick().
 procedure TStatki_Form.Ustawienia_Zapisz_ButtonClick( Sender: TObject );
 begin
@@ -47735,7 +50835,11 @@ end;//---//Celowanie_ParametryClick().
 procedure TStatki_Form.Celownik_Widocznoœæ_CheckBoxClick( Sender: TObject );
 begin
 
-  Celowniczy_GLDummyCube.Visible := Celownik_Widocznoœæ_CheckBox.Checked;
+  //Celowniczy_GLDummyCube.Visible := Celownik_Widocznoœæ_CheckBox.Checked;
+  Celownik_Ekranowy__Dó³_GLHUDSprite.Visible := Celownik_Widocznoœæ_CheckBox.Checked;
+  Celownik_Ekranowy__Góra_GLHUDSprite.Visible := Celownik_Ekranowy__Dó³_GLHUDSprite.Visible;
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Visible := Celownik_Ekranowy__Dó³_GLHUDSprite.Visible;
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Visible := Celownik_Ekranowy__Dó³_GLHUDSprite.Visible;
 
 end;//---//Celownik_Widocznoœæ_CheckBoxClick().
 
@@ -47747,17 +50851,99 @@ begin
 
   // Podstawowy SpinEdit pozwala tylko na liczby ca³kowite a nie chcê dodawaæ komponentów, których mo¿e nie byæ w podstawowych wersjach IDE.
 
-  zts := Celownik_Wielkoœæ_Edit.Text;
+  zts := Celownik_Ekranowy__Szerokoœæ_Edit.Text;
   zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
   zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
 
   try
-    Celowniczy_GLDummyCube.CubeSize := Abs(  StrToFloat( zts )  );
+    //Celowniczy_GLDummyCube.CubeSize := Abs(  StrToFloat( zts )  );
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Width := Abs(  StrToFloat( zts )  );
   except
   end;
   //---//try
 
-  Celownik_Wielkoœæ_Label.Caption := Trim(  FormatFloat( '### ### ##0.000000', Celowniczy_GLDummyCube.CubeSize )  );
+  zts := Celownik_Ekranowy__Wysokoœæ_Edit.Text;
+  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
+  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
+
+  try
+    Celownik_Ekranowy__Lewo_GLHUDSprite.Height := Abs(  StrToFloat( zts )  );
+  except
+  end;
+  //---//try
+
+  zts := Celownik_Ekranowy__Gruboœæ_Edit.Text;
+  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
+  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
+
+  try
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Height := Abs(  StrToFloat( zts )  );
+  except
+  end;
+  //---//try
+
+  Celownik_Ekranowy__Góra_GLHUDSprite.Height := Celownik_Ekranowy__Dó³_GLHUDSprite.Height;
+  Celownik_Ekranowy__Góra_GLHUDSprite.Width := Celownik_Ekranowy__Dó³_GLHUDSprite.Width;
+
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Width := Celownik_Ekranowy__Dó³_GLHUDSprite.Height;
+
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Height := Celownik_Ekranowy__Lewo_GLHUDSprite.Height;
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Width := Celownik_Ekranowy__Lewo_GLHUDSprite.Width;
+
+
+
+  zts := Celownik_Ekranowy__Kolor__R_Edit.Text;
+  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
+  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
+
+  try
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Red := Abs(  StrToFloat( zts )  );
+  except
+  end;
+  //---//try
+
+  zts := Celownik_Ekranowy__Kolor__G_Edit.Text;
+  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
+  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
+
+  try
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Green := Abs(  StrToFloat( zts )  );
+  except
+  end;
+  //---//try
+
+  zts := Celownik_Ekranowy__Kolor__B_Edit.Text;
+  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
+  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
+
+  try
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Blue := Abs(  StrToFloat( zts )  );
+  except
+  end;
+  //---//try
+
+  zts := Celownik_Ekranowy__Kolor__A_Edit.Text;
+  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
+  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
+
+  try
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Alpha := Abs(  StrToFloat( zts )  );
+  except
+  end;
+  //---//try
+
+  Celownik_Ekranowy__Góra_GLHUDSprite.Material.FrontProperties.Diffuse := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse;
+  Celownik_Ekranowy__Lewo_GLHUDSprite.Material.FrontProperties.Diffuse := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse;
+  Celownik_Ekranowy__Prawo_GLHUDSprite.Material.FrontProperties.Diffuse := Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse;
+
+
+  //Celownik_Ekranowy__Wielkoœæ_Label.Caption := Trim(  FormatFloat( '### ### ##0.000000', Celowniczy_GLDummyCube.CubeSize )  );
+  Celownik_Ekranowy__Wielkoœæ_Label.Caption :=
+    Trim(  FormatFloat( '### ### ##0.000000', Celownik_Ekranowy__Dó³_GLHUDSprite.Width )  ) +
+    ' x ' +
+    Trim(  FormatFloat( '### ### ##0.000000', Celownik_Ekranowy__Lewo_GLHUDSprite.Height )  ) +
+    ' : ' +
+    Trim(  FormatFloat( '### ### ##0.000000', Celownik_Ekranowy__Dó³_GLHUDSprite.Height )  );
 
 end;//---//Celownik_Wielkoœæ_EditChange().
 
@@ -47798,9 +50984,7 @@ end;//---//Kamera_Szybkoœæ_Ruchu_EditChange().
 procedure TStatki_Form.L¹dowanie_U³atwione_CheckBoxClick( Sender: TObject );
 begin
 
-  if czy_serwer_g then
-    Wieloosobowe__Strumieñ_Wyœlij(  wieloosobowe__komenda__gra__l¹dowanie_u³atwione_c, -99, Boolean_W__Tak_Nie( L¹dowanie_U³atwione_CheckBox.Checked )  );
-
+  Wspó³czynniki_Inne_Click( Sender );
 
   Elementy_Gracza_Dostosuj_CheckBoxClick( Sender );
 
@@ -47844,7 +51028,19 @@ end;//---//Mg³a_SpinEditChange().
 
 //Morze_Wzburzenie_SpinEditChange().
 procedure TStatki_Form.Morze_Wzburzenie_SpinEditChange( Sender: TObject );
+var
+  fale__wysokoœæ_bazowa_l : single;
 begin
+
+  if czy_klient_g then
+    fale__wysokoœæ_bazowa_l := fale__wysokoœæ_bazowa__serwer_g
+  else//if czy_klient_g then
+    fale__wysokoœæ_bazowa_l := fale__wysokoœæ_bazowa_g;
+
+
+  fale__fala_wysokoœæ_g := fale__wysokoœæ_bazowa_l * Morze_Wzburzenie_SpinEdit.Value * 0.01;
+  fale__woda_poziom_g := fale__fala_wysokoœæ_g + fale__fala_wysokoœæ_g * 0.1; // Aby p³aszczyzna wody nie przeœwitywa³a pod falami.
+
 
   if not Morze_Informacja_Dodatkowa_Pomiñ_CheckBox.Checked then
     Informacja_Dodatkowa_Dodaj(   Morze_Wzburzenie_Etykieta_Label.Caption + ' ' + Trim(  FormatFloat( '### ### ##0', Morze_Wzburzenie_SpinEdit.Value )  )   );
@@ -48044,8 +51240,21 @@ begin
   //---// Modyfikuje odcieñ s³oñca i ksiê¿yca.
 
 
-  Wygl¹d_Elementy__Noc_Zmieñ(); //??? w¹tki tylko dla klienta
+  Pod_Wod¹_GLHUDSprite.Material.FrontProperties.Diffuse.Red := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Red * dzieñ_jasnoœæ_g;
+  Pod_Wod¹_GLHUDSprite.Material.FrontProperties.Diffuse.Green := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Green * dzieñ_jasnoœæ_g;
+  Pod_Wod¹_GLHUDSprite.Material.FrontProperties.Diffuse.Blue := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Blue * dzieñ_jasnoœæ_g;
 
+  //???
+  //Woda_Dó³_GLPlane.Material.FrontProperties.Diffuse.Red := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Red * dzieñ_jasnoœæ_g;
+  //Woda_Dó³_GLPlane.Material.FrontProperties.Diffuse.Green := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Green * dzieñ_jasnoœæ_g;
+  //Woda_Dó³_GLPlane.Material.FrontProperties.Diffuse.Blue := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Blue * dzieñ_jasnoœæ_g;
+  //
+  //Woda_Dó³_GLPlane.Material.FrontProperties.Emission.Red := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Red * dzieñ_jasnoœæ_g;
+  //Woda_Dó³_GLPlane.Material.FrontProperties.Emission.Green := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Green * dzieñ_jasnoœæ_g;
+  //Woda_Dó³_GLPlane.Material.FrontProperties.Emission.Blue := Woda_Góra_GLPlane.Material.FrontProperties.Diffuse.Blue * dzieñ_jasnoœæ_g;
+
+
+  Wygl¹d_Elementy__Noc_Zmieñ();
 
 
   if czy_serwer_g then
@@ -48064,29 +51273,19 @@ var
 begin
 
   if statek_gracza <> nil then
-    statek_gracza.Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
+    statek_gracza.Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
 
   if samolot__statek_gracza <> nil then
-    samolot__statek_gracza.Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
+    samolot__statek_gracza.Elementy_Gracza_Dostosuj( -99, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Gracz_CheckBox.Checked, false, false, Obrót_K¹t_Zablokowany_WskaŸnik_CheckBox.Checked, Obrót_K¹t_Zablokowany_Strza³_WskaŸnik_CheckBox.Checked );
 
 
   for i := 0 to Length( statki_t ) - 1 do
     if    ( statki_t[ i ] <> nil )
       and ( statki_t[ i ] <> samolot__statek_gracza )
       and ( statki_t[ i ] <> statek_gracza ) then
-      statki_t[ i ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
+      statki_t[ i ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
 
 end;//---//Elementy_Gracza_Dostosuj_CheckBoxClick().
-
-//Radar_Widocznoœæ_CheckBoxClick().
-procedure TStatki_Form.Radar_Widocznoœæ_CheckBoxClick( Sender: TObject );
-begin
-
-  Radar_Panel.Visible := Radar_Widocznoœæ_CheckBox.Checked;
-
-  FormResize( Sender );
-
-end;//---//Radar_Widocznoœæ_CheckBoxClick().
 
 //Projektowy_Tryb_CheckBoxClick().
 procedure TStatki_Form.Projektowy_Tryb_CheckBoxClick( Sender: TObject );
@@ -48097,6 +51296,9 @@ begin
 
   if Projektowy_Tryb_CheckBox.Checked then
     projektowy_tryb__statek := statek_gracza;
+
+
+  Wspó³czynniki_Inne_Click( Sender );
 
 end;//---//Projektowy_Tryb_CheckBoxClick().
 
@@ -48152,42 +51354,58 @@ begin
 
 end;//---//Radar_GLSceneViewerMouseMove().
 
-//Radar_Wielkoœæ_ButtonClick().
-procedure TStatki_Form.Radar_Wielkoœæ_ButtonClick( Sender: TObject );
+//Radar__Skala_SpinEditChange().
+procedure TStatki_Form.Radar__Skala_SpinEditChange( Sender: TObject );
+begin
+
+  if Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked then
+    begin
+
+      Radar__Czu³oœæ_SpinEdit.Value := Radar__Czu³oœæ_SpinEdit.Value - ( radar__skala_spinedit__value__poprzednia_wartoœæ_g - Radar__Skala_SpinEdit.Value );
+      radar__skala_spinedit__value__poprzednia_wartoœæ_g := Radar__Skala_SpinEdit.Value;
+
+    end;
+  //---//if Radar__Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked then
+
+end;//---//Radar__Skala_SpinEditChange().
+
+//Radar__Widocznoœæ_CheckBoxClick().
+procedure TStatki_Form.Radar__Widocznoœæ_CheckBoxClick( Sender: TObject );
+begin
+
+  Radar_Panel.Visible := Radar__Widocznoœæ_CheckBox.Checked;
+
+  Pe³ny_Ekran__Znikaj¹ce_Elementy_Widocznoœæ_Ustaw();
+
+  FormResize( Sender );
+
+end;//---//Radar__Widocznoœæ_CheckBoxClick().
+
+//Radar__Wielkoœæ_ButtonClick().
+procedure TStatki_Form.Radar__Wielkoœæ_ButtonClick( Sender: TObject );
 begin
 
   if    ( Sender <> nil )
-    and ( TComponent(Sender).Name = Radar_Pomniejsz_Button.Name ) then
-    Radar_Panel.Tag := Radar_Panel.Tag - 10
-  else//if    ( Sender <> nil ) (...)
-    Radar_Panel.Tag := Radar_Panel.Tag + 10;
+    and ( TComponent(Sender).Name = Radar_Panel.Name ) then
+    // Tylko aby sprawdziæ wartoœæ zmiennej radar_panel__wielkoœæ_procent_okna_g.
+  else
+    if    ( Sender <> nil )
+      and ( TComponent(Sender).Name = Radar__Pomniejsz_Button.Name ) then
+      radar_panel__wielkoœæ_procent_okna_g := radar_panel__wielkoœæ_procent_okna_g - 10
+    else//if    ( Sender <> nil ) (...)
+      radar_panel__wielkoœæ_procent_okna_g := radar_panel__wielkoœæ_procent_okna_g + 10;
 
 
-  if Radar_Panel.Tag < 5 then
-    Radar_Panel.Tag := 5
-  else//if Radar_Panel.Tag < 5 then
-    if Radar_Panel.Tag > 95 then
-      Radar_Panel.Tag := 95;
+  if radar_panel__wielkoœæ_procent_okna_g < 5 then
+    radar_panel__wielkoœæ_procent_okna_g := 5
+  else//if radar_panel__wielkoœæ_procent_okna_g < 5 then
+    if radar_panel__wielkoœæ_procent_okna_g > 95 then
+      radar_panel__wielkoœæ_procent_okna_g := 95;
 
 
   FormResize( Sender );
 
-end;//---//Radar_Wielkoœæ_ButtonClick().
-
-//Radar_Skala_SpinEditChange().
-procedure TStatki_Form.Radar_Skala_SpinEditChange( Sender: TObject );
-begin
-
-  if Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked then
-    begin
-
-      Radar_Czu³oœæ_SpinEdit.Value := Radar_Czu³oœæ_SpinEdit.Value - ( Radar_Skala_SpinEdit.Tag - Radar_Skala_SpinEdit.Value );
-      Radar_Skala_SpinEdit.Tag := Radar_Skala_SpinEdit.Value;
-
-    end;
-  //---//if Radar_Zmieniaj_Czu³oœæ_Wraz_Ze_Skal¹_CheckBox.Checked then
-
-end;//---//Radar_Skala_SpinEditChange().
+end;//---//Radar__Wielkoœæ_ButtonClick().
 
 //Fotograficzny_Tryb_CheckBoxClick().
 procedure TStatki_Form.Fotograficzny_Tryb_CheckBoxClick( Sender: TObject );
@@ -48270,6 +51488,16 @@ begin
 
 end;//---//Punkt_NaprowadzajSpinEditKeyDown().
 
+//Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBoxChange().
+procedure TStatki_Form.Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBoxChange( Sender: TObject );
+begin
+
+  Statki__Punkty_¯ycia_WskaŸnik__Efekty_Tryb_Ustaw();
+
+  Wspó³czynniki_Inne_Click( Sender );
+
+end;//---//Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBoxChange().
+
 //Statki_Zaprezentuj_ButtonClick().
 procedure TStatki_Form.Statki_Zaprezentuj_ButtonClick( Sender: TObject );
 var
@@ -48295,7 +51523,7 @@ begin
 
         zti := Length( statki_t );
         SetLength( statki_t, zti + 1 );
-        statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, zti + 1, zti, Statek_Odczytaj_Schemat( i ), prymitywy_lista_t  );
+        statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, zti + 1, zti, Statek_Odczytaj_Schemat( i ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal()  );
         statki_t[ zti ].id_grupa := 1; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³ i ustawi³ statek.
         statki_t[ zti ].id_statek_schemat := i;
         statki_t[ zti ].obracaj_dzia³a := false;
@@ -48303,7 +51531,7 @@ begin
         statki_t[ zti ].gracz__nazwa.Text := Statek_ComboBox.Items[ i ];
         statki_t[ zti ].Wygl¹d_Elementy__Noc_Zmieñ( dzieñ_jasnoœæ_g );
         statki_t[ zti ].Elementy_Gracza_Widocznoœæ( statki_t[ zti ].id_grupa, false );
-        statki_t[ zti ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
+        statki_t[ zti ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
 
         if statki_t[ zti ].czy_lotniskowiec then
           statki_t[ zti ].lotniskowiec__gotowy_na_przyjêcie_samolotu := not statki_t[ zti ].si_decyduje;
@@ -48334,13 +51562,13 @@ begin
                 zti := Length( statki_t );
                 SetLength( statki_t, zti + 1 );
 
-                statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, zti, zti, zts, prymitywy_lista_t  );
+                statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, zti, zti, zts, prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal()  );
                 statki_t[ zti ].id_grupa := 1; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek.
                 statki_t[ zti ].id_statek_schemat := Statek__Samolot_Odczytaj_Schemat_Indeks( Statek__Samolot_ComboBox.Items[ Statek__Samolot_ComboBox.ItemIndex ] ); // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek.
                 statki_t[ zti ].gracz__nazwa.Text := '^ ' + Statek__Samolot_ComboBox.Items[ Statek__Samolot_ComboBox.ItemIndex ] + ' (' + Statek_ComboBox.Items[ i ] + ') ^';
                 statki_t[ zti ].Wygl¹d_Elementy__Noc_Zmieñ( dzieñ_jasnoœæ_g );
                 statki_t[ zti ].Elementy_Gracza_Widocznoœæ( statki_t[ zti ].id_grupa, false );
-                statki_t[ zti ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
+                statki_t[ zti ].Elementy_Gracza_Dostosuj( Gracz_Grupa_SpinEdit.Value, Celownik_Bombowiec_Widocznoœæ_CheckBox.Checked, Gra_GLCamera.AbsolutePosition.Y < 0, L¹dowanie_U³atwione_CheckBox.Checked, false, Punkty_¯ycia_WskaŸnik__Przeciwnik_CheckBox.Checked, Punkty_¯ycia_WskaŸnik__Sojusznik_CheckBox.Checked, false, false );
 
                 statki_t[ zti ].czy_samolot := true;
                 statki_t[ zti - 1 ].Samolot_Przyjmij( statki_t[ zti ], true );
@@ -48495,7 +51723,7 @@ begin
 
 
   // Gracz.
-  if    ( ACol in [ 1, 3 ] ) // Identyfikator, nazwa.
+  if    ( ACol in [ 0, 1, 3 ] ) // L. p., Identyfikator, nazwa.
     and ( ARow > 0 )
     and (  Trim( TStringGrid(Sender).Cells[ 1, ARow ] ) <> ''  )
     and ( Gracz_Identyfikator() <> -broñ_nie_obracana_c )
@@ -48605,8 +51833,9 @@ begin//Klawiatura_Konfiguracja_Domyœlna_ButtonClick().
   Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__podnoœ_lufy__na_k¹t_wyznaczony, 76, 'Broñ podnoœ lufy na k¹t wyznaczony', zti ); // L.
 
   Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__gra_wspó³czynnik_prêdkoœci__minus, 0, 'Gra prêdkoœci minus', zti ); // .
-  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__gra_wspó³czynnik_prêdkoœci__normalna, 0, 'Gra prêdkoœci normalna', zti ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__gra_wspó³czynnik_prêdkoœci__normalna, 0, 'Gra prêdkoœæ normalna', zti ); // .
   Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__gra_wspó³czynnik_prêdkoœci__plus, 0, 'Gra prêdkoœci plus', zti ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__gra_wspó³czynnik_prêdkoœci__x_10, 0, 'Gra prêdkoœæ x 10', zti ); // .
 
   Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__mouse_look_active, 32, 'Kamera obracanie mysz¹ prze³¹cz', zti ); // Space.
 

@@ -21,13 +21,22 @@
   PixelsPerInch = 96
   TextHeight = 13
   object Opcje_Pionowy_Splitter: TSplitter
-    Left = 428
+    Left = 378
     Top = 0
     Width = 6
     Height = 962
     Align = alRight
     ExplicitLeft = 381
     ExplicitHeight = 462
+  end
+  object Pełny_Ekran__Widoczność_Splitter: TSplitter
+    Left = 0
+    Top = 0
+    Width = 1
+    Height = 962
+    Color = clBlack
+    ParentColor = False
+    Visible = False
   end
   object Gra_GLSceneViewer: TGLSceneViewer
     Left = 8
@@ -52,56 +61,76 @@
     OnExit = Gra_GLSceneViewerExit
   end
   object Radar_Panel: TPanel
-    Tag = 25
     Left = 0
     Top = 805
     Width = 370
     Height = 150
     Anchors = [akLeft, akBottom]
+    BevelOuter = bvNone
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 2
-    object Radar_Przyciski_Panel: TPanel
-      Left = 1
-      Top = 1
-      Width = 368
+    object Radar__Przyciski_Panel: TPanel
+      Left = 0
+      Top = 0
+      Width = 370
       Height = 30
       Align = alTop
       TabOrder = 0
-      object Radar_Skala_Etykieta_Label: TLabel
+      object Radar__Skala_Etykieta_Label: TLabel
         Left = 30
-        Top = 0
-        Width = 16
-        Height = 26
+        Top = 5
+        Width = 10
+        Height = 13
         Hint = 'Skala radaru.'
-        Caption = 'Skl'#13#10'rdu'
+        Caption = 'S.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
         ParentShowHint = False
         ShowHint = True
         WordWrap = True
       end
-      object Radar_Czułość_Etykieta_Label: TLabel
-        Left = 105
-        Top = 0
-        Width = 16
-        Height = 26
+      object Radar__Czułość_Etykieta_Label: TLabel
+        Left = 95
+        Top = 5
+        Width = 11
+        Height = 13
         Hint = 'Czu'#322'o'#347#263' radaru %.'
-        Caption = 'Cz'#322#13#10'rdu'
+        Caption = 'C.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
         ParentShowHint = False
         ShowHint = True
         WordWrap = True
       end
-      object Radar_Skala_SpinEdit: TSpinEdit
-        Left = 50
-        Top = 4
-        Width = 45
+      object Radar__Skala_SpinEdit: TSpinEdit
+        Left = 40
+        Top = 5
+        Width = 50
         Height = 22
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
         MaxValue = 999999
         MinValue = 1
+        ParentFont = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 2
-        Value = 150
-        OnChange = Radar_Skala_SpinEditChange
+        Value = 100
+        OnChange = Radar__Skala_SpinEditChange
       end
-      object Radar_Powiększ_Button: TButton
+      object Radar__Powiększ_Button: TButton
         Left = 0
         Top = 0
         Width = 25
@@ -111,9 +140,9 @@
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
-        OnClick = Radar_Wielkość_ButtonClick
+        OnClick = Radar__Wielkość_ButtonClick
       end
-      object Radar_Pomniejsz_Button: TButton
+      object Radar__Pomniejsz_Button: TButton
         Left = 0
         Top = 15
         Width = 25
@@ -123,38 +152,50 @@
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
-        OnClick = Radar_Wielkość_ButtonClick
+        OnClick = Radar__Wielkość_ButtonClick
       end
-      object Radar_Dane_Z_Radia_CheckBox: TCheckBox
-        Left = 170
+      object Radar__Dane_Z_Radia_CheckBox: TCheckBox
+        Left = 160
         Top = -2
         Width = 50
         Height = 17
         Hint = 'Prezentuj na radarze dane z radia.'
         Caption = 'Radio'
         Checked = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
         ParentShowHint = False
         ShowHint = True
         State = cbChecked
         TabOrder = 4
       end
-      object Radar_Czułość_SpinEdit: TSpinEdit
+      object Radar__Czułość_SpinEdit: TSpinEdit
         Tag = 100
-        Left = 125
-        Top = 4
-        Width = 40
+        Left = 110
+        Top = 5
+        Width = 50
         Height = 22
         Hint = 'Czu'#322'o'#347#263' radaru %.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
         Increment = 10
         MaxValue = 999999
         MinValue = 1
+        ParentFont = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 3
         Value = 100
       end
-      object Radar_Zmieniaj_Czułość_Wraz_Ze_Skalą_CheckBox: TCheckBox
-        Left = 170
+      object Radar__Zmieniaj_Czułość_Wraz_Ze_Skalą_CheckBox: TCheckBox
+        Left = 160
         Top = 13
         Width = 97
         Height = 17
@@ -166,8 +207,8 @@
         State = cbChecked
         TabOrder = 5
       end
-      object Radar_Dane_Z_Sonaru_CheckBox: TCheckBox
-        Left = 220
+      object Radar__Dane_Z_Sonaru_CheckBox: TCheckBox
+        Left = 210
         Top = -2
         Width = 50
         Height = 17
@@ -192,9 +233,9 @@
     end
   end
   object PageControl1: TPageControl
-    Left = 434
+    Left = 384
     Top = 0
-    Width = 350
+    Width = 400
     Height = 962
     ActivePage = O_Programie_TabSheet
     Align = alRight
@@ -203,21 +244,19 @@
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
+    MultiLine = True
     ParentFont = False
     TabOrder = 1
+    TabPosition = tpRight
     OnChange = PageControl1Change
     object Gra_TabSheet: TTabSheet
       Caption = 'Gra'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Gra_ScrollBox: TScrollBox
         Left = 0
         Top = 0
-        Width = 342
-        Height = 934
+        Width = 372
+        Height = 954
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -229,7 +268,7 @@
         object Wieloosobowe_Gra_GroupBox: TGroupBox
           Left = 0
           Top = 0
-          Width = 338
+          Width = 368
           Height = 75
           Align = alTop
           Caption = 'Wieloosobowe gra'
@@ -239,6 +278,8 @@
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
           object Wieloosobowe_Identyfikator_Gra_Etykieta_Label: TLabel
             Left = 10
@@ -263,9 +304,10 @@
           object Gra_Uruchamianie_Panel: TPanel
             Left = 2
             Top = 38
-            Width = 334
+            Width = 364
             Height = 35
             Align = alBottom
+            ParentColor = True
             TabOrder = 0
             object Gra_Rozpocznij_BitBtn: TBitBtn
               Left = 5
@@ -328,15 +370,26 @@
               TabOrder = 1
               OnClick = Gra_Zakończ_BitBtnClick
             end
+            object Gra_Pauza_Button: TButton
+              Left = 205
+              Top = 5
+              Width = 75
+              Height = 25
+              Caption = 'Pauza'
+              TabOrder = 2
+              OnClick = Gra_Pauza_ButtonClick
+            end
           end
         end
         object Gracz_Dane_GroupBox: TGroupBox
           Left = 0
           Top = 75
-          Width = 338
+          Width = 368
           Height = 115
           Align = alTop
           Caption = 'Gracz dane'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
           object Gracz_Grupa_Etykieta_Label: TLabel
             Left = 5
@@ -426,7 +479,7 @@
           object Gracz_Nazwa_Edit: TEdit
             Left = 2
             Top = 28
-            Width = 334
+            Width = 364
             Height = 21
             Align = alTop
             TabOrder = 0
@@ -553,19 +606,21 @@
         object Statek_GroupBox: TGroupBox
           Left = 0
           Top = 190
-          Width = 338
+          Width = 368
           Height = 190
           Align = alTop
           Caption = 'Statek'
+          ParentShowHint = False
           PopupMenu = Group_Box_PopupMenu
+          ShowHint = True
           TabOrder = 2
           DesignSize = (
-            338
+            368
             190)
           object Statek_ComboBox: TComboBox
             Left = 10
             Top = 20
-            Width = 210
+            Width = 240
             Height = 22
             Hint = 'Enter - utw'#243'rz (ponownie) wskazany statek.'
             Style = csOwnerDrawVariable
@@ -610,7 +665,7 @@
           object Statek_Opis_Memo: TMemo
             Left = 10
             Top = 50
-            Width = 316
+            Width = 346
             Height = 105
             Anchors = [akLeft, akTop, akRight, akBottom]
             Lines.Strings = (
@@ -724,7 +779,7 @@
             TabOrder = 7
           end
           object Statek__Samolot_ComboBox: TComboBox
-            Left = 230
+            Left = 260
             Top = 20
             Width = 100
             Height = 22
@@ -771,11 +826,13 @@
         object Gracze_Lista_GroupBox: TGroupBox
           Left = 0
           Top = 380
-          Width = 338
+          Width = 368
           Height = 200
           Align = alTop
           Caption = 'Gracze lista'
+          ParentShowHint = False
           PopupMenu = Group_Box_PopupMenu
+          ShowHint = True
           TabOrder = 3
           object Mapa_Label: TLabel
             Left = 2
@@ -796,7 +853,7 @@
           object Gracze_Lista_StringGrid: TStringGrid
             Left = 2
             Top = 41
-            Width = 334
+            Width = 364
             Height = 157
             Align = alClient
             RowCount = 2
@@ -811,20 +868,22 @@
         object SI_GroupBox: TGroupBox
           Left = 0
           Top = 580
-          Width = 338
+          Width = 368
           Height = 305
           Align = alTop
           Caption = 'SI'
           Enabled = False
+          ParentShowHint = False
           PopupMenu = Group_Box_PopupMenu
+          ShowHint = True
           TabOrder = 4
           DesignSize = (
-            338
+            368
             305)
           object SI__Nazwa_Etykieta_Label: TLabel
             Left = 2
             Top = 15
-            Width = 334
+            Width = 364
             Height = 13
             Align = alTop
             Caption = 'Nazwa'
@@ -840,7 +899,7 @@
           object SI__Statek_ComboBox: TComboBox
             Left = 10
             Top = 55
-            Width = 211
+            Width = 241
             Height = 22
             Style = csOwnerDrawVariable
             Anchors = [akLeft, akTop, akRight]
@@ -850,7 +909,7 @@
             OnKeyDown = SI__Statek_ComboBoxKeyDown
           end
           object SI__Dodaj_BitBtn: TBitBtn
-            Left = 245
+            Left = 275
             Top = 85
             Width = 35
             Height = 25
@@ -883,7 +942,7 @@
             AlignWithMargins = True
             Left = 5
             Top = 31
-            Width = 328
+            Width = 358
             Height = 21
             Hint = 
               'Ctrl + K - wstaw symbol kodu statku i losowej warto'#347#263' liczbowej ' +
@@ -904,7 +963,7 @@
           object SI__Schemat_GroupBox: TGroupBox
             Left = 2
             Top = 113
-            Width = 334
+            Width = 364
             Height = 190
             Align = alBottom
             Anchors = [akLeft, akTop, akRight, akBottom]
@@ -912,7 +971,7 @@
             Enabled = False
             TabOrder = 6
             DesignSize = (
-              334
+              364
               190)
             object SI__Schemat__Zastosuj__Pomiń__Statki_Pozycje_Początkowe_CheckBox: TCheckBox
               Left = 115
@@ -949,7 +1008,7 @@
             object SI__Schemat_ComboBox: TComboBox
               Left = 10
               Top = 20
-              Width = 313
+              Width = 343
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               DropDownCount = 30
@@ -990,7 +1049,7 @@
             object SI__Schemat_Opis_Memo: TMemo
               Left = 10
               Top = 50
-              Width = 313
+              Width = 343
               Height = 105
               Anchors = [akLeft, akTop, akRight, akBottom]
               Lines.Strings = (
@@ -1138,7 +1197,7 @@
             end
           end
           object SI__Kasuj_Wszystkie_BitBtn: TBitBtn
-            Left = 290
+            Left = 320
             Top = 85
             Width = 35
             Height = 25
@@ -1168,7 +1227,7 @@
             OnClick = SI__Kasuj_Wszystkie_BitBtnClick
           end
           object SI__Statek__Samolot_ComboBox: TComboBox
-            Left = 230
+            Left = 260
             Top = 55
             Width = 100
             Height = 22
@@ -1198,15 +1257,11 @@
     object Wieloosobowe_TabSheet: TTabSheet
       Caption = 'Wieloosobowe'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Wieloosobowe_ScrollBox: TScrollBox
         Left = 0
         Top = 0
-        Width = 342
-        Height = 934
+        Width = 372
+        Height = 954
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1218,10 +1273,12 @@
         object Wieloosobowe_GroupBox: TGroupBox
           Left = 0
           Top = 0
-          Width = 338
+          Width = 368
           Height = 215
           Align = alTop
           Caption = 'Wieloosobowe'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
           object Serwer_Adres_IP_Etykieta_Label: TLabel
             Left = 10
@@ -1236,6 +1293,12 @@
             Width = 62
             Height = 13
             Caption = 'Port serwera'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
           end
           object Hasło_Etykieta_Label: TLabel
             Left = 10
@@ -1360,7 +1423,7 @@
           object Wieloosobowe_Identyfikator_Edit: TEdit
             Left = 2
             Top = 192
-            Width = 334
+            Width = 364
             Height = 21
             Align = alBottom
             ReadOnly = True
@@ -1370,21 +1433,25 @@
         object Ląd_GroupBox: TGroupBox
           Left = 0
           Top = 215
-          Width = 338
+          Width = 368
           Height = 190
           Align = alTop
           Caption = 'Mapy'
+          ParentShowHint = False
           PopupMenu = Group_Box_PopupMenu
+          ShowHint = True
           TabOrder = 1
           DesignSize = (
-            338
+            368
             190)
           object Ląd_Elementy_Ilość_Label: TLabel
             Left = 280
             Top = 165
             Width = 21
             Height = 13
-            Hint = 'Ilo'#347#263' element'#243'w l'#261'du.'
+            Hint = 
+              'Ilo'#347#263' element'#243'w l'#261'du / ilo'#347#263' element'#243'w l'#261'du uwzgl'#281'dnianych przez' +
+              ' radar.'
             Anchors = [akLeft, akBottom]
             Caption = '<?>'
             ParentShowHint = False
@@ -1393,7 +1460,7 @@
           object Ląd_ComboBox: TComboBox
             Left = 10
             Top = 20
-            Width = 316
+            Width = 346
             Height = 22
             Style = csOwnerDrawVariable
             Anchors = [akLeft, akTop, akRight]
@@ -1434,7 +1501,7 @@
           object Ląd_Opis_Memo: TMemo
             Left = 10
             Top = 50
-            Width = 316
+            Width = 346
             Height = 105
             Anchors = [akLeft, akTop, akRight, akBottom]
             Lines.Strings = (
@@ -1519,19 +1586,21 @@
         object Statki_Pozycje_Początkowe_GroupBox: TGroupBox
           Left = 0
           Top = 405
-          Width = 338
+          Width = 368
           Height = 190
           Align = alTop
           Caption = 'Pozycje pocz'#261'tkowe statk'#243'w'
+          ParentShowHint = False
           PopupMenu = Group_Box_PopupMenu
+          ShowHint = True
           TabOrder = 2
           DesignSize = (
-            338
+            368
             190)
           object Statki_Pozycje_Początkowe_ComboBox: TComboBox
             Left = 10
             Top = 20
-            Width = 316
+            Width = 346
             Height = 22
             Style = csOwnerDrawVariable
             Anchors = [akLeft, akTop, akRight]
@@ -1572,7 +1641,7 @@
           object Statki_Pozycje_Początkowe_Opis_Memo: TMemo
             Left = 10
             Top = 50
-            Width = 316
+            Width = 346
             Height = 105
             Anchors = [akLeft, akTop, akRight, akBottom]
             Lines.Strings = (
@@ -1645,16 +1714,18 @@
         object Pokój_Rozmów_GroupBox: TGroupBox
           Left = 0
           Top = 595
-          Width = 338
+          Width = 368
           Height = 200
           Align = alTop
           Caption = 'Pok'#243'j rozm'#243'w'
+          ParentShowHint = False
           PopupMenu = Group_Box_PopupMenu
+          ShowHint = True
           TabOrder = 3
           object Pokój_Rozmów_Memo: TMemo
             Left = 2
             Top = 15
-            Width = 334
+            Width = 364
             Height = 133
             Align = alClient
             ReadOnly = True
@@ -1664,10 +1735,11 @@
           object Pokój_Rozmów_Przyciski_Panel: TPanel
             Left = 2
             Top = 148
-            Width = 334
+            Width = 364
             Height = 50
             Hint = 'Przytrzymaj i przeci'#261'gnij aby zmieni'#263' rozmiar.'
             Align = alBottom
+            ParentColor = True
             ParentShowHint = False
             ShowHint = True
             TabOrder = 1
@@ -1675,12 +1747,12 @@
             OnMouseMove = Pokój_Rozmów_Przyciski_PanelMouseMove
             OnMouseUp = Pokój_Rozmów_Przyciski_PanelMouseUp
             DesignSize = (
-              334
+              364
               50)
             object Pokój_Rozmów__Wiadomość_Edit: TEdit
               Left = 1
               Top = 1
-              Width = 332
+              Width = 362
               Height = 21
               Hint = 
                 'Enter - wy'#347'lij.'#13#10'Esc - gdy pok'#243'j rozm'#243'w jest widoczny na ekranie' +
@@ -1726,7 +1798,7 @@
               OnClick = Pokój_Rozmów__Wyślij_Wiadomość_ButtonClick
             end
             object Pokój_Rozmów__Ukryj_Button: TButton
-              Left = 295
+              Left = 325
               Top = 25
               Width = 25
               Height = 25
@@ -1741,7 +1813,7 @@
             object Pokój_Rozmów__Wyślij_Do__Odbiorca_Rodzaj_ComboBox: TComboBox
               Left = 60
               Top = 25
-              Width = 230
+              Width = 260
               Height = 22
               Hint = 'Wy'#347'lij wiadomo'#347#263' do wybranego adresata.'
               Style = csOwnerDrawFixed
@@ -1755,7 +1827,7 @@
                 '')
             end
             object Pokój_Rozmów_Przyciski__Rozmiar_Przeciągnij_Panel: TPanel
-              Left = 320
+              Left = 350
               Top = 25
               Width = 15
               Height = 25
@@ -1782,20 +1854,19 @@
     object Ustawienia_TabSheet: TTabSheet
       Caption = 'Ustawienia'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Ustawienia_Panel: TPanel
         Left = 0
         Top = 0
-        Width = 342
-        Height = 40
+        Width = 372
+        Height = 30
         Align = alTop
+        ParentColor = True
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
         object Ustawienia_Wczytaj_Button: TButton
           Left = 10
-          Top = 5
+          Top = 0
           Width = 75
           Height = 25
           Hint = 'Wczytaj ustawienia.'
@@ -1807,7 +1878,7 @@
         end
         object Ustawienia_Zapisz_Button: TButton
           Left = 110
-          Top = 5
+          Top = 0
           Width = 75
           Height = 25
           Hint = 'Zapisz ustawienia.'
@@ -1820,15 +1891,15 @@
       end
       object Ustawienia_ScrollBox: TScrollBox
         Left = 0
-        Top = 40
-        Width = 342
-        Height = 894
+        Top = 30
+        Width = 372
+        Height = 924
         Align = alClient
         TabOrder = 1
         OnMouseWheel = ScrollBoxMouseWheel
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Etykieta_Label: TLabel
           Left = 10
-          Top = 1310
+          Top = 1095
           Width = 162
           Height = 13
           Hint = 
@@ -1841,7 +1912,7 @@
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Label: TLabel
           Left = 280
-          Top = 1310
+          Top = 1095
           Width = 21
           Height = 13
           Hint = 
@@ -1854,7 +1925,7 @@
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Etykieta_Label: TLabel
           Left = 10
-          Top = 1285
+          Top = 1070
           Width = 129
           Height = 13
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
@@ -1864,7 +1935,7 @@
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Label: TLabel
           Left = 245
-          Top = 1285
+          Top = 1070
           Width = 21
           Height = 13
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
@@ -1874,14 +1945,16 @@
         end
         object Gra_Współczynnik_Prędkości_Etykieta_Label: TLabel
           Left = 10
-          Top = 685
+          Top = 580
           Width = 62
           Height = 13
           Caption = 'Pr'#281'dko'#347#263' gry'
+          ParentShowHint = False
+          ShowHint = True
         end
         object Kamera_Odległość_Maksymalna_Etykieta_Label: TLabel
           Left = 10
-          Top = 335
+          Top = 235
           Width = 84
           Height = 13
           Hint = 
@@ -1893,7 +1966,7 @@
         end
         object Kamera_Szybkość_Ruchu_Etykieta_Label: TLabel
           Left = 10
-          Top = 370
+          Top = 270
           Width = 112
           Height = 13
           Hint = 'Pr'#281'dko'#347#263' ruchu kamery.'
@@ -1903,7 +1976,7 @@
         end
         object Kamera_Szybkość_Ruchu_Label: TLabel
           Left = 230
-          Top = 370
+          Top = 270
           Width = 21
           Height = 13
           Hint = 'Pr'#281'dko'#347#263' ruchu kamery'
@@ -1913,7 +1986,7 @@
         end
         object Mysz_Czułość_Etykieta_Label: TLabel
           Left = 10
-          Top = 500
+          Top = 400
           Width = 62
           Height = 13
           Hint = 'Czu'#322'o'#347#263' myszy (pr'#281'dko'#347#263' ruchu myszy).'
@@ -1923,7 +1996,7 @@
         end
         object Mysz_Czułość_Label: TLabel
           Left = 180
-          Top = 500
+          Top = 400
           Width = 21
           Height = 13
           Hint = 'Czu'#322'o'#347#263' myszy (pr'#281'dko'#347#263' ruchu myszy) warto'#347#263' ustawiona.'
@@ -1933,7 +2006,7 @@
         end
         object Mysz_Czułość_Luneta_Etykieta_Label: TLabel
           Left = 10
-          Top = 530
+          Top = 430
           Width = 95
           Height = 13
           Hint = 
@@ -1945,7 +2018,7 @@
         end
         object Mysz_Czułość_Luneta_Label: TLabel
           Left = 210
-          Top = 530
+          Top = 430
           Width = 21
           Height = 13
           Hint = 
@@ -1955,53 +2028,28 @@
           ParentShowHint = False
           ShowHint = True
         end
-        object Celowanie_Precyzja_Obrót_Etykieta_Label: TLabel
+        object Celownik_Ekranowy__Wielkość_Etykieta_Label: TLabel
           Left = 10
-          Top = 95
-          Width = 149
+          Top = 120
+          Width = 120
           Height = 13
-          Hint = 
-            'Precyzja celowania obrotu broni.'#13#10'Gdy r'#243#380'nica mi'#281'dzy k'#261'tem wycel' +
-            'owania a obrotu broni jest mniejsza od tej warto'#347'ci uznaje, '#380'e b' +
-            'ro'#324'  jest nakierowana na cel.'
-          Caption = 'Celowanie precyzja obr'#243't broni'
+          Hint = 'Rozmiar celownika ekranowego (szeroko'#347#263', wysoko'#347#263', grubo'#347#263').'
+          Caption = 'Celownik wielko'#347#263' (s w g)'
           ParentShowHint = False
           ShowHint = True
         end
-        object Celowanie_Precyzja_Podniesienie_Etykieta_Label: TLabel
-          Left = 10
+        object Celownik_Ekranowy__Wielkość_Label: TLabel
+          Left = 305
           Top = 125
-          Width = 170
-          Height = 13
-          Hint = 
-            'Precyzja celowania podniesienia luf broni.'#13#10'Gdy r'#243#380'nica mi'#281'dzy k' +
-            #261'tem wycelowania a podniesienia luf broni jest mniejsza od tej w' +
-            'arto'#347'ci uznaje, '#380'e bro'#324'  jest nakierowana na cel.'
-          Caption = 'Celowanie precyzja podniesienie luf'
-          ParentShowHint = False
-          ShowHint = True
-        end
-        object Celownik_Wielkość_Etykieta_Label: TLabel
-          Left = 10
-          Top = 260
-          Width = 84
-          Height = 13
-          Caption = 'Celownik wielko'#347#263
-          ParentShowHint = False
-          ShowHint = False
-        end
-        object Celownik_Wielkość_Label: TLabel
-          Left = 215
-          Top = 260
           Width = 21
           Height = 13
           Caption = '<?>'
           ParentShowHint = False
-          ShowHint = False
+          ShowHint = True
         end
         object Morze_Wzburzenie_Etykieta_Label: TLabel
           Left = 10
-          Top = 465
+          Top = 365
           Width = 108
           Height = 13
           Hint = 
@@ -2011,9 +2059,9 @@
           ParentShowHint = False
           ShowHint = True
         end
-        object Radar_Rysowanie_Śladów__Statków_Sekundy_Etykieta_Label: TLabel
-          Left = 10
-          Top = 965
+        object Radar__Rysowanie_Śladów__Statków_Sekundy_Etykieta_Label: TLabel
+          Left = 180
+          Top = 780
           Width = 98
           Height = 13
           Hint = 'Czas w sekundach wy'#347'wietlania na radarze '#347'lad'#243'w statk'#243'w.'
@@ -2021,9 +2069,9 @@
           ParentShowHint = False
           ShowHint = True
         end
-        object Radar_Rysowanie_Śladów__Amunicji_Sekundy_Etykieta_Label: TLabel
-          Left = 10
-          Top = 995
+        object Radar__Rysowanie_Śladów__Amunicji_Sekundy_Etykieta_Label: TLabel
+          Left = 180
+          Top = 810
           Width = 98
           Height = 13
           Hint = 'Czas w sekundach wy'#347'wietlania na radarze '#347'lad'#243'w amunicji.'
@@ -2033,7 +2081,7 @@
         end
         object Mgła_Etykieta_Label: TLabel
           Left = 10
-          Top = 430
+          Top = 330
           Width = 23
           Height = 13
           Hint = 'Intensywno'#347#263' mg'#322'y.'
@@ -2043,7 +2091,7 @@
         end
         object Noc_Etykieta_Label: TLabel
           Left = 10
-          Top = 565
+          Top = 465
           Width = 49
           Height = 13
           Hint = 'Intensywno'#347#263' nocy.'
@@ -2051,9 +2099,9 @@
           ParentShowHint = False
           ShowHint = True
         end
-        object Radar_Ląd_Rysowanie_Zasięg_Etykieta_Label: TLabel
-          Left = 10
-          Top = 935
+        object Radar__Ląd_Rysowanie_Zasięg_Etykieta_Label: TLabel
+          Left = 180
+          Top = 750
           Width = 93
           Height = 13
           Hint = 'W jakim procencie zasi'#281'gu radaru rysowa'#263' l'#261'd.'
@@ -2063,7 +2111,7 @@
         end
         object Gra_Współczynnik_Trudności_Etykieta_Label: TLabel
           Left = 10
-          Top = 1340
+          Top = 1120
           Width = 101
           Height = 13
           Hint = 'W'#322'a'#347'ciwie '#322'atwo'#347#263' - im wi'#281'ksza warto'#347#263' tym SI gorzej celuje.'
@@ -2073,69 +2121,87 @@
         end
         object Gra_Współczynnik_Prędkości_Label: TLabel
           Left = 215
-          Top = 685
+          Top = 580
           Width = 21
           Height = 13
           Caption = '<?>'
+          ParentShowHint = False
+          ShowHint = True
+        end
+        object Celownik_Ekranowy__Kolor_Etykieta_Label: TLabel
+          Left = 10
+          Top = 145
+          Width = 110
+          Height = 13
+          Hint = 
+            'Kolor celownika ekranowego (czerwony, zielony, niebieski, przezr' +
+            'oczysto'#347#263').'
+          Caption = 'Celownik kolor (r g b a)'
+          ParentShowHint = False
+          ShowHint = True
         end
         object Gra_Współczynnik_Prędkośc__Tło_Wyróżnienie_Panel: TPanel
           Left = 75
-          Top = 680
+          Top = 575
           Width = 131
           Height = 32
           Color = 52942
           ParentBackground = False
-          TabOrder = 59
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 72
         end
         object Punkty_Życia_Wskaźnik____Tło_Wyróżnienie_Panel: TPanel
           Left = 5
-          Top = 780
+          Top = 675
           Width = 190
           Height = 67
           Color = clMoneyGreen
           ParentBackground = False
-          TabOrder = 58
+          TabOrder = 71
         end
         object Mgła__Tło_Wyróżnienie_Panel: TPanel
           Left = 40
-          Top = 425
+          Top = 325
           Width = 131
           Height = 32
           Color = clSilver
           ParentBackground = False
-          TabOrder = 57
+          TabOrder = 70
         end
         object Morze_Wzburzenie__Tło_Wyróżnienie_Panel: TPanel
           Left = 125
-          Top = 460
+          Top = 360
           Width = 131
           Height = 32
           Color = clSkyBlue
           ParentBackground = False
-          TabOrder = 56
+          TabOrder = 69
         end
         object Kamera_Szybkość_Ruchu__Tło_Wyróżnienie_Panel: TPanel
           Left = 130
-          Top = 365
+          Top = 265
           Width = 90
           Height = 31
           Color = 4210816
           ParentBackground = False
-          TabOrder = 55
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 68
         end
         object Noc__Tło_Wyróżnienie_Panel: TPanel
           Left = 65
-          Top = 560
+          Top = 460
           Width = 131
           Height = 32
           Color = clBlack
           ParentBackground = False
-          TabOrder = 54
+          TabOrder = 67
         end
         object Amunicja__Cel_Pozycja_Dla_Lotu_Parabolą_Wyświetl_CheckBox: TCheckBox
           Left = 10
           Top = 5
-          Width = 97
+          Width = 130
           Height = 17
           Hint = 
             'Dla artylerii wy'#347'wietlaj znacznik miejsca, w kt'#243're oddano strza'#322 +
@@ -2149,7 +2215,7 @@
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana__Skok_O_Edit: TEdit
           Left = 185
-          Top = 1310
+          Top = 1095
           Width = 80
           Height = 21
           Hint = 
@@ -2158,31 +2224,33 @@
             'y spos'#243'b.'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 51
+          TabOrder = 64
           Text = '0'
           OnChange = Amunicja__Zanurzenie_Głębokość_Zadana_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Amunicja__Zanurzenie_Głębokość_Zadana_Edit: TEdit
           Left = 150
-          Top = 1285
+          Top = 1070
           Width = 80
           Height = 21
           Hint = 'Do p'#322'yni'#281'cia na jakiej g'#322#281'boko'#347'ci powinna d'#261#380'y'#263' torpeda.'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 50
+          TabOrder = 63
           Text = '-0.3'
           OnChange = Amunicja__Zanurzenie_Głębokość_Zadana_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Amunicja_Rodzaj_GroupBox: TGroupBox
           Left = 10
-          Top = 1085
+          Top = 895
           Width = 120
           Height = 145
           Caption = 'Strzelaj z'
-          TabOrder = 46
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 59
           object ar_Artyleria_CheckBox: TCheckBox
             Left = 10
             Top = 20
@@ -2252,7 +2320,7 @@
           Left = 10
           Top = 30
           Width = 185
-          Height = 50
+          Height = 35
           Hint = 
             'Celuj r'#243'wnolegle do linii od statku do wskazanego punktu lub zbi' +
             'e'#380'nie do wskazanego punktu.'
@@ -2269,7 +2337,7 @@
         end
         object Dalmierz_CheckBox: TCheckBox
           Left = 10
-          Top = 290
+          Top = 170
           Width = 70
           Height = 17
           Hint = 
@@ -2278,23 +2346,25 @@
           Caption = 'Dalmierz'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 10
+          TabOrder = 14
         end
         object Gra_Współczynnik_Prędkości_SpinEdit: TSpinEdit
           Left = 80
-          Top = 685
+          Top = 580
           Width = 121
           Height = 22
           Increment = 10
           MaxValue = 999999
           MinValue = 1
-          TabOrder = 27
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 33
           Value = 100
           OnChange = Gra_Współczynnik_Prędkości_SpinEditChange
         end
         object Kamera_Odległość_Maksymalna_SpinEdit: TSpinEdit
           Left = 105
-          Top = 335
+          Top = 235
           Width = 80
           Height = 22
           Hint = 
@@ -2304,38 +2374,38 @@
           MinValue = 0
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 12
+          TabOrder = 17
           Value = 5
         end
         object Kamera_Szybkość_Ruchu_Edit: TEdit
           Left = 135
-          Top = 370
+          Top = 270
           Width = 80
           Height = 21
           Hint = 'Pr'#281'dko'#347#263' ruchu kamery'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 13
+          TabOrder = 18
           Text = '1.00'
           OnChange = Kamera_Szybkość_Ruchu_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Mysz_Czułość_Edit: TEdit
           Left = 90
-          Top = 500
+          Top = 400
           Width = 80
           Height = 21
           Hint = 'Czu'#322'o'#347#263' myszy (pr'#281'dko'#347#263' ruchu myszy).'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 20
+          TabOrder = 25
           Text = '10.00'
           OnChange = Mysz_Czułość_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Mysz_Czułość_Luneta_Edit: TEdit
           Left = 120
-          Top = 530
+          Top = 430
           Width = 80
           Height = 21
           Hint = 
@@ -2343,49 +2413,49 @@
             'iu lunety.'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 21
+          TabOrder = 26
           Text = '0.1'
           OnChange = Mysz_Czułość_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Obrót_Kąt_Zablokowany_Wskaźnik_CheckBox: TCheckBox
           Left = 10
-          Top = 595
+          Top = 500
           Width = 220
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik zablokowanego k'#261'ta obrotu broni.'
           Caption = 'Obr'#243't k'#261't zablokowany broni wska'#378'nik'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 24
+          TabOrder = 29
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Pokój_Rozmów__Informacja_Dodatkowa_CheckBox: TCheckBox
           Left = 10
-          Top = 755
+          Top = 650
           Width = 200
           Height = 17
           Hint = 'Wy'#347'wietlaj dialogi z pokoju rozm'#243'w na ekranie gry.'
           Caption = 'Pok'#243'j rozm'#243'w informuj na ekranie'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 30
+          TabOrder = 36
         end
         object Punkty_Życia_Wskaźnik__Gracz_CheckBox: TCheckBox
           Left = 10
-          Top = 785
+          Top = 680
           Width = 160
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkiem gracza.'
           Caption = 'Punkty '#380'ycia wska'#378'nik gracz'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 34
+          TabOrder = 41
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Punkty_Życia_Wskaźnik__Przeciwnik_CheckBox: TCheckBox
           Left = 10
-          Top = 805
+          Top = 700
           Width = 180
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkami przeciwnik'#243'w.'
@@ -2394,12 +2464,12 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 36
+          TabOrder = 42
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Punkty_Życia_Wskaźnik__Sojusznik_CheckBox: TCheckBox
           Left = 10
-          Top = 825
+          Top = 720
           Width = 180
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik punkt'#243'w '#380'ycia nad statkami sojusznik'#243'w.'
@@ -2408,83 +2478,50 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 37
+          TabOrder = 43
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Pokój_Rozmów__Na_Ekranie_CheckBox: TCheckBox
           Left = 10
-          Top = 715
+          Top = 610
           Width = 150
           Height = 17
           Hint = 'Wy'#347'wietlaj pok'#243'j rozm'#243'w na ekranie gry.'
           Caption = 'Pok'#243'j rozm'#243'w na ekranie'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 28
+          TabOrder = 34
           OnClick = Pokój_Rozmów__Na_Ekranie_CheckBoxClick
         end
-        object Celowanie_Precyzja_Obrót_SpinEdit: TSpinEdit
-          Left = 195
-          Top = 95
-          Width = 80
-          Height = 22
-          Hint = 
-            'Precyzja celowania obrotu broni.'#13#10'Gdy r'#243#380'nica mi'#281'dzy k'#261'tem wycel' +
-            'owania a obrotu broni jest mniejsza od tej warto'#347'ci uznaje, '#380'e b' +
-            'ro'#324'  jest nakierowana na cel.'
-          MaxValue = 9999999
-          MinValue = 0
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 3
-          Value = 10
-          OnChange = Statek_Parametry_Ustaw
-        end
-        object Celowanie_Precyzja_Podniesienie_SpinEdit: TSpinEdit
-          Left = 195
-          Top = 125
-          Width = 80
-          Height = 22
-          Hint = 
-            'Precyzja celowania podniesienia luf broni.'#13#10'Gdy r'#243#380'nica mi'#281'dzy k' +
-            #261'tem wycelowania a podniesienia luf broni jest mniejsza od tej w' +
-            'arto'#347'ci uznaje, '#380'e bro'#324'  jest nakierowana na cel.'
-          MaxValue = 9999999
-          MinValue = 0
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 4
-          Value = 5
-          OnChange = Statek_Parametry_Ustaw
-        end
-        object Celownik_Wielkość_Edit: TEdit
-          Left = 125
-          Top = 260
-          Width = 80
+        object Celownik_Ekranowy__Wysokość_Edit: TEdit
+          Left = 190
+          Top = 120
+          Width = 50
           Height = 21
+          Hint = 'Wysoko'#347#263'.'
           ParentShowHint = False
-          ShowHint = False
-          TabOrder = 9
-          Text = '0.25'
+          ShowHint = True
+          TabOrder = 8
+          Text = '10.0'
           OnChange = Celownik_Wielkość_EditChange
           OnKeyDown = Edit_Jako_Spin_KeyDown
         end
         object Celownik_Widoczność_CheckBox: TCheckBox
           Left = 10
-          Top = 205
+          Top = 95
           Width = 150
           Height = 17
           Caption = 'Celownik widoczno'#347#263
           Checked = True
           ParentShowHint = False
-          ShowHint = False
+          ShowHint = True
           State = cbChecked
-          TabOrder = 7
+          TabOrder = 5
           OnClick = Celownik_Widoczność_CheckBoxClick
         end
         object Celownik_Widoczność_Mouse_Look_Active_CheckBox: TCheckBox
-          Left = 10
-          Top = 230
+          Left = 140
+          Top = 95
           Width = 220
           Height = 17
           Hint = 'Wy'#347'wietlaj celownik w trybie obracania kamery mysz'#261'.'
@@ -2493,11 +2530,11 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 8
+          TabOrder = 6
         end
-        object Radar_Widoczność_CheckBox: TCheckBox
+        object Radar__Widoczność_CheckBox: TCheckBox
           Left = 10
-          Top = 855
+          Top = 750
           Width = 110
           Height = 17
           Hint = 'Wy'#347'wietlaj radar na ekranie.'
@@ -2506,12 +2543,12 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 38
-          OnClick = Radar_Widoczność_CheckBoxClick
+          TabOrder = 46
+          OnClick = Radar__Widoczność_CheckBoxClick
         end
         object Obrót_Kąt_Zablokowany_Strzał_Wskaźnik_CheckBox: TCheckBox
           Left = 10
-          Top = 625
+          Top = 520
           Width = 260
           Height = 17
           Hint = 
@@ -2520,23 +2557,23 @@
           Caption = 'Obr'#243't k'#261't zablokowany broni strza'#322' wska'#378'nik'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 25
+          TabOrder = 30
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Pełny_Ekran_CheckBox: TCheckBox
           Left = 10
-          Top = 654
+          Top = 549
           Width = 90
           Height = 17
           Caption = 'Pe'#322'ny ekran'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 26
+          TabOrder = 31
           OnClick = Pełny_Ekran_CheckBoxClick
         end
         object Morze_Wzburzenie_SpinEdit: TSpinEdit
           Left = 130
-          Top = 465
+          Top = 365
           Width = 121
           Height = 22
           Hint = 
@@ -2547,13 +2584,13 @@
           MinValue = 0
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 18
+          TabOrder = 23
           Value = 100
           OnChange = Morze_Wzburzenie_SpinEditChange
         end
-        object Radar_Rysowanie_Śladów__Statków_Sekundy_SpinEdit: TSpinEdit
-          Left = 115
-          Top = 965
+        object Radar__Rysowanie_Śladów__Statków_Sekundy_SpinEdit: TSpinEdit
+          Left = 285
+          Top = 780
           Width = 80
           Height = 22
           Hint = 'Czas w sekundach wy'#347'wietlania na radarze '#347'lad'#243'w statk'#243'w.'
@@ -2561,12 +2598,12 @@
           MinValue = 0
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 42
+          TabOrder = 51
           Value = 180
         end
-        object Radar_Rysowanie_Śladów__Amunicji_Sekundy_SpinEdit: TSpinEdit
-          Left = 115
-          Top = 995
+        object Radar__Rysowanie_Śladów__Amunicji_Sekundy_SpinEdit: TSpinEdit
+          Left = 285
+          Top = 810
           Width = 80
           Height = 22
           Hint = 'Czas w sekundach wy'#347'wietlania na radarze '#347'lad'#243'w amunicji.'
@@ -2574,12 +2611,12 @@
           MinValue = 0
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 43
+          TabOrder = 52
           Value = 30
         end
-        object Radar_Współrzędne_Kursora_CheckBox: TCheckBox
-          Left = 10
-          Top = 1051
+        object Radar__Współrzędne_Kursora_CheckBox: TCheckBox
+          Left = 180
+          Top = 850
           Width = 220
           Height = 17
           Hint = 
@@ -2594,24 +2631,24 @@
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 45
+          TabOrder = 56
         end
-        object Radar_Kamera_Kierunek_Wyświetlaj_CheckBox: TCheckBox
+        object Radar__Kamera_Kierunek_Wyświetlaj_CheckBox: TCheckBox
           Left = 10
-          Top = 905
+          Top = 810
           Width = 150
           Height = 17
           Hint = 'Wy'#347'wietlaj kierunek kamery na radarze.'
           Caption = 'Radar kamera wy'#347'wietlaj'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 40
-          OnClick = Radar_Widoczność_CheckBoxClick
+          TabOrder = 49
+          OnClick = Radar__Widoczność_CheckBoxClick
         end
-        object Radar_Współrzędna_Y_CheckBox: TCheckBox
+        object Radar__Współrzędna_Y_CheckBox: TCheckBox
           Left = 10
-          Top = 1026
-          Width = 150
+          Top = 850
+          Width = 130
           Height = 17
           Hint = 'Wy'#347'wietlaj wsp'#243#322'rz'#281'dn'#261' Y na radarze.'
           Caption = 'Radar wsp'#243#322'rz'#281'dna Y'
@@ -2623,11 +2660,11 @@
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 44
+          TabOrder = 55
         end
         object Dalmierz_Tryb_RadioGroup: TRadioGroup
           Left = 90
-          Top = 290
+          Top = 170
           Width = 185
           Height = 36
           Hint = 'Odleg'#322'o'#347#263' od kamery lub statku do wskazanego punktu.'
@@ -2639,19 +2676,19 @@
             'statku')
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 11
+          TabOrder = 15
         end
-        object Punkty_Życia_Wskaźnik__Sposób_Prezentowania_ComboBox: TComboBox
+        object Punkty_Życia_Wskaźnik__Prezentowanie_Sposób_ComboBox: TComboBox
           Left = 195
-          Top = 785
-          Width = 145
+          Top = 680
+          Width = 320
           Height = 22
           Hint = 'Spos'#243'b prezentowania punkt'#243'w '#380'ycia.'
           Style = csOwnerDrawFixed
           ItemIndex = 4
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 35
+          TabOrder = 44
           Text = 'punkty '#380'ycia i punkty '#380'ycia %'
           Items.Strings = (
             'brak'
@@ -2660,21 +2697,21 @@
             'punkty '#380'ycia %'
             'punkty '#380'ycia i punkty '#380'ycia %')
         end
-        object Radar_Broń_Zasięg_Wyświetlaj_CheckBox: TCheckBox
+        object Radar__Broń_Zasięg_Wyświetlaj_CheckBox: TCheckBox
           Left = 10
-          Top = 880
-          Width = 175
+          Top = 770
+          Width = 165
           Height = 17
           Hint = 'Wy'#347'wietlaj zasi'#281'g broni na radarze.'
           Caption = 'Radar bro'#324' zasi'#281'g wy'#347'wietlaj'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 39
-          OnClick = Radar_Widoczność_CheckBoxClick
+          TabOrder = 47
+          OnClick = Radar__Widoczność_CheckBoxClick
         end
         object Mgła_SpinEdit: TSpinEdit
           Left = 45
-          Top = 430
+          Top = 330
           Width = 121
           Height = 22
           Hint = 'Intensywno'#347#263' mg'#322'y.'
@@ -2682,13 +2719,13 @@
           MinValue = 0
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 16
+          TabOrder = 21
           Value = 0
           OnChange = Mgła_SpinEditChange
         end
         object Noc_SpinEdit: TSpinEdit
           Left = 70
-          Top = 565
+          Top = 465
           Width = 121
           Height = 22
           Hint = 'Intensywno'#347#263' nocy.'
@@ -2697,45 +2734,45 @@
           MinValue = -1
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 22
+          TabOrder = 27
           Value = 5000
           OnChange = Noc_SpinEditChange
         end
         object Mgła_Informacja_Dodatkowa_Pomiń_CheckBox: TCheckBox
           Left = 180
-          Top = 430
+          Top = 330
           Width = 97
           Height = 17
           Hint = 'Nie informuj o zmianach intensywno'#347'ci mg'#322'y.'
           Caption = 'Nie informuj'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 17
+          TabOrder = 22
         end
         object Noc_Informacja_Dodatkowa_Pomiń_CheckBox: TCheckBox
           Left = 205
-          Top = 565
+          Top = 465
           Width = 97
           Height = 17
           Hint = 'Nie informuj o zmianach intensywno'#347'ci nocy.'
           Caption = 'Nie informuj'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 23
+          TabOrder = 28
         end
         object Morze_Informacja_Dodatkowa_Pomiń_CheckBox: TCheckBox
           Left = 265
-          Top = 465
+          Top = 365
           Width = 97
           Height = 17
           Hint = 'Nie informuj o zmianach intensywno'#347'ci wzburzenia morza.'
           Caption = 'Nie informuj'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 19
+          TabOrder = 24
         end
         object Celowanie__Bronie_Osobno_CheckBox: TCheckBox
-          Left = 120
+          Left = 150
           Top = 5
           Width = 150
           Height = 17
@@ -2753,34 +2790,40 @@
         end
         object Celownicze_Linie_Unoś_CheckBox: TCheckBox
           Left = 10
-          Top = 155
+          Top = 70
           Width = 130
           Height = 17
           Caption = 'Celownicze linie uno'#347
-          TabOrder = 5
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
           OnClick = Celowanie_ParametryClick
         end
         object Światła_CheckBox: TCheckBox
           Left = 10
-          Top = 1235
+          Top = 1045
           Width = 97
           Height = 17
           Caption = #346'wiat'#322'a'
-          TabOrder = 48
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 61
           OnClick = Statek_Parametry_Ustaw
         end
         object Światła_Dodatkowe_CheckBox: TCheckBox
-          Left = 10
-          Top = 1260
+          Left = 80
+          Top = 1045
           Width = 120
           Height = 17
           Caption = #346'wiat'#322'a dodatkowe'
-          TabOrder = 49
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 62
           OnClick = Statek_Parametry_Ustaw
         end
-        object Radar_Ląd_Rysowanie_Zasięg_SpinEdit: TSpinEdit
-          Left = 115
-          Top = 935
+        object Radar__Ląd_Rysowanie_Zasięg_SpinEdit: TSpinEdit
+          Left = 285
+          Top = 750
           Width = 80
           Height = 22
           Hint = 'W jakim procencie zasi'#281'gu radaru rysowa'#263' l'#261'd.'
@@ -2789,12 +2832,12 @@
           MinValue = 0
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 41
+          TabOrder = 50
           Value = 100
         end
         object Lądowanie_Ułatwione_CheckBox: TCheckBox
           Left = 10
-          Top = 400
+          Top = 300
           Width = 150
           Height = 17
           Hint = 
@@ -2804,12 +2847,12 @@
           Caption = 'L'#261'dowanie u'#322'atwione'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 14
+          TabOrder = 19
           OnClick = Lądowanie_Ułatwione_CheckBoxClick
         end
         object Zanurzenie_Zadane_Przekraczaj_100_Procent_CheckBox: TCheckBox
           Left = 10
-          Top = 1370
+          Top = 1145
           Width = 220
           Height = 17
           Hint = 
@@ -2818,23 +2861,25 @@
           Caption = 'Zanurzenie zadane przekraczaj 100%'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 53
+          TabOrder = 66
           OnClick = Statek_Parametry_Ustaw
         end
         object Celownik_Bombowiec_Widoczność_CheckBox: TCheckBox
-          Left = 10
-          Top = 180
+          Left = 140
+          Top = 70
           Width = 200
           Height = 17
           Caption = 'Celownik bombowiec widoczno'#347#263
           Checked = True
+          ParentShowHint = False
+          ShowHint = True
           State = cbChecked
-          TabOrder = 6
+          TabOrder = 4
           OnClick = Elementy_Gracza_Dostosuj_CheckBoxClick
         end
         object Lotniskowiec_Samolot_Lądowanie_Informacje_CheckBox: TCheckBox
           Left = 150
-          Top = 400
+          Top = 300
           Width = 160
           Height = 17
           Hint = 
@@ -2843,15 +2888,17 @@
           Caption = 'Lotniskowiec s. l. informacje'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 15
+          TabOrder = 20
         end
         object SI_Statek_Gracza_GroupBox: TGroupBox
           Left = 140
-          Top = 1085
+          Top = 895
           Width = 170
           Height = 145
           Caption = 'SI statek gracza'
-          TabOrder = 47
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 60
           object SI__Pływa__Statek_Gracza_CheckBox: TCheckBox
             Left = 10
             Top = 20
@@ -2911,29 +2958,31 @@
         end
         object Gra_Współczynnik_Trudności_SpinEdit: TSpinEdit
           Left = 135
-          Top = 1340
+          Top = 1120
           Width = 121
           Height = 22
           MaxValue = 999999
           MinValue = 0
-          TabOrder = 52
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 65
           Value = 0
           OnChange = Gra_Współczynnik_Trudności_SpinEditChange
         end
         object Pokój_Rozmów__Data_Czas_Wyświetlaj_CheckBox: TCheckBox
           Left = 10
-          Top = 735
+          Top = 630
           Width = 200
           Height = 17
           Hint = 'Wy'#347'wietlaj dat'#281' i czas wys'#322'ania wiadomo'#347'ci.'
           Caption = 'Pok'#243'j rozm'#243'w data czas wy'#347'wietlaj'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 29
+          TabOrder = 35
         end
         object Pokój_Rozmów__Ignoruj__Si_Zagaduje_CheckBox: TCheckBox
           Left = 225
-          Top = 715
+          Top = 595
           Width = 190
           Height = 17
           Hint = 
@@ -2942,11 +2991,11 @@
           Caption = 'Pok'#243'j rozm'#243'w ignoruj SI zagaduje'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 31
+          TabOrder = 37
         end
         object Pokój_Rozmów__Ignoruj__Wysłał_Polecenie_CheckBox: TCheckBox
           Left = 225
-          Top = 755
+          Top = 635
           Width = 210
           Height = 17
           Hint = 
@@ -2955,11 +3004,11 @@
           Caption = 'Pok'#243'j rozm'#243'w ignoruj wys'#322'a'#322' polecenie'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 33
+          TabOrder = 39
         end
         object Pokój_Rozmów__Ignoruj__Trafienie_Informacja_CheckBox: TCheckBox
           Left = 225
-          Top = 735
+          Top = 615
           Width = 190
           Height = 17
           Hint = 
@@ -2968,52 +3017,258 @@
           Caption = 'Pok'#243'j rozm'#243'w ignoruj trafienia'
           ParentShowHint = False
           ShowHint = True
+          TabOrder = 38
+        end
+        object Pokój_Rozmów__Ignoruj__Si_Zakłóca_CheckBox: TCheckBox
+          Left = 225
+          Top = 655
+          Width = 210
+          Height = 17
+          Hint = 
+            'Nie wy'#347'wietlaj w pokoju rozm'#243'w wiadomo'#347'ci wysy'#322'anych jako inform' +
+            'acje o pr'#243'bach zak'#322#243'cania system'#243'w statk'#243'w.'
+          Caption = 'Pok'#243'j rozm'#243'w ignoruj pr'#243'by zak'#322#243'cania'
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 40
+        end
+        object Sonarowe_Ułatwienie_CheckBox: TCheckBox
+          Left = 10
+          Top = 870
+          Width = 130
+          Height = 17
+          Hint = 
+            'Dla '#322'odzi podwodnych wy'#347'wietlaj dane z ich sonar'#243'w na ekranie gr' +
+            'y.'
+          Caption = 'Sonarowe u'#322'atwienia'
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 57
+          OnClick = Współczynniki_Inne_Click
+        end
+        object Celownik_Ekranowy__Szerokość_Edit: TEdit
+          Left = 135
+          Top = 120
+          Width = 50
+          Height = 21
+          Hint = 'Szeroko'#347#263'.'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 7
+          Text = '10.0'
+          OnChange = Celownik_Wielkość_EditChange
+          OnKeyDown = Edit_Jako_Spin_KeyDown
+        end
+        object Celownik_Ekranowy__Grubość_Edit: TEdit
+          Left = 245
+          Top = 120
+          Width = 50
+          Height = 21
+          Hint = 'Grubo'#347#263'.'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 9
+          Text = '5'
+          OnChange = Celownik_Wielkość_EditChange
+          OnKeyDown = Edit_Jako_Spin_KeyDown
+        end
+        object Celownik_Ekranowy__Kolor__R_Edit: TEdit
+          Left = 135
+          Top = 145
+          Width = 50
+          Height = 21
+          Hint = 'Czerwony.'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 10
+          Text = '1.0'
+          OnChange = Celownik_Wielkość_EditChange
+          OnKeyDown = Edit_Jako_Spin_KeyDown
+        end
+        object Celownik_Ekranowy__Kolor__G_Edit: TEdit
+          Left = 190
+          Top = 145
+          Width = 50
+          Height = 21
+          Hint = 'Zielony.'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 11
+          Text = '0.0'
+          OnChange = Celownik_Wielkość_EditChange
+          OnKeyDown = Edit_Jako_Spin_KeyDown
+        end
+        object Celownik_Ekranowy__Kolor__B_Edit: TEdit
+          Left = 245
+          Top = 145
+          Width = 50
+          Height = 21
+          Hint = 'Niebieski.'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 12
+          Text = '0.0'
+          OnChange = Celownik_Wielkość_EditChange
+          OnKeyDown = Edit_Jako_Spin_KeyDown
+        end
+        object Celownik_Ekranowy__Kolor__A_Edit: TEdit
+          Left = 300
+          Top = 145
+          Width = 50
+          Height = 21
+          Hint = 'Przezroczysto'#347#263'.'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 13
+          Text = '0.25'
+          OnChange = Celownik_Wielkość_EditChange
+          OnKeyDown = Edit_Jako_Spin_KeyDown
+        end
+        object Pełny_Ekran__Znikające_Elementy_CheckBox: TCheckBox
+          Left = 115
+          Top = 549
+          Width = 185
+          Height = 17
+          Caption = 'Pe'#322'ny ekran - znikaj'#261'ce elementy'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 32
+          OnClick = Pełny_Ekran_CheckBoxClick
+        end
+        object Punkty_Życia_Wskaźnik__Efekty_Tryb_ComboBox: TComboBox
+          Left = 195
+          Top = 705
+          Width = 320
+          Height = 22
+          Hint = 
+            'Spos'#243'b prezentowania wska'#378'nika punkt'#243'w '#380'ycia wzgl'#281'dem efekt'#243'w sc' +
+            'eny.'
+          Style = csOwnerDrawFixed
+          ItemIndex = 2
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 45
+          Text = 'podlega efektom sceny'
+          OnChange = Punkty_Życia_Wskaźnik__Efekty_Tryb_ComboBoxChange
+          Items.Strings = (
+            'nie podlega efektom sceny'
+            'nie podlega efektom sceny tylko ponad powierzchni'#261' wody'
+            'podlega efektom sceny')
+        end
+        object Sonarowe_Ułatwienie__Klient_Zmieniać_Może_CheckBox: TCheckBox
+          Left = 155
+          Top = 870
+          Width = 240
+          Height = 17
+          Hint = 'Zezwalaj klientom na zmian'#281' tej opcji.'
+          Caption = 'Sonarowe u'#322'atwienia - klient mo'#380'e zmienia'#263
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 58
+          OnClick = Współczynniki_Inne_Click
+        end
+        object Radar__Dane_Z_Radia__Lądy_CheckBox: TCheckBox
+          Left = 10
+          Top = 790
+          Width = 160
+          Height = 17
+          Hint = 'Prezentuj na radarze dane z radia o l'#261'dach.'
+          Caption = 'Radar dane z radia o l'#261'dach'
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 48
+        end
+        object Radar__Skala_Y_Uwzględniaj_Ląd_CheckBox: TCheckBox
+          Left = 10
+          Top = 830
+          Width = 150
+          Height = 17
+          Hint = 
+            'Rysuj na radarze zarys l'#261'd'#243'w z uwzgl'#281'dnieniem wysoko'#347'ci obiekt'#243'w' +
+            '.'
+          Caption = 'Radar skala y uwzgl'#281'dniaj'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 53
+        end
+        object Radar__Przyciski_Panel__Ukrywaj_CheckBox: TCheckBox
+          Left = 180
+          Top = 830
+          Width = 180
+          Height = 17
+          Hint = 'Ukrywaj panel przycisk'#243'w na panelu radaru.'
+          Caption = 'Radar ukrywaj panel przycisk'#243'w'
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 54
+        end
+        object Fale_CheckBox: TCheckBox
+          Left = 10
+          Top = 205
+          Width = 50
+          Height = 17
+          Hint = 'Animacja falowania morza.'
+          Caption = 'Fale'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 16
+          OnClick = Fale_CheckBoxClick
         end
       end
     end
     object Pozostałe_TabSheet: TTabSheet
       Caption = 'Pozosta'#322'e'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Pozostałe_ScrollBox: TScrollBox
         Left = 0
         Top = 0
-        Width = 342
-        Height = 934
+        Width = 372
+        Height = 954
+        VertScrollBar.Position = 215
         Align = alClient
         TabOrder = 0
         object Projektowy_Tryb_CheckBox: TCheckBox
-          Left = 130
-          Top = 110
+          Left = 155
+          Top = -110
           Width = 97
           Height = 17
           Caption = 'Projektowy tryb'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 6
           OnClick = Projektowy_Tryb_CheckBoxClick
         end
         object Button1: TButton
-          Left = 15
-          Top = 875
+          Left = 210
+          Top = -205
           Width = 75
           Height = 25
           Caption = 'Button1'
-          TabOrder = 16
+          TabOrder = 20
           OnClick = Button1Click
         end
         object Statki_Zaprezentuj_GroupBox: TGroupBox
           Left = 5
-          Top = 170
-          Width = 450
-          Height = 135
+          Top = 540
+          Width = 310
+          Height = 300
           Caption = 'Zaprezentuj statki'
-          TabOrder = 9
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 18
           DesignSize = (
-            450
-            135)
+            310
+            300)
           object Statki_Zaprezentuj__Pozycja_Początkowa_Etykieta_Label: TLabel
             Left = 10
             Top = 20
@@ -3174,10 +3429,10 @@
             OnClick = Statki_Zaprezentuj__Zwolnij_BitBtnClick
           end
           object Statki_Zaprezentuj_CheckListBox: TCheckListBox
-            Left = 260
-            Top = 10
-            Width = 185
-            Height = 120
+            Left = 10
+            Top = 130
+            Width = 290
+            Height = 165
             Hint = 
               'Statki do zaprezentowania.'#13#10'Ctrl + A - zaznacz wszystko'#13#10'Ctrl + ' +
               'N - odznacz wszystko'#13#10'Ctrl + O - odwr'#243#263' zaznaczenie'
@@ -3191,7 +3446,7 @@
         end
         object Klatek_Na_Sekundę_Wyświetlaj_CheckBox: TCheckBox
           Left = 5
-          Top = 110
+          Top = -110
           Width = 120
           Height = 17
           Hint = 'Wy'#347'wietlaj ilo'#347#263' klatek na sekund'#281'.'
@@ -3201,21 +3456,25 @@
           TabOrder = 5
         end
         object Gwiazdy_Migotanie_CheckBox: TCheckBox
-          Left = 130
-          Top = 80
+          Left = 155
+          Top = -135
           Width = 120
           Height = 17
           Caption = 'Gwiazdy migotanie'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 4
           OnClick = Gwiazdy_Migotanie_CheckBoxClick
         end
         object Zmieniaj_Automatycznie_GroupBox: TGroupBox
           Left = 5
-          Top = 315
+          Top = 335
           Width = 330
           Height = 195
           Caption = 'Zmieniaj automatycznie'
-          TabOrder = 10
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 17
           object Zmieniaj_Automatycznie_Etykieta_Label: TLabel
             Left = 10
             Top = 20
@@ -3505,24 +3764,29 @@
         end
         object SOS_Nadaj_Button: TButton
           Left = 5
-          Top = 10
+          Top = -205
           Width = 75
           Height = 25
           Caption = 'SOS nadaj'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
           OnClick = SOS_Nadaj_ButtonClick
         end
         object Projektowy_Tryb__Grawitacja_Wyłącz_CheckBox: TCheckBox
           Left = 5
-          Top = 80
+          Top = -135
           Width = 110
           Height = 17
           Caption = 'Grawitacja wy'#322#261'cz'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 3
+          OnClick = Współczynniki_Inne_Click
         end
         object Delta_Czasu_Wyświetlaj_CheckBox: TCheckBox
           Left = 5
-          Top = 55
+          Top = -160
           Width = 97
           Height = 17
           Hint = 'Wy'#347'wietlaj warto'#347#263' delty czasu.'
@@ -3533,11 +3797,13 @@
         end
         object Lotniskowiec__Samoloty_Wszystkie__Punkty_Życia_Zero_GroupBox: TGroupBox
           Left = 5
-          Top = 520
+          Top = 20
           Width = 330
           Height = 65
           Caption = 'Lotniskowiec samoloty wszystkie odrzu'#263
-          TabOrder = 11
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 14
           object Lotniskowiec__Samoloty_Wszystkie__Punkty_Życia_Zero__Rodzaj_RadioGroup: TRadioGroup
             Left = 10
             Top = 20
@@ -3585,28 +3851,34 @@
           end
         end
         object SI__Pływa_CheckBox: TCheckBox
-          Left = 120
-          Top = 675
+          Left = 5
+          Top = -60
           Width = 97
           Height = 17
           Caption = 'SI p'#322'ywa'
           Checked = True
+          ParentShowHint = False
+          ShowHint = True
           State = cbChecked
-          TabOrder = 14
+          TabOrder = 9
+          OnClick = Współczynniki_Inne_Click
         end
         object SI__Strzela_CheckBox: TCheckBox
-          Left = 230
-          Top = 675
+          Left = 155
+          Top = -60
           Width = 97
           Height = 17
           Caption = 'SI strzela'
           Checked = True
+          ParentShowHint = False
+          ShowHint = True
           State = cbChecked
-          TabOrder = 15
+          TabOrder = 10
+          OnClick = Współczynniki_Inne_Click
         end
         object SI__Patrol_Blisko_Zostaje_CheckBox: TCheckBox
-          Left = 10
-          Top = 675
+          Left = 155
+          Top = -85
           Width = 97
           Height = 17
           Hint = 'Gdy SI odp'#322'ynie zbyt daleko od '#347'rodka obszaru patrolu.'
@@ -3615,11 +3887,12 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 13
+          TabOrder = 8
+          OnClick = Współczynniki_Inne_Click
         end
         object Projektowy_Tryb__Przesuwanie_Skaluj_CheckBox: TCheckBox
           Left = 5
-          Top = 140
+          Top = -85
           Width = 115
           Height = 17
           Hint = 
@@ -3632,11 +3905,13 @@
         end
         object Punkt_Naprowadzaj_GroupBox: TGroupBox
           Left = 5
-          Top = 590
+          Top = 250
           Width = 330
           Height = 75
           Caption = 'Punkt naprowadzaj'
-          TabOrder = 12
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 16
           object Punkt_Naprowadzaj__X_Etykieta_Label: TLabel
             Left = 10
             Top = 20
@@ -3663,8 +3938,14 @@
             Top = 20
             Width = 90
             Height = 22
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
             MaxValue = 0
             MinValue = 0
+            ParentFont = False
             TabOrder = 0
             Value = 0
             OnChange = Punkt_Naprowadzaj_SpinEditChange
@@ -3701,6 +3982,12 @@
             Height = 17
             Hint = 'Wy'#347'wietlaj wskaz'#243'wki dotarcia do wskazanego punktu.'
             Caption = 'Naprowadzaj'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 3
@@ -3776,12 +4063,14 @@
           end
         end
         object Pokój_Rozmów__Ignoruj_GroupBox: TGroupBox
-          Left = 10
-          Top = 701
+          Left = 5
+          Top = 91
           Width = 325
           Height = 150
           Caption = 'Pok'#243'j rozm'#243'w - ignorowanie wiadomo'#347'ci'
-          TabOrder = 17
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 15
           object Pokój_Rozmów__Ignoruj_CheckListBox: TCheckListBox
             Left = 2
             Top = 15
@@ -3799,8 +4088,8 @@
           end
         end
         object Projektowy_Tryb__Współrzędne_Sceny_Wyświetlaj_CheckBox: TCheckBox
-          Left = 130
-          Top = 140
+          Left = 5
+          Top = -35
           Width = 140
           Height = 17
           Hint = 
@@ -3809,11 +4098,11 @@
           Caption = 'Wsp'#243#322'rz'#281'dne wy'#347'wietlaj'
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 8
+          TabOrder = 11
         end
         object Fotograficzny_Tryb_CheckBox: TCheckBox
-          Left = 130
-          Top = 55
+          Left = 155
+          Top = -160
           Width = 120
           Height = 17
           Hint = 'Wy'#322#261'cza informacje ekranowe.'
@@ -3823,21 +4112,163 @@
           TabOrder = 2
           OnClick = Fotograficzny_Tryb_CheckBoxClick
         end
+        object Zakłócanie__Dozwolone_CheckBox: TCheckBox
+          Left = 155
+          Top = -35
+          Width = 97
+          Height = 17
+          Hint = 
+            'Zezwalaj na zak'#322#243'canie wrogich statk'#243'w komunikatami z pokoju roz' +
+            'm'#243'w.'#13#10'Dotyczy tylko statk'#243'w SI i statk'#243'w graczy, kt'#243'rymi aktualn' +
+            'ie p'#322'ywa SI.'
+          Caption = 'Zak'#322#243'canie'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 12
+          OnClick = Współczynniki_Inne_Click
+        end
+        object Zakłócanie__Graczy_Nie_SI_Dozwolone_CheckBox: TCheckBox
+          Left = 5
+          Top = -10
+          Width = 115
+          Height = 17
+          Hint = 
+            'Zezwalaj r'#243'wnie'#380' na zak'#322#243'canie wrogich statk'#243'w graczy (komunikat' +
+            'ami z pokoju rozm'#243'w).'
+          Caption = 'Zak'#322#243'canie graczy'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 13
+          OnClick = Współczynniki_Inne_Click
+        end
+        object Do_Wygaszenia_Panel: TPanel
+          Left = 10
+          Top = 850
+          Width = 305
+          Height = 100
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentColor = True
+          ParentFont = False
+          TabOrder = 19
+          object Celowanie_Precyzja__Obrót_Etykieta_Label: TLabel
+            Left = 5
+            Top = 5
+            Width = 149
+            Height = 13
+            Hint = 
+              'Precyzja celowania obrotu broni.'#13#10'Gdy r'#243#380'nica mi'#281'dzy k'#261'tem wycel' +
+              'owania a obrotu broni jest mniejsza od tej warto'#347'ci uznaje, '#380'e b' +
+              'ro'#324'  jest nakierowana na cel.'
+            Caption = 'Celowanie precyzja obr'#243't broni'
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object Celowanie_Precyzja__Podniesienie_Etykieta_Label: TLabel
+            Left = 5
+            Top = 30
+            Width = 170
+            Height = 13
+            Hint = 
+              'Precyzja celowania podniesienia luf broni.'#13#10'Gdy r'#243#380'nica mi'#281'dzy k' +
+              #261'tem wycelowania a podniesienia luf broni jest mniejsza od tej w' +
+              'arto'#347'ci uznaje, '#380'e bro'#324'  jest nakierowana na cel.'
+            Caption = 'Celowanie precyzja podniesienie luf'
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object Celowanie_Precyzja__Falowanie_Niwelowanie_Etykieta_Label: TLabel
+            Left = 5
+            Top = 55
+            Width = 203
+            Height = 13
+            Hint = 
+              'Gdy r'#243#380'nica mi'#281'dzy k'#261'tem wycelowania a podniesienia luf broni je' +
+              'st mniejsza od tej warto'#347'ci pr'#243'buje niwelowa'#263' wp'#322'yw falowania mo' +
+              'rza na uniesienie luf.'
+            Caption = 'Celowanie precyzja niwelowanie falowania'
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object Celowanie_Precyzja__Obrót_SpinEdit: TSpinEdit
+            Left = 215
+            Top = 5
+            Width = 80
+            Height = 22
+            Hint = 
+              'Precyzja celowania obrotu broni.'#13#10'Gdy r'#243#380'nica mi'#281'dzy k'#261'tem wycel' +
+              'owania a obrotu broni jest mniejsza od tej warto'#347'ci uznaje, '#380'e b' +
+              'ro'#324'  jest nakierowana na cel.'
+            MaxValue = 9999999
+            MinValue = 0
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            Value = 0
+            OnChange = Statek_Parametry_Ustaw
+          end
+          object Celowanie_Precyzja__Podniesienie_SpinEdit: TSpinEdit
+            Left = 215
+            Top = 30
+            Width = 80
+            Height = 22
+            Hint = 
+              'Precyzja celowania podniesienia luf broni.'#13#10'Gdy r'#243#380'nica mi'#281'dzy k' +
+              #261'tem wycelowania a podniesienia luf broni jest mniejsza od tej w' +
+              'arto'#347'ci uznaje, '#380'e bro'#324'  jest nakierowana na cel.'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            MaxValue = 9999999
+            MinValue = 0
+            ParentFont = False
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 1
+            Value = 0
+            OnChange = Statek_Parametry_Ustaw
+          end
+          object Celowanie_Precyzja__Falowanie_Niwelowanie_SpinEdit: TSpinEdit
+            Left = 215
+            Top = 55
+            Width = 80
+            Height = 22
+            Hint = 
+              'Gdy r'#243#380'nica mi'#281'dzy k'#261'tem wycelowania a podniesienia luf broni je' +
+              'st mniejsza od tej warto'#347'ci pr'#243'buje niwelowa'#263' wp'#322'yw falowania mo' +
+              'rza na uniesienie luf.'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            MaxValue = 9999999
+            MinValue = 0
+            ParentFont = False
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 2
+            Value = 2
+            OnChange = Statek_Parametry_Ustaw
+          end
+        end
       end
     end
     object Statystyki_TabSheet: TTabSheet
       Caption = 'Statystyki'
       ImageIndex = 7
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Statystyki_StringGrid: TStringGrid
         Left = 0
         Top = 41
-        Width = 342
-        Height = 893
+        Width = 372
+        Height = 913
         Align = alClient
+        Color = clWhite
         RowCount = 2
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goFixedRowClick]
         TabOrder = 0
@@ -3849,15 +4280,18 @@
       object Statystyki_Panel: TPanel
         Left = 0
         Top = 0
-        Width = 342
+        Width = 372
         Height = 41
         Align = alTop
+        ParentColor = True
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
         DesignSize = (
-          342
+          372
           41)
         object Statystyki_Wiersz_Numer_Label: TLabel
-          Left = 280
+          Left = 310
           Top = 5
           Width = 52
           Height = 13
@@ -3866,6 +4300,7 @@
           BiDiMode = bdLeftToRight
           Caption = '<?> / <?>'
           ParentBiDiMode = False
+          ExplicitLeft = 280
         end
         object Statystyki_Pomoc_Label: TLabel
           Left = 170
@@ -3880,7 +4315,13 @@
             'ia zadane amunicja w tym sojusznikom'#13#10'Obra'#380'enia zadane taranowan' +
             'ie'#13#10'Obra'#380'enia zadane taranowanie w tym sojusznikom'#13#10'Taranowania ' +
             'ilo'#347#263#13#10'Taranowania ilo'#347#263' sojusznik'#243'w'#13#10'Trafienia'#13#10'Zatoni'#281'cia'#13#10'Zat' +
-            'opienia'#13#10'Zatopienia w tym sojusznik'#243'w'#13#10'Celno'#347#263' %'
+            'opienia'#13#10'Zatopienia w tym sojusznik'#243'w'#13#10'Celno'#347#263' %'#13#10'Czas do zatoni' +
+            #281'cia najkr'#243'tszy [mmm:ss]'#13#10'Czas do zatoni'#281'cia najd'#322'u'#380'szy [mmm:ss]' +
+            #13#10'Czas do zatoni'#281'cia '#347'redni [mmm:ss]'#13#10'Zak'#322#243'cenia udane'#13#10'Zak'#322#243'cen' +
+            'ia nieudane'#13#10'Zak'#322#243'cenia odbite cudze (ilo'#347#263' udanych odbi'#263' wrogic' +
+            'h pr'#243'b zak'#322#243'cenia)'#13#10'Zak'#322#243'cenia odbite w'#322'asne (ilo'#347#263' w'#322'asnych pr'#243 +
+            'b zak'#322#243'cenia, kt'#243're zosta'#322'y odbite)'#13#10'Obra'#380'enia otrzymane z zak'#322#243 +
+            'ce'#324#13#10'Odnawianie zasob'#243'w ilo'#347#263' razy'
           Caption = '(?)'
           ParentShowHint = False
           ShowHint = True
@@ -3908,6 +4349,22 @@
           ShowHint = True
           TabOrder = 1
         end
+        object Statystyki__Rozmiar_Zakładki_Poszerz_CheckBox: TCheckBox
+          Left = 217
+          Top = 5
+          Width = 100
+          Height = 25
+          Hint = 
+            'Podczas prze'#322#261'czania zak'#322'adki na statystyki zwi'#281'kszaj szeroko'#347#263' ' +
+            'panelu zak'#322'adek konfiguracji.'
+          Caption = 'Rozmiar zak'#322'adki poszerz'
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 2
+          WordWrap = True
+        end
       end
     end
     object Klawiatura_Konfiguracja_TabSheet: TTabSheet
@@ -3926,7 +4383,7 @@
       object Klawiatura_Konfiguracja__Przyciski_Panel: TPanel
         Left = 0
         Top = 0
-        Width = 342
+        Width = 372
         Height = 35
         Align = alTop
         Font.Charset = DEFAULT_CHARSET
@@ -3934,7 +4391,10 @@
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
+        ParentColor = True
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
         object Klawiatura_Konfiguracja__Pomoc_Label: TLabel
           Left = 580
@@ -4094,36 +4554,35 @@
     end
     object Log_TabSheet: TTabSheet
       Caption = 'Log'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Log_Memo: TMemo
         Left = 0
         Top = 0
-        Width = 342
-        Height = 934
+        Width = 372
+        Height = 954
         Align = alClient
         Lines.Strings = (
           'Log')
+        ParentShowHint = False
         ScrollBars = ssBoth
+        ShowHint = True
         TabOrder = 0
+        OnKeyDown = Log_MemoKeyDown
       end
     end
     object O_Programie_TabSheet: TTabSheet
       Caption = 'O programie'
       ImageIndex = 6
       DesignSize = (
-        342
-        934)
+        372
+        954)
       object O_Programie_Label: TLabel
         Left = 0
         Top = 0
-        Width = 342
+        Width = 372
         Height = 234
         Align = alTop
         Caption = 
-          'Statki z Eris Kallisti Dyskordia'#13#10'wersja 2022.11.13.'#13#10'W produkcj' +
+          'Statki z Eris Kallisti Dyskordia'#13#10'wersja 2022.12.11.'#13#10'W produkcj' +
           'i.'#13#10#13#10'MIT License'#13#10#13#10'Copyright (c) 2017 Jacek Mulawka'#13#10#13#10'j.mulaw' +
           'ka@interia.pl'#13#10#13#10'https://github.com/jacek-mulawka'#13#10#13#10#13#10'Program j' +
           'est darmowy, udost'#281'pniony w postaci takiej jakiej jest wraz ze w' +
@@ -4132,9 +4591,10 @@
           'wszelkie szkody (w'#322'asne i niew'#322'asne) materialne i niematerialne ' +
           'oraz utrat'#281' danych w zwi'#261'zku z u'#380'ywaniem programu.'
         WordWrap = True
+        ExplicitWidth = 368
       end
       object Logo_Image: TImage
-        Left = 300
+        Left = 330
         Top = 0
         Width = 43
         Height = 41
@@ -8424,6 +8884,7 @@
           1B340000000000000000000000000000000000000000F81FAC41E007AC41C003
           AC418001AC418001AC410000AC410000AC410000AC410000AC410000AC410000
           AC418001AC418001AC41C003AC41E007AC41F01FAC41}
+        ExplicitLeft = 300
       end
     end
   end
@@ -8463,6 +8924,7 @@
       object Punkt_Naprowadzaj_GLArrowLine: TGLArrowLine
         Material.FrontProperties.Ambient.Color = {0000803F0000803F0000803F0000803F}
         Material.FrontProperties.Diffuse.Color = {0000803F0000803F0000803F0000803F}
+        Material.MaterialOptions = [moIgnoreFog, moNoLighting]
         Position.Coordinates = {0000000000000000000020410000803F}
         Pickable = False
         BottomRadius = 0.050000000745058060
@@ -8526,31 +8988,15 @@
       Height = 1.000000000000000000
       Width = 1.000000000000000000
     end
-    object GLWaterPlane1: TGLWaterPlane
-      Scale.Coordinates = {0000C8420000803F0000C84200000000}
-      Visible = False
-      Pickable = False
-      RainTimeInterval = 100
-      RainForce = 25.000000000000000000
-      Viscosity = 1.000000000000000000
-      Elastic = 10.000000000000000000
-      Resolution = 256
-      SimulationFrequency = 30.000000000000000000
-    end
     object Gra_Obiekty_GLDummyCube: TGLDummyCube
       Pickable = False
       CubeSize = 1.000000000000000000
     end
     object Celowniczy_GLDummyCube: TGLDummyCube
+      Visible = False
       Pickable = False
       CubeSize = 0.250000000000000000
       VisibleAtRunTime = True
-    end
-    object Celownicza_GLSphere: TGLSphere
-      Material.FrontProperties.Emission.Color = {CFBC3C3EA19E9E3ECFBC3C3E0000803F}
-      Visible = False
-      Pickable = False
-      Radius = 0.500000000000000000
     end
     object Słońce_GLDummyCube: TGLDummyCube
       Direction.Coordinates = {0000000000000000000080BF00000000}
@@ -8594,6 +9040,18 @@
         00020006164772615F474C436F6C6C6973696F6E4D616E6167657202030200}
       CubeSize = {0000803F0AD7233C0000803F}
     end
+    object Fale_GLTerrainRenderer: TGLTerrainRenderer
+      Direction.Coordinates = {000000000000803F0000000000000000}
+      Up.Coordinates = {0000000000000000000080BF00000000}
+      Visible = False
+      Pickable = False
+      HeightDataSource = Fale_GLCustomHDS
+      TilesPerTexture = 1.000000000000000000
+      MaterialLibrary = Fale_GLMaterialLibrary
+      OnGetTerrainBounds = Fale_GLTerrainRendererGetTerrainBounds
+      OnHeightDataPostRender = Fale_GLTerrainRendererHeightDataPostRender
+      ContourWidth = 0
+    end
     object Punkt_Naprowadzaj_GLDummyCube: TGLDummyCube
       ShowAxes = True
       Pickable = False
@@ -8633,15 +9091,20 @@
       Material.FrontProperties.Diffuse.Color = {6891AD3E46B6F33ED34D423F0000403F}
       Material.FrontProperties.Emission.Color = {00000000000000000000000000000000}
       Material.BlendingMode = bmCustom
+      Material.MaterialOptions = [moNoLighting]
       Position.Coordinates = {0000164300001643000000000000803F}
       Pickable = False
       Rotation = 0.000000000000000000
+    end
+    object Sonarowe_Ułatwienie_GLDummyCube: TGLDummyCube
+      CubeSize = 1.000000000000000000
     end
     object Informacje_Główne_GLHUDSprite: TGLHUDSprite
       Material.FrontProperties.Ambient.Color = {00000000000000000000000000000000}
       Material.FrontProperties.Diffuse.Color = {00000000F8FEFE3E0000803F0000803E}
       Material.FrontProperties.Emission.Color = {00000000000000000000000000000000}
       Material.BlendingMode = bmCustom
+      Material.MaterialOptions = [moNoLighting]
       Pickable = False
       Width = 160.000000000000000000
       Height = 160.000000000000000000
@@ -8652,6 +9115,7 @@
       Material.FrontProperties.Diffuse.Color = {00000000DBF9FE3E0000803F0000803E}
       Material.FrontProperties.Emission.Color = {00000000000000000000000000000000}
       Material.BlendingMode = bmCustom
+      Material.MaterialOptions = [moNoLighting]
       Position.Coordinates = {0080894300808943000000000000803F}
       Pickable = False
       Width = 50.000000000000000000
@@ -8698,6 +9162,27 @@
       TopArrowHeadRadius = 0.200000002980232200
       BottomArrowHeadHeight = 0.500000000000000000
       BottomArrowHeadRadius = 0.200000002980232200
+    end
+    object Celownik_Ekranowy__Dół_GLHUDSprite: TGLHUDSprite
+      Material.FrontProperties.Ambient.Color = {00000000000000000000000000000000}
+      Material.FrontProperties.Diffuse.Color = {0000803F00000000000000000000803E}
+      Material.FrontProperties.Emission.Color = {00000000000000000000000000000000}
+      Material.BlendingMode = bmCustom
+      Material.MaterialOptions = [moNoLighting]
+      Position.Coordinates = {0000C8420000C842000000000000803F}
+      Pickable = False
+      Width = 20.000000000000000000
+      Height = 10.000000000000000000
+      Rotation = 0.000000000000000000
+      object Celownik_Ekranowy__Góra_GLHUDSprite: TGLHUDSprite
+        Rotation = 0.000000000000000000
+      end
+      object Celownik_Ekranowy__Lewo_GLHUDSprite: TGLHUDSprite
+        Rotation = 0.000000000000000000
+      end
+      object Celownik_Ekranowy__Prawo_GLHUDSprite: TGLHUDSprite
+        Rotation = 0.000000000000000000
+      end
     end
   end
   object Gra_GLCadencer: TGLCadencer
@@ -8773,7 +9258,7 @@
     InnerColor.Color = {00000000F8FEFE3E0000803F0000803F}
     OuterColor.Color = {EBE0E03EE4DB5B3FE4DB5B3F0000803F}
     FireDensity = 0.600000023841857900
-    FireEvaporation = 0.860000014305114800
+    FireEvaporation = 0.860000014305114700
     ParticleLife = 2
     FireBurst = 1.000000000000000000
     FireRadius = 0.100000001490116100
@@ -8781,8 +9266,8 @@
     Paused = False
     ParticleInterval = 0.039999999105930330
     UseInterval = True
-    Left = 115
-    Top = 571
+    Left = 280
+    Top = 591
   end
   object Efekt__Wpadnięcie_Do_Wody_GLPolygonPFXManager: TGLPolygonPFXManager
     Cadencer = Gra_GLCadencer
@@ -8801,8 +9286,8 @@
         LifeTime = 3.500000000000000000
         SizeScale = 1.000000000000000000
       end>
-    Left = 275
-    Top = 541
+    Left = 125
+    Top = 566
   end
   object Efekt__Ogień_GLFireFXManager: TGLFireFXManager
     Cadencer = Gra_GLCadencer
@@ -9182,7 +9667,7 @@
   object Group_Box_PopupMenu: TPopupMenu
     OnPopup = Group_Box_PopupMenuPopup
     Left = 55
-    Top = 650
+    Top = 685
     object Group_Box_Popup_Menu__Wielkość_Domyślna_MenuItem: TMenuItem
       Caption = 'Wielko'#347#263' domy'#347'lna'
       OnClick = Group_Box_Popup_Menu_MenuItemClick
@@ -9242,8 +9727,8 @@
         LifeTime = 3.000000000000000000
         SizeScale = 1.000000000000000000
       end>
-    Left = 300
-    Top = 480
+    Left = 110
+    Top = 510
   end
   object Efekt__Element_Uszkodzenie_GLThorFXManager: TGLThorFXManager
     Target.Coordinates = {000000000000C03F0000000000000000}
@@ -9299,7 +9784,304 @@
         LifeTime = 1.500000000000000000
         SizeScale = 0.100000001490116100
       end>
-    Left = 115
-    Top = 510
+    Left = 280
+    Top = 535
+  end
+  object Efekt__Sonarowe_Ułatwienie_GLFireFXManager: TGLFireFXManager
+    FireDir.Coordinates = {000000000AD7233C0000000000000000}
+    InitialDir.Coordinates = {00000000000000000000000000000000}
+    Cadencer = Gra_GLCadencer
+    ParticleSize = 0.100000001490116100
+    InnerColor.Color = {0000803F0000803F0000803F0000803F}
+    OuterColor.Color = {986E923E00000000BC74133F0000803E}
+    FireDensity = 5.000000000000000000
+    FireEvaporation = 1.000000000000000000
+    FireBurst = 0.100000001490116100
+    FireRadius = 1.000000000000000000
+    Disabled = False
+    Paused = False
+    ParticleInterval = 0.100000001490116100
+    UseInterval = True
+    Left = 260
+    Top = 476
+  end
+  object Fale_GLHeightTileFileHDS: TGLHeightTileFileHDS
+    MaxPoolSize = 0
+    Left = 330
+    Top = 160
+  end
+  object Fale_GLCustomHDS: TGLCustomHDS
+    MaxPoolSize = 0
+    OnStartPreparingData = Fale_GLCustomHDSStartPreparingData
+    Left = 330
+    Top = 100
+  end
+  object Fale_GLMaterialLibrary: TGLMaterialLibrary
+    Materials = <
+      item
+        Name = 'Woda'
+        Tag = 0
+        Material.BlendingMode = bmTransparency
+        Material.Texture.Image.Picture.Data = {
+          0A544A504547496D616765731F0000FFD8FFE000104A46494600010101006000
+          600000FFDB00430006040506050406060506070706080A100A0A09090A140E0F
+          0C1017141818171416161A1D251F1A1B231C1616202C20232627292A29191F2D
+          302D283025282928FFDB0043010707070A080A130A0A13281A161A2828282828
+          2828282828282828282828282828282828282828282828282828282828282828
+          28282828282828282828282828FFC00011080200020003012200021101031101
+          FFC4001800010101010100000000000000000000000100020306FFC400291000
+          02020202020201050003010000000000011121314102615171128122324291A1
+          B1C1D1F0E1FFC4001801010101010100000000000000000000000001020506FF
+          C4001A110101010101010100000000000000000000011131215141FFDA000C03
+          010002110311003F00F5664D139D1E9B1C42B25124DD7F459AB0CB349D2FE04A
+          524AA5F893332D42F721A68C9A20159259010CB3FBB1624431A64D045CC929D6
+          00D419FDABE3B340DF4E432A318FB205CB0B6C034D1045BBFA1022232DBC2BED
+          80FC5FD0AE30A893B0BF926B4311A5440EF92B1083FC223235A6965D11114464
+          861CCC9068A2992B5799C137748321AA49A14EBA04A14EFC68A1A8874045EC88
+          634BE2E66682053CC87299A74310C5C9352D92C16E05154E4965D8256C9282A9
+          073A03441250894C597E922488206365F21F91701A2D95CF4414426BCA14E48B
+          D14267964503C532543828904E5E04AA88C9A20A2FB160D5CCB43321901134D5
+          0845A61A42D7DB2929188C273C9468DB0BBAF438100F3316BB049CB354F0C828
+          E2E644B93A983206FD04F4C439290CA0812D0683BC48B98A08B9B100E3D8BC86
+          CAE6D8A8959299B881D94954BA016AD32753E08C852A4438CBB7F4200464D068
+          D649797B206B321940DB9A2E336F97D0CF41A5BD8A72A82FC95F8A0CB23F1DE6
+          40834DA4453A26C322E6C214871CDC8DEFF80D03464760237265CBC51A9FE432
+          991601D39026AC4B2A416E7200E65409190D19538122281010F82048CDFCAE6F
+          06808745FD1579B0CB0DDA9A42AB03AB10D2D96825C7621960D2B71E0C9A0D05
+          972311808FCA66FC094464D04DC43204889CE860517B09AFE843230E814D9AC2
+          ECCB957002495871EF62372B4CC7CB2BD0C38D148816888C8A344517320A7580
+          34D194E126949A098D377A0C9796D52F0416E2508195D9615FF20E7489727283
+          4D24F3846452F14251139950A84CC36E5AC1196B081B718819B076801274D960
+          554541069193660928D13FB726479295D14530E6257942EE2512C54A10CB0DBE
+          3A93418C0EC348C9A09B146A1CE489F952419041B10D104E45D82501920E7457
+          38A2729812542A62CB059C81835E08834881CFC966093CF403717104A2DA24E6
+          482424C0422F144C3BB925C9390220F421A3BEC9845CA910C8089CD2120D2818
+          F4C97BA7832F34192441B0D19B4BC8FB220C8FB92D98E4F97C9D64D4F984DE0A
+          D35E904F4C4CF35246484177703980D077B62E61C64C8B9A105C7B17924EC1E4
+          54396E1E020B8CC5D09543BC36264D1044646E542A01329E5B35A06DB56A00CA
+          6DF2E8D8714F2E893CD00B874FF8224A1CA73392289134EEC43E88C8E33B2F20
+          6834227330586A31020DC60A35D19E2ADDB150FDB1D2B23216E4CB691A330A65
+          A7E8AD1F4E50828D0904537B1C29277E832345FDBF00925484634A1A7044ADCA
+          202DC961C801251A08034FB708A2BAD8A5E03F4AF44A3D0646E44B441A4448CB
+          6F19F6030FCD0AE354893B076D35A18814CB48D2CC7809885B10A22DB6699834
+          519341A18209AC4A0F3BB26A624318980344440244E62A0BEC32CA9B9C0E29F1
+          860D4E438E5B56BC069AD11190344645001A5808BC6856002530F94E1C0A79E8
+          CAE33928DAC79F64665A88546AC08B66453951E09306B4661B76A0D52D95EB01
+          90B35F60ED0C115A130B02BD41561B06FC0124E9BA5E00D7D4792A02D93C16C1
+          92212FF9323CD4FA0AA61CC4AF285DC4A258A9421961BF8EA4A61FB184914CBF
+          F90D1324690121328643350288702B05FEF80D09DC3EA8DBC0443807330B0195
+          1724CCFE4EE14789345690B019AEC8C8D03426434D91106424ECA0A4A46AABAF
+          ECA21B6CA1FD0A5E02050DB8140A1384ACBE4A5200B9914129BA282B49CE90AC
+          590904117E0483208886344888321E3CC1295CDF8178B27293D81325D026CB79
+          A0222322B47E2517115E4AE734323504C68764455301C540E088CB2ED5E8414C
+          B9C08D68903D310CA70F28B655321B0132D39EBC9A2D0198873E723520A77449
+          741A2C3037F2C514D8D448B6417F3E81529B9FA2F3E041B8B1AA3F57A1C47848
+          480BA26B0513904ADDD0815373F444D4C1088A54493B5D115050925834CCF9BF
+          A3571E0540A1B94265AB9C095559935B26045A32689A32314485F6E80AE84308
+          B1CBC864E8CB7CB0AFB66B24C01641A7F24D6862FD960AD0B718EE4528C14EC2
+          1B69AD01429ECAF4244196F4A6F668C914468B450404CA144451398A8FB22896
+          889011390E2ADB5835925D13A88C8B49E438AB71834A8D133208D1192208D2B4
+          1178D0AC7A0094C2670E053CF40B8ED946812A188C13EDC220AEB609B97FD1AF
+          D28112445CDA551325A178AB0F2522258A25DE0B214911064193464345644910
+          103FE84B1BB0222D5974048992262A244C983102E8215A813215AD93209B8800
+          49F98B36CCACB42F9513A88984C3B7F4258AA49E8826E20062CA0A4A46A28282
+          9A21A052AB45338BF656FD8056C1F248613261965EB52291484FF03556E74F42
+          837250355A73A258B010C80872C415DF8D069AD037F92D21D169C8656C81358B
+          9100529C6516F342E22C2D4CD80871E8D19EC48A58080411D96E22BC975B1656
+          84C655791EE8888180E2A042733483225CC4135E097B900D344445096FA29491
+          273646411192B4D683E31B7029D85CEE081CCF45B329FE468A417D0993441427
+          E893922F451A46395B140F14C950C9641397812AA23268828BEC5835732D7919
+          90C804A5E290844C30D34A9D7D832D6871F43880C9AD505D44762295B27137E8
+          15327DD8A8421CCC8FB0F8F733F414AB5799C0377485108329426F7746960AE6
+          C711D88306894C10B02489CE81BAEF101944441A3EDC205998A1AB44A83216C2
+          2DC67FA35145188600464D60AD0E493F63B335F284CD81989C87156DAC1AC92E
+          89D442DF9017130C50288A2042554B2FC90C5CECA49A801396D450BFF082AE29
+          6F24F013F9468D0E2008A1926A6B4145A2B97FD142422039B4B523E6196896C0
+          14FC6C0D100959106433268834964891010E88ABCD86586ED4D215581F621A5B
+          2D04B8EC432C1A56E3C19341A0B2E4623011F94CDF81288C9A09B8820D034DBF
+          04B2D0C8646FB16E1199876FE89F3FB03504991006FA278220D087E27B165251
+          4C6A248364DC287229A8A1A2D9409041F18ECB65249D8C5444646AB50494D848
+          A6350BC209D8B765B088BC93C2EC1BBC4F90282099742234C9A26640D9008641
+          19341A380C3B0E385E05E49220C88384ED50F1C59551113EC04263267E3713F8
+          9A7128922283268C955A6A5AE848832CEFB43644E434A0A3B704DC6493B86190
+          F2A3006A8C95A68B44559F0405E742A14B04E6440498086578A261DDC92E49C8
+          1107A10D1DF64C22E54886402ED52120D259AAF24C939053F27E0BC887FB2C03
+          E49388A02456894ED511016C21CCC8A290256AF33826DE9499342092853BF1A2
+          86A21A8106A5AF01944678E6D64D06892273A06EBBC4065111068FB70815B981
+          D324A032165F90B9A99FE8D451478600A602200D25361A130F1F63AD053C5D89
+          441AC893E8031D8845DAB120C9A06202982C12530E5FFD824E2244438133D3B1
+          76B61117B245F62B49C12C06E68AFC94245139A1226B3C666D972EC97B1A7F42
+          0B92950A6C69208BB2CB738088888634C8A1202EC97A2A5316C1CCA870C0B722
+          5A20222465B78CFB0187E68571AA449D83B69AD0C40A65A469663C04C42D8851
+          16DB34CC1A28C9A0D0C105BF64F3D87EFB34196139E5E541A611F94C895A4445
+          5B9926014C3879015C94C32E36B20264D03709D0C1A20F954C0E43208309F92E
+          18C868C6F25B26404CC9A26288725B3337990C97190CBCB538A25330D02E4E23
+          9285E434DE0BCD9612C99E59A590CB5C7AC02CB42ED2409AF97680889990D348
+          A2410944464D104A89BBB0E38E87944888158EAC3942D7D82E2E2D856B725FE0
+          48814A1F20D4B5E066EC32889C90013AD64B0573780D1CA2229F190C81029023
+          24301A0688B404A770260DC84ACDD12A6DB6A041A956152899428BF4E0CFC978
+          940373228293E994144E748562C848208B120C8223369F92B4D4DB2657FBA208
+          9117127B2544FF0050A04EA84A2F0642B444C801F149CDFA25EA093B2E3C6264
+          4A85DB8D0A4A48AB01019346434D102CF44A6E4A34A8125A1B8A0E32F2465233
+          E6D41A44FC13AAC9A3268AA740F0F5D8AC609D064424AA83289CEA094CBF01A5
+          8EC60CC444FD1A0326911903504B8C229724ED0D420B94E041A532A8212520C7
+          F6FB0339C61134E7FF0050AAA5822B4CDD64D12CF42C90608D321812220C860E
+          745B1D0AD0E382BF8DE454A9F24C444EF7820897D08564D1398A526735B035A2
+          044F926E009BB84BECB3285901949BCD41AD9921A344445193444A6081451B41
+          9C61139FA7FD064352266EB268346488948659C2817806E7D22970A83493DC0B
+          B2494CDFA0FA81116138C970276E052BF0153C4F824E7D02A94B25C17E2025AF
+          445A278232689970221B332E7C864CE41F1A71B25330D02E4F0D4761A740220C
+          8530D943F894C3FF00910084D2CCF8640DBDC743A0D25832469640B40E5E28B6
+          30E6743449DC6C9922E4AD31117EE15B92892808094B78326C2D4441F2B86AC2
+          097E99717C9B724D4F2942808C91A2B4A9D0C46039295D92AA44645CA8FB1266
+          434654E0488A840A128B6442252A65E421649A734C7D155304A04A67041103F6
+          2519358042FEC83405F60190E47F6FB2052DE0347148888A254FA16625FA65C5
+          F26DC920D22D11998E50DDB036419F5E4920CB2DBF95E0D6CCCDA94EA8D6115A
+          41122440853C6842BE4C32B464D10C69093052D36194DC6321C5AF10CAFE3D8C
+          4A4EE434888B42855A4D872A2B86D8395C4331397E04A252CA7E03968345915D
+          411402914D94BE8988888C856B92734E8745724C322344D96822E65868929D83
+          15480338C264D5EBFE851610832DBA1E0BF191906DCEA0623405371124084888
+          20D839D01A0D2D79053F1BC8C352D109113BD83286DD8852265B695207F956FC
+          865353124925815F60DA980D344453FC064139D11069715045A228C9A2252408
+          7CAE22CB2EB089ABFF00D4190D4B9420DBAC8F0FD20483929512338A2918ABFA
+          0748924E6D8D245555570B640A9F44F31F64813268C946F645F40B2DDB44641A
+          D0148C5512EF45361370345541EE3A12641102F102D94136382A7D9004F98E85
+          760DA44981A6942F2017B17803268C8EC818A069BC5148C39C8D449DC6C9D122
+          E4AD3104DC36CACA258A771B08CB70D7653926BE4A98B5D406993410006C2939
+          D8E01AB94E186537F1BD0A06BE4B23F40669CA1882769A0C06884090025F948B
+          244C4412FE50F0305C9A8B4531918289B644642B4245B0CB38599609DC459AAE
+          48152721A2582099F206CC8806431D1935F61A58A582641CB5ECA159E883695F
+          99164119346661FE5B0361CA1D3299A5A24193136E88CCDA94FC0B9D0116C9E7
+          264346FA1326B451193444A12B8BC9505B52194EB40E7450D711894B33E0344B
+          44A5AB2F4832CF1FD2860127975D00687297A36BC119232D32222B4C9A322DC6
+          500EC425C60721965289C8CD02512964B8FE9C868E822E441B858014A393161F
+          2A98141960D6102CB92E4A6834A9DB106E1A8914CA08875B14F24ECA090464D6
+          82DBF08600D111409426D4FA132E3E5126C0CB5304DCFF002390A6E259024537
+          944C0881A98B825336FE900B5681D8A7FF00412B12D40C44D4E8494CF45B0A92
+          2222888813B6A0810782E2D2F62DCA1882F420FF0015E84452449E9E4A432089
+          90697B504EF0C427B0C84EE00BE4B31633780D34B245F40BF537341964D68B64
+          1A109B92952248042F7F42F41C9E120CA6184241A0B3484838C4B72509111028
+          813B6A0B8A57E432C9AA61B12B49F5500B1E0D6BB02444B2440B2E47424442AA
+          494CAFE016302B0DE084448A21CCC3251A264E89A954C8221D6C73865529F453
+          24D4EC832C8C72999A29A14EAC6282220AD202B2C065952AB2849E2CC869A452
+          44344E5435FC07255269872B0C8E2E521A437145E40CA738D0948415A6A5CC68
+          A5636500A191959FA1D06842D13F9750246794844FFA1F580530B2256984FF00
+          34268B241193414D81A33AAC925F94E4556092231C5AF923652255404640D103
+          11429C92E81CCA5A04E2569064B52D04399510334521A64D1688014FC9ED3166
+          54F9C0B72D888D167E88822467F77469008A999340DC682B45121358156194F1
+          5904EA5A255302DD4AB02D13AD0296A595AE335E401ED1A832DB4A63E8D64036
+          4D135FC94F80D26A412815683724E0A239FB1651390D1621326B416DF843141A
+          222812896A44CD3E59A36067959A2C84DAF03A822771D95AB6FE87F70B44E815
+          853A96A05DA0A4554F11365B64A32AE4AB12D000DCF449FF004204464D120888
+          13B6A00D19748B8C2F62ED124417A107F8F1F42AD495511190360EDD64435590
+          CA6A157F05C7F4E4CF1E5F9236052A4814CB9C0AD800FD91640CC0C14948D528
+          1C65821102D27EC2125E49A969E8A7F2808CFEA8CC781C35184841B8C15A38C9
+          16895244D168813D6C50090272DD171853E4324A99045803EA8963C0ACF9211A
+          4D4BE849EE832D3D780C92A208B00E56F365C7188159F242349044399864AEC5
+          93A89A9D97A409439433582AA22074FA01D92EC78DA9945B0CB2F424E1587FA1
+          A3F444428A6E2C1F62400A60488A20FDD4BD945F45C6F64083FD4A7E84A21202
+          D9110082145594EC3237D1368CCB35A0D09FCBA8129906F1004EAF42413D31E0
+          50728F9071991FA150A5F1E536E495609628647019058A62C96045613FCCD99A
+          9B56693900D891903446480DA724BA0BF96094F19D865352D198FCA547B344DC
+          486996E39632312D4925084050177A0E53144911AC5E0BD053BB8EC64A80AFE5
+          D41190D34440D4EC0D13C1897310692A122295304C212C56C166DD8568881A98
+          14689E01349C432D0910EC81ABD08445177A22DA00827C64A413F7F6315251A8
+          104E669A1D154715928B7A19465BB49301733502464942DC6865C60A983EAA00
+          4C8A511E094CB9FA28D2B335546A3B0A82444C9B6509120AC9A0E2E68A1C7650
+          B3232240A724BA073296813F8CA784192D4B410E65618CD1361A4440C00D0408
+          113220229525A26ABB61945FDF4094284C562E034B0E2482168BD80ECA549135
+          5DB0CA077BB14A14278211A513EFC8454099034459072A3C00B71CA05BF00E9B
+          6CB0E76194F045D115A4587D1935124083F051F94CFD08658353880798F23A2B
+          47FC33C55B4F3E466E0738646416590352D32B4B76C41C48E808C9AC86C816E0
+          3E5FEC0BBA0F8DABA5A0CB4030F65BE80B441C5CACA63B03295E1D9A7B13331C
+          A3EC0560CEE0D030B116AF264D052C8B441902822FA2E37B016C139F42514802
+          372682A2A022E9802108888421A44E32CC9A285A4FD8424BC9352D3D14FE5046
+          59FD5E63C1A222B4C8C3531903440386A5895A5E480CA84E1EC7A58F25CAD448
+          BFE09D40B2F009A954EA85D21AAB85B2AA8326BFD2284805648CB29FE4D0B240
+          C4524CB0112EC2A4DC4939F8D94D8E0A0D276E0D27D0398AC8E389196695C082
+          B86256829D92DBB1324D1A2206A760287960C26FE51069AA1114A982084B0AF3
+          209395615B5D1352D79226C3215972528CA87469E0451D63A1D93CD40B082FDD
+          9716DE71A1001261B19B680BB2024024C8333200BB5020ADAAA44B94B888F61A
+          4DC14B8C0D307D500E8C8AC4B101415E0744194C9B60E745898BE808C9A20D28
+          222024E490A665CA5E409C36BC847E5346B24D2FA0298E5EC58269521D06416D
+          460C9069A40F43821A280894ED948C8D44942FFB04A1F45CA1E50C4DBA4143CC
+          7D8890D46460A6CA5F4300B2DDB43E489D9554D94DC193644A29F6456D5E4B94
+          20AA52A826E21464217991FB27A81E04C9A2C52573D115EC3201D890697F832E
+          A2C23CA42191D6BC02CB510509D8869035221B02AFA1D5601A4C7D012EB044B0
+          404240195A206D4DA1E38B0D22227D80861D99F8DC4FE269C12441910709E051
+          5519869F922034C8C901B20A74310190997A82271F2A5F61A445B65FF05114D1
+          2500D5DE08105B4C4804880321BF233BD053EE344D4D6A0347250D6324940CF9
+          0CB2E1AB12B4AEC8634CCC65E4666968D000209B529F83419C944E742FD83BD9
+          26E5A600446B6409100651382C208972C3494C495AE3FD94DE04A2AA88446670
+          9A1518F0481264C80849499B9980CB40D4EE0418199730692841FE0CE20AD085
+          A5DC82EDD9AFF0CF156D3CF920D03522CB2C5126A62192501BB63E20A2D913AE
+          4A06209A81919162A92326806488B7619614B7742E78B52E7D1646C342AC668C
+          DE3927F42A2214D79111A0FB12610102573B11AD2E4A5764AA909065165413E8
+          92F2D819C521FE8B645688273C9CCC0715F8D9A73A2320C8C76C9285B6569A75
+          7A04E7C94C373829232BB04E79394E20740EE3C0689328495114453AD9184FF2
+          441B926440240219664172598B1D564CF16BE4834DCDE07E80432CAFD4DCD0EC
+          88AD22224E48240C55609A9689D410A96C60A49B9C32E8207D05F42144DF62FC
+          112CB2822F2244413571E4A28A49E06A09FCA0B38632A6082906A5A624EDA0CA
+          7125A2C93C3030BF2CA881FF004B8AAA2B9761A30505341235092EC932CE45A3
+          3F1B89FC4D3D13825813E8293B42A993D9493A0CC88384F028AA109191A34464
+          805B4B2244050500A936A7D0C8C44EF21765C94C4862D4C056B1822322C1B017
+          57A04D341914F3AD145F4209CF2733101A52D2432B3A1A08BE832A202CB7D095
+          A8882E7A120B24445138924BF29CC934E5344D42AFE08C9558290E3FA6D8CD80
+          11022B4764C6008CAFA0E5329687EC89EA85F8D5C219A270DD8B49BECBC05B29
+          22C05464D22021252661CCC0640B53D083C95A52E6052A1F4138824410B4BB90
+          49CAB9195E6512CBA2755A292068ACB34E8D68A3C14D509F54E1F45A2C069460
+          22109C764D46804BEC8BFC00DCD15F916E3249F9031D397E8543516BD964434B
+          1E4744110E43287590C8BC00104B95E00AD3488C9A202BE51226B8E0C888B24A
+          BD0295595E4A1DA90A5EA93098C8968A06DDC0A984B667E4DCC6B429425240E0
+          9DB5E09B4B212B206A8139773826E18BB6832098284E04AD3268888326836494
+          729B720535459CCA155489940F44D88429992073906D210E5860333E88CA5F2B
+          4680A0A08246A10E54A8482907CAE20A6718269CFF00EA0CAC85DA5FC84BAC9A
+          0D09FE45FD92210464D139D017126135DE205888318420E12F2C939D05264D13
+          9D0124519E8A4A46A144E27365B0610436E5440994A38A3535E434A0A0246646
+          A25E1AA2713D8ACE41D26C403693C50A205B90AD2C86EB22C93A25F5198AB626
+          4D370551F1FE860B6C06A12220A6089CF924E8321DAB330D6CD56C124B93F0C3
+          46FF00FA4F00DA4A0646229B82271297D9269E020A79B826A5BF0209CB79C068
+          5F15783720D2649540C44F464D4A9C9054580B9E84A2040D39E8D1044C1E55FD
+          08093A0B9E85F4C32CA669468CC9A7915594A1D0847E4EF42B6554CC9A2D1049
+          DC5D09972DA69C68528A90CAC608A65E7E8A434B0FA23332FC0B284B00867D90
+          10311792929188B64488AA1FEAC7F64E5CE0AFE50FE85F9244444AD2D037F945
+          8523060DA0947153B43066AA8460A2BC9136C845445856C86087611456A03288
+          8834CA70E1EC7A58F25CAD448FAA27502CB04F14EA8D3A455570B655445FE914
+          17342531145B978208C8AF03EC04888320C8B888FE87B7FC0683573252D66241
+          4CCC8B4B205852C9EBC0C4AB2D8141459493635192344E5A7190AB45840B5D00
+          1A96F5024097E536E432BB22554883487A208B990CA32DC5C5783455361A2AD1
+          02CC7FE657B41924C800A3F210C915A66E6BF9184BD8ACD3841C97C9A64881A9
+          72B468CB995E08AAD139D11104444E743028BD8375DE204321B875209B7A3554
+          65CA74A404A093F3B2918A863B0640A69A284889B08B21C5C9273E8BEC052306
+          B45A0B0BEDC20C2F304D78108CA9C327AF64F022B481439B6068A1A48153E8B9
+          4618C4DBA44643CC0905F9009B84132ED3A16A7E85DB5A5B0D222FF48A053316
+          FD16718F22E7C225D19EA05909B529D51A7481C428708AA48B56428834282006
+          5CF40DA5C9559AD683C064370D0E8CF25F8EDB1E2568FEE7FE841437CBA424C4
+          312AC1BF8FB107908580355D95CF4568B232DB4EACD10646501A1A1D112330FE
+          58A6193B322DFC45869277B132E5DAA14B398619137E0D3E8CB4DF29546A4037
+          D02D8297783456916010CFB2086379220C8D91222B41E6631D8DFB0DC3C31008
+          18BD322780128FE089A75E364659E29B42C903115AD2D954504A7F44E9A41045
+          E58ECCB94D10691A048AEB6069DA2220CB09C386F239C63C97252A245F44EA85
+          904ED4A75469D2F20F5A4556947B8D198956310E48A26B10F0448882105FAA2D
+          CF82CE31E432B943C8AF2E802714EA8031FA98AA7D13C2943172F0834AE4C9A5
+          D168A27FD1306B0467D0997F27CAB0689944B7265F273091A07870069328B32B
+          8E1BD0AAF61966D3BB35E81B5286C3496E42539E8491431B280DB52246583440
+          DB4A94D868C1355D1369FB2F1E06227992D502A997285050B3F4484C8139706B
+          25BE89B4988274495A762A95CB0F95C341940E5E0BE889E2922CE08AA9CC5290
+          6FE5536694A96F614195C439725303E4B02AACE09CB7D792F241529BAF444A62
+          CA008C9A20242DC2B220CB0DC34FFA14C9294F65F15E034B3BA27F8F1F435F44
+          013520688A120F921CE19191168394A279CC228B941A52068808888413E91146
+          01299B620708396A05249063D13F42E7C194E5A94D1A90E5AB84509935364064
+          D123206A5CF40DA5C9559A8A07A0C86E1A1D19E4BF11E3D15A32BC85F92DE460
+          82A9B560E2ADCCC9A8A07701913102F30114BCA162AA4A1D207C6C64A46842E6
+          3084B4FC0466D2F37FC0C59424FB2F4C349441029E33E04A216A7700852EC8CB
+          FFD9}
+        Material.Texture.TextureMode = tmModulate
+        Material.Texture.MappingSCoordinates.Coordinates = {CDCC4C3D000000000000000000000000}
+        Material.Texture.MappingTCoordinates.Coordinates = {00000000CDCC4C3D0000000000000000}
+        Material.Texture.Disabled = False
+      end>
+    Left = 330
+    Top = 223
   end
 end
