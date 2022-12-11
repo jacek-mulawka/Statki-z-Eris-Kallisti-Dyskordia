@@ -17,6 +17,8 @@ Oprócz możliwości pływania statkiem gra oferuje:
 * odrzut luf po wystrzale oraz efekt ognia z luf wraz z dymem;
 * statystyki rozgrywki dostępne na bieżąco (w formie tabeli i tekstowej);
 * wyświetlanie na radarze zasięgu broni, kierunku obrotu kamery, nadpływających torped (gdy sonar jest na wyposażeniu);
+* statki wymieniają między sobą przez radio informacje o pozycjach innych statków (i lądów), które są poza zasięgiem radaru oraz sonaru;
+* zakłócanie funkcjonowania systemów wrogich statków, które może zadawać obrażenia;
 * pokój rozmów (chat) zarówno w trakcie gry jak i poza grą;
 * wyświetlanie wiadomości pokoju rozmów na ekranie gry;
 * ignorowanie wiadomości od wskazanych graczy, grup, SI;
@@ -44,12 +46,13 @@ Oprócz możliwości pływania statkiem gra oferuje:
 * łodzie podwodne z możliwością zanurzenia;
 * przekraczanie zanurzenia maksymalnego dla łodzi podwodnej (może skutkować powstawaniem uszkodzeń);
 * wpływ prędkości na promień skrętu;
-* samoloty i lotniskowce, na których można wylądować i naprawić samolot;
+* samoloty i lotniskowce, na których można wylądować, naprawić samolot i uzupełnić amunicję;
 * możliwość gry jednocześnie lotniskowcem i samolotem;
 * wśród samolotów jest między innymi bombowiec i torpedowiec;
 * uproszczony i normalny tryb lądowania na lotniskowcach;
 * kilka trybów wskazywania drogi do wybranego punktu;
 * wskazywanie dla samolotów drogi do lotniskowca, który wyraził zgodę na lądowanie;
+* nanoszenie namiarów z sonaru na ekran gry (jako ułatwienie rozgrywki);
 * zdefiniowanie pozycji początkowych grup na mapie w definicjach lądu i jako oddzielne definicje pozycji początkowych;
 * możliwość zapisania ustawień gry;
 * możliwość zapisania konfiguracji statków SI, które mają wziąć udział w rozgrywce;
@@ -57,7 +60,7 @@ Oprócz możliwości pływania statkiem gra oferuje:
 * wyszukiwanie i filtrowanie w ustawieniach klawiszy;
 * sprawdzanie poprawności ustawień klawiszy;
 * tryb projektowy ułatwiający tworzenie statków, map oraz zmienianie przebiegu rozgrywki;
-* obiekty lądu mogą być neutralne, uszkadzać, leczyć, spowalniać, odbijać;
+* obiekty lądu mogą być neutralne, uszkadzać, leczyć, spowalniać, odbijać, uzupełnić amunicję;
 * obiektom lądu można określić wytrzymałość i niszczyć je w trakcie rozgrywki;
 * tryb fotograficzny ukrywający informacje ekranowe;
 * podczas tworzenia statków i map można korzystać z przygotowanych wcześniej obiektów (nazywanych tutaj prymitywami), wszystkie dostępne obiekty można umieszczać w pętlach aby łatwo tworzyć ich większe grupy;
@@ -87,6 +90,8 @@ In addition to the possibility of sailing a ship, the game offers:
 * the recoil of the barrels after firing and the effect of barrel fire with smoke;
 * game statistics available on an ongoing basis (in the form of a table and text);
 * displaying on the radar the range of weapons, the direction of rotation of the camera, incoming torpedoes (when sonar is equipped);
+* ships exchange with each other by radio information about the positions of other ships (and land objects) that are beyond the range of radar and sonar;
+* disrupting enemy ship systems that can deal damage;
 * a chat room both in-game and out-of-game;
 * displaying chat room messages on the game screen;
 * ignoring messages from selected players, groups, AI;
@@ -114,12 +119,13 @@ In addition to the possibility of sailing a ship, the game offers:
 * submarines with the possibility of immersion;
 * exceeding the maximum immersion for a submarine (may result in damage);
 * influence of speed on turning radius;
-* planes and aircraft carriers where you can land and repair the plane;
+* planes and aircraft carriers where you can land, repair the plane and replenish ammunition;
 * the ability to play both an aircraft carrier and an airplane at the same time;
 * planes include a bomber and a torpedo bomber;
 * simplified and normal landing mode on aircraft carriers;
 * several modes of indicating the way to the selected point;
 * showing the way for aircraft to the aircraft carrier that has agreed to land;
+* placing sonar bearings on the game screen (as a facilitation of the game);
 * defining group start positions on the map in land definitions and as separate start position definitions;
 * the ability to save game settings;
 * the ability to save the configuration of AI ships that are to take part in the game;
@@ -127,7 +133,7 @@ In addition to the possibility of sailing a ship, the game offers:
 * search and filtering in key settings;
 * checking the correctness of key settings;
 * a design mode that makes it easier to create ships, maps and change the course of the game;
-* land objects can be neutral, damage, heal, slow, bounce;
+* land objects can be neutral, damage, heal, slow, bounce, replenish ammunition;
 * land objects can be given durability and destroyed during the game;
 * photo mode hiding on-screen informations;
 * when creating ships and maps, you can use previously prepared objects (here called primitives), all available objects can be placed in loops to easily create larger groups of them;
@@ -284,6 +290,10 @@ Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't
 
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20SOS%202.jpg">
   <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20SOS%202%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20korona.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20korona%20m.jpg">
 </a>
 
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20H%20S%201.jpg">
