@@ -2,6 +2,8 @@
 
 Wieloosobowa gra o statkach (strzelanka z elementami 'symulacji'), wspiera modyfikowanie i tworzenie nowych statków i map w edytorach tekstu (schematy oparte o xml).
 
+Gra zawiera tłumaczenia na kilka wersji językowych.
+
 Oprócz możliwości pływania statkiem gra oferuje:
 * gra pojedyncza (lokalna) i sieciowa;
 * granie wraz z SI (opartej na algorytmie);
@@ -67,16 +69,16 @@ Oprócz możliwości pływania statkiem gra oferuje:
 * wiele opcji możliwych do dopasowania wedle własnych preferencji;
 * oraz inne funkcjonalności, do których poznania zapraszam.
 
-Gra zawiera tłumaczenia na kilka wersji językowych.
-
 Znane błędy.
-Tryb wieloosobowy nie jest do końca stabilny i nie jest zbyt wydajny. Aktualnie za bardzo nie wiem jak go ulepszyć.
-Czasami przestają działać tekstury.
+* Tryb wieloosobowy nie jest do końca stabilny i nie jest zbyt wydajny. Aktualnie za bardzo nie wiem jak go ulepszyć.
+* Czasami przestają działać tekstury.
 
 
 ## English
 
 Multiplayer ship game (shooter with 'simulation' elements), supports modifying and creating new ships and maps in text editors (xml based scheme).
+
+The game includes translations into several language versions.
 
 In addition to the possibility of sailing a ship, the game offers:
 * single (local) and online play;
@@ -143,11 +145,9 @@ In addition to the possibility of sailing a ship, the game offers:
 * many options that can be adjusted according to your preferences;
 * and other functionalities, which I invite you to get to know.
 
-The game includes translations into several language versions.
-
 Known issues.
-Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't really know how to improve it.
-Sometimes textures stop working.
+* Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't really know how to improve it.
+* Sometimes textures stop working.
 
 
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%201%20gra.jpg">
@@ -334,7 +334,8 @@ Sometimes textures stop working.
 #
 
 
-Skrócona instrukcja:
+## Skrócona instrukcja / Quick guide:
+
 1 - wybierz rodzaj gry;
 2 - zainicjuj grę;
 3 - wybierz mapę;
@@ -345,7 +346,6 @@ Skrócona instrukcja:
 8 - rozpocznij grę.
 
 
-Quick guide:
 1 - select the type of game;
 2 - initiate the game;
 3 - select a map;
