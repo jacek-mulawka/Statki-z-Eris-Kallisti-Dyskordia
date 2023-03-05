@@ -1,7 +1,5 @@
 # Statki-z-Eris-Kallisti-Dyskordia
 
-Gra jest w trakcie produkcji.
-
 Wieloosobowa gra o statkach (strzelanka z elementami 'symulacji'), wspiera modyfikowanie i tworzenie nowych statków i map w edytorach tekstu (schematy oparte o xml).
 
 Oprócz możliwości pływania statkiem gra oferuje:
@@ -29,13 +27,14 @@ Oprócz możliwości pływania statkiem gra oferuje:
 * SI może strzelać za gracza z jego statku;
 * pełny cykl dnia i nocy;
 * zmiana intensywności falowania (wzburzenia) morza;
-* efekt mgły;
+* efekt mgły, chmur, fal;
+* wiatr wpływający na rozgrywkę;
 * automatyczne zmienianie pory dnia, intensywności mgły i fal;
 * ślad torowy za statkami;
 * słońce, księżyc, gwiazdy;
 * gwiazdy o stałym położeniu wskazujące kierunki świata;
 * dwa tryby oświetlenia statków i obiektów na lądzie;
-* dalmierz, luneta;
+* dalmierz, luneta, kotwice;
 * wysyłanie sygnału SOS;
 * podążanie kamery za pociskami;
 * kamera 'trzymająca się' statku;
@@ -68,12 +67,14 @@ Oprócz możliwości pływania statkiem gra oferuje:
 * wiele opcji możliwych do dopasowania wedle własnych preferencji;
 * oraz inne funkcjonalności, do których poznania zapraszam.
 
+Gra zawiera tłumaczenia na kilka wersji językowych.
+
+Znane błędy.
 Tryb wieloosobowy nie jest do końca stabilny i nie jest zbyt wydajny. Aktualnie za bardzo nie wiem jak go ulepszyć.
+Czasami przestają działać tekstury.
 
 
 ## English
-
-The game is in production.
 
 Multiplayer ship game (shooter with 'simulation' elements), supports modifying and creating new ships and maps in text editors (xml based scheme).
 
@@ -102,13 +103,14 @@ In addition to the possibility of sailing a ship, the game offers:
 * the AI can control the guns on the player's ship (as a relief);
 * full day and night cycle;
 * change in the intensity of waves (turbulence) of the sea;
-* fog effect;
+* effect of fog, clouds, waves;
+* wind affecting gameplay;
 * automatic change of time of day, fog and wave intensity;
 * a wake (Kielwasser) behind ships;
 * sun, moon, stars;
 * stars with a fixed position indicating the directions of the world;
 * two lighting modes for ships and land objects;
-* rangefinder, telescope;
+* rangefinder, spyglass, anchors;
 * sending an SOS signal;
 * camera tracking of projectiles;
 * camera 'holding' to (following) the ship;
@@ -141,7 +143,11 @@ In addition to the possibility of sailing a ship, the game offers:
 * many options that can be adjusted according to your preferences;
 * and other functionalities, which I invite you to get to know.
 
+The game includes translations into several language versions.
+
+Known issues.
 Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't really know how to improve it.
+Sometimes textures stop working.
 
 
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%201%20gra.jpg">
@@ -214,6 +220,10 @@ Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't
 
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%204%20samoloty%20noc.jpg">
   <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%204%20samoloty%20noc%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%205%20kotwice.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2003%205%20kotwice%20m.jpg">
 </a>
 
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2001.jpg">
@@ -318,6 +328,35 @@ Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't
 
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%203.jpg">
   <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%203%20m.jpg">
+</a>
+
+
+#
+
+
+Skrócona instrukcja:
+1 - wybierz rodzaj gry;
+2 - zainicjuj grę;
+3 - wybierz mapę;
+4 - opcjonalnie wybierz pozycje startowe dla statków;
+5 - opcjonalnie dodaj graczy SI (boty) do gry;
+6 - wybierz swój statek;
+7 - wpisz swoją nazwę, określ grupę i ustaw status gotowości;
+8 - rozpocznij grę.
+
+
+Quick guide:
+1 - select the type of game;
+2 - initiate the game;
+3 - select a map;
+4 - optionally select starting positions for ships;
+5 - optionally add AI players (bots) to the game;
+6 - choose your ship;
+7 - enter your name, specify the group and set the ready status;
+8 - start the game.
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%20Instrukcja.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%20Instrukcja%20m.jpg">
 </a>
 
 
