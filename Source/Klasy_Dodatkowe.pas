@@ -4,11 +4,16 @@ interface
 
 uses
   GLObjects, GLGeomObjects, GLScene, GLColor, GLState,
-  System.Classes, System.SysUtils,
+  System.Classes, System.SysUtils, Vcl.StdCtrls,
 
   Typy_Wspolne;
 
 type
+  TKlawisz_Konfiguracja_CheckBox = class( TCheckBox )
+  public
+    klawisz_rodzaj : TShiftState;
+  end;//---//TKlawisz_Konfiguracja_CheckBox
+
   //TRadar_Obiekt = class( TGLSphere )
   TRadar_Obiekt = class( TGLDummyCube )
   public

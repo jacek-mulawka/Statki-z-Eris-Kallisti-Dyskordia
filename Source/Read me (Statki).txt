@@ -1,7 +1,5 @@
 Statki z Eris Kallisti Dyskordia
-wersja 2022.12.11.
-
-The game is in production.
+wersja 2023.03.05.
 
 MIT License
 

@@ -36,11 +36,11 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=Jacek Mulawka;FileDescription=Statki z Eris Kallisti Dyskordia. MIT License.;FileVersion=1.0.0.0;InternalName=;LegalCopyright=Copyright (c) 2017 Jacek Mulawka;LegalTrademarks=;OriginalFilename=Statki z Eris Kallisti Dyskordia;ProductName=Statki z Eris Kallisti Dyskordia;ProductVersion=2022.12.11;Comments=j.mulawka@interia.pl https://github.com/jacek-mulawka</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Jacek Mulawka;FileDescription=Statki z Eris Kallisti Dyskordia. MIT License.;FileVersion=1.0.0.0;InternalName=;LegalCopyright=Copyright (c) 2017 Jacek Mulawka;LegalTrademarks=;OriginalFilename=Statki z Eris Kallisti Dyskordia;ProductName=Statki z Eris Kallisti Dyskordia;ProductVersion=2023.3.5;Comments=j.mulawka@interia.pl https://github.com/jacek-mulawka</VerInfo_Keys>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_Locale>1045</VerInfo_Locale>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
-        <DCC_DcuOutput>.\10_2\$(Platform)\$(Config)</DCC_DcuOutput>
+        <DCC_DcuOutput>.\XE5\$(Platform)\$(Config)</DCC_DcuOutput>
         <DCC_ExeOutput>.</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
@@ -84,6 +84,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Klasy_Dodatkowe.pas"/>
+        <DCCReference Include="Przechwytywacze_Klas.pas"/>
         <DCCReference Include="Typy_Wspolne.pas"/>
         <DCCReference Include="Wyglad_Elementy.pas"/>
         <BuildConfiguration Include="Release">

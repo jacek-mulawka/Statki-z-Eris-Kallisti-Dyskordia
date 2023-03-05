@@ -4,6 +4,7 @@ uses
   Vcl.Forms,
   Statki in 'Statki.pas' {Statki_Form},
   Klasy_Dodatkowe in 'Klasy_Dodatkowe.pas',
+  Przechwytywacze_Klas in 'Przechwytywacze_Klas.pas',
   Typy_Wspolne in 'Typy_Wspolne.pas',
   Wyglad_Elementy in 'Wyglad_Elementy.pas';
 
