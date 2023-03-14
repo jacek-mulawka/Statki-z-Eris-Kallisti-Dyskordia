@@ -48365,6 +48365,7 @@ var
   zti_1,
   zti_2
     : integer;
+
   zts_1,
   zts_2,
   nazwa
