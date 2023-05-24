@@ -294,6 +294,10 @@ Known issues.
   <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2004%20walka%2017%20m.jpg">
 </a>
 
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20latarnia%20morska.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20latarnia%20morska%20m.jpg">
+</a>
+
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20SOS%201.jpg">
   <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2005%20SOS%201%20m.jpg">
 </a>
@@ -380,7 +384,9 @@ Powered by
 
 [GLScene](http://glscene.sourceforge.net),
 
-[Delphi](https://www.embarcadero.com/products/delphi).
+[Delphi](https://www.embarcadero.com/products/delphi),
+
+[Google Translate](https://translate.google.com/) (voices).
 
 
 ## Tag
