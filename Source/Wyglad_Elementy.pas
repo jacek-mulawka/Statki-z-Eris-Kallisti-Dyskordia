@@ -14,7 +14,7 @@ uses
 type
   TArray_Of_Integer = array of integer;
 
-  TObiekt_Rodzaj = ( or_Brak, or_Amunicja, or_Amunicja__Obra¿enia_Zasiêg, or_Kontener_Prymitywów, or_L¹d, or_£apacz_Samolotów, or_Statek, or_Wzorzec ); // or_Wzorzec - obiekt bêd¹cy wzorcem w pêtlach.
+  TObiekt_Rodzaj = ( or_Brak, or_Amunicja, or_Amunicja__Obra¿enia_Zasiêg, or_DŸwiêk_Emiter, or_Kontener_Prymitywów, or_L¹d, or_£apacz_Samolotów, or_Statek, or_Wzorzec ); // or_Wzorzec - obiekt bêd¹cy wzorcem w pêtlach.
 
   TSt_GLCapsule = class( TGLCapsule )
   public
@@ -27,6 +27,8 @@ type
     œwiat³o_dodatkowe
       : boolean;
 
+    dŸwiêki__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku.
+    dŸwiêki__opóŸnienie_losowe, // Ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku. Wartoœæ losowana z zakresu dŸwiêki__losowoœæ.
     œwiat³a_miganie__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile razy ma byæ wyd³u¿ony pierwszy krok migniêcia.
     œwiat³a_miganie__opóŸnienie_losowe, // Ile razy pierwszy krok migniêcia zostanie wyd³u¿ony. Wartoœæ losowana z zakresu œwiat³a_miganie__losowoœæ.
     œwiat³a_miganie__tabela_czasów_indeks
@@ -36,6 +38,7 @@ type
     œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i
       : Int64;
 
+    dŸwiêki__zasiêg_minimalny, // TGLBSoundEmitter.Source.MinDistance.
     kolizja_wp³yw__amunicja_uzupe³nianie,
     kolizja_wp³yw__obra¿enia,
     kolizja_wp³yw__prêdkoœæ,
@@ -43,6 +46,8 @@ type
       : real;
 
     obiekt_rodzaj : TObiekt_Rodzaj;
+
+    dŸwiêk_nazwa : string;
 
     œwiat³a_miganie__tabela_czasów_milisekundy_t : TArray_Of_Integer; // Kolejne odstêpy pomiêdzy zgaszeniami i zapaleniami œwiat³a.
 
@@ -60,6 +65,8 @@ type
     œwiat³o_dodatkowe
       : boolean;
 
+    dŸwiêki__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku.
+    dŸwiêki__opóŸnienie_losowe, // Ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku. Wartoœæ losowana z zakresu dŸwiêki__losowoœæ.
     œwiat³a_miganie__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile razy ma byæ wyd³u¿ony pierwszy krok migniêcia.
     œwiat³a_miganie__opóŸnienie_losowe, // Ile razy pierwszy krok migniêcia zostanie wyd³u¿ony. Wartoœæ losowana z zakresu œwiat³a_miganie__losowoœæ.
     œwiat³a_miganie__tabela_czasów_indeks
@@ -69,6 +76,7 @@ type
     œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i
       : Int64;
 
+    dŸwiêki__zasiêg_minimalny, // TGLBSoundEmitter.Source.MinDistance.
     kolizja_wp³yw__amunicja_uzupe³nianie,
     kolizja_wp³yw__obra¿enia,
     kolizja_wp³yw__prêdkoœæ,
@@ -76,6 +84,8 @@ type
       : real;
 
     obiekt_rodzaj : TObiekt_Rodzaj;
+
+    dŸwiêk_nazwa : string;
 
     œwiat³a_miganie__tabela_czasów_milisekundy_t : TArray_Of_Integer; // Kolejne odstêpy pomiêdzy zgaszeniami i zapaleniami œwiat³a.
 
@@ -93,6 +103,8 @@ type
     œwiat³o_dodatkowe
       : boolean;
 
+    dŸwiêki__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku.
+    dŸwiêki__opóŸnienie_losowe, // Ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku. Wartoœæ losowana z zakresu dŸwiêki__losowoœæ.
     œwiat³a_miganie__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile razy ma byæ wyd³u¿ony pierwszy krok migniêcia.
     œwiat³a_miganie__opóŸnienie_losowe, // Ile razy pierwszy krok migniêcia zostanie wyd³u¿ony. Wartoœæ losowana z zakresu œwiat³a_miganie__losowoœæ.
     œwiat³a_miganie__tabela_czasów_indeks
@@ -102,6 +114,7 @@ type
     œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i
       : Int64;
 
+    dŸwiêki__zasiêg_minimalny, // TGLBSoundEmitter.Source.MinDistance.
     kolizja_wp³yw__amunicja_uzupe³nianie,
     kolizja_wp³yw__obra¿enia,
     kolizja_wp³yw__prêdkoœæ,
@@ -109,6 +122,8 @@ type
       : real;
 
     obiekt_rodzaj : TObiekt_Rodzaj;
+
+    dŸwiêk_nazwa : string;
 
     œwiat³a_miganie__tabela_czasów_milisekundy_t : TArray_Of_Integer; // Kolejne odstêpy pomiêdzy zgaszeniami i zapaleniami œwiat³a.
 
@@ -126,6 +141,8 @@ type
     œwiat³o_dodatkowe
       : boolean;
 
+    dŸwiêki__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku.
+    dŸwiêki__opóŸnienie_losowe, // Ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku. Wartoœæ losowana z zakresu dŸwiêki__losowoœæ.
     œwiat³a_miganie__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile razy ma byæ wyd³u¿ony pierwszy krok migniêcia.
     œwiat³a_miganie__opóŸnienie_losowe, // Ile razy pierwszy krok migniêcia zostanie wyd³u¿ony. Wartoœæ losowana z zakresu œwiat³a_miganie__losowoœæ.
     œwiat³a_miganie__tabela_czasów_indeks
@@ -135,6 +152,7 @@ type
     œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i
       : Int64;
 
+    dŸwiêki__zasiêg_minimalny, // TGLBSoundEmitter.Source.MinDistance.
     kolizja_wp³yw__amunicja_uzupe³nianie,
     kolizja_wp³yw__obra¿enia,
     kolizja_wp³yw__prêdkoœæ,
@@ -142,6 +160,8 @@ type
       : real;
 
     obiekt_rodzaj : TObiekt_Rodzaj;
+
+    dŸwiêk_nazwa : string;
 
     œwiat³a_miganie__tabela_czasów_milisekundy_t : TArray_Of_Integer; // Kolejne odstêpy pomiêdzy zgaszeniami i zapaleniami œwiat³a.
 
@@ -160,6 +180,8 @@ type
     œwiat³o_dodatkowe
       : boolean;
 
+    dŸwiêki__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku.
+    dŸwiêki__opóŸnienie_losowe, // Ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku. Wartoœæ losowana z zakresu dŸwiêki__losowoœæ.
     œwiat³a_miganie__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile razy ma byæ wyd³u¿ony pierwszy krok migniêcia.
     œwiat³a_miganie__opóŸnienie_losowe, // Ile razy pierwszy krok migniêcia zostanie wyd³u¿ony. Wartoœæ losowana z zakresu œwiat³a_miganie__losowoœæ.
     œwiat³a_miganie__tabela_czasów_indeks
@@ -169,6 +191,7 @@ type
     œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i
       : Int64;
 
+    dŸwiêki__zasiêg_minimalny, // TGLBSoundEmitter.Source.MinDistance.
     kolizja_wp³yw__amunicja_uzupe³nianie,
     kolizja_wp³yw__obra¿enia,
     kolizja_wp³yw__prêdkoœæ,
@@ -176,6 +199,8 @@ type
       : real;
 
     obiekt_rodzaj : TObiekt_Rodzaj;
+
+    dŸwiêk_nazwa : string;
 
     œwiat³a_miganie__tabela_czasów_milisekundy_t : TArray_Of_Integer; // Kolejne odstêpy pomiêdzy zgaszeniami i zapaleniami œwiat³a.
 
@@ -193,6 +218,8 @@ type
     œwiat³o_dodatkowe
       : boolean;
 
+    dŸwiêki__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku.
+    dŸwiêki__opóŸnienie_losowe, // Ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku. Wartoœæ losowana z zakresu dŸwiêki__losowoœæ.
     œwiat³a_miganie__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile razy ma byæ wyd³u¿ony pierwszy krok migniêcia.
     œwiat³a_miganie__opóŸnienie_losowe, // Ile razy pierwszy krok migniêcia zostanie wyd³u¿ony. Wartoœæ losowana z zakresu œwiat³a_miganie__losowoœæ.
     œwiat³a_miganie__tabela_czasów_indeks
@@ -202,6 +229,7 @@ type
     œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i
       : Int64;
 
+    dŸwiêki__zasiêg_minimalny, // TGLBSoundEmitter.Source.MinDistance.
     kolizja_wp³yw__amunicja_uzupe³nianie,
     kolizja_wp³yw__obra¿enia,
     kolizja_wp³yw__prêdkoœæ,
@@ -209,6 +237,8 @@ type
       : real;
 
     obiekt_rodzaj : TObiekt_Rodzaj;
+
+    dŸwiêk_nazwa : string;
 
     œwiat³a_miganie__tabela_czasów_milisekundy_t : TArray_Of_Integer; // Kolejne odstêpy pomiêdzy zgaszeniami i zapaleniami œwiat³a.
 
@@ -226,6 +256,8 @@ type
     œwiat³o_dodatkowe
       : boolean;
 
+    dŸwiêki__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku.
+    dŸwiêki__opóŸnienie_losowe, // Ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku. Wartoœæ losowana z zakresu dŸwiêki__losowoœæ.
     œwiat³a_miganie__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile razy ma byæ wyd³u¿ony pierwszy krok migniêcia.
     œwiat³a_miganie__opóŸnienie_losowe, // Ile razy pierwszy krok migniêcia zostanie wyd³u¿ony. Wartoœæ losowana z zakresu œwiat³a_miganie__losowoœæ.
     œwiat³a_miganie__tabela_czasów_indeks
@@ -235,6 +267,7 @@ type
     œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i
       : Int64;
 
+    dŸwiêki__zasiêg_minimalny, // TGLBSoundEmitter.Source.MinDistance.
     kolizja_wp³yw__amunicja_uzupe³nianie,
     kolizja_wp³yw__obra¿enia,
     kolizja_wp³yw__prêdkoœæ,
@@ -242,6 +275,8 @@ type
       : real;
 
     obiekt_rodzaj : TObiekt_Rodzaj;
+
+    dŸwiêk_nazwa : string;
 
     œwiat³a_miganie__tabela_czasów_milisekundy_t : TArray_Of_Integer; // Kolejne odstêpy pomiêdzy zgaszeniami i zapaleniami œwiat³a.
 
@@ -259,6 +294,8 @@ type
     œwiat³o_dodatkowe
       : boolean;
 
+    dŸwiêki__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku.
+    dŸwiêki__opóŸnienie_losowe, // Ile cykli uruchomiania dŸwiêków zostanie opóŸnione w³¹czenie tego dŸwiêku. Wartoœæ losowana z zakresu dŸwiêki__losowoœæ.
     œwiat³a_miganie__losowoœæ, // Z jakiego zakresu mo¿na losowaæ ile razy ma byæ wyd³u¿ony pierwszy krok migniêcia.
     œwiat³a_miganie__opóŸnienie_losowe, // Ile razy pierwszy krok migniêcia zostanie wyd³u¿ony. Wartoœæ losowana z zakresu œwiat³a_miganie__losowoœæ.
     œwiat³a_miganie__tabela_czasów_indeks
@@ -268,6 +305,7 @@ type
     œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i
       : Int64;
 
+    dŸwiêki__zasiêg_minimalny, // TGLBSoundEmitter.Source.MinDistance.
     kolizja_wp³yw__amunicja_uzupe³nianie,
     kolizja_wp³yw__obra¿enia,
     kolizja_wp³yw__prêdkoœæ,
@@ -275,6 +313,8 @@ type
       : real;
 
     obiekt_rodzaj : TObiekt_Rodzaj;
+
+    dŸwiêk_nazwa : string;
 
     œwiat³a_miganie__tabela_czasów_milisekundy_t : TArray_Of_Integer; // Kolejne odstêpy pomiêdzy zgaszeniami i zapaleniami œwiat³a.
 
@@ -285,6 +325,10 @@ type
 // W tych funkcjach uwzglêdniæ wszystkie typy tutaj wystêpuj¹ce.
 
 function Dziób( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
+function DŸwiêk_Nazwa( const gl_custom_scene_object_f : TGLCustomSceneObject ) : string; overload;
+function DŸwiêki__Losowoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject ) : integer; overload;
+function DŸwiêki__OpóŸnienie_Losowe( const gl_custom_scene_object_f : TGLCustomSceneObject ) : integer; overload;
+function DŸwiêki__Zasiêg_Minimalny( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
 function Punkty_¯ycia( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
 function Radar( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
 function Radar_Ignoruje( const gl_custom_scene_object_f : TGLCustomSceneObject ) : boolean; overload;
@@ -304,6 +348,11 @@ function Kolizja_Wp³yw__Prêdkoœæ( const gl_custom_scene_object_f : TGLCustomScen
 function Obiekt_Rodzaj( const gl_custom_scene_object_f : TGLCustomSceneObject ) : TObiekt_Rodzaj; overload;
 
 procedure Dziób( const gl_custom_scene_object_f : TGLCustomSceneObject; const dziób_f : boolean ); overload;
+procedure DŸwiêk_Nazwa( const gl_custom_scene_object_f : TGLCustomSceneObject; const dŸwiêk_nazwa_f : string ); overload;
+procedure DŸwiêki__Losowoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject; const dŸwiêki__losowoœæ_f : integer ); overload;
+procedure DŸwiêki__OpóŸnienie_Losowe( const gl_custom_scene_object_f : TGLCustomSceneObject; const dŸwiêki__opóŸnienie_losowe_f : integer ); overload;
+procedure DŸwiêki__OpóŸnienie_Losowe__Wylicz( const gl_custom_scene_object_f : TGLCustomSceneObject );
+procedure DŸwiêki__Zasiêg_Minimalny( const gl_custom_scene_object_f : TGLCustomSceneObject; const dŸwiêki__zasiêg_minimalny_f : real ); overload;
 procedure Punkty_¯ycia( const gl_custom_scene_object_f : TGLCustomSceneObject; const punkty_¿ycia_f : real ); overload;
 procedure Radar( const gl_custom_scene_object_f : TGLCustomSceneObject; const radar_f : boolean ); overload;
 procedure Radar_Ignoruje( const gl_custom_scene_object_f : TGLCustomSceneObject; const radar_ignoruje_f : boolean ); overload;
@@ -341,6 +390,9 @@ begin
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
+  Self.dŸwiêki__losowoœæ := 0;
+  Self.dŸwiêki__opóŸnienie_losowe := 0;
+  Self.dŸwiêki__zasiêg_minimalny := -1;
   Self.œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i := 0;
   Self.œwiat³a_miganie__losowoœæ := 0;
   Self.œwiat³a_miganie__opóŸnienie_losowe := 0;
@@ -353,6 +405,8 @@ begin
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
+
+  Self.dŸwiêk_nazwa := '';
 
   SetLength( Self.œwiat³a_miganie__tabela_czasów_milisekundy_t, 0 );
 
@@ -372,6 +426,9 @@ begin
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
+  Self.dŸwiêki__losowoœæ := 0;
+  Self.dŸwiêki__opóŸnienie_losowe := 0;
+  Self.dŸwiêki__zasiêg_minimalny := -1;
   Self.œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i := 0;
   Self.œwiat³a_miganie__losowoœæ := 0;
   Self.œwiat³a_miganie__opóŸnienie_losowe := 0;
@@ -384,6 +441,8 @@ begin
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
+
+  Self.dŸwiêk_nazwa := '';
 
   SetLength( Self.œwiat³a_miganie__tabela_czasów_milisekundy_t, 0 );
 
@@ -403,6 +462,9 @@ begin
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
+  Self.dŸwiêki__losowoœæ := 0;
+  Self.dŸwiêki__opóŸnienie_losowe := 0;
+  Self.dŸwiêki__zasiêg_minimalny := -1;
   Self.œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i := 0;
   Self.œwiat³a_miganie__losowoœæ := 0;
   Self.œwiat³a_miganie__opóŸnienie_losowe := 0;
@@ -415,6 +477,8 @@ begin
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
+
+  Self.dŸwiêk_nazwa := '';
 
   SetLength( Self.œwiat³a_miganie__tabela_czasów_milisekundy_t, 0 );
 
@@ -434,6 +498,9 @@ begin
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
+  Self.dŸwiêki__losowoœæ := 0;
+  Self.dŸwiêki__opóŸnienie_losowe := 0;
+  Self.dŸwiêki__zasiêg_minimalny := -1;
   Self.œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i := 0;
   Self.œwiat³a_miganie__losowoœæ := 0;
   Self.œwiat³a_miganie__opóŸnienie_losowe := 0;
@@ -446,6 +513,8 @@ begin
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
+
+  Self.dŸwiêk_nazwa := '';
 
   SetLength( Self.œwiat³a_miganie__tabela_czasów_milisekundy_t, 0 );
 
@@ -466,6 +535,9 @@ begin
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
+  Self.dŸwiêki__losowoœæ := 0;
+  Self.dŸwiêki__opóŸnienie_losowe := 0;
+  Self.dŸwiêki__zasiêg_minimalny := -1;
   Self.œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i := 0;
   Self.œwiat³a_miganie__losowoœæ := 0;
   Self.œwiat³a_miganie__opóŸnienie_losowe := 0;
@@ -478,6 +550,8 @@ begin
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
+
+  Self.dŸwiêk_nazwa := '';
 
   SetLength( Self.œwiat³a_miganie__tabela_czasów_milisekundy_t, 0 );
 
@@ -497,6 +571,9 @@ begin
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
+  Self.dŸwiêki__losowoœæ := 0;
+  Self.dŸwiêki__opóŸnienie_losowe := 0;
+  Self.dŸwiêki__zasiêg_minimalny := -1;
   Self.œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i := 0;
   Self.œwiat³a_miganie__losowoœæ := 0;
   Self.œwiat³a_miganie__opóŸnienie_losowe := 0;
@@ -509,6 +586,8 @@ begin
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
+
+  Self.dŸwiêk_nazwa := '';
 
   SetLength( Self.œwiat³a_miganie__tabela_czasów_milisekundy_t, 0 );
 
@@ -528,6 +607,9 @@ begin
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
+  Self.dŸwiêki__losowoœæ := 0;
+  Self.dŸwiêki__opóŸnienie_losowe := 0;
+  Self.dŸwiêki__zasiêg_minimalny := -1;
   Self.œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i := 0;
   Self.œwiat³a_miganie__losowoœæ := 0;
   Self.œwiat³a_miganie__opóŸnienie_losowe := 0;
@@ -540,6 +622,8 @@ begin
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
+
+  Self.dŸwiêk_nazwa := '';
 
   SetLength( Self.œwiat³a_miganie__tabela_czasów_milisekundy_t, 0 );
 
@@ -559,6 +643,9 @@ begin
   Self.œwiat³o := false;
   Self.œwiat³o_dodatkowe := false;
 
+  Self.dŸwiêki__losowoœæ := 0;
+  Self.dŸwiêki__opóŸnienie_losowe := 0;
+  Self.dŸwiêki__zasiêg_minimalny := -1;
   Self.œwiat³a_miganie__czas_przeliczenia_ostatniego_milisekundy_i := 0;
   Self.œwiat³a_miganie__losowoœæ := 0;
   Self.œwiat³a_miganie__opóŸnienie_losowe := 0;
@@ -571,6 +658,8 @@ begin
   Self.punkty_¿ycia := -1;
 
   Self.obiekt_rodzaj := or_Brak;
+
+  Self.dŸwiêk_nazwa := '';
 
   SetLength( Self.œwiat³a_miganie__tabela_czasów_milisekundy_t, 0 );
 
@@ -611,6 +700,150 @@ begin
     Result := TSt_GLTorus(gl_custom_scene_object_f).dziób;
 
 end;//---//Funkcja Dziób().
+
+//Funkcja DŸwiêk_Nazwa().
+function DŸwiêk_Nazwa( const gl_custom_scene_object_f : TGLCustomSceneObject ) : string; overload;
+begin
+
+  Result := '';
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    Result := TSt_GLCapsule(gl_custom_scene_object_f).dŸwiêk_nazwa
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    Result := TSt_GLCone(gl_custom_scene_object_f).dŸwiêk_nazwa
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    Result := TSt_GLCube(gl_custom_scene_object_f).dŸwiêk_nazwa
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    Result := TSt_GLCylinder(gl_custom_scene_object_f).dŸwiêk_nazwa
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).dŸwiêk_nazwa
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    Result := TSt_GLFrustrum(gl_custom_scene_object_f).dŸwiêk_nazwa
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    Result := TSt_GLSphere(gl_custom_scene_object_f).dŸwiêk_nazwa
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    Result := TSt_GLTorus(gl_custom_scene_object_f).dŸwiêk_nazwa;
+
+end;//---//Funkcja DŸwiêk_Nazwa().
+
+//Funkcja DŸwiêki__Losowoœæ().
+function DŸwiêki__Losowoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject ) : integer; overload;
+begin
+
+  Result := 0;
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    Result := TSt_GLCapsule(gl_custom_scene_object_f).dŸwiêki__losowoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    Result := TSt_GLCone(gl_custom_scene_object_f).dŸwiêki__losowoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    Result := TSt_GLCube(gl_custom_scene_object_f).dŸwiêki__losowoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    Result := TSt_GLCylinder(gl_custom_scene_object_f).dŸwiêki__losowoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).dŸwiêki__losowoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    Result := TSt_GLFrustrum(gl_custom_scene_object_f).dŸwiêki__losowoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    Result := TSt_GLSphere(gl_custom_scene_object_f).dŸwiêki__losowoœæ
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    Result := TSt_GLTorus(gl_custom_scene_object_f).dŸwiêki__losowoœæ;
+
+end;//---//Funkcja DŸwiêki__Losowoœæ().
+
+//Funkcja DŸwiêki__OpóŸnienie_Losowe().
+function DŸwiêki__OpóŸnienie_Losowe( const gl_custom_scene_object_f : TGLCustomSceneObject ) : integer; overload;
+begin
+
+  Result := 0;
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    Result := TSt_GLCapsule(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    Result := TSt_GLCone(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    Result := TSt_GLCube(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    Result := TSt_GLCylinder(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    Result := TSt_GLFrustrum(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    Result := TSt_GLSphere(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    Result := TSt_GLTorus(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe;
+
+end;//---//Funkcja DŸwiêki__OpóŸnienie_Losowe().
+
+//Funkcja DŸwiêki__Zasiêg_Minimalny().
+function DŸwiêki__Zasiêg_Minimalny( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
+begin
+
+  Result := -1;
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    Result := TSt_GLCapsule(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    Result := TSt_GLCone(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    Result := TSt_GLCube(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    Result := TSt_GLCylinder(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    Result := TSt_GLDummyCube(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    Result := TSt_GLFrustrum(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    Result := TSt_GLSphere(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    Result := TSt_GLTorus(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny;
+
+end;//---//Funkcja DŸwiêki__Zasiêg_Minimalny().
 
 //Funkcja Punkty_¯ycia().
 function Punkty_¯ycia( const gl_custom_scene_object_f : TGLCustomSceneObject ) : real; overload;
@@ -1260,6 +1493,154 @@ begin
     TSt_GLTorus(gl_custom_scene_object_f).dziób := dziób_f;
 
 end;//---//Funkcja Dziób().
+
+//Funkcja DŸwiêk_Nazwa().
+procedure DŸwiêk_Nazwa( const gl_custom_scene_object_f : TGLCustomSceneObject; const dŸwiêk_nazwa_f : string ); overload;
+begin
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    TSt_GLCapsule(gl_custom_scene_object_f).dŸwiêk_nazwa := dŸwiêk_nazwa_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    TSt_GLCone(gl_custom_scene_object_f).dŸwiêk_nazwa := dŸwiêk_nazwa_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    TSt_GLCube(gl_custom_scene_object_f).dŸwiêk_nazwa := dŸwiêk_nazwa_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    TSt_GLCylinder(gl_custom_scene_object_f).dŸwiêk_nazwa := dŸwiêk_nazwa_f
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    TSt_GLDummyCube(gl_custom_scene_object_f).dŸwiêk_nazwa := dŸwiêk_nazwa_f
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    TSt_GLFrustrum(gl_custom_scene_object_f).dŸwiêk_nazwa := dŸwiêk_nazwa_f
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    TSt_GLSphere(gl_custom_scene_object_f).dŸwiêk_nazwa := dŸwiêk_nazwa_f
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    TSt_GLTorus(gl_custom_scene_object_f).dŸwiêk_nazwa := dŸwiêk_nazwa_f;
+
+end;//---//Funkcja DŸwiêk_Nazwa().
+
+//Funkcja DŸwiêki__Losowoœæ().
+procedure DŸwiêki__Losowoœæ( const gl_custom_scene_object_f : TGLCustomSceneObject; const dŸwiêki__losowoœæ_f : integer ); overload;
+begin
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    TSt_GLCapsule(gl_custom_scene_object_f).dŸwiêki__losowoœæ := dŸwiêki__losowoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    TSt_GLCone(gl_custom_scene_object_f).dŸwiêki__losowoœæ := dŸwiêki__losowoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    TSt_GLCube(gl_custom_scene_object_f).dŸwiêki__losowoœæ := dŸwiêki__losowoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    TSt_GLCylinder(gl_custom_scene_object_f).dŸwiêki__losowoœæ := dŸwiêki__losowoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    TSt_GLDummyCube(gl_custom_scene_object_f).dŸwiêki__losowoœæ := dŸwiêki__losowoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    TSt_GLFrustrum(gl_custom_scene_object_f).dŸwiêki__losowoœæ := dŸwiêki__losowoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    TSt_GLSphere(gl_custom_scene_object_f).dŸwiêki__losowoœæ := dŸwiêki__losowoœæ_f
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    TSt_GLTorus(gl_custom_scene_object_f).dŸwiêki__losowoœæ := dŸwiêki__losowoœæ_f;
+
+end;//---//Funkcja DŸwiêki__Losowoœæ().
+
+//Funkcja DŸwiêki__OpóŸnienie_Losowe().
+procedure DŸwiêki__OpóŸnienie_Losowe( const gl_custom_scene_object_f : TGLCustomSceneObject; const dŸwiêki__opóŸnienie_losowe_f : integer ); overload;
+begin
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    TSt_GLCapsule(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe := dŸwiêki__opóŸnienie_losowe_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    TSt_GLCone(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe := dŸwiêki__opóŸnienie_losowe_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    TSt_GLCube(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe := dŸwiêki__opóŸnienie_losowe_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    TSt_GLCylinder(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe := dŸwiêki__opóŸnienie_losowe_f
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    TSt_GLDummyCube(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe := dŸwiêki__opóŸnienie_losowe_f
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    TSt_GLFrustrum(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe := dŸwiêki__opóŸnienie_losowe_f
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    TSt_GLSphere(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe := dŸwiêki__opóŸnienie_losowe_f
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    TSt_GLTorus(gl_custom_scene_object_f).dŸwiêki__opóŸnienie_losowe := dŸwiêki__opóŸnienie_losowe_f;
+
+end;//---//Funkcja DŸwiêki__OpóŸnienie_Losowe().
+
+//Funkcja Œwiat³a_Miganie__Œwiat³o_W³¹czone().
+procedure DŸwiêki__OpóŸnienie_Losowe__Wylicz( const gl_custom_scene_object_f : TGLCustomSceneObject );
+var
+  zti : integer;
+begin
+
+  zti := Wyglad_Elementy.DŸwiêki__Losowoœæ( gl_custom_scene_object_f );
+  zti := Random( zti );
+  Wyglad_Elementy.DŸwiêki__OpóŸnienie_Losowe( gl_custom_scene_object_f, zti );
+
+end;//---//Funkcja Œwiat³a_Miganie__OpóŸnienie_Losowe().
+
+//Funkcja DŸwiêki__Zasiêg_Minimalny().
+procedure DŸwiêki__Zasiêg_Minimalny( const gl_custom_scene_object_f : TGLCustomSceneObject; const dŸwiêki__zasiêg_minimalny_f : real ); overload;
+begin
+
+  if   ( gl_custom_scene_object_f = nil )
+    or (  not Assigned( gl_custom_scene_object_f )  ) then
+    Exit;
+
+  if gl_custom_scene_object_f is TSt_GLCapsule then
+    TSt_GLCapsule(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny := dŸwiêki__zasiêg_minimalny_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCone then
+    TSt_GLCone(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny := dŸwiêki__zasiêg_minimalny_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCube then
+    TSt_GLCube(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny := dŸwiêki__zasiêg_minimalny_f
+  else
+  if gl_custom_scene_object_f is TSt_GLCylinder then
+    TSt_GLCylinder(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny := dŸwiêki__zasiêg_minimalny_f
+  else
+  if gl_custom_scene_object_f is TSt_GLDummyCube then
+    TSt_GLDummyCube(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny := dŸwiêki__zasiêg_minimalny_f
+  else
+  if gl_custom_scene_object_f is TSt_GLFrustrum then
+    TSt_GLFrustrum(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny := dŸwiêki__zasiêg_minimalny_f
+  else
+  if gl_custom_scene_object_f is TSt_GLSphere then
+    TSt_GLSphere(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny := dŸwiêki__zasiêg_minimalny_f
+  else
+  if gl_custom_scene_object_f is TSt_GLTorus then
+    TSt_GLTorus(gl_custom_scene_object_f).dŸwiêki__zasiêg_minimalny := dŸwiêki__zasiêg_minimalny_f;
+
+end;//---//Funkcja DŸwiêki__Zasiêg_Minimalny().
 
 //Funkcja Punkty_¯ycia().
 procedure Punkty_¯ycia( const gl_custom_scene_object_f : TGLCustomSceneObject; const punkty_¿ycia_f : real ); overload;
