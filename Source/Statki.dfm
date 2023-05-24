@@ -5075,7 +5075,7 @@
         Left = 0
         Top = 0
         Width = 372
-        Height = 273
+        Height = 390
         Align = alTop
         Caption = 
           'Statki z Eris Kallisti Dyskordia'#13#10'wersja 2023.05.24.'#13#10#13#10'MIT Lice' +
@@ -5085,9 +5085,15 @@
           'ami. U'#380'ytkownik zyskuje dost'#281'p do programu, u'#380'ywa programu na w'#322 +
           'asne ryzyko i ponosi wy'#322#261'czn'#261' odpowiedzialno'#347#263' za wszelkie szkod' +
           'y (w'#322'asne i niew'#322'asne) materialne i niematerialne oraz utrat'#281' da' +
-          'nych w zwi'#261'zku z u'#380'ywaniem programu.'#13#10#13#10#13#10'G'#322'osy wykorzystane w p' +
-          'rogramie pochodz'#261' z '#39'T'#322'umacz Google'#39'.'#13#10'https://translate.google.' +
-          'com/'
+          'nych w zwi'#261'zku z u'#380'ywaniem programu.'#13#10#13#10#13#10'Aby korzysta'#263' z d'#378'wi'#281'k' +
+          #243'w w grze system powinien mie'#263' dost'#281'p do bibliotek OpenAL (http:' +
+          '//www.openal.org). Najprawdopodobniej biblioteki te pr'#243'buj'#261' '#322#261'cz' +
+          'y'#263' si'#281' z sieci'#261' na co nie mam wp'#322'ywu.'#13#10#13#10'[To use sounds in the g' +
+          'ame, the system should have access to OpenAL libraries (http://w' +
+          'ww.openal.org). Most likely, these libraries are trying to conne' +
+          'ct to the network, which I have no influence on.]'#13#10#13#10#13#10'G'#322'osy wyk' +
+          'orzystane w programie pochodz'#261' z '#39'T'#322'umacz Google'#39'.'#13#10'https://tran' +
+          'slate.google.com/'
         WordWrap = True
         ExplicitWidth = 368
       end
@@ -9817,7 +9823,7 @@
     InnerColor.Color = {00000000F8FEFE3E0000803F0000803F}
     OuterColor.Color = {EBE0E03EE4DB5B3FE4DB5B3F0000803F}
     FireDensity = 0.600000023841857900
-    FireEvaporation = 0.860000014305114700
+    FireEvaporation = 0.860000014305114800
     ParticleLife = 2
     FireBurst = 1.000000000000000000
     FireRadius = 0.100000001490116100
@@ -10683,7 +10689,7 @@
     Left = 703
     Top = 19
     Bitmap = {
-      494C010108002000EC0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010108002000F00010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
