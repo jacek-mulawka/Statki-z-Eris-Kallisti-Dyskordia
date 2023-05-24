@@ -1,5 +1,5 @@
 Statki z Eris Kallisti Dyskordia
-wersja 2023.03.05.
+wersja 2023.05.24.
 
 MIT License
 
