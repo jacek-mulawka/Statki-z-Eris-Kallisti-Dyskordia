@@ -4,6 +4,8 @@ Wieloosobowa gra o statkach (strzelanka z elementami 'symulacji'), wspiera modyf
 
 Gra zawiera tłumaczenia na kilka wersji językowych.
 
+Aby korzystać z dźwięków w grze system powinien mieć dostęp do bibliotek OpenAL (http://www.openal.org). Najprawdopodobniej biblioteki te próbują łączyć się z siecią na co nie mam wpływu.
+
 Oprócz możliwości pływania statkiem gra oferuje:
 * gra pojedyncza (lokalna) i sieciowa;
 * granie wraz z SI (opartej na algorytmie);
@@ -79,6 +81,8 @@ Znane błędy.
 Multiplayer ship game (shooter with 'simulation' elements), supports modifying and creating new ships and maps in text editors (xml based scheme).
 
 The game includes translations into several language versions.
+
+To use sounds in the game, the system should have access to OpenAL libraries (http://www.openal.org). Most likely, these libraries are trying to connect to the network, which I have no influence on.
 
 In addition to the possibility of sailing a ship, the game offers:
 * single (local) and online play;
@@ -385,6 +389,8 @@ Powered by
 [GLScene](http://glscene.sourceforge.net),
 
 [Delphi](https://www.embarcadero.com/products/delphi),
+
+[OpenAL](http://www.openal.org),
 
 [Google Translate](https://translate.google.com/) (voices).
 
