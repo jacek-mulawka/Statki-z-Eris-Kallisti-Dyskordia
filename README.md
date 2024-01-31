@@ -74,6 +74,8 @@ Oprócz możliwości pływania statkiem gra oferuje:
 Znane błędy.
 * Tryb wieloosobowy nie jest do końca stabilny i nie jest zbyt wydajny. Aktualnie za bardzo nie wiem jak go ulepszyć.
 * Czasami przestają działać tekstury.
+* Na niektórych komputerach gra ulega 'zamrożeniu'. Najprawdopodobniej przyczyną jest jeden z efektów graficznych (GLS.FireFX). Jeżeli tak się dzieje należy w opcjach wyłączyć niektóre efekty graficzne.
+* Na niektórych komputerach pojawia się błąd przeliczania współrzędnych ekranowych na współrzędne sceny (świata gry). Najprawdopodobniej przyczyną jest GLS.SkyDome.TGLSkyDome (dla GLS.SkyDome.TGLEarthSkyDome działa poprawnie). Jeżeli tak się dzieje należy w opcjach zmienić 'Niebo' (również dla radaru).
 
 
 ## English
@@ -152,6 +154,8 @@ In addition to the possibility of sailing a ship, the game offers:
 Known issues.
 * Multiplayer isn't exactly stable and isn't very efficient. At the moment I don't really know how to improve it.
 * Sometimes textures stop working.
+* On some computers the game gets 'frozen'. Most likely the cause is one of the graphic effects (GLS.FireFX). If this happens, turn off some graphic effects in the options.
+* On some computers there is an error converting screen coordinates to scene (game world) coordinates. Most likely the cause is GLS.SkyDome.TGLSkyDome (for GLS.SkyDome.TGLEarthSkyDome it works correctly). If this happens you should change 'Sky' in the options (also for radar).
 
 
 <a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2001%20interfejs%201%20gra.jpg">
@@ -338,6 +342,17 @@ Known issues.
   <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2006%20zamek%20S%20H%203%20m.jpg">
 </a>
 
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2007%20niebo%201.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2007%20niebo%201%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2007%20niebo%202.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2007%20niebo%202%20m.jpg">
+</a>
+
+<a href="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/Statki%20z%20Eris%20Kallisti%20Dyskordia%2007%20niebo%203.jpg">
+  <img src="https://github.com/jacek-mulawka/Statki-z-Eris-Kallisti-Dyskordia/blob/main/Gallery/M/Statki%20z%20Eris%20Kallisti%20Dyskordia%2007%20niebo%203%20m.jpg">
+</a>
 
 #
 
