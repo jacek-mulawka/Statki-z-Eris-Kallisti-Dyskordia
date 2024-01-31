@@ -5,10 +5,10 @@ unit Przechwytywacze_Klas;{12.Gru.2022}
 interface
 
 uses
-  GLWin32Viewer, GLSound, GLSMOpenAL, OpenAL, System.Classes, Vcl.Grids;
+  GLS.SceneViewer, Sounds.OpenAL, Sounds.OpenALImport, System.Classes, Vcl.Grids;
 
 type
-  TGLSceneViewer = class( GLWin32Viewer.TGLSceneViewer )
+  TGLSceneViewer = class( GLS.SceneViewer.TGLSceneViewer )
   public
     skupienie_ustawione : boolean;
     constructor Create( AOwner: TComponent );
@@ -19,7 +19,7 @@ type
   //  procedure PauseSource(aSource : TGLBaseSoundSource; paused : Boolean);
   //end;//---//TGLSMOpenAL_2
 
-  TGLSMOpenAL = class ( GLSMOpenAL.TGLSMOpenAL )
+  TGLSMOpenAL = class ( Sounds.OpenAL.TGLSMOpenAL )
   public
     pauza : boolean;
     constructor Create( AOwner: TComponent );
@@ -90,14 +90,14 @@ begin
       begin
 
         if not Self.Sources[ i ].Pause then
-          alSourcePause(Self.Sources[ i ].ManagerTag); // uses OpenAL.
+          Sounds.OpenALImport.alSourcePause(Self.Sources[ i ].ManagerTag);
 
       end
     else//if Self.pauza then
       begin
 
         if not Self.Sources[ i ].Pause then
-          alSourcePlay(Self.Sources[ i ].ManagerTag); // uses OpenAL.
+          Sounds.OpenALImport.alSourcePlay(Self.Sources[ i ].ManagerTag);
 
       end;
     //---//if Self.pauza then

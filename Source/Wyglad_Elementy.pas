@@ -8,7 +8,7 @@ unit Wyglad_Elementy;
 interface
 
 uses
-  GLObjects, GLGeomObjects, GLScene,
+  GLS.Objects, GLS.GeomObjects, GLS.Scene,
   System.Classes;
 
 type

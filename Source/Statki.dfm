@@ -10,7 +10,7 @@
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
+  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnResize = FormResize
@@ -50,6 +50,7 @@
     Buffer.FogEnvironment.FogMode = fmExp
     Buffer.BackgroundColor = clWhite
     FieldOfView = 143.130096435546900000
+    PenAsTouch = False
     OnMouseLeave = Gra_GLSceneViewerExit
     OnClick = Gra_GLSceneViewerClick
     OnMouseDown = Gra_GLSceneViewerMouseDown
@@ -192,7 +193,7 @@
         ParentShowHint = False
         ShowHint = True
         TabOrder = 3
-        Value = 1000
+        Value = 400
       end
       object Radar__Zmieniaj_Czułość_Wraz_Ze_Skalą_CheckBox: TCheckBox
         Left = 160
@@ -228,6 +229,7 @@
       Height = 100
       Camera = Radar_GLCamera
       FieldOfView = 90.000000000000000000
+      PenAsTouch = False
       OnMouseMove = Radar_GLSceneViewerMouseMove
       TabOrder = 1
     end
@@ -237,7 +239,7 @@
     Top = 0
     Width = 400
     Height = 962
-    ActivePage = O_Programie_TabSheet
+    ActivePage = Gra_TabSheet
     Align = alRight
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -252,10 +254,6 @@
     OnChange = PageControl1Change
     object Gra_TabSheet: TTabSheet
       Caption = 'Gra'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Gra_ScrollBox: TScrollBox
         Left = 0
         Top = 0
@@ -405,10 +403,11 @@
           object Gracz_Nazwa_Etykieta_Label: TLabel
             Left = 2
             Top = 15
-            Width = 67
+            Width = 364
             Height = 13
             Align = alTop
             Caption = 'Nazwa gracza'
+            ExplicitWidth = 67
           end
           object Gracz_Gotowość_Nie_BitBtn: TBitBtn
             Left = 185
@@ -842,18 +841,20 @@
           object Mapa_Label: TLabel
             Left = 2
             Top = 15
-            Width = 58
+            Width = 364
             Height = 13
             Align = alTop
             Caption = 'Mapa: <?>.'
+            ExplicitWidth = 58
           end
           object Statki_Pozycje_Początkowe_Label: TLabel
             Left = 2
             Top = 28
-            Width = 170
+            Width = 364
             Height = 13
             Align = alTop
             Caption = 'Pozycje pocz'#261'tkowe statk'#243'w: <?>.'
+            ExplicitWidth = 170
           end
           object Gracze_Lista_StringGrid: TStringGrid
             Left = 2
@@ -3392,6 +3393,7 @@
         Top = 0
         Width = 372
         Height = 954
+        VertScrollBar.Position = 641
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3405,7 +3407,7 @@
           950)
         object Tłumaczenie_Etykieta_Label: TLabel
           Left = 95
-          Top = 10
+          Top = -631
           Width = 59
           Height = 13
           Caption = 'T'#322'umaczenie'
@@ -3414,7 +3416,7 @@
         end
         object Kamera_Odległość_Maksymalna_Etykieta_Label: TLabel
           Left = 10
-          Top = 1100
+          Top = 459
           Width = 84
           Height = 13
           Hint = 
@@ -3432,7 +3434,7 @@
         end
         object Czcionka_Wielkość__Ekran_Etykieta_Label: TLabel
           Left = 10
-          Top = 1175
+          Top = 664
           Width = 110
           Height = 13
           Hint = 'Wielko'#347#263' czcionki napis'#243'w wy'#347'wietlanych na ekranie.'
@@ -3448,7 +3450,7 @@
         end
         object Czcionka_Wielkość__Radar_Etykieta_Label: TLabel
           Left = 10
-          Top = 1200
+          Top = 689
           Width = 109
           Height = 13
           Hint = 'Wielko'#347#263' czcionki napis'#243'w wy'#347'wietlanych na radarze.'
@@ -3464,7 +3466,7 @@
         end
         object Projektowy_Tryb_CheckBox: TCheckBox
           Left = 155
-          Top = 105
+          Top = -536
           Width = 97
           Height = 17
           Caption = 'Projektowy tryb'
@@ -3475,16 +3477,16 @@
         end
         object Button1: TButton
           Left = 260
-          Top = 170
+          Top = -471
           Width = 75
           Height = 25
           Caption = 'Button1'
-          TabOrder = 32
+          TabOrder = 35
           OnClick = Button1Click
         end
         object Statki_Zaprezentuj_GroupBox: TGroupBox
           Left = 3
-          Top = 792
+          Top = 151
           Width = 310
           Height = 300
           Caption = 'Zaprezentuj statki'
@@ -3671,7 +3673,7 @@
         end
         object Klatek_Na_Sekundę_Wyświetlaj_CheckBox: TCheckBox
           Left = 5
-          Top = 105
+          Top = -536
           Width = 120
           Height = 17
           Hint = 'Wy'#347'wietlaj ilo'#347#263' klatek na sekund'#281'.'
@@ -3682,7 +3684,7 @@
         end
         object Gwiazdy_Migotanie_CheckBox: TCheckBox
           Left = 155
-          Top = 80
+          Top = -561
           Width = 120
           Height = 17
           Caption = 'Gwiazdy migotanie'
@@ -3693,7 +3695,7 @@
         end
         object Zmieniaj_Automatycznie_GroupBox: TGroupBox
           Left = 5
-          Top = 575
+          Top = -66
           Width = 330
           Height = 215
           Caption = 'Zmieniaj automatycznie'
@@ -4042,7 +4044,7 @@
         end
         object SOS_Nadaj_Button: TButton
           Left = 5
-          Top = 10
+          Top = -631
           Width = 75
           Height = 25
           Caption = 'SOS nadaj'
@@ -4053,7 +4055,7 @@
         end
         object Projektowy_Tryb__Grawitacja_Wyłącz_CheckBox: TCheckBox
           Left = 5
-          Top = 80
+          Top = -561
           Width = 110
           Height = 17
           Caption = 'Grawitacja wy'#322#261'cz'
@@ -4064,7 +4066,7 @@
         end
         object Delta_Czasu_Wyświetlaj_CheckBox: TCheckBox
           Left = 5
-          Top = 55
+          Top = -586
           Width = 97
           Height = 17
           Hint = 'Wy'#347'wietlaj warto'#347#263' delty czasu.'
@@ -4075,7 +4077,7 @@
         end
         object Lotniskowiec__Samoloty_Wszystkie__Punkty_Życia_Zero_GroupBox: TGroupBox
           Left = 5
-          Top = 260
+          Top = -381
           Width = 330
           Height = 65
           Caption = 'Lotniskowiec samoloty wszystkie odrzu'#263
@@ -4130,7 +4132,7 @@
         end
         object SI__Pływa_CheckBox: TCheckBox
           Left = 5
-          Top = 155
+          Top = -486
           Width = 97
           Height = 17
           Caption = 'SI p'#322'ywa'
@@ -4143,7 +4145,7 @@
         end
         object SI__Strzela_CheckBox: TCheckBox
           Left = 155
-          Top = 155
+          Top = -486
           Width = 97
           Height = 17
           Caption = 'SI strzela'
@@ -4156,7 +4158,7 @@
         end
         object SI__Patrol_Blisko_Zostaje_CheckBox: TCheckBox
           Left = 155
-          Top = 130
+          Top = -511
           Width = 97
           Height = 17
           Hint = 'SI nie odp'#322'ynie zbyt daleko od '#347'rodka obszaru patrolu.'
@@ -4170,7 +4172,7 @@
         end
         object Projektowy_Tryb__Przesuwanie_Skaluj_CheckBox: TCheckBox
           Left = 5
-          Top = 130
+          Top = -511
           Width = 115
           Height = 17
           Hint = 
@@ -4185,7 +4187,7 @@
         end
         object Punkt_Naprowadzaj_GroupBox: TGroupBox
           Left = 5
-          Top = 490
+          Top = -151
           Width = 330
           Height = 75
           Caption = 'Punkt naprowadzaj'
@@ -4344,7 +4346,7 @@
         end
         object Pokój_Rozmów__Ignoruj_GroupBox: TGroupBox
           Left = 5
-          Top = 331
+          Top = -310
           Width = 325
           Height = 150
           Caption = 'Pok'#243'j rozm'#243'w - ignorowanie wiadomo'#347'ci'
@@ -4369,7 +4371,7 @@
         end
         object Projektowy_Tryb__Współrzędne_Sceny_Wyświetlaj_CheckBox: TCheckBox
           Left = 155
-          Top = 205
+          Top = -436
           Width = 140
           Height = 17
           Hint = 
@@ -4382,7 +4384,7 @@
         end
         object Fotograficzny_Tryb_CheckBox: TCheckBox
           Left = 155
-          Top = 55
+          Top = -586
           Width = 120
           Height = 17
           Hint = 'Wy'#322#261'cza informacje ekranowe.'
@@ -4394,7 +4396,7 @@
         end
         object Zakłócanie__Dozwolone_CheckBox: TCheckBox
           Left = 5
-          Top = 230
+          Top = -411
           Width = 97
           Height = 17
           Hint = 
@@ -4411,7 +4413,7 @@
         end
         object Zakłócanie__Graczy_Nie_SI_Dozwolone_CheckBox: TCheckBox
           Left = 155
-          Top = 230
+          Top = -411
           Width = 115
           Height = 17
           Hint = 
@@ -4427,7 +4429,7 @@
         end
         object Do_Wygaszenia_Panel: TPanel
           Left = 10
-          Top = 1230
+          Top = 850
           Width = 305
           Height = 100
           Font.Charset = DEFAULT_CHARSET
@@ -4437,7 +4439,7 @@
           Font.Style = []
           ParentColor = True
           ParentFont = False
-          TabOrder = 31
+          TabOrder = 34
           object Celowanie_Precyzja__Obrót_Etykieta_Label: TLabel
             Left = 5
             Top = 5
@@ -4543,7 +4545,7 @@
         end
         object Światła_Miganie__Funkcjonalność_Aktywna_CheckBox: TCheckBox
           Left = 155
-          Top = 180
+          Top = -461
           Width = 97
           Height = 17
           Hint = 'Aktywno'#347#263' funkcjonalno'#347'ci migaj'#261'cych '#347'wiate'#322'.'
@@ -4557,7 +4559,7 @@
         end
         object Statki_Przywracaj_Do_Gry_CheckBox: TCheckBox
           Left = 5
-          Top = 180
+          Top = -461
           Width = 140
           Height = 17
           Hint = 'Przywracaj do gry zatopione statki.'
@@ -4571,7 +4573,7 @@
         end
         object Tłumaczenia_ComboBox: TComboBox
           Left = 165
-          Top = 10
+          Top = -631
           Width = 138
           Height = 22
           Hint = 'Enter - zastosuj.'
@@ -4584,8 +4586,8 @@
           OnKeyDown = Tłumaczenia_ComboBoxKeyDown
         end
         object Kamera_Odległość_Maksymalna_SpinEdit: TSpinEdit
-          Left = 105
-          Top = 1100
+          Left = 120
+          Top = 459
           Width = 80
           Height = 22
           Hint = 
@@ -4606,7 +4608,7 @@
         end
         object Tłumaczenie__Tłumacz_Polecenia_Dla_SI_CheckBox: TCheckBox
           Left = 95
-          Top = 35
+          Top = -606
           Width = 150
           Height = 17
           Hint = 
@@ -4622,7 +4624,7 @@
         end
         object Przeładowanie_Wskaźnik_CheckBox: TCheckBox
           Left = 5
-          Top = 205
+          Top = -436
           Width = 140
           Height = 17
           Hint = 'Wy'#347'wietlaj wska'#378'nik prze'#322'adowania na lufach.'
@@ -4636,7 +4638,7 @@
         end
         object Wiatr__Kierunek_Wyświetlaj_Na__Ekranie_CheckBox: TCheckBox
           Left = 10
-          Top = 1125
+          Top = 594
           Width = 160
           Height = 17
           Hint = 'Wy'#347'wietlaj informacj'#281' o kierunku wiatru na ekranie.'
@@ -4645,11 +4647,11 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 26
+          TabOrder = 28
         end
         object Wiatr__Kierunek_Wyświetlaj_Na__Radarze_CheckBox: TCheckBox
           Left = 10
-          Top = 1150
+          Top = 619
           Width = 160
           Height = 17
           Hint = 'Wy'#347'wietlaj informacj'#281' o kierunku wiatru na radarze.'
@@ -4658,12 +4660,12 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 27
+          TabOrder = 29
           OnClick = Wiatr__Siła_SpinEditChange
         end
         object Wiatr__Wpływ_Na_Rozgrywkę_CheckBox: TCheckBox
-          Left = 180
-          Top = 1150
+          Left = 10
+          Top = 639
           Width = 160
           Height = 17
           Hint = 'Wiatr jest w stanie przemieszcza'#263' statki, pociski.'
@@ -4672,12 +4674,12 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
-          TabOrder = 28
+          TabOrder = 30
           OnClick = Współczynniki_Inne_Click
         end
         object Czcionka_Wielkość__Ekran_SpinEdit: TSpinEdit
-          Left = 130
-          Top = 1175
+          Left = 145
+          Top = 664
           Width = 60
           Height = 22
           Hint = 'Wielko'#347#263' czcionki napis'#243'w wy'#347'wietlanych na ekranie.'
@@ -4691,13 +4693,13 @@
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 29
+          TabOrder = 31
           Value = 16
           OnChange = Czcionka_Wielkość_SpinEditChange
         end
         object Czcionka_Wielkość__Radar_SpinEdit: TSpinEdit
-          Left = 130
-          Top = 1200
+          Left = 145
+          Top = 689
           Width = 60
           Height = 22
           Hint = 'Wielko'#347#263' czcionki napis'#243'w wy'#347'wietlanych na radarze.'
@@ -4711,13 +4713,13 @@
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 30
+          TabOrder = 32
           Value = 11
           OnChange = Czcionka_Wielkość_SpinEditChange
         end
         object Trafienia_W_Logu_Wpisuj_CheckBox: TCheckBox
-          Left = 210
-          Top = 1100
+          Left = 10
+          Top = 569
           Width = 97
           Height = 17
           Hint = 'Wypisuj w logu zadane i otrzymane trafienia.'
@@ -4726,7 +4728,183 @@
           ParentShowHint = False
           ShowHint = True
           State = cbChecked
+          TabOrder = 27
+        end
+        object Efekty_GroupBox: TGroupBox
+          Left = 10
+          Top = 709
+          Width = 325
+          Height = 135
+          Hint = 'Efekty graficzne.'
+          Caption = 'Efekty'
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 33
+          object Efekty__Dym_CheckBox: TCheckBox
+            Left = 10
+            Top = 15
+            Width = 150
+            Height = 17
+            Caption = 'Dym'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object Efekty__Element_Uszkodzenie_CheckBox: TCheckBox
+            Left = 170
+            Top = 15
+            Width = 150
+            Height = 17
+            Caption = 'Element uszkodzenie'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 1
+          end
+          object Efekty__Ogień_CheckBox: TCheckBox
+            Left = 170
+            Top = 35
+            Width = 150
+            Height = 17
+            Caption = 'Ogie'#324
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 3
+          end
+          object Efekty__Smuga_CheckBox: TCheckBox
+            Left = 10
+            Top = 55
+            Width = 150
+            Height = 17
+            Caption = 'Smuga'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 4
+          end
+          object Efekty__Smuga_Długa_CheckBox: TCheckBox
+            Left = 170
+            Top = 55
+            Width = 150
+            Height = 17
+            Caption = 'Smuga d'#322'uga'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 5
+          end
+          object Efekty__Sonarowe_Ułatwienie_CheckBox: TCheckBox
+            Left = 10
+            Top = 75
+            Width = 150
+            Height = 17
+            Caption = 'Sonarowe u'#322'atwienie'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 6
+          end
+          object Efekty__SOS_Rozbłysk_CheckBox: TCheckBox
+            Left = 170
+            Top = 75
+            Width = 150
+            Height = 17
+            Caption = 'SOS rozb'#322'ysk'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 7
+          end
+          object Efekty__Wpadnięcie_Do_Wody_CheckBox: TCheckBox
+            Left = 170
+            Top = 95
+            Width = 150
+            Height = 17
+            Caption = 'Wpadni'#281'cie do wody'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 9
+          end
+          object Efekty__Trafienie_Rozbłysk_CheckBox: TCheckBox
+            Left = 10
+            Top = 95
+            Width = 150
+            Height = 17
+            Caption = 'Trafienie rozb'#322'ysk'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 8
+          end
+          object Efekty__Wpadnięcie_Do_Wody_0_CheckBox: TCheckBox
+            Left = 10
+            Top = 115
+            Width = 150
+            Height = 17
+            Caption = 'Wpadni'#281'cie do wody 0'
+            Checked = True
+            Enabled = False
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 10
+          end
+          object Efekty__Mgła_CheckBox: TCheckBox
+            Left = 10
+            Top = 35
+            Width = 150
+            Height = 17
+            Caption = 'Mg'#322'a'
+            Checked = True
+            ParentShowHint = False
+            ShowHint = True
+            State = cbChecked
+            TabOrder = 2
+          end
+        end
+        object Niebo_Rodzaj_RadioGroup: TRadioGroup
+          Left = 10
+          Top = 484
+          Width = 150
+          Height = 80
+          Caption = 'Niebo'
+          ItemIndex = 0
+          Items.Strings = (
+            'alternatywne'
+            'brak'
+            'standardowe')
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 25
+          OnClick = Niebo_Rodzaj_RadioGroupClick
+        end
+        object Radar__Niebo_Rodzaj_RadioGroup: TRadioGroup
+          Left = 170
+          Top = 484
+          Width = 150
+          Height = 80
+          Caption = 'Niebo - radar'
+          ItemIndex = 0
+          Items.Strings = (
+            'alternatywne'
+            'brak'
+            'standardowe')
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 26
+          OnClick = Niebo_Rodzaj_RadioGroupClick
         end
       end
     end
@@ -4853,10 +5031,6 @@
       Font.Style = []
       ImageIndex = 5
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Klawiatura_Konfiguracja__Przyciski_Panel: TPanel
         Left = 0
         Top = 0
@@ -5016,8 +5190,10 @@
           Height = 17
           Hint = 'Wy'#347'wietlaj tylko dopasowane wyszukania.'
           Caption = 'Tylko d.'
+          Checked = True
           ParentShowHint = False
           ShowHint = True
+          State = cbChecked
           TabOrder = 9
           OnClick = Klawiatura_Konfiguracja__Szukaj_EditChange
         end
@@ -5075,25 +5251,25 @@
         Left = 0
         Top = 0
         Width = 372
-        Height = 390
+        Height = 403
         Align = alTop
         Caption = 
-          'Statki z Eris Kallisti Dyskordia'#13#10'wersja 2023.05.24.'#13#10#13#10'MIT Lice' +
-          'nse'#13#10#13#10'Copyright (c) 2017 Jacek Mulawka'#13#10#13#10'j.mulawka@interia.pl'#13 +
-          #10#13#10'https://github.com/jacek-mulawka'#13#10#13#10#13#10'Program jest darmowy, u' +
-          'dost'#281'pniony w postaci takiej jakiej jest wraz ze wszystkimi b'#322#281'd' +
-          'ami. U'#380'ytkownik zyskuje dost'#281'p do programu, u'#380'ywa programu na w'#322 +
-          'asne ryzyko i ponosi wy'#322#261'czn'#261' odpowiedzialno'#347#263' za wszelkie szkod' +
-          'y (w'#322'asne i niew'#322'asne) materialne i niematerialne oraz utrat'#281' da' +
-          'nych w zwi'#261'zku z u'#380'ywaniem programu.'#13#10#13#10#13#10'Aby korzysta'#263' z d'#378'wi'#281'k' +
-          #243'w w grze system powinien mie'#263' dost'#281'p do bibliotek OpenAL (http:' +
-          '//www.openal.org). Najprawdopodobniej biblioteki te pr'#243'buj'#261' '#322#261'cz' +
-          'y'#263' si'#281' z sieci'#261' na co nie mam wp'#322'ywu.'#13#10#13#10'[To use sounds in the g' +
-          'ame, the system should have access to OpenAL libraries (http://w' +
-          'ww.openal.org). Most likely, these libraries are trying to conne' +
-          'ct to the network, which I have no influence on.]'#13#10#13#10#13#10'G'#322'osy wyk' +
-          'orzystane w programie pochodz'#261' z '#39'T'#322'umacz Google'#39'.'#13#10'https://tran' +
-          'slate.google.com/'
+          'Statki z Eris Kallisti Dyskordia'#13#10'wydanie 2.0.0.0'#13#10'wersja 2024.0' +
+          '1.31.'#13#10#13#10'MIT License'#13#10#13#10'Copyright (c) 2017 Jacek Mulawka'#13#10#13#10'j.mu' +
+          'lawka@interia.pl'#13#10#13#10'https://github.com/jacek-mulawka'#13#10#13#10#13#10'Progra' +
+          'm jest darmowy, udost'#281'pniony w postaci takiej jakiej jest wraz z' +
+          'e wszystkimi b'#322#281'dami. U'#380'ytkownik zyskuje dost'#281'p do programu, u'#380'y' +
+          'wa programu na w'#322'asne ryzyko i ponosi wy'#322#261'czn'#261' odpowiedzialno'#347#263' ' +
+          'za wszelkie szkody (w'#322'asne i niew'#322'asne) materialne i niematerial' +
+          'ne oraz utrat'#281' danych w zwi'#261'zku z u'#380'ywaniem programu.'#13#10#13#10#13#10'Aby k' +
+          'orzysta'#263' z d'#378'wi'#281'k'#243'w w grze system powinien mie'#263' dost'#281'p do biblio' +
+          'tek OpenAL (http://www.openal.org). Najprawdopodobniej bibliotek' +
+          'i te pr'#243'buj'#261' '#322#261'czy'#263' si'#281' z sieci'#261' na co nie mam wp'#322'ywu.'#13#10#13#10'[To us' +
+          'e sounds in the game, the system should have access to OpenAL li' +
+          'braries (http://www.openal.org). Most likely, these libraries ar' +
+          'e trying to connect to the network, which I have no influence on' +
+          '.]'#13#10#13#10#13#10'G'#322'osy wykorzystane w programie pochodz'#261' z '#39'T'#322'umacz Googl' +
+          'e'#39'.'#13#10'https://translate.google.com/'
         WordWrap = True
         ExplicitWidth = 368
       end
@@ -9399,6 +9575,7 @@
       Direction.Coordinates = {000000000000803F0000000000000000}
       Position.Coordinates = {00000000000040C0000000000000803F}
       Up.Coordinates = {0000000000000000000080BF00000000}
+      Visible = False
       Bands = <
         item
           StartColor.Color = {EBE0E03E9A93133FE4DB5B3F0000803F}
@@ -9507,6 +9684,17 @@
       OnGetTerrainBounds = Fale_GLTerrainRendererGetTerrainBounds
       OnHeightDataPostRender = Fale_GLTerrainRendererHeightDataPostRender
       ContourWidth = 0
+    end
+    object Gra_GLEarthSkyDome: TGLEarthSkyDome
+      Direction.Coordinates = {000000000000803F0000000000000000}
+      Up.Coordinates = {0000000000000000000080BF00000000}
+      Bands = <>
+      Stars = <>
+      SunElevation = 75.000000000000000000
+      Turbidity = 15.000000000000000000
+      ExtendedOptions = [esoRotateOnTwelveHours, esoDepthTest]
+      Slices = 48
+      Stacks = 24
     end
     object Gra_Obiekty_GLDummyCube: TGLDummyCube
       Pickable = False
@@ -10072,6 +10260,15 @@
       Up.Coordinates = {0000000000000000000080BF00000000}
       Height = 100.000000000000000000
       Width = 100.000000000000000000
+    end
+    object Radar_GLEarthSkyDome: TGLEarthSkyDome
+      Bands = <>
+      Stars = <>
+      SunElevation = 75.000000000000000000
+      Turbidity = 15.000000000000000000
+      ExtendedOptions = [esoDepthTest]
+      Slices = 48
+      Stacks = 24
     end
     object Radar_Obiekty_GLDummyCube: TGLDummyCube
       Pickable = False
@@ -10689,7 +10886,7 @@
     Left = 703
     Top = 19
     Bitmap = {
-      494C010108002000F00010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010108002000540010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

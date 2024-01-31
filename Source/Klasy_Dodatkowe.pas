@@ -3,7 +3,7 @@ unit Klasy_Dodatkowe;{17.PaŸ.2022}
 interface
 
 uses
-  GLObjects, GLGeomObjects, GLScene, GLColor, GLState,
+  GLS.Objects, GLS.GeomObjects, GLS.Scene, GLS.Color, GLS.State,
   System.Classes, System.SysUtils, Vcl.StdCtrls,
 
   Typy_Wspolne;
@@ -94,9 +94,9 @@ begin
       // Jako œlad (amunicji, statku).
 
       Œlad_Wielkoœæ_Zmieñ( korekcja_wielkoœci_obiektu_f );
-      Self.obiekt_kszta³t.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
-      Self.obiekt_kszta³t.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
-      Self.obiekt_kszta³t.Material.PolygonMode := GLState.pmPoints;
+      Self.obiekt_kszta³t.Material.FrontProperties.Ambient.Color := GLS.Color.clrTransparent;
+      Self.obiekt_kszta³t.Material.FrontProperties.Emission.Color := GLS.Color.clrTransparent;
+      Self.obiekt_kszta³t.Material.PolygonMode := GLS.State.pmPoints;
       TGLSphere(Self.obiekt_kszta³t).Slices := 4;
       TGLSphere(Self.obiekt_kszta³t).Stacks := 4;
 
@@ -106,9 +106,9 @@ begin
 
       // Jako l¹d.
 
-      Self.obiekt_kszta³t.Material.FrontProperties.Ambient.Color := GLColor.clrDarkBrown;
-      Self.obiekt_kszta³t.Material.FrontProperties.Diffuse.Color := GLColor.clrVeryDarkBrown;
-      Self.obiekt_kszta³t.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
+      Self.obiekt_kszta³t.Material.FrontProperties.Ambient.Color := GLS.Color.clrDarkBrown;
+      Self.obiekt_kszta³t.Material.FrontProperties.Diffuse.Color := GLS.Color.clrVeryDarkBrown;
+      Self.obiekt_kszta³t.Material.FrontProperties.Emission.Color := GLS.Color.clrTransparent;
       Self.l¹d__ro := true;
 
     end;

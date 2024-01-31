@@ -11,6 +11,9 @@ unit Statki;{18.Sty.2017}
   //
 
 
+  // Wydanie 2.0.0.0 - aktualizacja GLScene z 1.6.0.7082 na 2.2 2023.
+
+
   // Kierunki wspó³rzêdnych uk³adu g³ównego.
   //
   //     góra y
@@ -114,30 +117,32 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, GLObjects, GLScene, GLCoordinates, Vcl.ComCtrls, Vcl.Buttons,
-  Vcl.Samples.Spin, Vcl.Grids, Vcl.CheckLst, Vcl.ImgList,
-
-  GLNavigator, GLCadencer, GLCrossPlatform, GLBaseClasses, GLWin32Viewer, GLAsyncTimer,
-  GLGeomObjects,
-  GLKeyboard, GLHUDObjects, GLBitmapFont, GLWindowsFont, GLSkydome, GLVectorGeometry, GLColor, IdContext,
-  GLState,
-  GLTerrainRenderer, GLHeightData, GLHeightTileFileHDS,
-
-  GLCollision, GLFireFX, GLParticleFX, GLPerlinPFX, GLThorFX, GLMaterial, GLSpaceText, GLTexture, GLRenderContextInfo,
-
-  GLSound, GLSMOpenAL, GLFileWAV,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Buttons, Vcl.Samples.Spin, Vcl.Grids,
+  Vcl.CheckLst, Vcl.ImgList, System.ImageList, Vcl.ExtCtrls, Vcl.Menus, Vcl.StdCtrls, IdGlobal,
 
   IdTCPConnection, IdTCPClient, IdBaseComponent, IdComponent, IdCustomTCPServer, IdTCPServer,
-  IdSocketHandle, IdUDPClient, IdUDPBase, IdUDPServer,
-  IdCoder, IdCoder3to4, IdCoderMIME,
+  IdSocketHandle, IdUDPClient, IdUDPBase, IdUDPServer, IdCoder, IdCoder3to4, IdCoderMIME, IdContext,
 
-  System.DateUtils, Math, Vcl.ExtCtrls, IdIOHandler, IdGlobal, Vcl.StdCtrls, Xml.XMLDoc, Xml.XMLIntf,
-  pngimage, IdSync, IniFiles, System.IOUtils, StrUtils, Vcl.Menus, System.TypInfo, Winapi.OpenGL,
-  System.Rtti,
+  GLS.Objects, GLS.Scene, GLS.Coordinates, GLS.Navigator, GLS.Cadencer, GLS.BaseClasses, GLS.SceneViewer,
+  GLS.AsyncTimer, GLS.GeomObjects, GLS.HUDObjects, GLS.BitmapFont, GLS.WindowsFont, GLS.SkyDome,
+  GLS.TerrainRenderer, GLS.HeightData, GLS.HeightTileFileHDS, GLS.Collision, GLS.FireFX, GLS.ParticleFX,
+  GLS.PerlinPFX, GLS.ThorFX, GLS.Material, GLS.SoundManager, Sounds.OpenAL,
+
+
+  GLS.Color,
+  GLS.RenderContextInfo,
+  GLS.Texture, //???
+  GLS.SpaceText,
+  GLS.VectorGeometry,
+  GLS.VectorTypes,
+
+  IdIOHandler,
+  IdSync,
+  Xml.XMLIntf,
 
   Typy_Wspolne, Wyglad_Elementy, Klasy_Dodatkowe,
 
-  Przechwytywacze_Klas, System.ImageList; // Na samym koñcu.
+  Przechwytywacze_Klas; // Na samym koñcu.
 
 
 type
@@ -260,7 +265,7 @@ type
   end;//---//TUDP_Klienci_Lista
 
 
-  TWieloosobowe_Powiadomienie = class( TIdNotify ) // uses IdSync.
+  TWieloosobowe_Powiadomienie = class( IdSync.TIdNotify )
   private
     wyró¿nij : boolean; // Czy ma zaznaczyæ pojawienie siê komunikatu.
     powiadomienie_treœæ : string;
@@ -274,18 +279,18 @@ type
 
   TStatek_Create_Funkcje = record
     // Aby nie u¿ywaæ w klasie TStatek odwo³ani do Statki_Form.
-    Amunicja_Wystrzelona_Utwórz_Jeden : procedure( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector ) of object;
+    Amunicja_Wystrzelona_Utwórz_Jeden : procedure( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector ) of object;
     Grawitacja_Opadanie_Obra¿enia_Wylicz : function( const punkty_¿ycia_maksymalne_f, grawitacja_opadanie_szybkoœæ_aktualna_f : real ) : real of object;
     Lotniskowiec__Samoloty_Wszystkie__Punkty_¯ycia_Zero : procedure( const statek_lotniskowiec_f, statek_niszcz¹cy_f : TStatek; const rodzaj_f : smallint = -1 ) of object;
 
     Log_Wypisz_wsk : procedure( const napis_f : string; const prze³¹cz_zak³adkê_f : boolean = true ) of object;
     Odczytaj_Liczbê_Z_Napisu_wsk : function ( napis_f : string; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real of object;
-    Odczytaj_Liczbê_Z_Napisu_Xml_wsk : function( const i_xml_node_f : IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real of object;
+    Odczytaj_Liczbê_Z_Napisu_Xml_wsk : function( const i_xml_node_f : Xml.XMLIntf.IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real of object;
     Pêtla_Wzorzec_Oznacz_wsk : procedure( gl_custom_scene_object_f : TGLCustomSceneObject ) of object;
     Œwiat³a_Miganie__Wartoœci_Ustaw_wsk : procedure( const gl_custom_scene_object_f : TGLCustomSceneObject; czas_odstêpy_f : string ) of object;
     Wygl¹d_Elementy__DŸwiêk_Wczytaj_wsk : function( wzorzec__gl_custom_scene_object_f : TGLCustomSceneObject; dŸwiêk_nazwa_f : string; const dŸwiêki__zasiêg_minimalny_f : real; const zt_statek_f : TStatek = nil ) : boolean of object;
-    Wygl¹d_Elementy__Kolor_Losowy_Wylicz_wsk : function( kolor_od_f, kolor_do_f : real ) : GLVectorGeometry.TVector of object;
-    Wygl¹d_Elementy__Kolor_Ustaw_wsk : procedure( const gl_material_f : TGLMaterial; const vector_f : GLVectorGeometry.TVector ) of object;
+    Wygl¹d_Elementy__Kolor_Losowy_Wylicz_wsk : function( kolor_od_f, kolor_do_f : real ) : GLS.VectorTypes.TVector4f of object;
+    Wygl¹d_Elementy__Kolor_Ustaw_wsk : procedure( const gl_material_f : TGLMaterial; const vector_f : GLS.VectorTypes.TVector4f ) of object;
     Wygl¹d_Elementy__Kopiuj_W³aœciwoœci_wsk : procedure( zt_gl_custom_scene_object_wzorzec_f, zt_gl_custom_scene_object_kopia_f : TGLCustomSceneObject; kolor_od_f : real = -1; kolor_do_f : real = -1 ) of object;
     Wygl¹d_Elementy__Tekstura_Wczytaj_2_wsk : function( gl_custom_scene_object_f : TGLCustomSceneObject; tekstura_œcie¿ka_f : string; const materia³_nazwa_f : string = '' ) :  boolean of object;
     Wygl¹d_Elementy__Utwórz_Element_wsk : function( const statek_f : TStatek; const l¹d_prymityw_f : string; const w³aœciciel_gl_base_scene_object_f : TGLBaseSceneObject; const rodzic_gl_dummy_cube_f : TGLDummyCube = nil ) : TGLCustomSceneObject of object;
@@ -294,12 +299,12 @@ type
 
     procedure Log_Wypisz( const napis_f : string; const prze³¹cz_zak³adkê_f : boolean = true );
     function Odczytaj_Liczbê_Z_Napisu( napis_f : string; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
-    function Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
+    function Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : Xml.XMLIntf.IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
     procedure Pêtla_Wzorzec_Oznacz( gl_custom_scene_object_f : TGLCustomSceneObject );
     procedure Œwiat³a_Miganie__Wartoœci_Ustaw( const gl_custom_scene_object_f : TGLCustomSceneObject; czas_odstêpy_f : string );
     function Wygl¹d_Elementy__DŸwiêk_Wczytaj( wzorzec__gl_custom_scene_object_f : TGLCustomSceneObject; dŸwiêk_nazwa_f : string; const dŸwiêki__zasiêg_minimalny_f : real; const zt_statek_f : TStatek = nil ) : boolean;
-    function Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_od_f, kolor_do_f : real ) : GLVectorGeometry.TVector;
-    procedure Wygl¹d_Elementy__Kolor_Ustaw( const gl_material_f : TGLMaterial; const vector_f : GLVectorGeometry.TVector );
+    function Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_od_f, kolor_do_f : real ) : GLS.VectorTypes.TVector4f;
+    procedure Wygl¹d_Elementy__Kolor_Ustaw( const gl_material_f : TGLMaterial; const vector_f : GLS.VectorTypes.TVector4f );
     procedure Wygl¹d_Elementy__Kopiuj_W³aœciwoœci( zt_gl_custom_scene_object_wzorzec_f, zt_gl_custom_scene_object_kopia_f : TGLCustomSceneObject; kolor_od_f : real = -1; kolor_do_f : real = -1 );
     function Wygl¹d_Elementy__Tekstura_Wczytaj_2( gl_custom_scene_object_f : TGLCustomSceneObject; tekstura_œcie¿ka_f : string; const materia³_nazwa_f : string = '' ) :  boolean;
     function Wygl¹d_Elementy__Utwórz_Element( const statek_f : TStatek; const l¹d_prymityw_f : string; const w³aœciciel_gl_base_scene_object_f : TGLBaseSceneObject; const rodzic_gl_dummy_cube_f : TGLDummyCube = nil ) : TGLCustomSceneObject;
@@ -345,7 +350,7 @@ type
 
     prze³adowanie_wskaŸnik__kolor__owo,
     prze³adowanie_wskaŸnik__pozycja__owo
-      : TWieloosobowe__Wektor_4; //GLVectorGeometry.TVector
+      : TWieloosobowe__Wektor_4; //GLS.VectorTypes.TVector4d
   end;//---//TObiekty_Wieloosobowe__Lufa_r
 
   TObiekty_Wieloosobowe__Dzia³o_r = record
@@ -372,7 +377,7 @@ type
 
     uszkodzone_czas_i__owo : Int64; // Informacje do wyœwietlania dla gracza o jego statku.
 
-    celownik_linia__kolor__owo : TWieloosobowe__Wektor_4; //GLVectorGeometry.TVector
+    celownik_linia__kolor__owo : TWieloosobowe__Wektor_4; //GLS.VectorTypes.TVector4d
 
     obiekty_wieloosobowe_lufa_r_t__owo
       : array of TObiekty_Wieloosobowe__Lufa_r; // SizeOf( Pointer ) = 4.
@@ -407,13 +412,13 @@ type
     kierunek_am__owo,
     pozycja_am__owo,
     pozycja_celu__owo
-      : GLVectorGeometry.TVector;
+      : GLS.VectorTypes.TVector4f;
   end;//---//TObiekty_Wieloosobowe__Amunicja_r
 
   TObiekty_Wieloosobowe__Efekt_r = record
     id_statek_ef__owo : integer;
     wys³ane__owo : boolean;
-    pozycja_ef__owo : GLVectorGeometry.TVector;
+    pozycja_ef__owo : GLS.VectorTypes.TVector4f;
     czas_trwania__owo,
     czas_trwania_efekt_dodatkowy__owo
       : Int64;
@@ -498,11 +503,11 @@ type
 
     //gracz__nazwa__owo : TWieloosobowe_String;
 
-    cel_wspó³rzêdne_st__owo : GLVectorGeometry.TAffineVector;
+    cel_wspó³rzêdne_st__owo : GLS.VectorGeometry.TAffineVector;
 
     kierunek_st__owo,
     pozycja_st__owo
-      : TWieloosobowe__Wektor_4; //GLVectorGeometry.TVector
+      : TWieloosobowe__Wektor_4; //GLS.VectorTypes.TVector4d
 
     amunicja_rodzaj_st__owo : Typy_Wspolne.TAmunicja_Rodzaj; // SizeOf( Typy_Wspolne.TAmunicja_Rodzaj ) = 1 ale SizeOf( SmallInt ) = 2. // To chyba te¿ siê traktuje jako - SizeOf( Pointer ) = 4.
 
@@ -515,7 +520,7 @@ type
     œruba__obrót_k¹t_t__owo // Aktualny k¹t obrotu œruby (daje efekt obracania œrub¹).
       : array of real; // SizeOf( Pointer ) = 4.
 
-    kotwica__wspó³rzêdne_t__owo : array of GLVectorGeometry.TAffineVector;
+    kotwica__wspó³rzêdne_t__owo : array of GLS.VectorGeometry.TAffineVector;
     kotwica__ruch_etap_t__owo : array of TKotwica_Ruch_Etap;
 
     artyleria_t__owo,
@@ -547,7 +552,7 @@ type
   TObiekty_Wieloosobowe__Statek_Cel_Wspó³rzêdne_r = record
     id_statek_cel__owo : integer;
 
-    cel_wspó³rzêdne_cel__owo : GLVectorGeometry.TAffineVector;
+    cel_wspó³rzêdne_cel__owo : GLS.VectorGeometry.TAffineVector;
   end;//---//TObiekty_Wieloosobowe__Statek_Cel_Wspó³rzêdne_r
 
   TObiekty_Wieloosobowe__Statek_Klawisze_Obs³uga_r = record
@@ -585,7 +590,7 @@ type
     celowanie_precyzja__podniesienie__owo
       : real;
 
-    cel_wspó³rzêdne__owo : GLVectorGeometry.TAffineVector; //GLVectorGeometry.TVector;
+    cel_wspó³rzêdne__owo : GLS.VectorGeometry.TAffineVector; //GLS.VectorTypes.TVector4d;
     polecenie__nazwa__owo : TWieloosobowe_String;
   end;//---//TObiekty_Wieloosobowe__Statek_Klawisze_Obs³uga_r
 
@@ -635,7 +640,7 @@ type
     odbiorca_rodzaj : TPokój_Rozmów__Odbiorca_Rodzaj;
   end;//---//TPokój_Rozmów__Wyœlij_Do__Odbiorca_Rodzaj_
 
-  TPokój_Rozmów_Powiadomienie = class( TIdNotify ) // uses IdSync.
+  TPokój_Rozmów_Powiadomienie = class( IdSync.TIdNotify )
   private
     data_czas_wyœwietlaj,
     informacja_dodatkowa
@@ -920,8 +925,16 @@ type
     klawiatura_konfiguracja__polecenie_nazwa____punkty_¿ycia_wskaŸnik__przeciwnik,
     klawiatura_konfiguracja__polecenie_nazwa____punkty_¿ycia_wskaŸnik__sojusznik,
 
-    klawiatura_konfiguracja__polecenie_nazwa____radar_widocznoœæ,
-    klawiatura_konfiguracja__polecenie_nazwa____radar_broñ_zasiêg_wyœwietlaj,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__broñ_zasiêg_wyœwietlaj,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__1_minus,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__10_minus,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__1_plus,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__10_plus,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__skala__1_minus,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__skala__10_minus,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__skala__1_plus,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__skala__10_plus,
+    klawiatura_konfiguracja__polecenie_nazwa____radar__widocznoœæ,
 
     klawiatura_konfiguracja__polecenie_nazwa____samolot_katapult¹_startuj,
     klawiatura_konfiguracja__polecenie_nazwa____samolot_statek_prze³¹cz,
@@ -1084,6 +1097,8 @@ type
     komunikat__potwierdzenie,
     komunikat__pozycje_pocz¹tkowe_statków,
     komunikat__pozycje_pocz¹tkowe_statków__wed³ug_mapy,
+    komunikat__radar__czu³oœæ,
+    komunikat__radar__skala,
     komunikat__samolot_zg³asza_l¹dowanie,
     komunikat__serwer_zakoñczy³_grê,
     komunikat__statystyki_gry,
@@ -1452,7 +1467,7 @@ type
   end;//---//TPozycja_Pocz¹tkowa_Parametry_r
 
   TWygl¹d_Kolor_Definicja_r = record
-    kolor_vector : GLVectorGeometry.TVector;
+    kolor_vector : GLS.VectorTypes.TVector4f;
     kolor_definicja_nazwa : string;
   end;//---//TWygl¹d_Kolor_Definicja_r
 
@@ -1700,7 +1715,7 @@ type
     grawitacja_opadanie_obra¿enia_wylicz : function ( const punkty_¿ycia_maksymalne_f, grawitacja_opadanie_szybkoœæ_aktualna_f : real ) : real of object;
     lotniskowiec__samoloty_wszystkie__punkty_¿ycia_zero : procedure( const statek_lotniskowiec_f, statek_niszcz¹cy_f : TStatek; const rodzaj_f : smallint = -1 ) of object;
 
-    punkty_¿ycia__wskaŸnik__kolor : GLColor.TColorVector;
+    punkty_¿ycia__wskaŸnik__kolor : GLS.Color.TGLColorVector;
 
     amunicja_rodzaj_zbiór : TAmunicja_Rodzaj_Zbiór;
     celowanie__tryb : TCelowanie_Tryb;
@@ -1714,13 +1729,13 @@ type
     si__kolizja__wspó³rzêdne, // Wspó³rzêdne statku w momencie kolizji.
     si__punkt_zadany__wspó³rzêdne, // Wspó³rzêdne, do których SI kieruje statek.
     œlad_torowy__pozycja_ostatniego // Pozycja utworzonego ostatniego œladu torowego dla statku.
-      : GLVectorGeometry.TVector;
+      : GLS.VectorTypes.TVector4f;
 
     kamera_na_statek_pozycja, // W którym miejscu ma siê ustawiæ kamera po ustawieniu widoku ze statku.
     kamera_za_statkiem_pozycja // Przesuniêcie kamery po ustawieniu widoku za statkiem.
       : TWieloosobowe__Wektor_4;
 
-    cel_wspó³rzêdne_bezwzglêdne_affine_vektor : GLVectorGeometry.TAffineVector;
+    cel_wspó³rzêdne_bezwzglêdne_affine_vektor : GLS.VectorGeometry.TAffineVector;
 
     kotwica_ruch_etap__st : TKotwica_Ruch_Etap; // Dopuszczalne wartoœci kre_Stop, kre_W_Dó³, kre_W_Górê.
 
@@ -1748,7 +1763,7 @@ type
 
     gracz__nazwa,
     punkty_¿ycia__napis
-      : TGLSpaceText; // uses GLSpaceText.
+      : GLS.SpaceText.TGLSpaceText;
 
     lotniskowiec__³apacz_samolotów_dummy : Wyglad_Elementy.TSt_GLDummyCube; // Obiekt do wykrywania l¹dowania samolotu na lotniskowcu.
 
@@ -1782,7 +1797,7 @@ type
       : TWieloosobowe_String;
   public
     { Public declarations }
-    constructor Create( AOwner : TGLBaseSceneObject; gl_collision_mmanager_f : TGLCollisionManager; efekt__element_uszkodzenie_gl_thor_fx_manager_f : TGLThorFXManager; const id_gracz_f, id_statek_f : integer; const wygl¹d_definicja_f : string; const prymitywy_lista_f : TSchematy_Lista_r_t; const punkty_¿ycia_wskaŸnik__material_options_f : GLMaterial.TMaterialOptions; const statek_create_funkcje_f : TStatek_Create_Funkcje; const t³umaczenie_komunikaty_r_f : TT³umaczenie_Komunikaty_r );
+    constructor Create( AOwner : TGLBaseSceneObject; gl_collision_mmanager_f : TGLCollisionManager; efekt__element_uszkodzenie_gl_thor_fx_manager_f : TGLThorFXManager; const id_gracz_f, id_statek_f : integer; const wygl¹d_definicja_f : string; const prymitywy_lista_f : TSchematy_Lista_r_t; const punkty_¿ycia_wskaŸnik__material_options_f : GLS.Material.TGLMaterialOptions; const statek_create_funkcje_f : TStatek_Create_Funkcje; const t³umaczenie_komunikaty_r_f : TT³umaczenie_Komunikaty_r );
     destructor Destroy(); override;
 
     procedure DŸwiêków_Emitery_Utwórz( const statek_create_funkcje_f : TStatek_Create_Funkcje; const t³umaczenie_komunikaty_r_f : TT³umaczenie_Komunikaty_r );
@@ -1809,14 +1824,14 @@ type
 
     procedure Amunicja_Rodzaj_Zbiór_Wyznacz();
 
-    procedure Cel_Wspó³rzêdne_Ustaw( const cel_wspó³rzêdne_bezwzglêdne_affine_vektor_f : GLVectorGeometry.TAffineVector; const statek_celownicza_linia_tylko_f : boolean = false );
+    procedure Cel_Wspó³rzêdne_Ustaw( const cel_wspó³rzêdne_bezwzglêdne_affine_vektor_f : GLS.VectorGeometry.TAffineVector; const statek_celownicza_linia_tylko_f : boolean = false );
     procedure Celownik_Linia_Bez_Falowania__Pozycja_Y_Dostosuj( const kamera_pod_wod¹_f : boolean; const nad_powierzchni¹_wody_utrzymuj_f : boolean = false );
 
     function Broñ__Amunicja_Uzupe³nij( broñ_f : array of TTorpedy_Wyrzutnia; uzupe³nienie_procent_f : real = 10 ) : boolean;
     procedure Broñ__Indeks_Zmieniaj_Ustaw(); overload;
     procedure Broñ__Indeks_Zmieniaj_Ustaw( const czy_poprzednia_f : boolean ); overload;
 
-    function Strza³( const czy_wszystkie_bronie_f, czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector ) : boolean;
+    function Strza³( const czy_wszystkie_bronie_f, czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector ) : boolean;
 
     procedure Elementy_Gracza_Dostosuj( const id_grupa_gracza_f : integer; const celownik_bombowiec_widoczne_f, kamera_pod_wod¹_f, lotniskowiec__³apacz_samolotów_widoczne_f, punkty_¿ycia_wskaŸnik_widoczne__gracz_f, punkty_¿ycia_wskaŸnik_widoczne__przeciwnik_f, punkty_¿ycia_wskaŸnik_widoczne__sojusznik_f, obrót_k¹t_zablokowany_wskaŸnik_widoczne_f, obrót_k¹t_zablokowany_strza³_wskaŸnik_widoczne_f, prze³adowanie_wskaŸnik_f : boolean );
     procedure Elementy_Gracza_Widocznoœæ( const id_grupa_gracza_f : integer; const widoczne_f : boolean );
@@ -1825,7 +1840,7 @@ type
 
     procedure Punkty_¯ycia__Zmieñ( const wartoœæ_f : real );
     procedure Punkty_¯ycia__W_Zanurzeniu_Przeliczaj();
-    procedure Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw( const material_options_f : GLMaterial.TMaterialOptions );
+    procedure Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw( const material_options_f : GLS.Material.TGLMaterialOptions );
     procedure Punkty_¯ycia__WskaŸnik__Noc_Zmieñ( dzieñ_jasnoœæ_f : real );
     procedure Punkty_¯ycia__WskaŸnik__Rysuj( const gl_camera_f : TGLCamera; const wartoœæ_liczbowa_f : integer );
 
@@ -1879,7 +1894,7 @@ type
 
     prze³adowanie_procent : real; // Procent postêpu prze³adowania (100 - na³adowane).
 
-    amunicja_wystrzelona_utwórz_jeden : procedure( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector ) of object;
+    amunicja_wystrzelona_utwórz_jeden : procedure( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector ) of object;
 
     dzia³o : TTorpedy_Wyrzutnia;
 
@@ -1893,7 +1908,7 @@ type
       : real;
     prze³adowanie_wskaŸnik__pozycja_roz³adowany,
     prze³adowanie_wskaŸnik__pozycja_za³adowany
-      : GLVectorGeometry.TAffineVector;
+      : GLS.VectorGeometry.TAffineVector;
 
     korpus__lufa : Wyglad_Elementy.TSt_GLCylinder;
 
@@ -1907,7 +1922,7 @@ type
 
     procedure Dodatkowe_Elementy_Lufy_Pozycja_Ustaw();
     function  Prze³adowanie( const delta_czasu_f : double ) : boolean;
-    function Strza³( const obracaj_dzia³a_f, podnoœ_lufy_f, lufa_unoszona_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector ) : boolean;
+    function Strza³( const obracaj_dzia³a_f, podnoœ_lufy_f, lufa_unoszona_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector ) : boolean;
 
     procedure Wygl¹d_Elementy__Noc_Zmieñ( const dzieñ_jasnoœæ_f : real; const wygl¹d_elementy__kolor_noc_zmieñ_f : TWygl¹d_Elementy__Kolor_Noc_Zmieñ );
   end;//---//TLufa
@@ -1971,8 +1986,8 @@ type
     celownik_linia_bez_falowania__position_y__standardowa // Kopia pocz¹tkowej pozycji linii celowania.
       : single;
 
-    si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor : GLVectorGeometry.TAffineVector; // Wspó³rzêdne celu wybranego przez SI.
-    obrót_kierunek_zadany : GLVectorGeometry.TVector; // uses GLVectorGeometry. //TGLCoordinates;
+    si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor : GLS.VectorGeometry.TAffineVector; // Wspó³rzêdne celu wybranego przez SI.
+    obrót_kierunek_zadany : GLS.VectorTypes.TVector4f; //TGLCoordinates;
 
     // Wewn¹trz tych k¹tów nie mo¿na strzelaæ.
     // Wszystkie trzy tabela maj¹ taki sam wymiar.
@@ -2022,7 +2037,7 @@ type
     procedure Obrót_Zadany_Zmieñ( const celownik_linia_widocznoœæ_f : boolean = true );
     procedure Obrót_Kierunek_Zmieñ( const delta_czasu_f : double; const gra_wspó³czynnik_trudnoœci_f : integer; const broñ_nie_unosi_luf_f : boolean = false );
 
-    function Strza³( const czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; var wystrzeli³y_wszystkie_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector  ) : boolean;
+    function Strza³( const czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; var wystrzeli³y_wszystkie_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector ) : boolean;
     function Obrót_K¹t_Zablokowany_Strza³u_SprawdŸ() : boolean; overload;
     function Obrót_K¹t_Zablokowany_Strza³u_SprawdŸ( k¹t_f : real; const indeks_f : integer ) : boolean; overload;
 
@@ -2143,7 +2158,7 @@ type
 
     dzia³o_pozycja_absolutna_vector,
     uzbrojenie_wspó³rzêdne_vector // Wspó³rzêdne punktu, w którym amunicja siê uzbroi³a.
-      : GLVectorGeometry.TVector;
+      : GLS.VectorTypes.TVector4f;
 
     // TAmunicja TGLDummyCube -  porusza siê w linii strza³u (tylko w przód, nie obraca siê, nie obni¿a ani nie wznosi; jedynie je¿eli wynika to ze skoœnego tor lotu - wznosz¹cego lub opadaj¹cego).
     //                             Dla torped przesuwa siê w linii wody.
@@ -2166,7 +2181,7 @@ type
     statek__am : TStatek; // Statek, z którego wystrzelono amunicjê.
   public
     { Public declarations }
-    constructor Create( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector; const amunicja_prêdkoœæ_zakresy_r_f : TAmunicja_Prêdkoœæ_Zakresy_r; gl_collision_mmanager_f : TGLCollisionManager ); overload;
+    constructor Create( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector; const amunicja_prêdkoœæ_zakresy_r_f : TAmunicja_Prêdkoœæ_Zakresy_r; gl_collision_mmanager_f : TGLCollisionManager ); overload;
     //constructor Create( AAmunicja : TAmunicja ); overload; //Konstruktor kopiuj¹cy klasy TAmunicja.
     constructor Create( AObiekty_Wieloosobowe_Amunicja_r : TObiekty_Wieloosobowe__Amunicja_r; AOwner : TGLBaseSceneObject ); overload;
     destructor Destroy(); override;
@@ -2185,7 +2200,7 @@ type
 
     kotwica_lina_mocowanie, // Miejsce przymocowania liny do statku.
     kotwica_statek_mocowanie // Miejsce przymocowania kotwicy do statku.
-      : GLVectorGeometry.TAffineVector;
+      : GLS.VectorGeometry.TAffineVector;
 
     kotwica_ruch_etap__ko : TKotwica_Ruch_Etap;
     statek__ko : TStatek;
@@ -2271,7 +2286,7 @@ type
     //œlad : TGLCube;
   public
     { Public declarations }
-    constructor Create( AOwner : TGLBaseSceneObject; const kierunek_f, pozycja_f : GLVectorGeometry.TVector; œlad_torowy__d³ugoœæ_f, œlad_torowy__szerokoœæ_f : single; const dzieñ_jasnoœæ_f : real; const zanurzenie_peryskopowe__utrzymywane_f : boolean );
+    constructor Create( AOwner : TGLBaseSceneObject; const kierunek_f, pozycja_f : GLS.VectorTypes.TVector4f; œlad_torowy__d³ugoœæ_f, œlad_torowy__szerokoœæ_f : single; const dzieñ_jasnoœæ_f : real; const zanurzenie_peryskopowe__utrzymywane_f : boolean );
     destructor Destroy(); override;
   end;//---//TŒlad_Torowy
 
@@ -2322,6 +2337,10 @@ type
   TTrafienia_Efekt = class( TGLDummyCube )
   private
     { Private declarations }
+    mg³a_te : boolean;
+
+    czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i, // Czas poprzedniego animowania wizualizacji alternatywnej.
+    czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i, // Co ile milisekund animuje efekt.
     czas_rozb³ysku_ostatniego_sekundy_i, // Czas poprzedniego rozb³ysku efektu.
     czas_trwania_milisekundy_te, // Ile milisekund efekt trwa (widaæ go).
     czas_utworzenia_milisekundy_te // Czas utworzenia efektu (od niego odmierza siê czas trwania).
@@ -2329,11 +2348,20 @@ type
 
     wznoszenie_prêdkoœæ : double;
 
+    dzieñ_jasnoœæ_te : real;
+
     efekt_rodzaj : TEfekt_Rodzaj;
+
+    wizualizacja_alternatywna__gl_custom_scene_object : TGLCustomSceneObject; // Je¿eli efekty graficzne nie s¹ aktywne unaoczni efekt za pomoc¹ obiektów.
+
   public
     { Public declarations }
-    constructor Create( AOwner : TGLBaseSceneObject; x_f, y_f, z_f : real; const efekt_rodzaj_f : TEfekt_Rodzaj );
+    constructor Create( AOwner : TGLBaseSceneObject; x_f, y_f, z_f : real; const efekt_rodzaj_f : TEfekt_Rodzaj; const mg³a_f : boolean = false );
     destructor Destroy(); override;
+
+    procedure Wizualizacja_Alternatywna__Utwórz( const dzieñ_jasnoœæ_f : real );
+
+    procedure Wizualizacja_Alternatywna__Animuj();
   end;//---//TTrafienia_Efekt
 
   TInformacje_Dodatkowe = class
@@ -2362,7 +2390,7 @@ type
     Plus_Alt_Klawisz_Konfiguracja_CheckBox,
     Plus_Ctrl_Klawisz_Konfiguracja_CheckBox,
     Plus_Shift_Klawisz_Konfiguracja_CheckBox
-      : TKlawisz_Konfiguracja_CheckBox;
+      : Klasy_Dodatkowe.TKlawisz_Konfiguracja_CheckBox;
 
     t³umaczenie_komunikaty_r_wsk : ^TT³umaczenie_Komunikaty_r;
   public
@@ -2391,7 +2419,7 @@ type
 
     function Definicja_Istnieje( const kolor_definicja_nazwa_f : string ) : boolean;
     procedure Dodaj_Definicjê( const czerwony_f, zielony_f, niebieski_f, przezroczystoœæ_f : real; const kolor_definicja_nazwa_f : string );
-    function Odczytaj_Definicjê( const kolor_definicja_nazwa_f : string ) : GLVectorGeometry.TVector;
+    function Odczytaj_Definicjê( const kolor_definicja_nazwa_f : string ) : GLS.VectorTypes.TVector4f;
   end;//---//TWygl¹d_Kolor_Definicja
 
   TWygl¹d_Liczba_Definicja = class
@@ -2886,6 +2914,22 @@ type
     Klawiatura_Konfiguracja__Sortuj_Button: TButton;
     DŸwiêki__Komunikaty_GLDummyCube: TGLDummyCube;
     DŸwiêki__Komunikaty_GLAsyncTimer: TGLAsyncTimer;
+    Efekty_GroupBox: TGroupBox;
+    Efekty__Dym_CheckBox: TCheckBox;
+    Efekty__Element_Uszkodzenie_CheckBox: TCheckBox;
+    Efekty__Mg³a_CheckBox: TCheckBox;
+    Efekty__Ogieñ_CheckBox: TCheckBox;
+    Efekty__Smuga_CheckBox: TCheckBox;
+    Efekty__Smuga_D³uga_CheckBox: TCheckBox;
+    Efekty__Sonarowe_U³atwienie_CheckBox: TCheckBox;
+    Efekty__SOS_Rozb³ysk_CheckBox: TCheckBox;
+    Efekty__Trafienie_Rozb³ysk_CheckBox: TCheckBox;
+    Efekty__Wpadniêcie_Do_Wody_CheckBox: TCheckBox;
+    Efekty__Wpadniêcie_Do_Wody_0_CheckBox: TCheckBox;
+    Gra_GLEarthSkyDome: TGLEarthSkyDome;
+    Radar_GLEarthSkyDome: TGLEarthSkyDome;
+    Niebo_Rodzaj_RadioGroup: TRadioGroup;
+    Radar__Niebo_Rodzaj_RadioGroup: TRadioGroup;
 
     procedure FormShow( Sender: TObject );
     procedure Form_Show_Dokoñcz_TimerTimer( Sender: TObject );
@@ -2928,7 +2972,7 @@ type
 
     procedure Fale_CheckBoxClick( Sender: TObject );
     procedure Fale_GLTerrainRendererGetTerrainBounds( var l, t, r, b: Single );
-    procedure Fale_GLTerrainRendererHeightDataPostRender( var rci: TGLRenderContextInfo; var HeightDatas: TList );
+    procedure Fale_GLTerrainRendererHeightDataPostRender( var rci: GLS.RenderContextInfo.TGLRenderContextInfo; var HeightDatas: TList );
     procedure Fale_GLCustomHDSStartPreparingData( HeightData: TGLHeightData );
 
     procedure Fotograficzny_Tryb_CheckBoxClick( Sender: TObject );
@@ -2971,6 +3015,7 @@ type
     procedure Mg³a_SpinEditChange( Sender: TObject );
     procedure Morze_Wzburzenie_SpinEditChange( Sender: TObject );
     procedure Mysz_Czu³oœæ_EditChange( Sender: TObject );
+    procedure Niebo_Rodzaj_RadioGroupClick( Sender: TObject );
     procedure Noc_SpinEditChange( Sender: TObject );
     procedure PageControl1Change( Sender: TObject );
     procedure Pe³ny_Ekran_CheckBoxClick( Sender: TObject );
@@ -3273,9 +3318,9 @@ type
     kamera_ustawienie_kopia__góra_g,
     kamera_ustawienie_kopia__pozycja_g,
     wiatr_vector_g // Kierunek wiatru (X, Y, Z) i si³a (W). W któr¹ stronê wieje wiatr.
-      : GLVectorGeometry.TVector;
+      : GLS.VectorTypes.TVector4f;
 
-    wspó³rzêdne_œwiata_z_radaru_affine_vector_g : GLVectorGeometry.TAffineVector;
+    wspó³rzêdne_œwiata_z_radaru_affine_vector_g : GLS.VectorGeometry.TAffineVector;
 
     kamera_tryb_g,
     kamera_dla_prze³¹czania_statku_kopia__kamera_tryb_g,
@@ -3397,8 +3442,16 @@ type
     klawisz__punkty_¿ycia_wskaŸnik__gracz,
     klawisz__punkty_¿ycia_wskaŸnik__przeciwnik,
     klawisz__punkty_¿ycia_wskaŸnik__sojusznik,
-    klawisz__radar_widocznoœæ,
-    klawisz__radar_broñ_zasiêg_wyœwietlaj,
+    klawisz__radar__broñ_zasiêg_wyœwietlaj,
+    klawisz__radar__czu³oœæ__1_minus,
+    klawisz__radar__czu³oœæ__10_minus,
+    klawisz__radar__czu³oœæ__1_plus,
+    klawisz__radar__czu³oœæ__10_plus,
+    klawisz__radar__skala__1_minus,
+    klawisz__radar__skala__10_minus,
+    klawisz__radar__skala__1_plus,
+    klawisz__radar__skala__10_plus,
+    klawisz__radar__widocznoœæ,
     klawisz__samolot_katapult¹_startuj,
     klawisz__samolot_statek_prze³¹cz,
     klawisz__samolot_statek_prze³¹cz_bez_kamery,
@@ -3455,10 +3508,10 @@ type
     klawiatura_konfiguracja_r_t : array of ^TKlawiatura_Konfiguracja_r;
 
     procedure Amunicja_Ruch( delta_czasu_f : double );
-    procedure Amunicja_Wystrzelona_Utwórz_Jeden( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector );
+    procedure Amunicja_Wystrzelona_Utwórz_Jeden( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector );
     procedure Amunicja_Wystrzelona_Zwolnij_Jeden( amunicja_f : TAmunicja );
     procedure Amunicja_Wystrzelona_Zwolnij_Wszystkie();
-    procedure Amunicja_Wystrzelona_Efekt_Utwórz( amunicja_f : TAmunicja; const czy_torpeda_efekt_na_wodzie_f : boolean; const czy_wieloosobowa_f : boolean = false );
+    procedure Amunicja_Wystrzelona_Efekt_Utwórz( amunicja_f : TAmunicja; const czy_torpeda_efekt_na_wodzie_f : boolean; const dzieñ_jasnoœæ_f : real; const czy_wieloosobowa_f : boolean = false );
 
     procedure BabyMetal_Statek__Ruch( delta_czasu_f : double );
 
@@ -3470,8 +3523,8 @@ type
 
     procedure DŸwiêk__Losowe_Uruchamianie();
     procedure DŸwiêk__Plik_Dodaj_Do_Biblioteki( const plik_nazwa_f : string; dŸwiêk_nazwa_f : string = '' );
-    procedure DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const pozycja_f : GLVectorGeometry.TVector ); overload; //30.Mar.2023.
-    procedure DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const pozycja_f : GLVectorGeometry.TAffineVector ); overload;
+    procedure DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const pozycja_f : GLS.VectorTypes.TVector4f ); overload; //30.Mar.2023.
+    procedure DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const pozycja_f : GLS.VectorGeometry.TAffineVector ); overload;
     procedure DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const x_f, y_f, z_f : real ); overload;
     procedure DŸwiêki__Efekt__Utwórz_Jeden( AOwner : TGLBaseSceneObject; const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const x_f, y_f, z_f : real ); overload;
     procedure DŸwiêki__Efekt__Utwórz_Jeden( AOwner : TGLBaseSceneObject; const efekt_rodzaj_f : TEfekt_Rodzaj; const x_f, y_f, z_f : real; amunicja_f : TAmunicja ); overload;
@@ -3491,7 +3544,9 @@ type
     procedure Elementy_Gry_Przygotuj();
     procedure Elementy_Gry_Zwolnij( const czy_start_gry : boolean = true );
 
-    function Fala__Wysokoœæ_Na_Zboczu( const absolute_position_f : GLVectorGeometry.TVector ) : single;
+    function Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ() : TGLThorFXManager;
+
+    function Fala__Wysokoœæ_Na_Zboczu( const absolute_position_f : GLS.VectorTypes.TVector4f ) : single;
 
     function Gracz_Identyfikator() : integer;
     procedure Gracze_Lista_Odœwie¿();
@@ -3534,7 +3589,7 @@ type
 
     procedure Napis_Odœwie¿( const delta_czasu_f : double; const oczekiwanie_pomiñ_f : boolean = false );
     function Odczytaj_Liczbê_Z_Napisu( napis_f : string; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
-    function Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
+    function Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : Xml.XMLIntf.IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
 
     procedure Pauza( const czy_pauza_f : boolean );
     procedure Pauza_Podczas_Funkcje();
@@ -3546,7 +3601,7 @@ type
     procedure Punkt_Naprowadzaj();
     procedure Punkt_Naprowadzaj__Kolor_Zmieñ();
     procedure Punkt_Naprowadzaj__Na_Lotniskowiec();
-    function Punkty_¯ycia_WskaŸnik__Material_Options_Ustal() : TMaterialOptions;
+    function Punkty_¯ycia_WskaŸnik__Material_Options_Ustal() : GLS.Material.TGLMaterialOptions;
 
     function Radar__Koryguj_Wielkoœæ_Obiektów() : real;
     procedure Radar__L¹d_Rysuj();
@@ -3562,10 +3617,11 @@ type
     function SI__Polecenie__Zak³ócenia_Interpretuj( const pokój_rozmów_r_f : TPokój_Rozmów_r ) : boolean;
     procedure SI__Samolot_Gracza__L¹duj_Na_Lotniskowcu_Gracza( const id_gracz_f : integer; const peer_port__nadawca_f : integer = -1 );
     procedure SI__Statek_Gracza__Sterowanie_Ustaw( const statek_f : TStatek; const si__statek_gracza__p³ywa_poprzednia_wartoœæ_f : boolean; const si__statek_gracza__strzela_poprzednia_wartoœæ_f : TSi__Statek_Gracza__Strzela );
+    procedure SI__Syrena_Okrêtowa__Uruchom( const statek_f : TStatek );
     procedure SOS__Inicjuj( const statek_f : TStatek );
     procedure SOS__Przygotuj( const id_statek_f : integer );
     function Statek_Gracza__Gracz_Tryb_Zwróæ() : TStatek;
-    procedure Statek_Klient_Cel_Ustaw( const id_statek_f : integer; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector );
+    procedure Statek_Klient_Cel_Ustaw( const id_statek_f : integer; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector );
     procedure Statek_Przywróæ_Do_Gry( const id_statek_f : integer ); overload;
     procedure Statek_Przywróæ_Do_Gry( const statek_f : TStatek ); overload;
     function Statek_Odczytaj_Schemat( const lista_indeks_f : integer ) : string;
@@ -3604,7 +3660,7 @@ type
     procedure Ustawienia_Plik( const l¹d_twórz_f : boolean; const zapisuj_ustawienia_f : boolean = false );
     procedure Ustawienia_T³umaczenia( const zapisuj_ustawienia_f : boolean = false );
 
-    function Vector__Do__Wieloosobowe__Wektor_4( const vector_f : GLVectorGeometry.TVector ) : TWieloosobowe__Wektor_4;
+    function Vector__Do__Wieloosobowe__Wektor_4( const vector_f : GLS.VectorTypes.TVector4f ) : TWieloosobowe__Wektor_4;
 
     function WaterPhase( const px_f, py_f : single ) : single;
     procedure Wczytaj_Schemat_Xml( const katalog_nazwa_f : string; const lista_indeks_f : integer; var schematy_lista_r_t_f : TSchematy_Lista_r_t );
@@ -3625,7 +3681,7 @@ type
     procedure Wieloosobowe__DŸwiêk_Efekt_Utwórz( obiekty_wieloosobowe__efekt_r_f : TObiekty_Wieloosobowe__Efekt_r );
     procedure Wieloosobowe__Efekt_Odczytaj_Jeden( AOwner : TGLBaseSceneObject; efekt_rodzaj_f : TEfekt_Rodzaj; x_f, y_f, z_f : real; amunicja_f : TAmunicja; czas_trwania_f, czas_trwania_efekt_dodatkowy_f : Int64 );
     procedure Wieloosobowe__Log_Wypisz( const napis_f : string; const wyró¿nij_f : boolean = false );
-    function Wieloosobowe__Odczytaj( const io_handler_f : TIdIOHandler; const komenda_udp_f : string; const id_context_f : TIdContext; const id_socket_handle_f : TIdSocketHandle ) : string; // uses IdIOHandler.
+    function Wieloosobowe__Odczytaj( const io_handler_f : IdIOHandler.TIdIOHandler; const komenda_udp_f : string; const id_context_f : TIdContext; const id_socket_handle_f : TIdSocketHandle ) : string;
     procedure Wieloosobowe__Strumieñ_Wyœlij( const komenda_f : string; const peer_port_f : integer; const wartoœæ_f : TWieloosobowe_String; const czy_udp_f : boolean = false ); overload;
     procedure Wieloosobowe__Strumieñ_Wyœlij( const komenda_f : string; const peer_port_f : integer; const pokój_rozmów_r_f : TPokój_Rozmów_r; const czy_udp_f : boolean = false ); overload;
     procedure Wieloosobowe__Strumieñ_Wyœlij( const komenda_f : string; const peer_port_f : integer; const wieloosobowe__efekt_r_f : TObiekty_Wieloosobowe__Efekt_r; const czy_udp_f : boolean = false ); overload;
@@ -3635,13 +3691,13 @@ type
     procedure Wieloosobowe__Trafienia_Efekt_Utwórz( obiekty_wieloosobowe__efekt_r_f : TObiekty_Wieloosobowe__Efekt_r );
     procedure xNx__Wieloosobowe__Trafienia_Efekt_Utwórz( obiekty_wieloosobowe__efekt_t_f : array of TObiekty_Wieloosobowe__Efekt_r );
 
-    function Wieloosobowe__Wektor_4__Do__Vector( const wieloosobowe__wektor_4_f : TWieloosobowe__Wektor_4 ) : GLVectorGeometry.TVector;
+    function Wieloosobowe__Wektor_4__Do__Vector( const wieloosobowe__wektor_4_f : TWieloosobowe__Wektor_4 ) : GLS.VectorTypes.TVector4f;
     procedure Wspó³czynniki_Gry_Informacja_Wyœlij( const peer_port_f : integer = -99 );
 
     function Wygl¹d_Elementy__DŸwiêk_Wczytaj( wzorzec__gl_custom_scene_object_f : TGLCustomSceneObject; dŸwiêk_nazwa_f : string; const dŸwiêki__zasiêg_minimalny_f : real; const zt_statek_f : TStatek = nil ) : boolean;
-    function Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_od_f, kolor_do_f : real ) : GLVectorGeometry.TVector;
+    function Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_od_f, kolor_do_f : real ) : GLS.VectorTypes.TVector4f;
     procedure Wygl¹d_Elementy__Kolor_Noc_Zmieñ( const gl_material_f : TGLMaterial; const dzieñ_jasnoœæ_f : real );
-    procedure Wygl¹d_Elementy__Kolor_Ustaw( const gl_material_f : TGLMaterial; const vector_f : GLVectorGeometry.TVector );
+    procedure Wygl¹d_Elementy__Kolor_Ustaw( const gl_material_f : TGLMaterial; const vector_f : GLS.VectorTypes.TVector4f );
     procedure Wygl¹d_Elementy__Kolor_Ustaw_Losowy( const gl_material_f : TGLMaterial; kolor_od_f : real = -1; kolor_do_f : real = -1 );
     procedure Wygl¹d_Elementy__Kopiuj_W³aœciwoœci( zt_gl_custom_scene_object_wzorzec_f, zt_gl_custom_scene_object_kopia_f : TGLCustomSceneObject; kolor_od_f : real = -1; kolor_do_f : real = -1 );
     procedure Wygl¹d_Elementy__Noc_Zmieñ( const œwiat³a_miganie_tylko_f : boolean = false );
@@ -3950,6 +4006,8 @@ var
   function Czas_Teraz_W_Sekundach() : Int64;
   function Czas_Teraz_W_Milisekundach() : Int64;
 
+  function Separator_Dziesiêtny__Ustal() : string;
+  function String_To__Float( napis_f : string ) : real;
   function Zaokr¹glij__W_Górê( const liczba_f : real ) : integer;
 
   // Przyk³ad u¿ycia:
@@ -3967,13 +4025,26 @@ var
 
 implementation
 
-//uses
-//  Klasy_Dodatkowe;
+uses
+  pngimage,
+  System.DateUtils,
+  System.IniFiles,
+  System.IOUtils,
+  System.Math,
+  System.Rtti,
+  System.StrUtils,
+  System.TypInfo,
+  Winapi.OpenGL,
+  Xml.XMLDoc,
+
+  GLS.FileWAV,
+  GLS.Keyboard,
+  GLS.State;
 
 {$R *.dfm}
 
 //Konstruktor klasy TStatek.
-constructor TStatek.Create( AOwner : TGLBaseSceneObject; gl_collision_mmanager_f : TGLCollisionManager; efekt__element_uszkodzenie_gl_thor_fx_manager_f : TGLThorFXManager; const id_gracz_f, id_statek_f : integer; const wygl¹d_definicja_f : string; const prymitywy_lista_f : TSchematy_Lista_r_t; const punkty_¿ycia_wskaŸnik__material_options_f : GLMaterial.TMaterialOptions; const statek_create_funkcje_f : TStatek_Create_Funkcje; const t³umaczenie_komunikaty_r_f : TT³umaczenie_Komunikaty_r );
+constructor TStatek.Create( AOwner : TGLBaseSceneObject; gl_collision_mmanager_f : TGLCollisionManager; efekt__element_uszkodzenie_gl_thor_fx_manager_f : TGLThorFXManager; const id_gracz_f, id_statek_f : integer; const wygl¹d_definicja_f : string; const prymitywy_lista_f : TSchematy_Lista_r_t; const punkty_¿ycia_wskaŸnik__material_options_f : GLS.Material.TGLMaterialOptions; const statek_create_funkcje_f : TStatek_Create_Funkcje; const t³umaczenie_komunikaty_r_f : TT³umaczenie_Komunikaty_r );
 var
   x_prymityw_najmniejsze_l,
   x_prymityw_najwiêksze_l,
@@ -3986,7 +4057,7 @@ var
   procedure Wygl¹d_Elementy_Utwórz( const prymityw_indeks_f : integer = -99; const prymityw_rodzic_gl_dummy_cube_f : TGLDummyCube = nil );
 
     //Funkcja Kolor_Ustaw() w Wygl¹d_Elementy_Utwórz() w Konstruktor klasy TStatek.
-    procedure Kolor_Ustaw( const zt_gl_custom_scene_object_f : TGLCustomSceneObject; const kolor_vector_f : GLVectorGeometry.TVector );
+    procedure Kolor_Ustaw( const zt_gl_custom_scene_object_f : TGLCustomSceneObject; const kolor_vector_f : GLS.VectorTypes.TVector4f );
     var
       i_l : integer;
     begin
@@ -4167,11 +4238,11 @@ var
       : real;
 
     zts : string;
-    zt_xml_document : TXMLDocument; //uses XMLDoc
+    zt_xml_document : Xml.XMLDoc.TXMLDocument;
     zt_gl_custom_scene_object,
     zt_pêtla_gl_custom_scene_object
       : TGLCustomSceneObject;
-    kolor_vector : GLVectorGeometry.TVector;
+    kolor_vector : GLS.VectorTypes.TVector4f;
     wygl¹d_kolor_definicja : TWygl¹d_Kolor_Definicja;
     wygl¹d_liczba_definicja : TWygl¹d_Liczba_Definicja;
   begin//Funkcja Wygl¹d_Elementy_Utwórz() w Konstruktor klasy TStatek.
@@ -4234,7 +4305,7 @@ var
     //---//if prymityw_indeks_f = -99 then
 
 
-    zt_xml_document := TXMLDocument.Create( Application );
+    zt_xml_document := Xml.XMLDoc.TXMLDocument.Create( Application );
 
     zt_xml_document.Options := zt_xml_document.Options + [ doNodeAutoIndent ]; // Domyœlnie ma: doNodeAutoCreate, doAttrNull, doAutoPrefix, doNamespaceDecl.
 
@@ -4686,7 +4757,7 @@ var
 
 
                                 try
-                                  ztr_1 := StrToFloat(  VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Attributes[ 'zasiêg_minimalny' ] )  );
+                                  ztr_1 := String_To__Float(  VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Attributes[ 'zasiêg_minimalny' ] )  );
                                 except
                                   ztr_1 := -1;
                                 end;
@@ -4742,9 +4813,9 @@ var
                                 //---//for jj := 0 to zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].ChildNodes.Count - 1 do
 
                                 if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].ChildNodes.Count > 0 then
-                                  GLVectorGeometry.SetVector( kolor_vector, ztr_1, ztr_2, ztr_3, ztr_4 )
+                                  GLS.VectorGeometry.SetVector( kolor_vector, ztr_1, ztr_2, ztr_3, ztr_4 )
                                 else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].ChildNodes.Count > 0 then
-                                  kolor_vector := GLColor.clrGray20;
+                                  kolor_vector := GLS.Color.clrGray20;
 
                               end;
                             //---//if    (   Trim(  VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Attributes[ 'nazwa' ] )  ) <> ''   ) (...)
@@ -4770,7 +4841,7 @@ var
 
                             if    ( kolor_losowy__do < 0 )
                               and ( kolor_losowy__od < 0 ) then
-                              GLVectorGeometry.SetVector( kolor_vector, Random(), Random(), Random(), Random() )
+                              GLS.VectorGeometry.SetVector( kolor_vector, Random(), Random(), Random(), Random() )
                             else//if    ( kolor_losowy__do < 0 ) (...)
                               kolor_vector := statek_create_funkcje_f.Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_losowy__od, kolor_losowy__do );
 
@@ -4782,7 +4853,7 @@ var
                         if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolor_nazwa' then
                           begin
 
-                            Kolor_Ustaw(  zt_gl_custom_scene_object, GLColor.ColorManager.GetColor( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text )  ); // Robi wyciek pamiêci. // clrGreen clrYellowGreen clrBronze2 clrGray40
+                            Kolor_Ustaw(  zt_gl_custom_scene_object, GLS.Color.ColorManager.GetColor( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text )  ); // Robi wyciek pamiêci. // clrGreen clrYellowGreen clrBronze2 clrGray40
 
                           end
                         else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolor_nazwa' then
@@ -6083,7 +6154,7 @@ begin//Konstruktor klasy TStatek.
   Self.id_statek__lotniskowiec__ma_samolot_na_pok³adzie := -99;
   Self.id_statek__lotniskowiec__samolot_w_trakcie_l¹dowanie := -99;
 
-  Self.cel_wspó³rzêdne_bezwzglêdne_affine_vektor := GLVectorGeometry.AffineVectorMake( 0, 5, -15 );
+  Self.cel_wspó³rzêdne_bezwzglêdne_affine_vektor := GLS.VectorGeometry.AffineVectorMake( 0, 5, -15 );
 
   Self.amunicja_zanurzenie_g³êbokoœæ_zadana := -0.3;
   //Self.celowanie_precyzja__falowanie_niwelowanie := 2;
@@ -6252,7 +6323,7 @@ begin//Konstruktor klasy TStatek.
   Self.uszkodzone_czas_sekundy_i__œruba := 0;
   Self.zak³ócanie__czas_próba_ostatnia_sekundy_i := Czas_Teraz_W_Sekundach();
 
-  MakeVector( Self.œlad_torowy__pozycja_ostatniego, 0, 0, 0 );
+  GLS.VectorGeometry.MakeVector( Self.œlad_torowy__pozycja_ostatniego, 0, 0, 0 );
 
   Self.kamera_na_statek_pozycja.X := 0;
   Self.kamera_na_statek_pozycja.Y := 1;
@@ -6281,7 +6352,7 @@ begin//Konstruktor klasy TStatek.
   Self.toniêcie_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.toniêcie_gl_dummy_cube.Parent := Self;
   //Self.toniêcie_gl_dummy_cube.Pickable := false; // Nie wykrywa w trybie projektowym klikniêcia w statek.
-  Self.toniêcie_gl_dummy_cube.EdgeColor.Color := GLColor.clrBlack;
+  Self.toniêcie_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrBlack;
   //Self.toniêcie_gl_dummy_cube.ShowAxes := true;
   //Self.toniêcie_gl_dummy_cube.VisibleAtRunTime := true;
 
@@ -6289,7 +6360,7 @@ begin//Konstruktor klasy TStatek.
   Self.falowanie_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.falowanie_gl_dummy_cube.Parent := Self.toniêcie_gl_dummy_cube; //Self
   //Self.falowanie_gl_dummy_cube.Pickable := false; // Nie wykrywa w trybie projektowym klikniêcia w statek.
-  Self.falowanie_gl_dummy_cube.EdgeColor.Color := GLColor.clrBlue;
+  Self.falowanie_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrBlue;
   //Self.falowanie_gl_dummy_cube.ShowAxes := true;
   //Self.falowanie_gl_dummy_cube.VisibleAtRunTime := true;
 
@@ -6322,10 +6393,10 @@ begin//Konstruktor klasy TStatek.
   Self.punkty_¿ycia__wskaŸnik.BottomRadius := 0.3;
   Self.punkty_¿ycia__wskaŸnik.TopRadius := Self.punkty_¿ycia__wskaŸnik.BottomRadius;
   Self.punkty_¿ycia__wskaŸnik.Height := 10;
-  //Self.punkty_¿ycia__wskaŸnik.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
-  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
-  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLColor.clrGreen;
-  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
+  //Self.punkty_¿ycia__wskaŸnik.Material.MaterialOptions := [ GLS.Material.TGLMaterialOption.moNoLighting ];
+  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Ambient.Color := GLS.Color.clrTransparent;
+  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLS.Color.clrGreen;
+  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Emission.Color := GLS.Color.clrTransparent;
   Self.punkty_¿ycia__wskaŸnik.Scale.Z := 0.075; // 0.075 0.3
   Self.punkty_¿ycia__wskaŸnik__kolor := Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color;
   Self.punkty_¿ycia__wskaŸnik__wielkoœæ_z_pe³nym_¿yciem := Self.punkty_¿ycia__wskaŸnik.Height; // Wielkoœæ z pe³nym ¿yciem.
@@ -6336,10 +6407,10 @@ begin//Konstruktor klasy TStatek.
   Self.punkty_¿ycia__ramka.CubeHeight := Self.punkty_¿ycia__wskaŸnik.TopRadius * 2 + Self.punkty_¿ycia__wskaŸnik.TopRadius * 0.4; // Wysokoœæ. Promieñ * 2 + œrednica + 2 * 10% z ka¿dej strony (promieñ * 40%).
   Self.punkty_¿ycia__ramka.CubeWidth := Self.punkty_¿ycia__wskaŸnik.Height + Self.punkty_¿ycia__wskaŸnik.TopRadius * 2 * 0.4; // Szerokoœæ. Taki sam margines jak wy¿ej.
   Self.punkty_¿ycia__ramka.CubeDepth := 0.01; // Gruboœæ. // 0.01 0.03
-  //Self.punkty_¿ycia__ramka.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
-  Self.punkty_¿ycia__ramka.Material.FrontProperties.Diffuse.Color := GLColor.clrBlack;
+  //Self.punkty_¿ycia__ramka.Material.MaterialOptions := [ GLS.Material.TGLMaterialOption.moNoLighting ];
+  Self.punkty_¿ycia__ramka.Material.FrontProperties.Diffuse.Color := GLS.Color.clrBlack;
 
-  Self.punkty_¿ycia__napis := TGLSpaceText.Create( Self );
+  Self.punkty_¿ycia__napis := GLS.SpaceText.TGLSpaceText.Create( Self );
   Self.punkty_¿ycia__napis.Parent := Self.punkty_¿ycia_podniesienie_gl_dummy_cube; // punkty_¿ycia_gl_dummy_cube
   Self.punkty_¿ycia__napis.Pickable := false;
   Self.punkty_¿ycia__napis.TurnAngle := 180;
@@ -6348,10 +6419,10 @@ begin//Konstruktor klasy TStatek.
   Self.punkty_¿ycia__napis.Position.Z := -Self.punkty_¿ycia__ramka.CubeDepth * 2.5;
   //Self.punkty_¿ycia__napis.Scale.Scale( 0.25 );
   Self.punkty_¿ycia__napis.TextHeight := 0.4;
-  //Self.punkty_¿ycia__napis.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
+  //Self.punkty_¿ycia__napis.Material.MaterialOptions := [ GLS.Material.TGLMaterialOption.moNoLighting ];
   Self.punkty_¿ycia__napis.Text := 'p¿';
 
-  Self.gracz__nazwa := TGLSpaceText.Create( Self );
+  Self.gracz__nazwa := GLS.SpaceText.TGLSpaceText.Create( Self );
   Self.gracz__nazwa.Parent := Self.punkty_¿ycia_podniesienie_gl_dummy_cube;
   Self.gracz__nazwa.Pickable := false;
   Self.gracz__nazwa.TurnAngle := 180;
@@ -6359,7 +6430,7 @@ begin//Konstruktor klasy TStatek.
   Self.gracz__nazwa.Position.Y := -Self.punkty_¿ycia__ramka.CubeHeight * 0.2 + Self.punkty_¿ycia__ramka.CubeHeight;
   Self.gracz__nazwa.Position.Z := -Self.punkty_¿ycia__ramka.CubeDepth * 2;
   Self.gracz__nazwa.TextHeight := 0.4;
-  //Self.gracz__nazwa.Material.MaterialOptions := [ GLMaterial.moNoLighting ]; // uses GLMaterial.
+  //Self.gracz__nazwa.Material.MaterialOptions := [ GLS.Material.TGLMaterialOption.moNoLighting ];
   Self.gracz__nazwa.Text := 'gn';
   Self.gracz__nazwa.Font.Style := [ fsBold ];
   //Self.gracz__nazwa.Extrusion := Self.gracz__nazwa.TextHeight;
@@ -7236,7 +7307,7 @@ begin
     begin
 
       //if Self.zanurzenie_pu³ap__maksymalne <> 0 then
-      //  Self.zanurzenie_pu³ap__zadane_procent := Floor( Self.zanurzenie_peryskopowe_do * 100 / Self.zanurzenie_pu³ap__maksymalne ) - zanurzanie_precyzja_c
+      //  Self.zanurzenie_pu³ap__zadane_procent := System.Math.Floor( Self.zanurzenie_peryskopowe_do * 100 / Self.zanurzenie_pu³ap__maksymalne ) - zanurzanie_precyzja_c
       //else//if Self.zanurzenie_pu³ap__maksymalne <> 0 then
       //  Self.zanurzenie_pu³ap__zadane_procent := 0;
 
@@ -7766,11 +7837,11 @@ begin
       ztr := // K¹t miêdzy samolotem i lotniskowcem. Wartoœæ jest zawsze dodatnia, bez znaczenia, jak i nie okreœla, w któr¹ stronê s¹ obrócone obiekty.
         System.Math.RadToDeg
           (
-            GLVectorGeometry.AngleBetweenVectors
+            GLS.VectorGeometry.AngleBetweenVectors
               (
-                GLVectorGeometry.VectorMake( zt_statek_lotniskowiec.AbsoluteDirection.X, 0, zt_statek_lotniskowiec.AbsoluteDirection.Z ),
-                GLVectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
-                GLVectorGeometry.VectorMake( 0, 0, 0 )
+                GLS.VectorGeometry.VectorMake( zt_statek_lotniskowiec.AbsoluteDirection.X, 0, zt_statek_lotniskowiec.AbsoluteDirection.Z ),
+                GLS.VectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
+                GLS.VectorGeometry.VectorMake( 0, 0, 0 )
               )
           );
 
@@ -8152,7 +8223,7 @@ begin
   //
 
   if Self.zanurzenie_pu³ap__maksymalne <> 0 then
-    Result := Floor( Self.zanurzenie_peryskopowe_do * 100 / Self.zanurzenie_pu³ap__maksymalne ) - zanurzanie_precyzja_c
+    Result := System.Math.Floor( Self.zanurzenie_peryskopowe_do * 100 / Self.zanurzenie_pu³ap__maksymalne ) - zanurzanie_precyzja_c
   else//if Self.zanurzenie_pu³ap__maksymalne <> 0 then
     Result := 0;
 
@@ -8256,12 +8327,12 @@ begin
 end;//---//Funkcja Amunicja_Rodzaj_Zbiór_Wyznacz().
 
 //Funkcja Cel_Wspó³rzêdne_Ustaw().
-procedure TStatek.Cel_Wspó³rzêdne_Ustaw( const cel_wspó³rzêdne_bezwzglêdne_affine_vektor_f : GLVectorGeometry.TAffineVector; const statek_celownicza_linia_tylko_f : boolean = false );
+procedure TStatek.Cel_Wspó³rzêdne_Ustaw( const cel_wspó³rzêdne_bezwzglêdne_affine_vektor_f : GLS.VectorGeometry.TAffineVector; const statek_celownicza_linia_tylko_f : boolean = false );
 
   //Funkcja Wspó³rzêdne_Dla_Linii_Ustaw() w Cel_Wspó³rzêdne_Ustaw().
   procedure Wspó³rzêdne_Dla_Linii_Ustaw( gt_lines_f : TGLLines );
   var
-    zt_affine_vektor : GLVectorGeometry.TAffineVector;
+    zt_affine_vektor : GLS.VectorGeometry.TAffineVector;
   begin
 
     if   ( gt_lines_f = nil )
@@ -8446,7 +8517,7 @@ begin
           Result := true;
 
 
-          zti := Floor( broñ_f[ i ].amunicja_iloœæ_pocz¹tkowa * uzupe³nienie_procent_f * 0.01 );
+          zti := System.Math.Floor( broñ_f[ i ].amunicja_iloœæ_pocz¹tkowa * uzupe³nienie_procent_f * 0.01 );
 
           if zti < 1 then
             zti := 1;
@@ -8658,7 +8729,7 @@ begin//Funkcja Broñ__Indeks_Zmieniaj_Ustaw().
 end;//---//Funkcja Broñ__Indeks_Zmieniaj_Ustaw().
 
 //Funkcja Strza³().
-function TStatek.Strza³( const czy_wszystkie_bronie_f, czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector ) : boolean;
+function TStatek.Strza³( const czy_wszystkie_bronie_f, czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector ) : boolean;
 var
   wystrzeli³y_wszystkie_l : boolean;
 
@@ -9187,7 +9258,7 @@ begin
   if Self.id_grupa <> id_grupa_gracza_f then
     begin
 
-      Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLColor.clrRed;
+      Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLS.Color.clrRed;
       Self.punkty_¿ycia__wskaŸnik__kolor := Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color;
 
     end;
@@ -9408,7 +9479,7 @@ begin
 end;//---//Funkcja Punkty_¯ycia__W_Zanurzeniu_Przeliczaj().
 
 //Funkcja Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw().
-procedure TStatek.Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw( const material_options_f : GLMaterial.TMaterialOptions );
+procedure TStatek.Punkty_¯ycia__WskaŸnik__Efekty_Tryb_Ustaw( const material_options_f : GLS.Material.TGLMaterialOptions );
 begin
 
   Self.gracz__nazwa.Material.MaterialOptions := material_options_f;
@@ -9429,10 +9500,10 @@ begin
        ) then
     dzieñ_jasnoœæ_f := 1;
 
-  Self.gracz__nazwa.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( GLColor.clrGray80, dzieñ_jasnoœæ_f );
-  Self.punkty_¿ycia__napis.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( GLColor.clrGray80, dzieñ_jasnoœæ_f );
-  Self.punkty_¿ycia__ramka.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( GLColor.clrBlack, dzieñ_jasnoœæ_f );
-  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( Self.punkty_¿ycia__wskaŸnik__kolor, dzieñ_jasnoœæ_f );
+  Self.gracz__nazwa.Material.FrontProperties.Diffuse.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrGray80, dzieñ_jasnoœæ_f );
+  Self.punkty_¿ycia__napis.Material.FrontProperties.Diffuse.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrGray80, dzieñ_jasnoœæ_f );
+  Self.punkty_¿ycia__ramka.Material.FrontProperties.Diffuse.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrBlack, dzieñ_jasnoœæ_f );
+  Self.punkty_¿ycia__wskaŸnik.Material.FrontProperties.Diffuse.Color := GLS.VectorGeometry.VectorScale( Self.punkty_¿ycia__wskaŸnik__kolor, dzieñ_jasnoœæ_f );
 
 
   Self.gracz__nazwa.Material.FrontProperties.Diffuse.Alpha := 1;
@@ -9470,7 +9541,7 @@ begin
   Self.punkty_¿ycia_gl_dummy_cube.ResetRotations();
 
   // Obraca (lewo prawo) aby czo³o by³o równolegle do ekranu.
-  Self.punkty_¿ycia_gl_dummy_cube.AbsoluteDirection := GLVectorGeometry.VectorMake
+  Self.punkty_¿ycia_gl_dummy_cube.AbsoluteDirection := GLS.VectorGeometry.VectorMake
     (
         gl_camera_f.AbsoluteDirection.X - Self.punkty_¿ycia_gl_dummy_cube.Position.X
       , 0 //gl_camera_f.AbsoluteDirection.Y - Self.punkty_¿ycia_gl_dummy_cube.Position.Y
@@ -9478,18 +9549,18 @@ begin
     );
 
   if gl_camera_f.Up.Y < 0 then // Je¿eli kamera patrz¹c w górê lub w dó³ przekrêci siê do góry nogami to wskaŸnik ¿ycia równie¿ obraca³ siê do góry nogami.
-    Self.punkty_¿ycia_gl_dummy_cube.AbsoluteDirection := GLVectorGeometry.VectorNegate( Self.punkty_¿ycia_gl_dummy_cube.AbsoluteDirection );
+    Self.punkty_¿ycia_gl_dummy_cube.AbsoluteDirection := GLS.VectorGeometry.VectorNegate( Self.punkty_¿ycia_gl_dummy_cube.AbsoluteDirection );
   //---// Obraca (lewo prawo) aby czo³o by³o równolegle do ekranu.
 
   // Obraca (góra dó³) aby czo³o by³o równolegle do ekranu.
   Self.punkty_¿ycia_podniesienie_gl_dummy_cube.PitchAngle :=
     System.Math.RadToDeg
       (
-        GLVectorGeometry.AngleBetweenVectors
+        GLS.VectorGeometry.AngleBetweenVectors
           (
-            GLVectorGeometry.VectorMake(  gl_camera_f.AbsoluteDirection.X, Abs( gl_camera_f.AbsoluteDirection.Y ), gl_camera_f.AbsoluteDirection.Z  ),
-            GLVectorGeometry.VectorMake( gl_camera_f.AbsoluteDirection.X, 0, gl_camera_f.AbsoluteDirection.Z ),
-            GLVectorGeometry.VectorMake( 0, 0, 0 )
+            GLS.VectorGeometry.VectorMake(  gl_camera_f.AbsoluteDirection.X, Abs( gl_camera_f.AbsoluteDirection.Y ), gl_camera_f.AbsoluteDirection.Z  ),
+            GLS.VectorGeometry.VectorMake( gl_camera_f.AbsoluteDirection.X, 0, gl_camera_f.AbsoluteDirection.Z ),
+            GLS.VectorGeometry.VectorMake( 0, 0, 0 )
           )
       );
 
@@ -9503,8 +9574,8 @@ begin
   // Wylicza dobrze ale je¿eli statek odp³ynie w bok ekranu to k¹t miêdzy kamer¹ a wskaŸnikiem zycia maleje.
   //
   // Oblicza odleg³oœæ od wskaŸnika ¿ycia do kamery w p³aszczyŸnie poziomej (kierunku wskaŸnika ¿ycia).
-  //GLVectorGeometry.SetVector( zt_vector, gl_camera_f.AbsolutePosition.X, 0, gl_camera_f.AbsolutePosition.Z ); // zt_vector : GLVectorGeometry.TVector;
-  ////GLVectorGeometry.SetVector( zt_vector, gl_camera_f.AbsolutePosition.X, Self.punkty_¿ycia_gl_dummy_cube.AbsoluteDirection.Y, gl_camera_f.AbsolutePosition.Z );
+  //GLS.VectorGeometry.SetVector( zt_vector, gl_camera_f.AbsolutePosition.X, 0, gl_camera_f.AbsolutePosition.Z ); // zt_vector : GLS.VectorTypes.TVector4d;
+  ////GLS.VectorGeometry.SetVector( zt_vector, gl_camera_f.AbsolutePosition.X, Self.punkty_¿ycia_gl_dummy_cube.AbsoluteDirection.Y, gl_camera_f.AbsolutePosition.Z );
   //punkty_¿ycia_procent_zosta³o_l := Self.punkty_¿ycia_gl_dummy_cube.DistanceTo( zt_vector ); // Tutaj tymczasowo jako odleg³oœæ.
   //
   //// Liczy k¹t w osi X -
@@ -9514,11 +9585,11 @@ begin
   //Self.punkty_¿ycia_podniesienie_gl_dummy_cube.PitchAngle :=
   //  -Math.RadToDeg
   //    (
-  //      GLVectorGeometry.AngleBetweenVectors
+  //      GLS.VectorGeometry.AngleBetweenVectors
   //        (
-  //          GLVectorGeometry.VectorMake( punkty_¿ycia_procent_zosta³o_l, gl_camera_f.AbsolutePosition.Y - Self.punkty_¿ycia_gl_dummy_cube.AbsolutePosition.Y, 0 ),
-  //          GLVectorGeometry.VectorMake( 1, 0, 0 ),
-  //          GLVectorGeometry.VectorMake( 0, 0, 0 )
+  //          GLS.VectorGeometry.VectorMake( punkty_¿ycia_procent_zosta³o_l, gl_camera_f.AbsolutePosition.Y - Self.punkty_¿ycia_gl_dummy_cube.AbsolutePosition.Y, 0 ),
+  //          GLS.VectorGeometry.VectorMake( 1, 0, 0 ),
+  //          GLS.VectorGeometry.VectorMake( 0, 0, 0 )
   //        )
   //    );
   //
@@ -10051,7 +10122,7 @@ var
   ztr : real;
   kierunek_kopia_vector,
   pozycja_kopia_vector
-    : GLVectorGeometry.TVector; // uses GLVectorGeometry.
+    : GLS.VectorTypes.TVector4f;
   kotwica_zakresy_r_l : TKotwica_Zakresy_r; // Tylko aby wywo³aæ funkcjê.
 begin
 
@@ -10121,11 +10192,11 @@ begin
           ztr := // K¹t miêdzy samolotem i lotniskowcem. Wartoœæ jest zawsze dodatnia, bez znaczenia, jak i nie okreœla, w któr¹ stronê s¹ obrócone obiekty.
             System.Math.RadToDeg
               (
-                GLVectorGeometry.AngleBetweenVectors
+                GLS.VectorGeometry.AngleBetweenVectors
                   (
-                    GLVectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
-                    GLVectorGeometry.VectorMake( samolot__statek_f.AbsoluteDirection.X, 0, samolot__statek_f.AbsoluteDirection.Z ),
-                    GLVectorGeometry.VectorMake( 0, 0, 0 )
+                    GLS.VectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
+                    GLS.VectorGeometry.VectorMake( samolot__statek_f.AbsoluteDirection.X, 0, samolot__statek_f.AbsoluteDirection.Z ),
+                    GLS.VectorGeometry.VectorMake( 0, 0, 0 )
                   )
               );
 
@@ -10214,7 +10285,7 @@ var
   ztr : real;
   kierunek_kopia_vector,
   pozycja_kopia_vector
-    : GLVectorGeometry.TVector; // uses GLVectorGeometry.
+    : GLS.VectorTypes.TVector4f;
   zt_statek_lotniskowiec : TStatek;
 begin
 
@@ -10291,11 +10362,11 @@ begin
       ztr := // K¹t miêdzy samolotem i lotniskowcem. Wartoœæ jest zawsze dodatnia, bez znaczenia, jak i nie okreœla, w któr¹ stronê s¹ obrócone obiekty.
         System.Math.RadToDeg
           (
-            GLVectorGeometry.AngleBetweenVectors
+            GLS.VectorGeometry.AngleBetweenVectors
               (
-                GLVectorGeometry.VectorMake( zt_statek_lotniskowiec.AbsoluteDirection.X, 0, zt_statek_lotniskowiec.AbsoluteDirection.Z ),
-                GLVectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
-                GLVectorGeometry.VectorMake( 0, 0, 0 )
+                GLS.VectorGeometry.VectorMake( zt_statek_lotniskowiec.AbsoluteDirection.X, 0, zt_statek_lotniskowiec.AbsoluteDirection.Z ),
+                GLS.VectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
+                GLS.VectorGeometry.VectorMake( 0, 0, 0 )
               )
           );
 
@@ -10364,11 +10435,11 @@ begin
   ztr :=
     System.Math.RadToDeg
       (
-        GLVectorGeometry.AngleBetweenVectors
+        GLS.VectorGeometry.AngleBetweenVectors
           (
-            GLVectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
-            GLVectorGeometry.VectorMake( Self.Samolot_Na_Lotniskowcu().AbsoluteDirection.X, 0, Self.Samolot_Na_Lotniskowcu().AbsoluteDirection.Z ),
-            GLVectorGeometry.VectorMake( 0, 0, 0 )
+            GLS.VectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
+            GLS.VectorGeometry.VectorMake( Self.Samolot_Na_Lotniskowcu().AbsoluteDirection.X, 0, Self.Samolot_Na_Lotniskowcu().AbsoluteDirection.Z ),
+            GLS.VectorGeometry.VectorMake( 0, 0, 0 )
           )
       );
 
@@ -10672,10 +10743,10 @@ begin
   //   t³umaczenie_komunikaty_r_f
   //
 
-  Result := GetEnumName(  TypeInfo(TSi_Aktywnoœæ), Ord( si_aktywnoœæ_f )  ); // uses  System.TypInfo. // Daje nazwy elementów.
+  Result := System.TypInfo.GetEnumName(  System.TypeInfo(TSi_Aktywnoœæ), Ord( si_aktywnoœæ_f )  ); // Daje nazwy elementów.
 
 
-  rtti_type := TRTTIContext.Create.GetType(  TypeInfo( TT³umaczenie_Komunikaty_r )  );
+  rtti_type := TRTTIContext.Create.GetType(  System.TypeInfo( TT³umaczenie_Komunikaty_r )  );
 
   for rtti_field in rtti_type.GetFields do
     if rtti_field.Name = 'si__wyliczeniowy_typ__aktywnoœæ__' + Result then
@@ -10748,10 +10819,10 @@ begin
   //   t³umaczenie_komunikaty_r_f
   //
 
-  Result := GetEnumName(  TypeInfo(TSi_Strzelanie_Tryb), Ord( Self.si_strzelanie_tryb )  ); // uses  System.TypInfo. // Daje nazwy elementów.
+  Result := System.TypInfo.GetEnumName(  System.TypeInfo(TSi_Strzelanie_Tryb), Ord( Self.si_strzelanie_tryb )  ); // Daje nazwy elementów.
 
 
-  rtti_type := TRTTIContext.Create.GetType(  TypeInfo( TT³umaczenie_Komunikaty_r )  );
+  rtti_type := TRTTIContext.Create.GetType(  System.TypeInfo( TT³umaczenie_Komunikaty_r )  );
 
   for rtti_field in rtti_type.GetFields do
     if rtti_field.Name = 'si__wyliczeniowy_typ__strzelanie_tryb__' + Result then
@@ -11203,9 +11274,9 @@ begin
       // Mo¿e zmieniæ ustawienia koloru zwi¹zane z por¹ dnia.
       if    ( Self.czy_indeks_do_strza³u_lufa )
         and ( TTorpedy_Wyrzutnia(Self.dzia³o).czy_indeks_do_strza³u ) then
-        Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLColor.clrGreenYellow //clrBlue clrGreenYellow
+        Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLS.Color.clrGreenYellow //clrBlue clrGreenYellow
       else//if    ( Self.czy_indeks_do_strza³u_lufa ) (...)
-        Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLColor.clrGreen;
+        Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLS.Color.clrGreen;
 
     end;
   //---//if Self.dzia³o <> nil then
@@ -11324,7 +11395,7 @@ begin
 
         // Wskazuje brak amunicji.
 
-        Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLColor.clrRed;
+        Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLS.Color.clrRed;
         Exit;
 
       end;
@@ -11338,7 +11409,7 @@ begin
 
       Self.strza³_gotowoœæ := true;
       Self.prze³adowanie_wskaŸnik.Position.Z := Self.prze³adowanie_wskaŸnik__pozycja_za³adowany.Z;
-      Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLColor.clrGreen;
+      Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLS.Color.clrGreen;
 
       Result := true;
 
@@ -11370,7 +11441,7 @@ begin
 end;//---//Funkcja Prze³adowanie().
 
 //Funkcja Strza³().
-function TLufa.Strza³( const obracaj_dzia³a_f, podnoœ_lufy_f, lufa_unoszona_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector ) : boolean;
+function TLufa.Strza³( const obracaj_dzia³a_f, podnoœ_lufy_f, lufa_unoszona_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector ) : boolean;
 var
   rodzic_l : TGLBaseSceneObject;
 begin
@@ -11405,7 +11476,7 @@ begin
 
   //Self.prze³adowanie_wskaŸnik.Move( Self.korpus__lufa.Height * 0.5 );
   Self.prze³adowanie_wskaŸnik.Position.Z := Self.prze³adowanie_wskaŸnik__pozycja_roz³adowany.Z;
-  Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLColor.clrYellow;
+  Self.prze³adowanie_wskaŸnik.Material.FrontProperties.Ambient.Color := GLS.Color.clrYellow;
 
   rodzic_l := Self;
 
@@ -11545,7 +11616,7 @@ begin
   Self.elementy_wizualne_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.elementy_wizualne_gl_dummy_cube.Parent := Self;
   Self.elementy_wizualne_gl_dummy_cube.Pickable := false;
-  Self.elementy_wizualne_gl_dummy_cube.EdgeColor.Color := GLColor.clrRed;
+  Self.elementy_wizualne_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrRed;
   //Self.elementy_wizualne_gl_dummy_cube.ShowAxes := true;
   //Self.elementy_wizualne_gl_dummy_cube.VisibleAtRunTime := true;
 
@@ -11570,7 +11641,7 @@ begin
   //Self.k¹t_test_gl_dummy_cube.Pickable := false;
   //Self.k¹t_test_gl_dummy_cube.Position := Self.podstawa.Position;
   //Self.k¹t_test_gl_dummy_cube.Up.SetVector( 0, 1, 0 ); //???
-  //Self.k¹t_test_gl_dummy_cube.EdgeColor.Color := GLColor.clrBlack;
+  //Self.k¹t_test_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrBlack;
   //Self.k¹t_test_gl_dummy_cube.ShowAxes := true;
   //Self.k¹t_test_gl_dummy_cube.VisibleAtRunTime := true;
 
@@ -11657,13 +11728,13 @@ begin
 
           Self.lufy_t[ i ].korpus__lufa.TopRadius := 0.025;
           Self.lufy_t[ i ].korpus__lufa.Height := 0.25;
-          Self.lufy_t[ i ].PitchAngle := -50 - Floor( i * 0.25 ) * 4; // Iloœæ kolców je¿a w rzêdzie 4. // Ka¿dy kolejny rz¹d jest uniesiony pod wiêkszym k¹tem.
+          Self.lufy_t[ i ].PitchAngle := -50 - System.Math.Floor( i * 0.25 ) * 4; // Iloœæ kolców je¿a w rzêdzie 4. // Ka¿dy kolejny rz¹d jest uniesiony pod wiêkszym k¹tem.
           //Self.lufy_t[ i ].TurnAngle := -(   i - (  Length( Self.lufy_t ) * 0.5  )   ) * 6;
           Self.lufy_t[ i ].TurnAngle := -(   zti - (  2  )   ) * 4; // 4 / 2 = 2 // Iloœæ kolców je¿a w rzêdzie 4. Odchyla kolce na boki (na zewn¹trz).
 
           Self.lufy_t[ i ].Position.Z :=
-              Floor( i * 0.25 ) * Self.lufy_t[ i ].korpus__lufa.TopRadius * 4 // Iloœæ kolców je¿a w rzêdzie 4. Ka¿de co 4 kolce przesuwa w ty³.
-            - (    Floor(   (  Length( Self.lufy_t ) - 1  ) * 0.25   ) * Self.lufy_t[ i ].korpus__lufa.TopRadius * 5.25    ) * 0.5; // Ca³¹ grupê kolców przesuwa w przód o oko³o po³owê przesuniêcia w ty³ aby nie wystawa³y poza dzia³o.
+              System.Math.Floor( i * 0.25 ) * Self.lufy_t[ i ].korpus__lufa.TopRadius * 4 // Iloœæ kolców je¿a w rzêdzie 4. Ka¿de co 4 kolce przesuwa w ty³.
+            - (    System.Math.Floor(   (  Length( Self.lufy_t ) - 1  ) * 0.25   ) * Self.lufy_t[ i ].korpus__lufa.TopRadius * 5.25    ) * 0.5; // Ca³¹ grupê kolców przesuwa w przód o oko³o po³owê przesuniêcia w ty³ aby nie wystawa³y poza dzia³o.
 
         end
       else//if Self.amunicja_rodzaj in [ Typy_Wspolne.ar_Je¿e_G³êbinowe ] then
@@ -11701,7 +11772,7 @@ begin
   Self.celownik_linia.Pickable := false;
   Self.celownik_linia.AntiAliased := true;
   Self.celownik_linia.LineWidth := 0;
-  Self.celownik_linia.LineColor.Color := GLColor.clrYellow;
+  Self.celownik_linia.LineColor.Color := GLS.Color.clrYellow;
   Self.celownik_linia.NodesAspect := lnaInvisible;
   Self.celownik_linia.Position := Self.elementy_wizualne_gl_dummy_cube.Position; //Self.podstawa.Position elementy_wizualne_gl_dummy_cube
   Self.celownik_linia.Position.Y := Self.podstawa.Height * 0.5; // Y - w po³owie wysokoœci podstawy.
@@ -11717,7 +11788,7 @@ begin
   Self.celownik_linia_bez_falowania.Pickable := false;
   Self.celownik_linia_bez_falowania.AntiAliased := Self.celownik_linia.AntiAliased;
   Self.celownik_linia_bez_falowania.LineWidth := Self.celownik_linia.LineWidth;
-  Self.celownik_linia_bez_falowania.LineColor.Color := GLColor.clrRichBlue; //Self.celownik_linia.LineColor.Color;
+  Self.celownik_linia_bez_falowania.LineColor.Color := GLS.Color.clrRichBlue; //Self.celownik_linia.LineColor.Color;
   Self.celownik_linia_bez_falowania.NodesAspect := Self.celownik_linia.NodesAspect;
   Self.celownik_linia_bez_falowania.Position := Self.elementy_wizualne_gl_dummy_cube.Position; //Self.podstawa.Position elementy_wizualne_gl_dummy_cube
   Self.celownik_linia_bez_falowania.Position.Y := Self.podstawa.Height * 0.5; // Y - w po³owie wysokoœci podstawy.
@@ -11729,8 +11800,8 @@ begin
   Self.celownik_linia__do_punktu_uzbrajania.Pickable := false;
   Self.celownik_linia__do_punktu_uzbrajania.AntiAliased := Self.celownik_linia.AntiAliased;
   Self.celownik_linia__do_punktu_uzbrajania.LineWidth := 2;
-  Self.celownik_linia__do_punktu_uzbrajania.LineColor.Color := GLColor.clrGray50;
-  Self.celownik_linia__do_punktu_uzbrajania.LinePattern := Floor( MAXWORD * 0.05 ); // Punktowana $CCCC, ci¹g³a $FFFF.
+  Self.celownik_linia__do_punktu_uzbrajania.LineColor.Color := GLS.Color.clrGray50;
+  Self.celownik_linia__do_punktu_uzbrajania.LinePattern := System.Math.Floor( MAXWORD * 0.05 ); // Punktowana $CCCC, ci¹g³a $FFFF.
   Self.celownik_linia__do_punktu_uzbrajania.NodesAspect := Self.celownik_linia.NodesAspect;
   Self.celownik_linia__do_punktu_uzbrajania.AddNode( 0, 0, 0 );
   Self.celownik_linia__do_punktu_uzbrajania.AddNode( 0, 0, -Self.amunicja_uzbrajanie_odleg³oœæ );
@@ -12116,7 +12187,7 @@ begin//Funkcja Dodatkowe_Elementy_Ustaw().
   Self.TurnAngle := Self.obrót_k¹t_zadany;
   Self.si__namiar_pocz¹tkowy__obrót_k¹t_zadany := Self.obrót_k¹t_zadany;
 
-  Self.cel_linia.Nodes[ 1 ].AsAffineVector := GLVectorGeometry.VectorAdd(  Self.cel_linia.Nodes[ 1 ].AsAffineVector, GLVectorGeometry.VectorScale( Self.Direction.AsAffineVector, 10 )  );
+  Self.cel_linia.Nodes[ 1 ].AsAffineVector := GLS.VectorGeometry.VectorAdd(  Self.cel_linia.Nodes[ 1 ].AsAffineVector, GLS.VectorGeometry.VectorScale( Self.Direction.AsAffineVector, 10 )  );
   Self.cel_linia.Nodes[ 1 ].Y := -Self.cel_linia.Nodes[ 1 ].Y;
 
   //Self.k¹t_test_obrót.Position.AsVector := Self.statek.AbsoluteToLocal( Self.podstawa.AbsolutePosition );
@@ -12214,7 +12285,7 @@ procedure TTorpedy_Wyrzutnia.Obrót_Zadany_Zmieñ( const celownik_linia_widocznoœæ
     //statek_obrót_k¹t_l : real; // K¹t obrotu statku w poziomie (lewo prawo).
     zt_vector
     //zt_vector1
-      : GLVectorGeometry.TVector; // uses GLVectorGeometry.
+      : GLS.VectorTypes.TVector4f;
   begin
 
     //
@@ -12223,16 +12294,16 @@ procedure TTorpedy_Wyrzutnia.Obrót_Zadany_Zmieñ( const celownik_linia_widocznoœæ
     // Zwraca zadany k¹t obrotu wzglêdem statku.
     //
 
-    GLVectorGeometry.SetVector( zt_vector, 0, 0, 0 ); // Najlepiej sprawdzaæ k¹t w punkcie zero.
-    //GLVectorGeometry.SetVector( zt_vector1, 0, 0, -1 ); // Kierunek w przód.
+    GLS.VectorGeometry.SetVector( zt_vector, 0, 0, 0 ); // Najlepiej sprawdzaæ k¹t w punkcie zero.
+    //GLS.VectorGeometry.SetVector( zt_vector1, 0, 0, -1 ); // Kierunek w przód.
 
-    //statek_obrót_k¹t_l := System.Math.RadToDeg(  GLVectorGeometry.AngleBetweenVectors( Self.statek.AbsoluteDirection, zt_vector1, zt_vector )  );
+    //statek_obrót_k¹t_l := System.Math.RadToDeg(  GLS.VectorGeometry.AngleBetweenVectors( Self.statek.AbsoluteDirection, zt_vector1, zt_vector )  );
 
     //if Self.statek.AbsoluteDirection.X > 0 then
     //  statek_obrót_k¹t_l := -statek_obrót_k¹t_l;
 
 
-    Result := System.Math.RadToDeg(  GLVectorGeometry.AngleBetweenVectors( Self.statek__tw.AbsoluteDirection, Self.obrót_kierunek_zadany, zt_vector )  );
+    Result := System.Math.RadToDeg(  GLS.VectorGeometry.AngleBetweenVectors( Self.statek__tw.AbsoluteDirection, Self.obrót_kierunek_zadany, zt_vector )  );
 
     if gt_lines_f.Nodes[ 1 ].AsAffineVector.X > 0 then
       Result := -Result;
@@ -12244,7 +12315,7 @@ var
   odleg³oœæ_k¹t_zablokowany_od_l
     : real;
   zt_gt_lines : TGLLines;
-  //zt_vector : GLVectorGeometry.TVector; // uses GLVectorGeometry.
+  //zt_vector : GLS.VectorTypes.TVector4d;
 begin//Funkcja Obrót_Zadany_Zmieñ().
 
   //
@@ -12353,7 +12424,7 @@ begin//Funkcja Obrót_Zadany_Zmieñ().
   //if Self.Parent <> nil then
   //  begin
   //
-  //    GLVectorGeometry.SetVector( zt_vector, 0, 1, 0 );
+  //    GLS.VectorGeometry.SetVector( zt_vector, 0, 1, 0 );
   //    //RotateVector(  Self.obrót_kierunek_zadany, zt_vector, DegToRad( Self.statek.xNx__K¹t_Obrotu_Statku() )  );
   //    //RotateVector(  Self.obrót_kierunek_zadany, zt_vector, DegToRad( Self.statek.TurnAngle )  );
   //    //RotateVectorAroundY( Self.obrót_kierunek_zadany, Self.statek.xNx__K¹t_Obrotu_Statku() );
@@ -13048,7 +13119,7 @@ var
   obrót_kierunek_l,
   obrót_szybkoœæ_l
     : real;
-  //zt_vector : GLVectorGeometry.TVector; // uses GLVectorGeometry.
+  //zt_vector : GLS.VectorTypes.TVector4d;
 begin//Funkcja Obrót_Kierunek_Zmieñ().
 
   //
@@ -13070,9 +13141,9 @@ begin//Funkcja Obrót_Kierunek_Zmieñ().
       // Sygnalizuje, ¿e dzia³o jest w trakcie strza³u i nie obraca siê.
 
       //if Self.czy_indeks_do_strza³u then
-      //  Self.celownik_linia.LineColor.Color := GLColor.clrLightGray // Jasny szary.
+      //  Self.celownik_linia.LineColor.Color := GLS.Color.clrLightGray // Jasny szary.
       //else//if Self.czy_indeks_do_strza³u then
-      //  Self.celownik_linia.LineColor.Color := GLColor.clrBlack; // Ciemny czarny.
+      //  Self.celownik_linia.LineColor.Color := GLS.Color.clrBlack; // Ciemny czarny.
       //
       //Self.celownik_linia_bez_falowania.LineColor.Color := Self.celownik_linia.LineColor.Color;
       Exit;
@@ -13081,7 +13152,7 @@ begin//Funkcja Obrót_Kierunek_Zmieñ().
   //---//if Czas_Miêdzy_W_Milisekundach( Self.strza³_czas__broñ_sekundy_i ) <= Self.strza³_od_blokada_milisekundy then
 
   {$region 'Wersja 1.'}
-  //GLVectorGeometry.SetVector( zt_vector, 0, 0, 0 ); // Najlepiej sprawdzaæ k¹t w punkcie zero.
+  //GLS.VectorGeometry.SetVector( zt_vector, 0, 0, 0 ); // Najlepiej sprawdzaæ k¹t w punkcie zero.
   //
   //Self.k¹t_test_gl_dummy_cube.Up.SetVector( 0, 1, 0 ); // Je¿eli k¹t testowy jest u¿ywany do wyliczania podniesienia mo¿e go obróciæ.
   //
@@ -13089,13 +13160,13 @@ begin//Funkcja Obrót_Kierunek_Zmieñ().
   //Self.k¹t_test_gl_dummy_cube.AbsoluteDirection := Self.AbsoluteDirection;
   //
   //// Sprawdza k¹t miêdzy kierunkiem zadanym a kierunkiem dzia³a.
-  //k¹t_1 := 180 - System.Math.RadToDeg(  GLVectorGeometry.AngleBetweenVectors( Self.k¹t_test_gl_dummy_cube.AbsoluteDirection, Self.obrót_kierunek_zadany, zt_vector )  );
+  //k¹t_1 := 180 - System.Math.RadToDeg(  GLS.VectorGeometry.AngleBetweenVectors( Self.k¹t_test_gl_dummy_cube.AbsoluteDirection, Self.obrót_kierunek_zadany, zt_vector )  );
   //
   //
   //// Obraca bry³ê testow¹ i ponownie wylicza k¹t.
   ////Self.k¹t_test_gl_dummy_cube.Turn( Self.obrót_szybkoœæ );
   //Self.k¹t_test_gl_dummy_cube.TurnAngle := Self.k¹t_test_gl_dummy_cube.TurnAngle - Self.obrót_szybkoœæ;
-  //k¹t_2 := 180 - System.Math.RadToDeg(  GLVectorGeometry.AngleBetweenVectors( Self.k¹t_test_gl_dummy_cube.AbsoluteDirection, Self.obrót_kierunek_zadany, zt_vector )  );
+  //k¹t_2 := 180 - System.Math.RadToDeg(  GLS.VectorGeometry.AngleBetweenVectors( Self.k¹t_test_gl_dummy_cube.AbsoluteDirection, Self.obrót_kierunek_zadany, zt_vector )  );
   //
   //// Je¿eli po obrocie k¹t siê zmniejsza obraca dzia³o w tym samym kierunki, w przeciwnym wypadku obraca w przeciwn¹ stronê.
 
@@ -13214,9 +13285,9 @@ begin//Funkcja Obrót_Kierunek_Zmieñ().
   //  begin
   //
   //    if Self.czy_indeks_do_strza³u then
-  //      Self.celownik_linia.LineColor.Color := GLColor.clrGreenYellow // Jasny zielony.
+  //      Self.celownik_linia.LineColor.Color := GLS.Color.clrGreenYellow // Jasny zielony.
   //    else//if Self.czy_indeks_do_strza³u then
-  //      Self.celownik_linia.LineColor.Color := GLColor.clrGreen; // Ciemny zielony.
+  //      Self.celownik_linia.LineColor.Color := GLS.Color.clrGreen; // Ciemny zielony.
   //
   //
   //    if celowanie_precyzja_obrót_l <> 0 then
@@ -13250,9 +13321,9 @@ begin//Funkcja Obrót_Kierunek_Zmieñ().
   //  begin
   //
   //    if Self.czy_indeks_do_strza³u then
-  //      Self.celownik_linia.LineColor.Color := GLColor.clrRed // Jasny czerwony.
+  //      Self.celownik_linia.LineColor.Color := GLS.Color.clrRed // Jasny czerwony.
   //    else//if Self.czy_indeks_do_strza³u then
-  //      Self.celownik_linia.LineColor.Color := GLColor.clrDarkPurple; // Ciemny czerwony.
+  //      Self.celownik_linia.LineColor.Color := GLS.Color.clrDarkPurple; // Ciemny czerwony.
   //
   //    //Self.celownik_linia_szerokoœæ_obrót := ztr;
   //
@@ -13268,7 +13339,7 @@ begin//Funkcja Obrót_Kierunek_Zmieñ().
 end;//---//Funkcja Obrót_Kierunek_Zmieñ().
 
 //Funkcja Strza³().
-function TTorpedy_Wyrzutnia.Strza³( const czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; var wystrzeli³y_wszystkie_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector  ) : boolean;
+function TTorpedy_Wyrzutnia.Strza³( const czy_wszystkie_lufy_f, obracaj_dzia³a_f, podnoœ_lufy_f : boolean; var wystrzeli³y_wszystkie_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector  ) : boolean;
 
   //Funkcja Strza³y_Iloœæ_SprawdŸ() w Strza³().
   procedure Strza³y_Iloœæ_SprawdŸ();
@@ -13610,9 +13681,9 @@ begin
       // Sygnalizuje, ¿e dzia³o nie mo¿e strzelaæ w zanurzeniu.
 
       if Self.czy_indeks_do_strza³u then
-        Self.celownik_linia.LineColor.Color := GLColor.clrMediumTurquoise
+        Self.celownik_linia.LineColor.Color := GLS.Color.clrMediumTurquoise
       else//if Self.czy_indeks_do_strza³u then
-        Self.celownik_linia.LineColor.Color := GLColor.clrDarkTurquoise;
+        Self.celownik_linia.LineColor.Color := GLS.Color.clrDarkTurquoise;
 
       Self.celownik_linia.LineWidth := 0;
 
@@ -13625,9 +13696,9 @@ begin
         // Sygnalizuje, ¿e dzia³o jest w trakcie strza³u i nie obraca siê.
 
         if Self.czy_indeks_do_strza³u then
-          Self.celownik_linia.LineColor.Color := GLColor.clrLightGray // Jasny szary.
+          Self.celownik_linia.LineColor.Color := GLS.Color.clrLightGray // Jasny szary.
         else//if Self.czy_indeks_do_strza³u then
-          Self.celownik_linia.LineColor.Color := GLColor.clrBlack; // Ciemny czarny.
+          Self.celownik_linia.LineColor.Color := GLS.Color.clrBlack; // Ciemny czarny.
 
         Self.celownik_linia.LineWidth := 0;
 
@@ -13664,12 +13735,12 @@ begin
 
             // Brak amunicji.
 
-            Self.celownik_linia.LineColor.Color := GLColor.clrBlack;
+            Self.celownik_linia.LineColor.Color := GLS.Color.clrBlack;
 
             //if Self.celownik_linia.NodesAspect <> lnaInvisible then
             //  Self.celownik_linia.NodesAspect := lnaInvisible;
 
-            //Self.celownik_linia.LinePattern := Floor( MAXWORD * 0.01 ); // Punktowana $CCCC, ci¹g³a $FFFF.
+            //Self.celownik_linia.LinePattern := System.Math.Floor( MAXWORD * 0.01 ); // Punktowana $CCCC, ci¹g³a $FFFF.
             Self.celownik_linia.LinePattern := MAXWORD; // Punktowana $CCCC, ci¹g³a $FFFF.
 
           end
@@ -13687,9 +13758,9 @@ begin
               begin
 
                 if Self.czy_indeks_do_strza³u then
-                  Self.celownik_linia.LineColor.Color := GLColor.clrOrange
+                  Self.celownik_linia.LineColor.Color := GLS.Color.clrOrange
                 else//if Self.czy_indeks_do_strza³u then
-                  Self.celownik_linia.LineColor.Color := GLColor.clrYellow;
+                  Self.celownik_linia.LineColor.Color := GLS.Color.clrYellow;
 
               end
             else//if not Self.statek__tw.obracaj_dzia³a then
@@ -13706,25 +13777,25 @@ begin
                 begin
 
                   if Self.czy_indeks_do_strza³u then
-                    Self.celownik_linia.LineColor.Color := GLColor.clrGreenYellow // Jasny zielony.
+                    Self.celownik_linia.LineColor.Color := GLS.Color.clrGreenYellow // Jasny zielony.
                   else//if Self.czy_indeks_do_strza³u then
-                    Self.celownik_linia.LineColor.Color := GLColor.clrGreen; // Ciemny zielony.
+                    Self.celownik_linia.LineColor.Color := GLS.Color.clrGreen; // Ciemny zielony.
 
                 end
               else//if    ( Self.czy_wycelowany_obrót ) (...)
                 begin
 
                   if Self.czy_indeks_do_strza³u then
-                    Self.celownik_linia.LineColor.Color := GLColor.clrRed // Jasny czerwony.
+                    Self.celownik_linia.LineColor.Color := GLS.Color.clrRed // Jasny czerwony.
                   else//if Self.czy_indeks_do_strza³u then
-                    Self.celownik_linia.LineColor.Color := GLColor.clrDarkPurple; // Ciemny czerwony.
+                    Self.celownik_linia.LineColor.Color := GLS.Color.clrDarkPurple; // Ciemny czerwony.
 
                 end;
               //---//if    ( Self.czy_wycelowany_obrót ) (...)
 
 
-            Self.celownik_linia.LinePattern := Floor( MAXWORD * prze³adowanie_procent_najwiêksze * 0.01 ); // Punktowana $CCCC, ci¹g³a $FFFF.
-            //Self.celownik_linia.LinePattern := Floor( MAXWORD * prze³adowanie_procent_najwiêksze * 0.01 * 0.01 ); // Punktowana $CCCC, ci¹g³a $FFFF.
+            Self.celownik_linia.LinePattern := System.Math.Floor( MAXWORD * prze³adowanie_procent_najwiêksze * 0.01 ); // Punktowana $CCCC, ci¹g³a $FFFF.
+            //Self.celownik_linia.LinePattern := System.Math.Floor( MAXWORD * prze³adowanie_procent_najwiêksze * 0.01 * 0.01 ); // Punktowana $CCCC, ci¹g³a $FFFF.
             //Self.celownik_linia.LineWidth := 7 * prze³adowanie_procent_najwiêksze * 0.01; // Powy¿ej wartoœci 7 nie widaæ ró¿nicy w szerokoœci linii celowania.
 
           end;
@@ -13761,7 +13832,7 @@ begin
   // Pomija wspó³rzêdna uniesienia kierunku (tylko obrót).
   //Self.celownik_linia_bez_falowania.AbsoluteDirection := Self.celownik_linia.AbsoluteDirection;
   //Self.celownik_linia_bez_falowania.Direction.Y := 0;
-  Self.celownik_linia_bez_falowania.AbsoluteDirection := GLVectorGeometry.VectorMake( Self.celownik_linia.AbsoluteDirection.X, 0, Self.celownik_linia.AbsoluteDirection.Z );
+  Self.celownik_linia_bez_falowania.AbsoluteDirection := GLS.VectorGeometry.VectorMake( Self.celownik_linia.AbsoluteDirection.X, 0, Self.celownik_linia.AbsoluteDirection.Z );
 
 
   if    ( Self.amunicja_rodzaj in [ Typy_Wspolne.ar_Torpeda, Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe ] )
@@ -13802,7 +13873,7 @@ begin
       if    ( not kamera_pod_wod¹_f )
         and ( nad_powierzchni¹_wody_utrzymuj_f )
         and ( Self.statek__tw <> nil ) then
-        Self.celownik_linia_bez_falowania.Position.Y := Self.statek__tw.AbsoluteToLocal(  GLVectorGeometry.AffineVectorMake( 0, zanurzanie_precyzja_c, 0 )  ).Y
+        Self.celownik_linia_bez_falowania.Position.Y := Self.statek__tw.AbsoluteToLocal(  GLS.VectorGeometry.AffineVectorMake( 0, zanurzanie_precyzja_c, 0 )  ).Y
       else//if    ( not kamera_pod_wod¹_f ) (...)
       if    ( not kamera_pod_wod¹_f )
         and ( Self.celownik_linia_bez_falowania.Position.Y <> Self.celownik_linia_bez_falowania__position_y__kamera_nad_wod¹ ) then
@@ -13938,7 +14009,7 @@ begin
   Self.si__cel__korekta_losowa_namiaru_procent__wyszukanie_ostatnie_sekundy_i := 0;
   Self.si__cel__namiar_wyznaczenie_ostatnie_sekundy_i := -si__cel__namiar_wyznaczenie_sekundy_c;
   Self.si__cel__wyszukanie_ostatnie_sekundy_i := -si__cel__wyszukanie_sekundy_c;
-  GLVectorGeometry.MakeVector( Self.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, 0, 0, 0 ); // Zostanie potem nadpisane w funkcji Broñ__Namiar_Wyznacz(). //???
+  GLS.VectorGeometry.MakeVector( Self.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, 0, 0, 0 ); // Zostanie potem nadpisane w funkcji Broñ__Namiar_Wyznacz(). //???
 
 end;//---//Funkcja Si_Wartoœci_Pocz¹tkowe_Ustaw().
 
@@ -14150,7 +14221,7 @@ var
   odleg³oœæ_do_celu_l,
   ztr
     : real;
-  zt_vector : GLVectorGeometry.TVector; // uses GLVectorGeometry.
+  zt_vector : GLS.VectorTypes.TVector4f;
   celowanie_tryb_l : TCelowanie_Tryb;
   zt_gt_lines : TGLLines;
 begin
@@ -14213,14 +14284,14 @@ begin
       //    //zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.k¹t_test_gl_dummy_cube.AbsolutePosition.X;
       //    //zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.k¹t_test_gl_dummy_cube.AbsolutePosition.Y;
       //    //zt_vector.Z := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Z - Self.k¹t_test_gl_dummy_cube.AbsolutePosition.Z;
-      //    //Self.k¹t_test_gl_dummy_cube.AbsoluteDirection := VectorNormalize( zt_vector );
+      //    //Self.k¹t_test_gl_dummy_cube.AbsoluteDirection := GLS.VectorGeometry.VectorNormalize( zt_vector );
       //    //
       //    //Self.podniesienie_k¹t_zadany := Self.k¹t_test_gl_dummy_cube.AbsoluteDirection.Y * 90;
       //    // Lub.
       //    zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.podstawa.AbsolutePosition.X;
       //    zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.korpus_przód.AbsolutePosition.Y; // Dok³adniej celuje w punkt.
       //    zt_vector.Z := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Z - Self.podstawa.AbsolutePosition.Z;
-      //    zt_vector := VectorNormalize( zt_vector );
+      //    zt_vector := GLS.VectorGeometry.VectorNormalize( zt_vector );
       //
       //    Self.podniesienie_k¹t_zadany := zt_vector.Y * 90;
       //
@@ -14265,15 +14336,15 @@ begin
           //zt_vector.X := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).X - Self.k¹t_test_gl_dummy_cube.AbsolutePosition.X;
           //zt_vector.Y := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Y - Self.k¹t_test_gl_dummy_cube.AbsolutePosition.Y;
           //zt_vector.Z := zt_gt_lines.LocalToAbsolute( zt_gt_lines.Nodes[ 1 ].AsAffineVector ).Z - Self.k¹t_test_gl_dummy_cube.AbsolutePosition.Z;
-          //Self.k¹t_test_gl_dummy_cube.AbsoluteDirection := VectorNormalize( zt_vector );
+          //Self.k¹t_test_gl_dummy_cube.AbsoluteDirection := GLS.VectorGeometry.VectorNormalize( zt_vector );
           //
-          //GLVectorGeometry.SetVector( zt_vector, 0, 0, 0 ); // Najlepiej sprawdzaæ k¹t w punkcie zero.
+          //GLS.VectorGeometry.SetVector( zt_vector, 0, 0, 0 ); // Najlepiej sprawdzaæ k¹t w punkcie zero.
           //
           //// Sprawdza k¹t miêdzy kierunkiem zadanym a kierunkiem dzia³a.
           //ztr := 180 -
           //  System.Math.RadToDeg
           //    (
-          //      GLVectorGeometry.AngleBetweenVectors
+          //      GLS.VectorGeometry.AngleBetweenVectors
           //        (
           //          Self.k¹t_test_gl_dummy_cube.AbsoluteDirection,
           //          Self.AbsoluteDirection,
@@ -14302,7 +14373,7 @@ begin
             end;
           //---//if celowanie_tryb_l = ct_Linia then
 
-          zt_vector := VectorNormalize( zt_vector );
+          zt_vector := GLS.VectorGeometry.VectorNormalize( zt_vector );
 
 
           {$region 'Zakomentowane - wariant z prze³¹czaniem na celowanie niweluj¹ce falowanie.'}
@@ -14322,11 +14393,11 @@ begin
           //    ztr := 180 -
           //      System.Math.RadToDeg
           //        (
-          //          GLVectorGeometry.AngleBetweenVectors
+          //          GLS.VectorGeometry.AngleBetweenVectors
           //            (
           //              zt_vector,
           //              Self.AbsoluteDirection,
-          //              GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
+          //              GLS.VectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
           //            )
           //        );
           //
@@ -14340,11 +14411,11 @@ begin
           //    ztr :=
           //      System.Math.RadToDeg
           //        (
-          //          GLVectorGeometry.AngleBetweenVectors
+          //          GLS.VectorGeometry.AngleBetweenVectors
           //            (
           //              zt_vector,
-          //              GLVectorGeometry.VectorMake( zt_vector.X, Self.AbsoluteDirection.Y, zt_vector.Z ),
-          //              GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
+          //              GLS.VectorGeometry.VectorMake( zt_vector.X, Self.AbsoluteDirection.Y, zt_vector.Z ),
+          //              GLS.VectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
           //            )
           //        );
           //
@@ -14363,11 +14434,11 @@ begin
           Self.podniesienie_k¹t_zadany :=
             System.Math.RadToDeg
               (
-                GLVectorGeometry.AngleBetweenVectors
+                GLS.VectorGeometry.AngleBetweenVectors
                   (
                     zt_vector,
-                    GLVectorGeometry.VectorMake( zt_vector.X, 0, zt_vector.Z ),
-                    GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
+                    GLS.VectorGeometry.VectorMake( zt_vector.X, 0, zt_vector.Z ),
+                    GLS.VectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
                   )
               );
 
@@ -14382,11 +14453,11 @@ begin
           ztr :=
             System.Math.RadToDeg
               (
-                GLVectorGeometry.AngleBetweenVectors
+                GLS.VectorGeometry.AngleBetweenVectors
                   (
                     Self.AbsoluteDirection,
-                    GLVectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
-                    GLVectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
+                    GLS.VectorGeometry.VectorMake( Self.AbsoluteDirection.X, 0, Self.AbsoluteDirection.Z ),
+                    GLS.VectorGeometry.VectorMake( 0, 0, 0 ) // Najlepiej sprawdzaæ k¹t w punkcie zero.
                   )
               );
 
@@ -14573,7 +14644,7 @@ begin//Funkcja Podniesienie_Kierunek_Zmieñ().
 
       // Sygnalizuje, ¿e dzia³o jest w trakcie strza³u i nie obraca siê.
 
-      //Self.celownik_linia.LineColor.Color := GLColor.clrGray50;
+      //Self.celownik_linia.LineColor.Color := GLS.Color.clrGray50;
       //Self.celownik_linia_bez_falowania.LineColor.Color := Self.celownik_linia.LineColor.Color;
       Exit;
 
@@ -14822,7 +14893,7 @@ begin
 end;//---//Funkcja Parametry_Odczytaj().
 
 //Konstruktor klasy TAmunicja.
-constructor TAmunicja.Create( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector; const amunicja_prêdkoœæ_zakresy_r_f : TAmunicja_Prêdkoœæ_Zakresy_r; gl_collision_mmanager_f : TGLCollisionManager );
+constructor TAmunicja.Create( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector; const amunicja_prêdkoœæ_zakresy_r_f : TAmunicja_Prêdkoœæ_Zakresy_r; gl_collision_mmanager_f : TGLCollisionManager );
 
   //Funkcja xNx__Równanie_Paraboli_3_Punkty() w Konstruktor klasy TAmunicja.
   function xNx__Równanie_Paraboli_3_Punkty( x1, y1, x2, y2, x3, y3 : real; var a, b, c : real ) : boolean;
@@ -14965,7 +15036,7 @@ begin//Konstruktor klasy TAmunicja.
   Self.czy_poza_luf¹ := false;
   Self.czy_uzbrojona := false;
 
-  GLVectorGeometry.MakeVector( Self.uzbrojenie_wspó³rzêdne_vector, 0, 0, 0 );
+  GLS.VectorGeometry.MakeVector( Self.uzbrojenie_wspó³rzêdne_vector, 0, 0, 0 );
 
   Self.pozycja_celu := TGLSphere.Create( Self );
   Self.pozycja_celu.Parent := AOwner; // Aby pozycja startowa siê nie przesuwa³a.
@@ -15023,7 +15094,7 @@ begin//Konstruktor klasy TAmunicja.
 
               // Inicjuje pocz¹tkow¹ pozycjê wskaŸnika celu do wyliczenia pozycji celu przy opuszczaniu lufy przez amunicjê.
               //Self.pozycja_celu.Visible := true;
-              Self.pozycja_celu.Material.FrontProperties.Emission.Color := GLColor.clrGreen;
+              Self.pozycja_celu.Material.FrontProperties.Emission.Color := GLS.Color.clrGreen;
               //Self.pozycja_celu.AbsolutePosition := TDzia³o(ALufa.dzia³o).AbsolutePosition;
 
               Self.pozycja_celu.Parent := ALufa.dzia³o;
@@ -15188,14 +15259,14 @@ begin//Konstruktor klasy TAmunicja.
   Self.korpus_opadanie_obrót_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.korpus_opadanie_obrót_gl_dummy_cube.Parent := Self;
   Self.korpus_opadanie_obrót_gl_dummy_cube.Pickable := false;
-  Self.korpus_opadanie_obrót_gl_dummy_cube.EdgeColor.Color := GLColor.clrGreen;
+  Self.korpus_opadanie_obrót_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrGreen;
   //Self.korpus_opadanie_obrót_gl_dummy_cube.VisibleAtRunTime := true;
   //Self.korpus_opadanie_obrót_gl_dummy_cube.ShowAxes := true;
 
   Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.Parent := Self.korpus_opadanie_obrót_gl_dummy_cube;
   Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.Pickable := false;
-  Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.EdgeColor.Color := GLColor.clrYellow;
+  Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrYellow;
   //Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.VisibleAtRunTime := true;
   //Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.ShowAxes := true;
 
@@ -15203,7 +15274,7 @@ begin//Konstruktor klasy TAmunicja.
   Self.torpeda_efekt_na_wodzie_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.torpeda_efekt_na_wodzie_gl_dummy_cube.Parent := nil;
   Self.torpeda_efekt_na_wodzie_gl_dummy_cube.Pickable := false;
-  Self.torpeda_efekt_na_wodzie_gl_dummy_cube.EdgeColor.Color := GLColor.clrRed;
+  Self.torpeda_efekt_na_wodzie_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrRed;
   //Self.torpeda_efekt_na_wodzie_gl_dummy_cube.VisibleAtRunTime := true;
   //Self.torpeda_efekt_na_wodzie_gl_dummy_cube.ShowAxes := true;
 
@@ -15284,7 +15355,7 @@ begin//Konstruktor klasy TAmunicja.
 
 
   Self.AbsoluteDirection := ALufa.AbsoluteDirection;
-  Self.Direction.AsVector := GLVectorGeometry.VectorNegate( Self.Direction.AsVector ); // Lepiej dzia³a.
+  Self.Direction.AsVector := GLS.VectorGeometry.VectorNegate( Self.Direction.AsVector ); // Lepiej dzia³a.
   Self.opadanie_obrót_korekta_o_k¹t_na_granicy_zasiêgu := 0;
   Self.opadanie_obrót_korekta_o_ustawienie_pocz¹tkowe := 0;
 
@@ -15319,7 +15390,7 @@ begin//Konstruktor klasy TAmunicja.
   Self.jasna_linia.Height := Self.korpus__amunicja.Height;
   Self.jasna_linia.TopRadius := Self.korpus__amunicja.TopRadius * 0.1;
   Self.jasna_linia.BottomRadius := Self.korpus__amunicja.BottomRadius * 0.1;
-  Self.jasna_linia.Material.FrontProperties.Emission.Color := GLColor.clrWhite;
+  Self.jasna_linia.Material.FrontProperties.Emission.Color := GLS.Color.clrWhite;
   //Self.jasna_linia.Position.Y := Self.korpus__amunicja.TopRadius;
   //Self.jasna_linia.Height := Self.jasna_linia.Height * 2;
   //Self.jasna_linia.Position.Z := Self.korpus__amunicja.Height * 0.5 - Self.jasna_linia.Height * 0.5;
@@ -15329,12 +15400,12 @@ begin//Konstruktor klasy TAmunicja.
   Wyglad_Elementy.Obiekt_Rodzaj( Self.obra¿enia_zasiêg_st_gl_sphere, Wyglad_Elementy.or_Amunicja__Obra¿enia_Zasiêg );
   Wyglad_Elementy.Identyfikator_Elementu( Self.obra¿enia_zasiêg_st_gl_sphere, Self.id_statek );
   Self.obra¿enia_zasiêg_st_gl_sphere.Visible := false; // Je¿eli jest niewidoczna to te¿ wykrywa kolizje.
-  Self.obra¿enia_zasiêg_st_gl_sphere.Material.PolygonMode := pmLines; // pmPoints - bardzo spowalnia grê.
-  Self.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrGreen;
+  Self.obra¿enia_zasiêg_st_gl_sphere.Material.PolygonMode := GLS.State.pmLines; // pmPoints - bardzo spowalnia grê.
+  Self.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLS.Color.clrGreen;
   //Self.obra¿enia_zasiêg_st_gl_sphere.Material.BlendingMode := bmTransparency; // Przezroczystoœæ sprawia, ¿e widaæ przez wodê.
-  //Self.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
+  //Self.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLS.Color.clrTransparent;
   //Self.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Diffuse.SetColor( 1, 0, 0, 0.01 );
-  //Self.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
+  //Self.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Emission.Color := GLS.Color.clrTransparent;
 
   if   ( obra¿enia_zasiêg_l = -1 )
     or ( Self.skala__amunicja = 0 ) then
@@ -15483,7 +15554,7 @@ begin
 
   Self.strza³_od_blokada_dystans := 0;
 
-  GLVectorGeometry.MakeVector( Self.uzbrojenie_wspó³rzêdne_vector, 0, 0, 0 );
+  GLS.VectorGeometry.MakeVector( Self.uzbrojenie_wspó³rzêdne_vector, 0, 0, 0 );
 
   Self.Parent := AOwner; // Rodzicem jest scena aby kontener obiektu porusza³ siê po wspó³rzêdnych absolutnych sceny (nie lokalnych).
   //Self.Direction.AsAffineVector := TTorpedy_Wyrzutnia(ALufa.dzia³o).Direction.AsAffineVector;
@@ -15495,21 +15566,21 @@ begin
   Self.korpus_opadanie_obrót_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.korpus_opadanie_obrót_gl_dummy_cube.Parent := Self;
   Self.korpus_opadanie_obrót_gl_dummy_cube.Pickable := false;
-  Self.korpus_opadanie_obrót_gl_dummy_cube.EdgeColor.Color := GLColor.clrGreen;
+  Self.korpus_opadanie_obrót_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrGreen;
   //Self.korpus_opadanie_obrót_gl_dummy_cube.VisibleAtRunTime := true;
 
 
   Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.Parent := AOwner;
   Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.Pickable := false;
-  Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.EdgeColor.Color := GLColor.clrYellow;
+  Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrYellow;
   //Self.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.VisibleAtRunTime := true;
 
 
   Self.torpeda_efekt_na_wodzie_gl_dummy_cube := TGLDummyCube.Create( Self );
   Self.torpeda_efekt_na_wodzie_gl_dummy_cube.Parent := nil;
   Self.torpeda_efekt_na_wodzie_gl_dummy_cube.Pickable := false;
-  Self.torpeda_efekt_na_wodzie_gl_dummy_cube.EdgeColor.Color := GLColor.clrRed;
+  Self.torpeda_efekt_na_wodzie_gl_dummy_cube.EdgeColor.Color := GLS.Color.clrRed;
   //Self.torpeda_efekt_na_wodzie_gl_dummy_cube.VisibleAtRunTime := true;
   //Self.torpeda_efekt_na_wodzie_gl_dummy_cube.ShowAxes := true;
 
@@ -15544,7 +15615,7 @@ begin
   Self.jasna_linia.Height := Self.korpus__amunicja.Height;
   Self.jasna_linia.TopRadius := Self.korpus__amunicja.TopRadius * 0.1;
   Self.jasna_linia.BottomRadius := Self.korpus__amunicja.BottomRadius * 0.1;
-  //Self.jasna_linia.Material.FrontProperties.Emission.Color := GLColor.clrWhite;
+  //Self.jasna_linia.Material.FrontProperties.Emission.Color := GLS.Color.clrWhite;
   Self.jasna_linia.Material.FrontProperties.Emission.SetColor( 1, 0, 0, 1 ); // Klient na razie ma ca³y czas czerwony kolor.
 
   Self.obra¿enia_zasiêg_st_gl_sphere := Wyglad_Elementy.TSt_GLSphere.Create( Self );
@@ -15560,7 +15631,7 @@ begin
   Self.pozycja_celu.Position.SetPoint( 0, 0, 0 );
 
   if AObiekty_Wieloosobowe_Amunicja_r.czy_lot_parabol¹_am__owo then
-    Self.pozycja_celu.Material.FrontProperties.Emission.Color := GLColor.clrGreen;
+    Self.pozycja_celu.Material.FrontProperties.Emission.Color := GLS.Color.clrGreen;
 
 
   Self.pozycja_startowa := TGLSphere.Create( Self );
@@ -15626,8 +15697,8 @@ begin
     id_statek_l := -1;
 
   Self.id_kotwica := Length( Self.statek__ko.kotwica_t );
-  Self.kotwica_lina_mocowanie := GLVectorGeometry.AffineVectorMake( 0, 0, 0 );
-  Self.kotwica_statek_mocowanie := GLVectorGeometry.AffineVectorMake( 0, 0, 0 );
+  Self.kotwica_lina_mocowanie := GLS.VectorGeometry.AffineVectorMake( 0, 0, 0 );
+  Self.kotwica_statek_mocowanie := GLS.VectorGeometry.AffineVectorMake( 0, 0, 0 );
   Self.kotwica_ruch_etap__ko := kre_Statek;
   Self.uszkodzone_czas_sekundy_i := 0;
   Self.dno_wspó³rzêdna_y := 0;
@@ -15808,7 +15879,7 @@ begin
     and (  Assigned( Self.Parent )  ) then
     Self.kotwica_lina_mocowanie := Self.Parent.AbsoluteToLocal(  Self.kotwica_lina.LocalToAbsolute( Self.kotwica_lina.Nodes[ 1 ].AsAffineVector )  );
 
-  Self.kotwica_statek_mocowanie := GLVectorGeometry.AffineVectorMake( Self.AbsolutePosition );
+  Self.kotwica_statek_mocowanie := GLS.VectorGeometry.AffineVectorMake( Self.AbsolutePosition );
 
   Self.kotwica_statek_mocowanie.X := -Self.kotwica_statek_mocowanie.X;
   Self.kotwica_statek_mocowanie.Z := -Self.kotwica_statek_mocowanie.Z;
@@ -15845,7 +15916,7 @@ begin
   Self.kotwica_ruch_etap__ko := kre_Dno;
 
   // Je¿eli kotwica zatrzyma siê za g³êboko to podczas zanurzania statku, gdy kotwica dotknie dna nie przestawia siê ze kre_Stop na kre_Dno.
-  ztsi := Self.kotwica_trzon__dó³.DistanceTo(  GLVectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  );
+  ztsi := Self.kotwica_trzon__dó³.DistanceTo(  GLS.VectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  );
 
   if ztsi > kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz then
     if Self.Position.Y <= 0 then
@@ -15911,7 +15982,7 @@ begin
 
       if    ( Self.kotwica_ruch_etap__ko = kre_Dno )
         and (  Abs( Self.AbsolutePosition.Y - Self.dno_wspó³rzêdna_y ) > 0.01  )
-        and (   Self.kotwica_trzon__dó³.DistanceTo(  GLVectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  ) <= kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz   ) then
+        and (   Self.kotwica_trzon__dó³.DistanceTo(  GLS.VectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  ) <= kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz   ) then
         begin
 
           // Aby podci¹ga³ kotwicê gdy np. statek siê zanurza.
@@ -15929,14 +16000,14 @@ begin
         end
       else//if    ( Self.kotwica_ruch_etap__ko <> kre_Dno ) (...)
       //if    ( Self.kotwica_ruch_etap__ko <> kre_Stop )
-      //  and (   Self.kotwica_trzon__dó³.DistanceTo(  GLVectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  ) > kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz   ) then
-      if Self.kotwica_trzon__dó³.DistanceTo(  GLVectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  ) > kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz then
+      //  and (   Self.kotwica_trzon__dó³.DistanceTo(  GLS.VectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  ) > kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz   ) then
+      if Self.kotwica_trzon__dó³.DistanceTo(  GLS.VectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  ) > kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz then
         begin
 
             Self.kotwica_ruch_etap__ko := kre_Stop;
 
         end
-      else//if Self.kotwica_trzon__dó³.DistanceTo(  GLVectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  ) > kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz then
+      else//if Self.kotwica_trzon__dó³.DistanceTo(  GLS.VectorGeometry.VectorMake( Self.kotwica_trzon__dó³.AbsolutePosition.X, Self.statek__ko.AbsolutePosition.Y, Self.kotwica_trzon__dó³.AbsolutePosition.Z )  ) > kotwica_zakresy_r_f.odleg³oœæ_maksymalna__kz then
       if Self.kotwica_ruch_etap__ko <> kre_Dno then
         begin
 
@@ -16034,7 +16105,7 @@ begin
       wygl¹d_elementy__kolor_noc_zmieñ_f( Self.kotwica_trzon__dó³.Material, dzieñ_jasnoœæ_f );
       wygl¹d_elementy__kolor_noc_zmieñ_f( Self.kotwica_trzon__góra.Material, dzieñ_jasnoœæ_f );
       wygl¹d_elementy__kolor_noc_zmieñ_f( Self.kotwica_trzon.Material, dzieñ_jasnoœæ_f );
-      Self.kotwica_lina.LineColor.Color := GLVectorGeometry.VectorScale( GLColor.clrWhite, dzieñ_jasnoœæ_f );
+      Self.kotwica_lina.LineColor.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrWhite, dzieñ_jasnoœæ_f );
       Self.kotwica_lina.LineColor.Alpha := 1;
 
     end;
@@ -16318,7 +16389,7 @@ begin
 end;//---//Funkcja Element_Uszkodzenie_Przeliczaj().
 
 //Konstruktor klasy TŒlad_Torowy.
-constructor TŒlad_Torowy.Create( AOwner : TGLBaseSceneObject; const kierunek_f, pozycja_f : GLVectorGeometry.TVector; œlad_torowy__d³ugoœæ_f, œlad_torowy__szerokoœæ_f : single; const dzieñ_jasnoœæ_f : real; const zanurzenie_peryskopowe__utrzymywane_f : boolean );
+constructor TŒlad_Torowy.Create( AOwner : TGLBaseSceneObject; const kierunek_f, pozycja_f : GLS.VectorTypes.TVector4f; œlad_torowy__d³ugoœæ_f, œlad_torowy__szerokoœæ_f : single; const dzieñ_jasnoœæ_f : real; const zanurzenie_peryskopowe__utrzymywane_f : boolean );
 begin
 
   inherited Create( AOwner );
@@ -16352,7 +16423,7 @@ begin
   Self.czas_trwania_milisekundy_œt := œlad_torowy__czas_trwania_milisekundy_c;
   Self.czas_utworzenia_milisekundy_œt := Czas_Teraz_W_Milisekundach();
 
-  Self.EdgeColor.Color := GLVectorGeometry.VectorScale( GLColor.clrLightBlue, dzieñ_jasnoœæ_f );
+  Self.EdgeColor.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrLightBlue, dzieñ_jasnoœæ_f );
 
   // Za bardzo migocze.
   //Self.œlad := TGLCube.Create( AOwner );
@@ -16527,10 +16598,10 @@ begin
       Self.wirnik_³opaty_t[ i ].Position.Y := Self.wirnik_œrodek.Radius + Self.wirnik_³opaty_t[ i ].BottomRadius * 0.5;
 
       Self.wirnik_³opaty_t[ i ].Position.AsVector :=
-        GLVectorGeometry.MoveObjectAround
+        GLS.VectorGeometry.MoveObjectAround
           (
             Self.wirnik_³opaty_t[ i ].Position.AsVector,
-            GLVectorGeometry.VectorMake( 0, 0, 1 ),
+            GLS.VectorGeometry.VectorMake( 0, 0, 1 ),
             Self.wirnik_œrodek.Position.AsVector, 0, i * ztr
           );
 
@@ -16881,7 +16952,7 @@ end;//---//Funkcja Element_Uszkodzenie_Przeliczaj().
 //Konstruktor klasy TTrafienia_Efekt.
 //constructor TTrafienia_Efekt.Create( AOwner : TGLBaseSceneObject; gl_fire_fx_manager_f : TGLFireFXManager; x_f, y_f, z_f : real );
 //constructor TTrafienia_Efekt.Create( AOwner : TGLBaseSceneObject; gl_cadence_able_component_f : TGLCadenceAbleComponent; x_f, y_f, z_f : real; gl_cadencer__current_time_f : double; amunicja_f : TAmunicja );
-constructor TTrafienia_Efekt.Create( AOwner : TGLBaseSceneObject; x_f, y_f, z_f : real; const efekt_rodzaj_f : TEfekt_Rodzaj );
+constructor TTrafienia_Efekt.Create( AOwner : TGLBaseSceneObject; x_f, y_f, z_f : real; const efekt_rodzaj_f : TEfekt_Rodzaj; const mg³a_f : boolean = false );
 //var
 //  zt_gl_base_scene_object : TGLBaseSceneObject;
 begin
@@ -16901,11 +16972,18 @@ begin
   //Self.ShowAxes := true;
   Self.Position.SetPoint( x_f, y_f, z_f );
 
+  Self.czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i := 0;
   Self.czas_rozb³ysku_ostatniego_sekundy_i := Czas_Teraz_W_Sekundach();
   Self.czas_trwania_milisekundy_te := Random( 10000 ) + 2500;
   Self.czas_utworzenia_milisekundy_te := Czas_Teraz_W_Milisekundach();
 
+  Self.dzieñ_jasnoœæ_te := 1;
+
   Self.efekt_rodzaj := efekt_rodzaj_f;
+
+  Self.mg³a_te := mg³a_f;
+
+  Self.wizualizacja_alternatywna__gl_custom_scene_object := nil;
 
   //Self.statek := AStatek; //???
 
@@ -16938,9 +17016,232 @@ end;//---//Konstruktor klasy TTrafienia_Efekt.
 destructor TTrafienia_Efekt.Destroy();
 begin
 
+  if Self.wizualizacja_alternatywna__gl_custom_scene_object <> nil then
+    FreeAndNil( Self.wizualizacja_alternatywna__gl_custom_scene_object );
+
+
   inherited;
 
 end;//---//Destruktor klasy TTrafienia_Efekt.
+
+//Funkcja Wizualizacja_Alternatywna__Utwórz().
+procedure TTrafienia_Efekt.Wizualizacja_Alternatywna__Utwórz( const dzieñ_jasnoœæ_f : real );
+begin
+
+  Self.dzieñ_jasnoœæ_te := dzieñ_jasnoœæ_f;
+
+  if not Self.mg³a_te then
+    begin
+
+      if Self.efekt_rodzaj = er_SOS then
+        begin
+
+          Self.wizualizacja_alternatywna__gl_custom_scene_object := TGLSphere.Create( Self );
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.RandomColor();
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X := 0.1;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Y := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Z := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+
+          Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 100;
+
+        end
+      else//if Self.efekt_rodzaj = er_SOS then
+      if Self.efekt_rodzaj in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] then
+        begin
+
+          if Self.efekt_rodzaj = er_Trafienie_Statek_Zatopienie then
+            Self.wizualizacja_alternatywna__gl_custom_scene_object := TGLSphere.Create( Self )
+          else//if Self.efekt_rodzaj = er_Trafienie_Statek_Zatopienie then
+            Self.wizualizacja_alternatywna__gl_custom_scene_object := TGLCone.Create( Self );
+
+
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.SetColor(  0.8 + Random( 3 ) * 0.1, 0.5 + Random( 6 ) * 0.1, 0  );
+
+          if Self.efekt_rodzaj = er_Trafienie_Statek_Zatopienie then
+            begin
+
+              Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X := 0.5;
+
+              Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 100;
+
+            end
+          else//if Self.efekt_rodzaj = er_Trafienie_Statek_Zatopienie then
+            begin
+
+              Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X := 4;
+
+              Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 100 + Random( 100 );
+
+            end;
+          //---//if Self.efekt_rodzaj = er_Trafienie_Statek_Zatopienie then
+
+
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Y := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Z := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+
+        end
+      else//if Self.efekt_rodzaj in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] then
+      if Self.efekt_rodzaj = er_Trafienie_Woda then
+        begin
+
+          Self.wizualizacja_alternatywna__gl_custom_scene_object := TGLSphere.Create( Self );
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Color := GLS.Color.clrBlue;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X := 0.1;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Y := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Z := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+
+          Self.czas_trwania_milisekundy_te := Self.czas_trwania_milisekundy_te * 2;
+
+          Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 100;
+
+
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Red := Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Red * Self.dzieñ_jasnoœæ_te;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Green := Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Green * Self.dzieñ_jasnoœæ_te;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Blue := Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Blue * Self.dzieñ_jasnoœæ_te;
+
+        end;
+      //---//if Self.efekt_rodzaj = er_Trafienie_Woda then
+
+    end
+  else//if not Self.mg³a_te then
+    begin
+
+      Self.wizualizacja_alternatywna__gl_custom_scene_object := TGLSphere.Create( Self );
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Color := GLS.Color.clrGray50;
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X := 3;
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Y := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Z := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+
+      Self.czas_trwania_milisekundy_te := Self.czas_trwania_milisekundy_te * 5;
+
+      Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 150;
+
+
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Red := Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Red * Self.dzieñ_jasnoœæ_te;
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Green := Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Green * Self.dzieñ_jasnoœæ_te;
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Blue := Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.Blue * Self.dzieñ_jasnoœæ_te;
+
+    end;
+  //---//if not Self.mg³a_te then
+
+
+  if Self.wizualizacja_alternatywna__gl_custom_scene_object <> nil then
+    begin
+
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Parent := Self;
+      Self.wizualizacja_alternatywna__gl_custom_scene_object.Pickable := false;
+
+      if   ( Self.mg³a_te )
+        or ( Self.efekt_rodzaj in [ er_SOS, er_Trafienie_Statek_Zatopienie ] ) then
+        Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.PolygonMode := pmPoints
+      else//if   ( Self.mg³a_te ) (...)
+        Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.PolygonMode := pmLines;
+
+    end;
+  //---//if Self.wizualizacja_alternatywna__gl_custom_scene_object <> nil then
+
+
+  if Self.efekt_rodzaj <> er_SOS then
+    Self.czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i := Czas_Teraz_W_Milisekundach();
+
+end;//---//Funkcja Wizualizacja_Alternatywna__Utwórz().
+
+//Funkcja Wizualizacja_Alternatywna__Animuj().
+procedure TTrafienia_Efekt.Wizualizacja_Alternatywna__Animuj();
+var
+  sos_wyzerowany_l : boolean;
+begin
+
+  if Self.wizualizacja_alternatywna__gl_custom_scene_object = nil then
+    Exit;
+
+
+  sos_wyzerowany_l := false;
+
+
+  if not Self.mg³a_te then
+    begin
+
+      if Self.efekt_rodzaj in [ er_SOS ] then
+        begin
+
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X * 1.15;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Y := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Y * 1.1;
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Z := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+
+
+          if Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X > 100 then
+            begin
+
+              if Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i > 100 then
+                begin
+
+                  Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X := 0.1;
+                  Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Y := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+                  Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Z := Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+
+                  Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 100;
+                  Self.czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i := 0;
+
+                end
+              else//if Self.czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i > 100 then
+                Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 2000 + Random( 3000 ); // Po osi¹gniêciu maksymalnego rozmiaru efekt jeszcze siê jakiœ czas utrzymuje.
+
+              sos_wyzerowany_l := true;
+
+            end;
+          //---//if Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X > 10 then
+
+        end
+      else//if Self.efekt_rodzaj in [ er_SOS ] then
+      if Self.efekt_rodzaj in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] then
+        begin
+
+          if Self.efekt_rodzaj in [ er_Trafienie_Statek_Zatopienie ] then
+            begin
+
+              Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.SetColor(  0.9 + Random( 2 ) * 0.1, 0.2 + Random( 3 ) * 0.1, 0  );
+
+              if Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X < 10 then
+                Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Scale( 1.05 );
+
+            end
+          else//if Self.efekt_rodzaj = er_Trafienie_Woda then
+            begin
+
+              Self.wizualizacja_alternatywna__gl_custom_scene_object.Material.FrontProperties.Emission.SetColor(  0.8 + Random( 3 ) * 0.1, 0.5 + Random( 6 ) * 0.1, 0  );
+
+              Self.czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 100 + Random( 100 );
+
+            end;
+
+        end
+      else//if Self.efekt_rodzaj in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] then
+      if Self.efekt_rodzaj in [ er_Trafienie_Woda ] then
+        begin
+
+          Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Scale( 1.15 );
+
+        end;
+      //---//if Self.efekt_rodzaj in [ er_Trafienie_Woda ] then
+
+    end
+  else//if not Self.mg³a_te then
+    begin
+
+      if Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X <= 500 then
+        Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Scale( 1.05 )
+      else//if Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.X <= 500 then
+        Self.wizualizacja_alternatywna__gl_custom_scene_object.Scale.Scale( 1.005 );
+
+    end;
+  //---//if not Self.mg³a_te then
+
+
+  if not sos_wyzerowany_l then
+    Self.czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i := Czas_Teraz_W_Milisekundach();
+
+end;//---//Funkcja Wizualizacja_Alternatywna__Animuj().
 
 //Konstruktor klasy TInformacje_Dodatkowe.
 constructor TInformacje_Dodatkowe.Create( const napis_f : string = '' );
@@ -17539,7 +17840,7 @@ begin
 
   // Klawiatura konfiguracja.
   polecenie__opis_l := '';
-  rtti_type := TRTTIContext.Create.GetType(  TypeInfo( TT³umaczenie_Komunikaty_r )  );
+  rtti_type := TRTTIContext.Create.GetType(  System.TypeInfo( TT³umaczenie_Komunikaty_r )  );
 
   for rtti_field in rtti_type.GetFields do
     if rtti_field.Name = Self.klawiatura_konfiguracja_r_w.polecenie__nazwa then
@@ -17625,12 +17926,12 @@ begin
   SetLength( wygl¹d_kolor_definicja_t, i + 1 );
 
   wygl¹d_kolor_definicja_t[ i ].kolor_definicja_nazwa := kolor_definicja_nazwa_f;
-  GLVectorGeometry.SetVector( wygl¹d_kolor_definicja_t[ i ].kolor_vector, czerwony_f, zielony_f, niebieski_f, przezroczystoœæ_f );
+  GLS.VectorGeometry.SetVector( wygl¹d_kolor_definicja_t[ i ].kolor_vector, czerwony_f, zielony_f, niebieski_f, przezroczystoœæ_f );
 
 end;//---//Funkcja Dodaj_Definicjê().
 
 //Funkcja Odczytaj_Definicjê().
-function TWygl¹d_Kolor_Definicja.Odczytaj_Definicjê( const kolor_definicja_nazwa_f : string ) : GLVectorGeometry.TVector;
+function TWygl¹d_Kolor_Definicja.Odczytaj_Definicjê( const kolor_definicja_nazwa_f : string ) : GLS.VectorTypes.TVector4f;
 var
   i : integer;
 begin
@@ -17642,8 +17943,8 @@ begin
   //   kolor_definicja_nazwa_f
   //
 
-  //GLVectorGeometry.SetVector( Result, 0, 0, 0, 1 );
-  Result := GLColor.clrGray20;
+  //GLS.VectorGeometry.SetVector( Result, 0, 0, 0, 1 );
+  Result := GLS.Color.clrGray20;
 
   for i := 0 to Length( Self.wygl¹d_kolor_definicja_t ) - 1 do
     if Self.wygl¹d_kolor_definicja_t[ i ].kolor_definicja_nazwa = kolor_definicja_nazwa_f then
@@ -18219,7 +18520,7 @@ begin
 end;//---//Funkcja Odczytaj_Liczbê_Z_Napisu().
 
 //Funkcja Odczytaj_Liczbê_Z_Napisu_Xml().
-function TStatek_Create_Funkcje.Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
+function TStatek_Create_Funkcje.Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : Xml.XMLIntf.IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
 begin
 
   if @Self.Odczytaj_Liczbê_Z_Napisu_Xml_wsk <> nil then
@@ -18259,13 +18560,13 @@ begin
 end;//---//Funkcja Wygl¹d_Elementy__DŸwiêk_Wczytaj().
 
 //Funkcja Wygl¹d_Elementy__Kolor_Losowy_Wylicz().
-function TStatek_Create_Funkcje.Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_od_f, kolor_do_f : real ) : GLVectorGeometry.TVector;
+function TStatek_Create_Funkcje.Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_od_f, kolor_do_f : real ) : GLS.VectorTypes.TVector4f;
 begin
 
   if @Self.Wygl¹d_Elementy__Kolor_Losowy_Wylicz_wsk <> nil then
     Result := Self.Wygl¹d_Elementy__Kolor_Losowy_Wylicz_wsk( kolor_od_f, kolor_do_f )
   else//if @Self.Wygl¹d_Elementy__Kolor_Losowy_Wylicz_wsk <> nil then
-    GLVectorGeometry.SetVector
+    GLS.VectorGeometry.SetVector
       (
         Result,
         Random(),
@@ -18277,7 +18578,7 @@ begin
 end;//---//Funkcja Wygl¹d_Elementy__Kolor_Losowy_Wylicz().
 
 //Funkcja Wygl¹d_Elementy__Kolor_Ustaw().
-procedure TStatek_Create_Funkcje.Wygl¹d_Elementy__Kolor_Ustaw( const gl_material_f : TGLMaterial; const vector_f : GLVectorGeometry.TVector );
+procedure TStatek_Create_Funkcje.Wygl¹d_Elementy__Kolor_Ustaw( const gl_material_f : TGLMaterial; const vector_f : GLS.VectorTypes.TVector4f );
 begin
 
   if @Self.Wygl¹d_Elementy__Kolor_Ustaw_wsk <> nil then
@@ -18418,7 +18719,7 @@ begin
   //     true - zmienna czas_poprzedni_f przechowuje wartoœæ w milisekundach (wartoœæ zmiennej dla 1 sekunda = 1 000).
   //
 
-  Result := Floor(  Czas_Miêdzy_W_Milisekundach( czas_poprzedni_f, zmienna_w_milisekundach_f ) * 0.001  );
+  Result := System.Math.Floor(  Czas_Miêdzy_W_Milisekundach( czas_poprzedni_f, zmienna_w_milisekundach_f ) * 0.001  );
 
 end;//---//Funkcja Czas_Miêdzy_W_Sekundach().
 
@@ -18470,7 +18771,7 @@ begin
   // Zwraca aktualny bezwzglêdny czas gry bez u³amków sekund w postaci 123 (1:59 = 1).
   //
 
-  Result := Floor( Czas_Teraz() );
+  Result := System.Math.Floor( Czas_Teraz() );
 
 end;//---//Funkcja Czas_Teraz_W_Sekundach().
 
@@ -18488,6 +18789,68 @@ begin
 
 end;//---//Funkcja Czas_Teraz_W_Milisekundach().
 
+//Funkcja Separator_Dziesiêtny__Ustal().
+function Separator_Dziesiêtny__Ustal() : string;
+begin
+
+  //
+  // Funkcja ustala systemowy separator dziesiêtny liczb.
+  // Dla ró¿nych ustawieñ lokalnych komputera mo¿e byæ inny separator dziesiêtny liczb.
+  //
+  // Zwraca systemowy separator dziesiêtny liczb.
+  //
+
+  Result := FloatToStr( 1.1 );
+  Result := Copy( Result, 2, 1 );
+
+end;//---//Funkcja Separator_Dziesiêtny__Ustal().
+
+//Funkcja String_To__Float().
+function String_To__Float( napis_f : string ) : real;
+var
+  i : integer;
+
+  zts,
+  separator_dziesiêtny_l
+    : string;
+begin
+
+  //
+  // Funkcja konwertuje napis na liczbê.
+  // Dla ró¿nych ustawieñ lokalnych komputera mo¿e byæ inny separator dziesiêtny liczb.
+  //
+  // Zwraca liczbê.
+  //
+
+  separator_dziesiêtny_l := Separator_Dziesiêtny__Ustal();
+
+  napis_f := Trim( napis_f );
+  napis_f := StringReplace( napis_f, ' ', '', [ rfReplaceAll ] );
+
+  zts := '';
+
+  for i := 1 to Length( napis_f ) do
+    begin
+
+      if napis_f[ i ] = '-' then
+        zts := zts + napis_f[ i ]
+      else//if napis_f[ i ] = '-' then
+        try
+          StrToInt( napis_f[ i ] );
+          zts := zts + napis_f[ i ];
+        except
+          zts := zts + separator_dziesiêtny_l;
+        end;
+        //---//try
+
+    end;
+  //---//for i := 1 to Length( zts_l ) do
+
+
+  Result := StrToFloat( zts );
+
+end;//---//Funkcja String_To__Float().
+
 //Funkcja Zaokr¹glij__W_Górê().
 function Zaokr¹glij__W_Górê( const liczba_f : real ) : integer;
 begin
@@ -18498,7 +18861,7 @@ begin
   // Zwraca liczbê zaokr¹glon¹ w górê.
   //
 
-  Result := System.Math.Ceil(  Abs( liczba_f )  ); // Bo Ceil( -2.1 ) = -2.
+  Result := System.Math.Ceil(  Abs( liczba_f )  ); // Bo System.Math.Ceil( -2.1 ) = -2.
 
   if liczba_f < 0 then
     Result := -Result;
@@ -18523,7 +18886,7 @@ var
   ztr,
   lot_parabol¹__k¹ta_opadania__przed_namierzaniem_modyfikator_l // Zale¿nie od ustawionego procentu zasiêgu celu artylerii modyfikuje k¹t do jakiego pochylaæ amunicjê przed rozpoczêciem nakierowywania na cel.
     : real;
-  zt_vector : GLVectorGeometry.TVector;
+  zt_vector : GLS.VectorTypes.TVector4f;
   zt_amunicja : TAmunicja;
 begin
 
@@ -18648,7 +19011,7 @@ begin
 //                    or (     // Dla lotu parabolicznego poza zasiêgiem jest gdy wyleci poza swój zasiêg (liczony w poziomie). // A Je¿eli leci (pionowo) w górê to odleg³oœæ w poziomie mo¿e siê prawie nie zmieniaæ.
 //                             ( zt_amunicja.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] )
 //                         and ( zt_amunicja.czy_lot_parabol¹ )
-//                         and (   zt_amunicja.pozycja_startowa.DistanceTo(  GLVectorGeometry.VectorMake( zt_amunicja.AbsolutePosition.X, zt_amunicja.pozycja_startowa.AbsolutePosition.Y, zt_amunicja.AbsolutePosition.Z )  ) > zt_amunicja.zasiêg__amunicja   )
+//                         and (   zt_amunicja.pozycja_startowa.DistanceTo(  GLS.VectorGeometry.VectorMake( zt_amunicja.AbsolutePosition.X, zt_amunicja.pozycja_startowa.AbsolutePosition.Y, zt_amunicja.AbsolutePosition.Z )  ) > zt_amunicja.zasiêg__amunicja   )
 //                       )
                     or (
                              ( zt_amunicja.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] )
@@ -18666,8 +19029,8 @@ begin
 
                       zt_amunicja.opadanie_obrót_korekta_o_k¹t_na_granicy_zasiêgu := zt_amunicja.korpus_opadanie_obrót_gl_dummy_cube.PitchAngle;
 
-                      zt_amunicja.jasna_linia.Material.FrontProperties.Emission.Color := GLColor.clrBlack;
-                      zt_amunicja.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrBlack;
+                      zt_amunicja.jasna_linia.Material.FrontProperties.Emission.Color := GLS.Color.clrBlack;
+                      zt_amunicja.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLS.Color.clrBlack;
 
                     end;
                   //---//if   ( (...)
@@ -18694,7 +19057,7 @@ begin
                   //
                   //        //zt_amunicja.Turn( zt_amunicja.statek.prêdkoœæ_obrotu_aktualna );
                   //        zt_amunicja.TurnAngle := zt_amunicja.TurnAngle - zt_amunicja.statek.prêdkoœæ_obrotu_aktualna;
-                  //        zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.Color := GLColor.clrGreen;
+                  //        zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.Color := GLS.Color.clrGreen;
                   //
                   //      end
                   //    else//if zt_amunicja.korpus__amunicja.DistanceTo( zt_amunicja.pozycja_startowa.AbsolutePosition ) <= zt_amunicja.strza³_od_blokada_dystans then
@@ -18706,10 +19069,10 @@ begin
                   //          zt_amunicja.czy_poza_luf¹ := true;
                   //
                   //
-                  //        zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.Color := GLColor.clrRed;
+                  //        zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.Color := GLS.Color.clrRed;
                   //
                   //        //if zt_amunicja.pozycja_startowa.AbsolutePosition.Y <> 0 then
-                  //          //??? zt_amunicja.pozycja_startowa.Position.Y := zt_amunicja.pozycja_startowa.AbsoluteToLocal( GLVectorGeometry.TVector(0, 0, 0) ).Y; // Zawsze poziom wody.
+                  //          //??? zt_amunicja.pozycja_startowa.Position.Y := zt_amunicja.pozycja_startowa.AbsoluteToLocal( GLS.VectorTypes.TVector4d(0, 0, 0) ).Y; // Zawsze poziom wody.
                   //        //  zt_amunicja.pozycja_startowa.Position.Y := 0;
                   //
                   //
@@ -18766,7 +19129,7 @@ begin
                       czy_zmiana_rodzica := true;
 
                       zt_amunicja.jasna_linia.Position.Y := zt_amunicja.korpus__amunicja.TopRadius; // To samo .jasna_linia.Height.
-                      zt_amunicja.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrWhite;
+                      zt_amunicja.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLS.Color.clrWhite;
 
 
                       {$region 'Po opuszczeniu lufy amunicja zmienia rodzica.'}
@@ -18774,11 +19137,11 @@ begin
                       zt_amunicja.opadanie_obrót_korekta_o_ustawienie_pocz¹tkowe :=
                         System.Math.RadToDeg
                           (
-                            GLVectorGeometry.AngleBetweenVectors
+                            GLS.VectorGeometry.AngleBetweenVectors
                               (
-                                GLVectorGeometry.VectorMake(  zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.X, Abs( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.Y ), zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.Z  ),
-                                GLVectorGeometry.VectorMake( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.X, 0, zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.Z ),
-                                GLVectorGeometry.VectorMake( 0, 0, 0 )
+                                GLS.VectorGeometry.VectorMake(  zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.X, Abs( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.Y ), zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.Z  ),
+                                GLS.VectorGeometry.VectorMake( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.X, 0, zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.Z ),
+                                GLS.VectorGeometry.VectorMake( 0, 0, 0 )
                               )
                           );
 
@@ -18806,7 +19169,7 @@ begin
                         zt_amunicja.pozycja_startowa.AbsolutePosition := zt_amunicja.dzia³o_pozycja_absolutna_vector;
 
                       zt_amunicja.korpus_opadanie_obrót_gl_dummy_cube.AbsoluteDirection := zt_amunicja.AbsoluteDirection;
-                      zt_amunicja.korpus_opadanie_obrót_gl_dummy_cube.AbsoluteUp := GLVectorGeometry.VectorMake( 0, 1, 0 );
+                      zt_amunicja.korpus_opadanie_obrót_gl_dummy_cube.AbsoluteUp := GLS.VectorGeometry.VectorMake( 0, 1, 0 );
 
                       zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection := zt_amunicja.AbsoluteDirection;
                       zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteUp := zt_vector;
@@ -18948,7 +19311,7 @@ begin
                                           zt_amunicja.amunicja_lot_parabol¹_etap := alpe_Opadanie;
 
                                           // K¹t pod jakim amunicja leci wzglêdem wody w momencie kiedy amunicja zaczyna opadaæ w locie parabol¹.
-                                          zt_amunicja.lot_parabol¹__opadanie__k¹t_wzglêdem_wody := System.Math.RadToDeg(  GLVectorGeometry.AngleBetweenVectors( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection, GLVectorGeometry.VectorMake( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.X, 0, zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.Z ), GLVectorGeometry.VectorMake( 0, 0, 0 ) )  );
+                                          zt_amunicja.lot_parabol¹__opadanie__k¹t_wzglêdem_wody := System.Math.RadToDeg(  GLS.VectorGeometry.AngleBetweenVectors( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection, GLS.VectorGeometry.VectorMake( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.X, 0, zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection.Z ), GLS.VectorGeometry.VectorMake( 0, 0, 0 ) )  );
 
                                         end;
                                       //---//if ztr >= zt_amunicja.cel_odleg³oœæ * lot_parabol¹__k¹ta_opadania__odleg³oœæ_od_procent_c then
@@ -18990,7 +19353,7 @@ begin
 
 
                                       //// K¹t na cel z aktualnego po³o¿enia amunicji.
-                                      //GLVectorGeometry.SetVector
+                                      //GLS.VectorGeometry.SetVector
                                       //  (
                                       //      zt_vector
                                       //      // Cel                 Obiekt celuj¹cy
@@ -19000,7 +19363,7 @@ begin
                                       //  );
                                       //
                                       //// K¹t miêdzy kierunkiem lotu amunicji a kierunkiem na cel z aktualnego po³o¿enia amunicji.
-                                      //ztr := System.Math.RadToDeg(  GLVectorGeometry.AngleBetweenVectors( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection, zt_vector, GLVectorGeometry.VectorMake( 0, 0, 0 ) )  );
+                                      //ztr := System.Math.RadToDeg(  GLS.VectorGeometry.AngleBetweenVectors( zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection, zt_vector, GLS.VectorGeometry.VectorMake( 0, 0, 0 ) )  );
 
                                     end
                                   else//if zt_amunicja.amunicja_lot_parabol¹_etap = alpe_Opadanie then
@@ -19023,7 +19386,7 @@ begin
                                               zt_amunicja.amunicja_lot_parabol¹_etap := alpe_Cel_Naprowadzanie;
 
                                               // Nakierowuje amunicjê na cel (jak rakietê).
-                                              zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection := GLVectorGeometry.VectorMake
+                                              zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection := GLS.VectorGeometry.VectorMake
                                                 (
                                                     // Cel                 Obiekt celuj¹cy
                                                     zt_amunicja.pozycja_celu.AbsolutePosition.X - zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsolutePosition.X
@@ -19047,7 +19410,7 @@ begin
                                           if zt_amunicja.amunicja_lot_parabol¹_etap = alpe_Poni¿ej_Celu then
                                             begin
 
-                                              zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection := GLVectorGeometry.VectorMake( 0, -1, 0 ); // Zabezpieczenie aby poza kontrol¹ naprowadzania amunicja lecia³a tylko w dó³.
+                                              zt_amunicja.korpus_ustawienie_pocz¹tkowe_gl_dummy_cube.AbsoluteDirection := GLS.VectorGeometry.VectorMake( 0, -1, 0 ); // Zabezpieczenie aby poza kontrol¹ naprowadzania amunicja lecia³a tylko w dó³.
                                               //zt_amunicja.korpus__amunicja.Material.FrontProperties.Ambient.SetColor( 10, 10, 10 ); // Test.
 
                                             end;
@@ -19112,7 +19475,7 @@ begin
                           //    if zt_amunicja.czy_lot_parabol¹ then
                           //      begin
                           //
-                          //        ztr := zt_amunicja.pozycja_startowa.DistanceTo(  GLVectorGeometry.VectorMake( zt_amunicja.AbsolutePosition.X, zt_amunicja.pozycja_startowa.AbsolutePosition.Y, zt_amunicja.AbsolutePosition.Z )  ); // Odleg³oœæ od pozycji startowej w poziomie.
+                          //        ztr := zt_amunicja.pozycja_startowa.DistanceTo(  GLS.VectorGeometry.VectorMake( zt_amunicja.AbsolutePosition.X, zt_amunicja.pozycja_startowa.AbsolutePosition.Y, zt_amunicja.AbsolutePosition.Z )  ); // Odleg³oœæ od pozycji startowej w poziomie.
                           //
                           //        // Obraca czubkiem w dó³ (im mniejszy dystans do celu tym k¹t jest bli¿szy 80).
                           //        //   Samo wykrywa, w któr¹ stronê obracaæ aby obraca³o siê czubkiem do do³u (najkrótsz¹ drog¹).
@@ -19173,7 +19536,7 @@ begin
                               // Opada po wystrzeleniu.
                               zt_amunicja.prêdkoœæ_opadania := zt_amunicja.prêdkoœæ_opadania + zt_amunicja.prêdkoœæ_opadania_wspó³czynnik;
 
-                              zt_amunicja.Position.AddScaledVector(  zt_amunicja.prêdkoœæ_opadania * delta_czasu_f, GLVectorGeometry.VectorMake( 0, -1, 0 )  );
+                              zt_amunicja.Position.AddScaledVector(  zt_amunicja.prêdkoœæ_opadania * delta_czasu_f, GLS.VectorGeometry.VectorMake( 0, -1, 0 )  );
                               zt_amunicja.TransformationChanged();
 
                             end
@@ -19234,7 +19597,7 @@ begin
                                     and ( zt_amunicja.torpeda_efekt_na_wodzie_gl_dummy_cube.Parent = nil ) then
                                     begin
 
-                                      Amunicja_Wystrzelona_Efekt_Utwórz( zt_amunicja, true );
+                                      Amunicja_Wystrzelona_Efekt_Utwórz( zt_amunicja, true, dzieñ_jasnoœæ_g );
                                       zt_amunicja.torpeda_efekt_na_wodzie_gl_dummy_cube.Parent := Gra_Obiekty_GLDummyCube;
 
                                     end;
@@ -19251,7 +19614,7 @@ begin
 
                                   zt_amunicja.prêdkoœæ_opadania := zt_amunicja.prêdkoœæ_opadania + zt_amunicja.prêdkoœæ_opadania_wspó³czynnik * woda_wspó³czynnik_t³umienia_c;
 
-                                  zt_amunicja.Position.AddScaledVector(  zt_amunicja.prêdkoœæ_opadania * delta_czasu_f, GLVectorGeometry.VectorMake( 0, -1, 0 )  );
+                                  zt_amunicja.Position.AddScaledVector(  zt_amunicja.prêdkoœæ_opadania * delta_czasu_f, GLS.VectorGeometry.VectorMake( 0, -1, 0 )  );
                                   zt_amunicja.TransformationChanged();
 
                                   if zt_amunicja.amunicja_rodzaj in [ Typy_Wspolne.ar_Torpeda ] then
@@ -19274,7 +19637,7 @@ begin
                                     and ( zt_amunicja.torpeda_efekt_na_wodzie_gl_dummy_cube.Parent = nil ) then
                                     begin
 
-                                      Amunicja_Wystrzelona_Efekt_Utwórz( zt_amunicja, true );
+                                      Amunicja_Wystrzelona_Efekt_Utwórz( zt_amunicja, true, dzieñ_jasnoœæ_g );
                                       zt_amunicja.torpeda_efekt_na_wodzie_gl_dummy_cube.Parent := Gra_Obiekty_GLDummyCube;
 
                                     end;
@@ -19311,8 +19674,8 @@ begin
                                       if ztr > 1 then
                                         ztr := 1; // Nie wiêcej ni¿ 100%.
 
-                                      //zt_amunicja.Position.AddScaledVector(  zt_amunicja.prêdkoœæ_opadania * torpeda_d¹¿enie_do_zadanej_g³êbokoœci_szybkoœæ_c * ztr * delta_czasu_f, GLVectorGeometry.VectorMake( 0, -1, 0 )  );
-                                      zt_amunicja.Position.AddScaledVector(  zt_amunicja.prêdkoœæ_opadania * ztr * delta_czasu_f, GLVectorGeometry.VectorMake( 0, -1, 0 )  );
+                                      //zt_amunicja.Position.AddScaledVector(  zt_amunicja.prêdkoœæ_opadania * torpeda_d¹¿enie_do_zadanej_g³êbokoœci_szybkoœæ_c * ztr * delta_czasu_f, GLS.VectorGeometry.VectorMake( 0, -1, 0 )  );
+                                      zt_amunicja.Position.AddScaledVector(  zt_amunicja.prêdkoœæ_opadania * ztr * delta_czasu_f, GLS.VectorGeometry.VectorMake( 0, -1, 0 )  );
                                       zt_amunicja.TransformationChanged();
 
                                     end
@@ -19461,7 +19824,7 @@ begin
 
 
                   {$region 'Poza skutecznym zasiêgiem amunicja opada.'}
-                  zt_amunicja.Position.AddScaledVector(  -Abs(zt_amunicja.prêdkoœæ_opadania) * delta_czasu_f, GLVectorGeometry.VectorMake( 0, 1, 0 )  );
+                  zt_amunicja.Position.AddScaledVector(  -Abs(zt_amunicja.prêdkoœæ_opadania) * delta_czasu_f, GLS.VectorGeometry.VectorMake( 0, 1, 0 )  );
                   zt_amunicja.TransformationChanged();
                   {$endregion 'Poza skutecznym zasiêgiem amunicja opada.'}
 
@@ -19548,11 +19911,11 @@ begin
                       ztr :=
                         System.Math.RadToDeg
                           (
-                            GLVectorGeometry.AngleBetweenVectors
+                            GLS.VectorGeometry.AngleBetweenVectors
                               (
-                                GLVectorGeometry.VectorMake( zt_amunicja.AbsoluteDirection.X, 0, zt_amunicja.AbsoluteDirection.Z ),
-                                GLVectorGeometry.VectorMake( -wiatr_vector_g.X, 0, -wiatr_vector_g.Z ),
-                                GLVectorGeometry.VectorMake( 0, 0, 0 )
+                                GLS.VectorGeometry.VectorMake( zt_amunicja.AbsoluteDirection.X, 0, zt_amunicja.AbsoluteDirection.Z ),
+                                GLS.VectorGeometry.VectorMake( -wiatr_vector_g.X, 0, -wiatr_vector_g.Z ),
+                                GLS.VectorGeometry.VectorMake( 0, 0, 0 )
                               )
                           );
 
@@ -19572,7 +19935,7 @@ begin
                       zt_amunicja.Position.AddScaledVector
                         (
                           wiatr_vector_g.W * ztr * wiatr__wp³yw_na__amunicjê__przesuwanie_g * delta_czasu_f,
-                          GLVectorGeometry.AffineVectorMake
+                          GLS.VectorGeometry.AffineVectorMake
                             (
                               -wiatr_vector_g.X,
                               0,
@@ -19594,7 +19957,7 @@ begin
                       zt_amunicja.Position.AddScaledVector
                         (
                           wiatr_vector_g.Y * wiatr__wp³yw_na__amunicjê__unoszenie_g * delta_czasu_f,
-                          GLVectorGeometry.AffineVectorMake
+                          GLS.VectorGeometry.AffineVectorMake
                             (
                               0,
                               1, // Na kierunek wp³ynie znak wiatr_vector_g.Y.
@@ -19623,9 +19986,9 @@ begin
 
                   zt_amunicja.czy_uzbrojona := true;
                   zt_amunicja.jasna_linia.Material.FrontProperties.Emission.SetColor( 1, 0, 0, 1 );
-                  zt_amunicja.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrRed;
+                  zt_amunicja.obra¿enia_zasiêg_st_gl_sphere.Material.FrontProperties.Ambient.Color := GLS.Color.clrRed;
 
-                  GLVectorGeometry.MakeVector( zt_amunicja.uzbrojenie_wspó³rzêdne_vector, zt_amunicja.korpus__amunicja.AbsolutePosition );
+                  GLS.VectorGeometry.MakeVector( zt_amunicja.uzbrojenie_wspó³rzêdne_vector, zt_amunicja.korpus__amunicja.AbsolutePosition );
 
                   if not ( zt_amunicja.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] ) then // To samo .jasna_linia.Height.
                     begin
@@ -19703,9 +20066,9 @@ begin
 end;//---//Funkcja Amunicja_Ruch().
 
 //Funkcja Amunicja_Wystrzelona_Utwórz_Jeden().
-procedure TStatki_Form.Amunicja_Wystrzelona_Utwórz_Jeden( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector );
+procedure TStatki_Form.Amunicja_Wystrzelona_Utwórz_Jeden( AOwner : TGLBaseSceneObject; ALufa : TLufa; const obracaj_dzia³a_f : boolean; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector );
 var
-  zt_vector : GLVectorGeometry.TVector;
+  zt_vector : GLS.VectorTypes.TVector4f;
   zt_amunicja : TAmunicja;
 begin
 
@@ -19715,7 +20078,7 @@ begin
 
   zt_amunicja := TAmunicja.Create( AOwner, ALufa, obracaj_dzia³a_f, cel_wspó³rzêdne_f, amunicja_prêdkoœæ_zakresy_r_g, Gra_GLCollisionManager );
 
-  Amunicja_Wystrzelona_Efekt_Utwórz( zt_amunicja, false );
+  Amunicja_Wystrzelona_Efekt_Utwórz( zt_amunicja, false, dzieñ_jasnoœæ_g );
 
   DŸwiêki__Efekt__Utwórz_Jeden( zt_amunicja, der_Amunicja__Lot, 0, 0, 0 );
 
@@ -19729,10 +20092,10 @@ begin
       // Przesuniêcie efektu przed wylot lufy.
       zt_vector := ALufa.wylot_pozycja.AbsolutePosition;
 
-      GLVectorGeometry.AddVector
+      GLS.VectorGeometry.AddVector
         (
           zt_vector,
-          GLVectorGeometry.VectorScale
+          GLS.VectorGeometry.VectorScale
             (
               ALufa.AbsoluteDirection,
               -ALufa.wylot_pozycja.Radius * 3
@@ -19812,7 +20175,7 @@ begin
 end;//---//Funkcja Amunicja_Wystrzelona_Zwolnij_Wszystkie().
 
 //Funkcja Amunicja_Wystrzelona_Efekt_Utwórz().
-procedure TStatki_Form.Amunicja_Wystrzelona_Efekt_Utwórz( amunicja_f : TAmunicja; const czy_torpeda_efekt_na_wodzie_f : boolean; const czy_wieloosobowa_f : boolean = false  );
+procedure TStatki_Form.Amunicja_Wystrzelona_Efekt_Utwórz( amunicja_f : TAmunicja; const czy_torpeda_efekt_na_wodzie_f : boolean; const dzieñ_jasnoœæ_f : real; const czy_wieloosobowa_f : boolean = false  );
 var
   zt_gl_dummy_cube : TGLDummyCube;
 begin
@@ -19842,45 +20205,66 @@ begin
 
 
   // Dodaje efekt smugi za pociskiem.
-  with GetOrCreateSourcePFX( zt_gl_dummy_cube ) do // uses GLParticleFX.
+  if   (
+             ( amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] )
+         and ( Efekty__Smuga_D³uga_CheckBox.Checked )
+       )
+    or (
+             (  not ( amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] )  )
+         and ( Efekty__Smuga_CheckBox.Checked )
+       ) then
+    with GLS.ParticleFX.GetOrCreateSourcePFX( zt_gl_dummy_cube ) do
+      begin
+
+        //Manager := Efekt__Smuga_GLPerlinPFXManager;
+
+        if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] then
+          begin
+
+            Manager := Efekt__Smuga_D³uga_GLPerlinPFXManager;
+            ParticleInterval := 0.01;
+
+          end
+        else//if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] then
+          Manager := Efekt__Smuga_GLPerlinPFXManager;
+
+
+
+        //TGLPerlinPFXManager(Manager).Acceleration.AsVector := VectorNegate( zt_amunicja.korpus_opadanie_obrót_gl_dummy_cube.AbsoluteDirection );
+
+        VelocityMode := GLS.ParticleFX.svmAbsolute;
+
+        if not czy_torpeda_efekt_na_wodzie_f then // Efekt na wodzie jest w poziomie.
+          if not czy_wieloosobowa_f then
+            InitialVelocity.AsVector := VectorNegate( amunicja_f.AbsoluteDirection )
+          else//if not czy_wieloosobowa_f then
+            InitialVelocity.AsVector := amunicja_f.AbsoluteDirection; // Nie wiem dlaczego amunicja wieloosobowa ma odwrócony kierunek bezwzglêdny.
+
+        //InitialVelocity.AsVector := amunicja_f.AbsoluteDirection;
+        //VelocityDispersion := 0.0001;
+        //DispersionMode := GLS.ParticleFX.sdmIsotropic;
+
+        //if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria ] then
+        //  EffectScale := 3
+        //else//if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria ] then
+        if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe ] then
+          EffectScale := 0.1;
+
+      end;
+    //---//with GLS.ParticleFX.GetOrCreateSourcePFX( zt_gl_dummy_cube ) do
+
+
+  if    ( amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Torpeda ] )
+    and ( not Efekty__Smuga_CheckBox.Checked ) then
     begin
 
-      //Manager := Efekt__Smuga_GLPerlinPFXManager;
+      // Je¿eli efekty graficzne s¹ wy³¹czone to aby by³o widaæ œlad za torped¹.
 
-      if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] then
-        begin
-
-          Manager := Efekt__Smuga_D³uga_GLPerlinPFXManager;
-          ParticleInterval := 0.01;
-
-        end
-      else//if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk ] then
-        Manager := Efekt__Smuga_GLPerlinPFXManager;
-
-
-
-      //TGLPerlinPFXManager(Manager).Acceleration.AsVector := VectorNegate( zt_amunicja.korpus_opadanie_obrót_gl_dummy_cube.AbsoluteDirection );
-
-      VelocityMode := GLParticleFX.svmAbsolute;
-
-      if not czy_torpeda_efekt_na_wodzie_f then // Efekt na wodzie jest w poziomie.
-        if not czy_wieloosobowa_f then
-          InitialVelocity.AsVector := VectorNegate( amunicja_f.AbsoluteDirection )
-        else//if not czy_wieloosobowa_f then
-          InitialVelocity.AsVector := amunicja_f.AbsoluteDirection; // Nie wiem dlaczego amunicja wieloosobowa ma odwrócony kierunek bezwzglêdny.
-
-      //InitialVelocity.AsVector := amunicja_f.AbsoluteDirection;
-      //VelocityDispersion := 0.0001;
-      //DispersionMode := GLParticleFX.sdmIsotropic;
-
-      //if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria ] then
-      //  EffectScale := 3
-      //else//if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Artyleria ] then
-      if amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe ] then
-        EffectScale := 0.1;
+      amunicja_f.torpeda_efekt_na_wodzie_gl_dummy_cube.VisibleAtRunTime := true;
+      amunicja_f.torpeda_efekt_na_wodzie_gl_dummy_cube.EdgeColor.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrLightBlue, dzieñ_jasnoœæ_f ); // Kolor nie jest aktualizowany wraz ze zmian¹ pory dnia ale pora dnia raczej nie bêdzie siê tak szybko zmieniaæ by amunicja nie zosta³a wczeœniej zwolniona.
 
     end;
-  //---//with GetOrCreateSourcePFX( zt_gl_dummy_cube ) do
+  //---//if    ( amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Torpeda ] ) (...)
 
 end;//---//Funkcja Amunicja_Wystrzelona_Efekt_Utwórz().
 
@@ -19894,7 +20278,7 @@ var
   k¹t,
   ztsi
     : single;
-  zt_vector : GLVectorGeometry.TVector;
+  zt_vector : GLS.VectorTypes.TVector4f;
   zt_statek : TStatek;
 begin
 
@@ -19995,13 +20379,13 @@ begin
              ( statek_gracza <> nil )
          //and ( BabyMetal_Statek_GLDummyCube.DistanceTo( statek_gracza ) <= statek_gracza.z_prymityw_odleg³oœæ * 3 )
          //and ( DŸwiêki__BabyMetal_Statek_GLDummyCube.DistanceTo( statek_gracza ) <= statek_gracza.z_prymityw_odleg³oœæ * 3 )
-         and (   GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( BabyMetal_Statek_GLDummyCube.AbsolutePosition.X, 0, BabyMetal_Statek_GLDummyCube.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( statek_gracza.AbsolutePosition.X, 0, statek_gracza.AbsolutePosition.Z )  ) <= statek_gracza.z_prymityw_odleg³oœæ * 3   )
+         and (   GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.VectorMake( BabyMetal_Statek_GLDummyCube.AbsolutePosition.X, 0, BabyMetal_Statek_GLDummyCube.AbsolutePosition.Z ), GLS.VectorGeometry.VectorMake( statek_gracza.AbsolutePosition.X, 0, statek_gracza.AbsolutePosition.Z )  ) <= statek_gracza.z_prymityw_odleg³oœæ * 3   )
        )
     or (
              ( samolot__statek_gracza <> nil )
          //and ( BabyMetal_Statek_GLDummyCube.DistanceTo( samolot__statek_gracza ) <= samolot__statek_gracza.z_prymityw_odleg³oœæ * 3 )
          //and ( DŸwiêki__BabyMetal_Statek_GLDummyCube.DistanceTo( samolot__statek_gracza ) <= samolot__statek_gracza.z_prymityw_odleg³oœæ * 3 )
-         and (   GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( BabyMetal_Statek_GLDummyCube.AbsolutePosition.X, 0, BabyMetal_Statek_GLDummyCube.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( samolot__statek_gracza.AbsolutePosition.X, 0, samolot__statek_gracza.AbsolutePosition.Z )  ) <= samolot__statek_gracza.z_prymityw_odleg³oœæ * 3   )
+         and (   GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.VectorMake( BabyMetal_Statek_GLDummyCube.AbsolutePosition.X, 0, BabyMetal_Statek_GLDummyCube.AbsolutePosition.Z ), GLS.VectorGeometry.VectorMake( samolot__statek_gracza.AbsolutePosition.X, 0, samolot__statek_gracza.AbsolutePosition.Z )  ) <= samolot__statek_gracza.z_prymityw_odleg³oœæ * 3   )
        ) then
     begin
 
@@ -20029,10 +20413,10 @@ begin
       zt_vector.Y := 0;
 
       // Przesuniêcie punktu w stronê dziobu statku BabyMetal.
-      GLVectorGeometry.AddVector
+      GLS.VectorGeometry.AddVector
         (
           zt_vector,
-          GLVectorGeometry.VectorMake
+          GLS.VectorGeometry.VectorMake
             (
               BabyMetal_Statek_GLDummyCube.AbsoluteDirection.X,
               0,
@@ -20043,11 +20427,11 @@ begin
       k¹t := // K¹t w poziomie miêdzy pozycj¹ statku i pozycj¹ torpedy. Wartoœæ jest zawsze dodatnia, bez znaczenia, jak i nie okreœla, w któr¹ stronê s¹ obrócone obiekty.
         RadToDeg // uses System.Math.
           (
-            AngleBetweenVectors // uses GLVectorGeometry.
+            GLS.VectorGeometry.AngleBetweenVectors
               (
-                GLVectorGeometry.VectorMake( zt_statek.AbsolutePosition.X, 0, zt_statek.AbsolutePosition.Z ),
+                GLS.VectorGeometry.VectorMake( zt_statek.AbsolutePosition.X, 0, zt_statek.AbsolutePosition.Z ),
                 zt_vector,
-                GLVectorGeometry.VectorMake( BabyMetal_Statek_GLDummyCube.AbsolutePosition.X, 0, BabyMetal_Statek_GLDummyCube.AbsolutePosition.Z )
+                GLS.VectorGeometry.VectorMake( BabyMetal_Statek_GLDummyCube.AbsolutePosition.X, 0, BabyMetal_Statek_GLDummyCube.AbsolutePosition.Z )
               )
           );
 
@@ -20179,7 +20563,7 @@ begin
         Pickable := false;
         //VisibleAtRunTime := true;
 
-        with GetOrCreateSourcePFX( Chmury_GLDummyCube.Children[ Chmury_GLDummyCube.Count - 1 ] ) do // uses GLParticleFX.
+        with GLS.ParticleFX.GetOrCreateSourcePFX( Chmury_GLDummyCube.Children[ Chmury_GLDummyCube.Count - 1 ] ) do
           begin
 
             Manager := Efekt__Chmury_GLPerlinPFXManager;
@@ -20187,7 +20571,7 @@ begin
             EffectScale := 50;
 
           end;
-        //---//with GetOrCreateSourcePFX( Chmury_GLDummyCube.Children[ Chmury_GLDummyCube.Count - 1 ] ) do
+        //---//with GLS.ParticleFX.GetOrCreateSourcePFX( Chmury_GLDummyCube.Children[ Chmury_GLDummyCube.Count - 1 ] ) do
 
       end;
     //---//with TGLDummyCube.Create( Chmury_GLDummyCube ) do
@@ -20608,7 +20992,7 @@ begin
 
       if zt_gl_sound_library.Samples.GetByName( plik_nazwa_f ) = nil then
         try
-          zt_gl_sound_library.Samples.AddFile // uses GLFileWAV.
+          zt_gl_sound_library.Samples.AddFile // uses GLS.FileWAV.
             (
               zts + plik_nazwa_f,
               dŸwiêk_nazwa_f
@@ -20626,7 +21010,7 @@ begin
 end;//---//Funkcja DŸwiêk__Plik_Dodaj_Do_Biblioteki().
 
 //Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
-procedure TStatki_Form.DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const pozycja_f : GLVectorGeometry.TVector );
+procedure TStatki_Form.DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const pozycja_f : GLS.VectorTypes.TVector4f );
 begin
 
   DŸwiêki__Efekt__Utwórz_Jeden( dŸwiêk_efekt_rodzaj_f, pozycja_f.X, pozycja_f.Y, pozycja_f.Z );
@@ -20634,7 +21018,7 @@ begin
 end;//---//Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
 
 //Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
-procedure TStatki_Form.DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const pozycja_f : GLVectorGeometry.TAffineVector );
+procedure TStatki_Form.DŸwiêki__Efekt__Utwórz_Jeden( const dŸwiêk_efekt_rodzaj_f : TDŸwiêk_Efekt_Rodzaj; const pozycja_f : GLS.VectorGeometry.TAffineVector );
 begin
 
   DŸwiêki__Efekt__Utwórz_Jeden( dŸwiêk_efekt_rodzaj_f, pozycja_f.X, pozycja_f.Y, pozycja_f.Z );
@@ -20742,21 +21126,21 @@ begin//Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
     begin
 
       zts := dŸwiêki___sos_lot_c + DŸwiêk_Numer_Losuj( dŸwiêki__iloœæ__sos_lot_g ) + dŸwiêki__rozszerzenie_c;
-      //zt_GLDummyCube.EdgeColor.Color := GLColor.clrWhite;
+      //zt_GLDummyCube.EdgeColor.Color := GLS.Color.clrWhite;
 
     end
   else//if efekt_rodzaj_f = er_SOS then
   //if efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ then
   //  begin
   //
-  //    //zt_GLDummyCube.EdgeColor.Color := GLColor.clrGreen;
+  //    //zt_GLDummyCube.EdgeColor.Color := GLS.Color.clrGreen;
   //
   //  end
   //else//if efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ then
   //if efekt_rodzaj_f = er_Trafienie_L¹d__Obra¿enia then
   //  begin
   //
-  //    //zt_GLDummyCube.EdgeColor.Color := GLColor.clrOrange;
+  //    //zt_GLDummyCube.EdgeColor.Color := GLS.Color.clrOrange;
   //
   //  end
   //else//if efekt_rodzaj_f = er_Trafienie_L¹d__Obra¿enia then
@@ -20768,7 +21152,7 @@ begin//Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
       else//if Czy_Du¿e( amunicja_f ) then
         zts := dŸwiêki___trafienie_l¹d_c + DŸwiêk_Numer_Losuj( dŸwiêki__iloœæ__trafienie_l¹d_g ) + dŸwiêki__rozszerzenie_c;
 
-      //zt_GLDummyCube.EdgeColor.Color := GLColor.clrGreen;
+      //zt_GLDummyCube.EdgeColor.Color := GLS.Color.clrGreen;
 
     end
   else//if efekt_rodzaj_f in [ er_Trafienie_L¹d__Bez_Obra¿eñ, er_Trafienie_L¹d__Obra¿enia ] then
@@ -20780,7 +21164,7 @@ begin//Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
       else//if Czy_Du¿e( amunicja_f ) then
         zts := dŸwiêki___trafienie_statek_c + DŸwiêk_Numer_Losuj( dŸwiêki__iloœæ__trafienie_statek_g ) + dŸwiêki__rozszerzenie_c;
 
-      //zt_GLDummyCube.EdgeColor.Color := GLColor.clrRed;
+      //zt_GLDummyCube.EdgeColor.Color := GLS.Color.clrRed;
 
     end
   else//if efekt_rodzaj_f = er_Trafienie_Statek then
@@ -20788,7 +21172,7 @@ begin//Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
     begin
 
       zts := dŸwiêki___zatopienie_statek_c + DŸwiêk_Numer_Losuj( dŸwiêki__iloœæ__zatopienie_statek_g ) + dŸwiêki__rozszerzenie_c;
-      //zt_GLDummyCube.EdgeColor.Color := GLColor.clrViolet;
+      //zt_GLDummyCube.EdgeColor.Color := GLS.Color.clrViolet;
       //zt_GLDummyCube.Scale.Scale( 10 );
 
     end
@@ -20801,7 +21185,7 @@ begin//Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
       else//if Czy_Du¿e( amunicja_f ) then
         zts := dŸwiêki___trafienie_woda_c + DŸwiêk_Numer_Losuj( dŸwiêki__iloœæ__trafienie_woda_g ) + dŸwiêki__rozszerzenie_c;
 
-      //zt_GLDummyCube.EdgeColor.Color := GLColor.clrBlue;
+      //zt_GLDummyCube.EdgeColor.Color := GLS.Color.clrBlue;
 
     end
   else//if efekt_rodzaj_f = er_Trafienie_Woda then
@@ -20813,7 +21197,7 @@ begin//Funkcja DŸwiêki__Efekt__Utwórz_Jeden().
       else//if Czy_Du¿e( amunicja_f ) then
         zts := dŸwiêki___wystrza³_c + DŸwiêk_Numer_Losuj( dŸwiêki__iloœæ__wystrza³_g ) + dŸwiêki__rozszerzenie_c;
 
-      //zt_GLDummyCube.EdgeColor.Color := GLColor.clrBlack;
+      //zt_GLDummyCube.EdgeColor.Color := GLS.Color.clrBlack;
 
     end
   else//if efekt_rodzaj_f = er_Wystrza³ then
@@ -21434,7 +21818,7 @@ begin
       if dŸwiêki__komunikat__wyg³aszany__rodzaj_g = dkr_Amunicja__Rodzaj then
         begin
 
-          zts := GetEnumName(  TypeInfo(Typy_Wspolne.TAmunicja_Rodzaj), Ord( amunicja_rodzaj_l )  ); // uses  System.TypInfo. // Daje nazwy elementów.
+          zts := System.TypInfo.GetEnumName(  System.TypeInfo(Typy_Wspolne.TAmunicja_Rodzaj), Ord( amunicja_rodzaj_l )  ); // Daje nazwy elementów.
 
           zts := StringReplace( zts, dŸwiêki__typ_prefiks__ar_c, '', [] );
 
@@ -21442,7 +21826,7 @@ begin
       else//if dŸwiêki__komunikat__wyg³aszany__rodzaj_g = dkr_Amunicja__Rodzaj then
         begin
 
-          zts := GetEnumName(  TypeInfo(TDŸwiêk_Komunikat_Rodzaj), Ord( dŸwiêki__komunikat__wyg³aszany__rodzaj_g )  ); // uses  System.TypInfo. // Daje nazwy elementów.
+          zts := System.TypInfo.GetEnumName(  System.TypeInfo(TDŸwiêk_Komunikat_Rodzaj), Ord( dŸwiêki__komunikat__wyg³aszany__rodzaj_g )  ); // Daje nazwy elementów.
 
           zts := StringReplace( zts, dŸwiêki__typ_prefiks__dkr_c, '', [] );
 
@@ -21559,7 +21943,7 @@ procedure TStatki_Form.DŸwiêki__Komunikat__O_Zmianie_Utwórz();
     odleg³oœæ_l
       : single;
     zts : string;
-    zt_vector : GLVectorGeometry.TVector;
+    zt_vector : GLS.VectorTypes.TVector4f;
     amunicja_list_l : TList;
   begin
 
@@ -21648,10 +22032,10 @@ procedure TStatki_Form.DŸwiêki__Komunikat__O_Zmianie_Utwórz();
                     zt_vector.Y := 0;
 
                     // Przesuniêcie punktu w stronê dziobu statku.
-                    GLVectorGeometry.AddVector
+                    GLS.VectorGeometry.AddVector
                       (
                         zt_vector,
-                        GLVectorGeometry.VectorMake
+                        GLS.VectorGeometry.VectorMake
                           (
                             statek_f.AbsoluteDirection.X,
                             0,
@@ -21663,11 +22047,11 @@ procedure TStatki_Form.DŸwiêki__Komunikat__O_Zmianie_Utwórz();
                     ztsi_1 := // K¹t w poziomie miêdzy pozycj¹ statku i pozycj¹ torpedy. Wartoœæ jest zawsze dodatnia, bez znaczenia, jak i nie okreœla, w któr¹ stronê s¹ obrócone obiekty.
                       System.Math.RadToDeg
                         (
-                          GLVectorGeometry.AngleBetweenVectors
+                          GLS.VectorGeometry.AngleBetweenVectors
                             (
-                              GLVectorGeometry.VectorMake( TAmunicja(amunicja_list_l[ i_l ]).AbsolutePosition.X, 0, TAmunicja(amunicja_list_l[ i_l ]).AbsolutePosition.Z ),
+                              GLS.VectorGeometry.VectorMake( TAmunicja(amunicja_list_l[ i_l ]).AbsolutePosition.X, 0, TAmunicja(amunicja_list_l[ i_l ]).AbsolutePosition.Z ),
                               zt_vector,
-                              GLVectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z )
+                              GLS.VectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z )
                             )
                         );
 
@@ -22048,7 +22432,7 @@ begin
           inc( zti );
 
           SetLength( statki_t, zti + 1 );
-          statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd, zti, Statek_Odczytaj_Schemat( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek_schemat__kd ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
+          statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ(), TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd, zti, Statek_Odczytaj_Schemat( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek_schemat__kd ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
           statki_t[ zti ].id_grupa := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_grupa__kd;
           statki_t[ zti ].id_statek_schemat := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek_schemat__kd;
           statki_t[ zti ].gracz__nazwa.Text :=
@@ -22101,7 +22485,7 @@ begin
               inc( zti );
 
               SetLength( statki_t, zti + 1 );
-              statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd, zti, Statek_Odczytaj_Schemat( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek__samolot_schemat__kd ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
+              statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ(), TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).identyfikator__kd, zti, Statek_Odczytaj_Schemat( TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek__samolot_schemat__kd ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
               statki_t[ zti ].id_grupa := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_grupa__kd;
               statki_t[ zti ].id_statek_schemat := TTCP_Klient_Dane(tcp_klienci_lista_g.klienci_lista_list[ i ]).id_statek__samolot_schemat__kd;
               statki_t[ zti ].gracz__nazwa.Text :=
@@ -22226,10 +22610,27 @@ begin
 
 end;//---//Funkcja Elementy_Gry_Zwolnij().
 
+//Funkcja Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ().
+function TStatki_Form.Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ() : TGLThorFXManager;
+begin
+
+  //
+  // Funkcja je¿eli w ustawieniach aktywny jest odpowiedni efekt.
+  //
+  // Zwraca menad¿era efektów uszkodzeñ lub nil.
+  //
+
+  if Efekty__Element_Uszkodzenie_CheckBox.Checked then
+    Result := Efekt__Element_Uszkodzenie_GLThorFXManager
+  else//if Efekty__Element_Uszkodzenie_CheckBox.Checked then
+    Result := nil;
+
+end;//---//Funkcja Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ().
+
 //Funkcja Fala__Wysokoœæ_Na_Zboczu().
-function TStatki_Form.Fala__Wysokoœæ_Na_Zboczu( const absolute_position_f : GLVectorGeometry.TVector ) : single;
+function TStatki_Form.Fala__Wysokoœæ_Na_Zboczu( const absolute_position_f : GLS.VectorTypes.TVector4f ) : single;
 var
-  zt_vector : GLVectorGeometry.TVector;
+  zt_vector : GLS.VectorTypes.TVector4f;
 begin
 
   if not Fale_CheckBox.Checked then
@@ -23742,10 +24143,10 @@ var
   zti : integer;
 begin
 
-  napis_f := ReverseString( napis_f ); //uses StrUtils.
+  napis_f := System.StrUtils.ReverseString( napis_f );
   zti := Pos( ';', napis_f );
   Delete(   napis_f, zti, Length( napis_f )  );
-  napis_f := ReverseString( napis_f ); //uses StrUtils.
+  napis_f := System.StrUtils.ReverseString( napis_f );
 
   try
     Result := StrToInt( napis_f );
@@ -23779,7 +24180,7 @@ end;//---//Funkcja Kamera_Na_Statek_Gracza_Ustaw().
 procedure TStatki_Form.Kamera_Odleg³oœæ_Kontroluj_Ustaw( delta_czasu_f : double );
 var
   korekta_o_time_multiplier : real;
-  zt_vector : GLVectorGeometry.TVector;
+  zt_vector : GLS.VectorTypes.TVector4f;
 begin
 
   //
@@ -23821,9 +24222,9 @@ begin
       //  (
       //      //-0.1
       //      -1 * delta_czasu_f
-      //    , //NormalizeVector
+      //    , //GLS.VectorGeometry.NormalizeVector
       //      (
-      //        GLVectorGeometry.VectorMake
+      //        GLS.VectorGeometry.VectorMake
       //          (
       //              Gra_GLCamera.Position.X
       //            , Gra_GLCamera.Position.Y
@@ -23833,7 +24234,7 @@ begin
       //  );
 
 
-      zt_vector := GLVectorGeometry.VectorMake
+      zt_vector := GLS.VectorGeometry.VectorMake
         (
             Gra_GLCamera.Position.X
           , Gra_GLCamera.Position.Y
@@ -23841,7 +24242,7 @@ begin
         );
 
 
-      NormalizeVector( zt_vector );
+      GLS.VectorGeometry.NormalizeVector( zt_vector );
 
 
       if    ( not czy_pauza_g )
@@ -23879,7 +24280,7 @@ begin
 
 
       // Odleg³oœæ kamery od œrodka obszaru fal w poziomie.
-      if Fale_GLTerrainRenderer.DistanceTo(  GLVectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > fale__obszar_ograniczenie_g * 0.5 then
+      if Fale_GLTerrainRenderer.DistanceTo(  GLS.VectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > fale__obszar_ograniczenie_g * 0.5 then
         begin
 
           // Obszar falowania jest zbyt ma³y ze wzglêdu na wydajnoœæ.
@@ -23889,11 +24290,11 @@ begin
           Fale_GLTerrainRenderer.Position.Z := Gra_GLCamera.AbsolutePosition.Z;
 
         end;
-      //---//if Fale_GLTerrainRenderer.DistanceTo(  GLVectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > fale__obszar_ograniczenie_g * 0.5 then
+      //---//if Fale_GLTerrainRenderer.DistanceTo(  GLS.VectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > fale__obszar_ograniczenie_g * 0.5 then
 
 
       // Odleg³oœæ kamery od œrodka obszaru chmur w poziomie.
-      if Chmury_GLDummyCube.DistanceTo(  GLVectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > chmury__rozpiêtoœæ_w__poziomie_g * 0.5 then
+      if Chmury_GLDummyCube.DistanceTo(  GLS.VectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > chmury__rozpiêtoœæ_w__poziomie_g * 0.5 then
         begin
 
           // Obszar chmur jest zbyt ma³y ze wzglêdu na wydajnoœæ.
@@ -23903,7 +24304,7 @@ begin
           Chmury_GLDummyCube.Position.Z := Gra_GLCamera.AbsolutePosition.Z;
 
         end;
-      //---//if Chmury_GLDummyCube.DistanceTo(  GLVectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > chmury__rozpiêtoœæ_w__poziomie_g * 0.5 then
+      //---//if Chmury_GLDummyCube.DistanceTo(  GLS.VectorGeometry.VectorMake( Gra_GLCamera.AbsolutePosition.X, 0, Gra_GLCamera.AbsolutePosition.Z )  ) > chmury__rozpiêtoœæ_w__poziomie_g * 0.5 then
 
     end;
   //---//if Fale_CheckBox.Checked then
@@ -23949,7 +24350,7 @@ var
   zt_amunicja_wystrzelona_list : TList;
   zt_vector_1,
   zt_vector_2
-    : GLVectorGeometry.TVector;
+    : GLS.VectorTypes.TVector4f;
   zt_statek : TStatek;
 begin
 
@@ -24159,10 +24560,10 @@ begin
           Gra_GLCamera.Position.AddScaledVector
             (
               zt_statek.artyleria_t[ 0 ].zasiêg__broñ,
-              GLVectorGeometry.VectorNormalize
+              GLS.VectorGeometry.VectorNormalize
                 (
                   // Ustawia kamerê w kierunku od statku do celu.
-                  GLVectorGeometry.VectorMake
+                  GLS.VectorGeometry.VectorMake
                     (   // Cel                 Obiekt celuj¹cy
                         zt_statek.celownicza_linia.LocalToAbsolute( zt_statek.celownicza_linia.Nodes[ 1 ].AsAffineVector ).X - zt_statek.AbsolutePosition.X
                       , 0
@@ -24521,21 +24922,21 @@ function TStatki_Form.Klawisz_Wciœniêto_SprawdŸ( const klawiatura_konfiguracja_r
     if    (
                (
                      ( klawiatura_konfiguracja_r_f.plus_alt )
-                 and (  IsKeyDown( VK_MENU )  )
+                 and (  GLS.Keyboard.IsKeyDown( VK_MENU )  )
                )
             or (
                      ( not klawiatura_konfiguracja_r_f.plus_alt )
-                 and (  not IsKeyDown( VK_MENU )  )
+                 and (  not GLS.Keyboard.IsKeyDown( VK_MENU )  )
                )
           )
       and (
                (
                      ( klawiatura_konfiguracja_r_f.plus_ctrl )
-                 and ( IsKeyDown( VK_CONTROL ) )
+                 and ( GLS.Keyboard.IsKeyDown( VK_CONTROL ) )
                )
             or (
                      ( not klawiatura_konfiguracja_r_f.plus_ctrl )
-                 and (  not IsKeyDown( VK_CONTROL )  )
+                 and (  not GLS.Keyboard.IsKeyDown( VK_CONTROL )  )
                )
 
             // Prawy Alt zg³asza siê jako Alt i Ctrl jednoczeœnie.
@@ -24544,18 +24945,18 @@ function TStatki_Form.Klawisz_Wciœniêto_SprawdŸ( const klawiatura_konfiguracja_r
             or (
                      ( klawiatura_konfiguracja_r_f.plus_alt )
                  and ( not klawiatura_konfiguracja_r_f.plus_ctrl )
-                 and (  IsKeyDown( VK_MENU )  )
-                 and (  IsKeyDown( VK_CONTROL )  )
+                 and (  GLS.Keyboard.IsKeyDown( VK_MENU )  )
+                 and (  GLS.Keyboard.IsKeyDown( VK_CONTROL )  )
                )
           )
       and (
                (
                      ( klawiatura_konfiguracja_r_f.plus_shift )
-                 and ( IsKeyDown( VK_SHIFT ) )
+                 and ( GLS.Keyboard.IsKeyDown( VK_SHIFT ) )
                )
             or (
                      ( not klawiatura_konfiguracja_r_f.plus_shift )
-                 and (  not IsKeyDown( VK_SHIFT )  )
+                 and (  not GLS.Keyboard.IsKeyDown( VK_SHIFT )  )
                )
           )
       then
@@ -24648,7 +25049,7 @@ begin//Funkcja Klawisz_Wciœniêto_SprawdŸ().
          and (
                   (
                         ( not czy_z_wieloosobowe__odczytaj_f )
-                    and (  IsKeyDown( klawiatura_konfiguracja_r_f.klawisz )  )
+                    and (  GLS.Keyboard.IsKeyDown( klawiatura_konfiguracja_r_f.klawisz )  )
                     and (  Klawisz_Plus__Alt_Ctrl_Shift( klawiatura_konfiguracja_r_f )  )
                   )
                or (
@@ -25483,11 +25884,91 @@ begin//Funkcja Klawisze_Obs³uga__Statek().
   //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__prêdkoœæ_zadana_procent_zmieñ__100_minus ) then
 
 
-  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar_widocznoœæ ) then
-    Radar__Widocznoœæ_CheckBox.Checked := not Radar__Widocznoœæ_CheckBox.Checked;
-
-  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar_broñ_zasiêg_wyœwietlaj ) then
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__broñ_zasiêg_wyœwietlaj ) then
     Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked := not Radar__Broñ_Zasiêg_Wyœwietlaj_CheckBox.Checked;
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__czu³oœæ__1_minus ) then
+    begin
+
+      Radar__Czu³oœæ_SpinEdit.Value := Radar__Czu³oœæ_SpinEdit.Value - 1;
+
+      Informacja_Dodatkowa_Dodaj(  t³umaczenie_komunikaty_r.komunikat__radar__czu³oœæ + IntToStr( Radar__Czu³oœæ_SpinEdit.Value )  );
+
+    end;
+  //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__czu³oœæ__1_minus ) then
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__czu³oœæ__10_minus ) then
+    begin
+
+      Radar__Czu³oœæ_SpinEdit.Value := Radar__Czu³oœæ_SpinEdit.Value - 10;
+
+      Informacja_Dodatkowa_Dodaj(  t³umaczenie_komunikaty_r.komunikat__radar__czu³oœæ + IntToStr( Radar__Czu³oœæ_SpinEdit.Value )  );
+
+    end;
+  //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__czu³oœæ__10_minus ) then
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__czu³oœæ__1_plus ) then
+    begin
+
+      Radar__Czu³oœæ_SpinEdit.Value := Radar__Czu³oœæ_SpinEdit.Value + 1;
+
+      Informacja_Dodatkowa_Dodaj(  t³umaczenie_komunikaty_r.komunikat__radar__czu³oœæ + IntToStr( Radar__Czu³oœæ_SpinEdit.Value )  );
+
+    end;
+  //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__czu³oœæ__1_plus ) then
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__czu³oœæ__10_plus ) then
+    begin
+
+      Radar__Czu³oœæ_SpinEdit.Value := Radar__Czu³oœæ_SpinEdit.Value + 10;
+
+      Informacja_Dodatkowa_Dodaj(  t³umaczenie_komunikaty_r.komunikat__radar__czu³oœæ + IntToStr( Radar__Czu³oœæ_SpinEdit.Value )  );
+
+    end;
+  //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__czu³oœæ__10_plus ) then
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__skala__1_minus ) then
+    begin
+
+      Radar__Skala_SpinEdit.Value := Radar__Skala_SpinEdit.Value - 1;
+
+      Informacja_Dodatkowa_Dodaj(  t³umaczenie_komunikaty_r.komunikat__radar__skala + IntToStr( Radar__Skala_SpinEdit.Value )  );
+
+    end;
+  //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__skala__1_minus ) then
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__skala__10_minus ) then
+    begin
+
+      Radar__Skala_SpinEdit.Value := Radar__Skala_SpinEdit.Value - 10;
+
+      Informacja_Dodatkowa_Dodaj(  t³umaczenie_komunikaty_r.komunikat__radar__skala + IntToStr( Radar__Skala_SpinEdit.Value )  );
+
+    end;
+  //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__skala__10_minus ) then
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__skala__1_plus ) then
+    begin
+
+      Radar__Skala_SpinEdit.Value := Radar__Skala_SpinEdit.Value + 1;
+
+      Informacja_Dodatkowa_Dodaj(  t³umaczenie_komunikaty_r.komunikat__radar__skala + IntToStr( Radar__Skala_SpinEdit.Value )  );
+
+    end;
+  //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__skala__1_plus ) then
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__skala__10_plus ) then
+    begin
+
+      Radar__Skala_SpinEdit.Value := Radar__Skala_SpinEdit.Value + 10;
+
+      Informacja_Dodatkowa_Dodaj(  t³umaczenie_komunikaty_r.komunikat__radar__skala + IntToStr( Radar__Skala_SpinEdit.Value )  );
+
+    end;
+  //---//if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__skala__10_plus ) then
+
+  if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__radar__widocznoœæ ) then
+    Radar__Widocznoœæ_CheckBox.Checked := not Radar__Widocznoœæ_CheckBox.Checked;
 
 
       if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__samolot_katapult¹_startuj ) then
@@ -25944,10 +26425,10 @@ begin//Funkcja Klawisze_Obs³uga__Zachowanie_Ci¹g³e__Lokalne().
   if Klawisz_Wciœniêto_SprawdŸ_l( klawisz__kamera__w_dó³_obrót ) then // Obrót  w dó³.
     Gra_GLCamera.Pitch( -delta_czasu_f * kamera_szybkoœæ_ruchu_g * korekta_o_time_multiplier * 10 );
 
-  //if IsKeyDown( 'Q' ) then // Beczka w lewo.
+  //if GLS.Keyboard.IsKeyDown( 'Q' ) then // Beczka w lewo.
   //  Gra_GLCamera.Roll( delta_czasu_f * 10 );
   //
-  //if IsKeyDown( 'E' ) then // Beczka w prawo.
+  //if GLS.Keyboard.IsKeyDown( 'E' ) then // Beczka w prawo.
   //  Gra_GLCamera.Roll( -delta_czasu_f * 10 );
   //---// Ruch kamery.
 
@@ -26080,15 +26561,15 @@ begin//Funkcja Klawisze_Obs³uga__Zachowanie_Ci¹g³e__Lokalne().
     Exit; // Test. //?????
   {$ENDIF}
 
-  if IsKeyDown( 'J' ) then
+  if GLS.Keyboard.IsKeyDown( 'J' ) then
     begin
 
       Button1Click( nil );
 
     end;
-  //---//if IsKeyDown( 'V' ) then
+  //---//if GLS.Keyboard.IsKeyDown( 'V' ) then
 
-  if IsKeyDown( 'N' ) then
+  if GLS.Keyboard.IsKeyDown( 'N' ) then
     begin
 
       if projektowy_tryb__statek.id_grupa = 1 then
@@ -26099,7 +26580,7 @@ begin//Funkcja Klawisze_Obs³uga__Zachowanie_Ci¹g³e__Lokalne().
       Informacja_Dodatkowa_Dodaj(  IntToStr( projektowy_tryb__statek.id_grupa )  );
 
     end;
-  //---//if IsKeyDown( 'N' ) then
+  //---//if GLS.Keyboard.IsKeyDown( 'N' ) then
 
 end;//---//Funkcja Klawisze_Obs³uga__Zachowanie_Ci¹g³e__Lokalne().
 
@@ -26263,9 +26744,9 @@ begin
     wartoœæ_f := Abs( wartoœæ_f ) * 10;
 
 
-  gl_custom_scene_object_f.Material.FrontProperties.Ambient.Color := GLVectorGeometry.VectorScale( gl_custom_scene_object_f.Material.FrontProperties.Ambient.Color, wartoœæ_f );
-  gl_custom_scene_object_f.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( gl_custom_scene_object_f.Material.FrontProperties.Diffuse.Color, wartoœæ_f );
-  gl_custom_scene_object_f.Material.FrontProperties.Emission.Color := GLVectorGeometry.VectorScale( gl_custom_scene_object_f.Material.FrontProperties.Emission.Color, wartoœæ_f );
+  gl_custom_scene_object_f.Material.FrontProperties.Ambient.Color := GLS.VectorGeometry.VectorScale( gl_custom_scene_object_f.Material.FrontProperties.Ambient.Color, wartoœæ_f );
+  gl_custom_scene_object_f.Material.FrontProperties.Diffuse.Color := GLS.VectorGeometry.VectorScale( gl_custom_scene_object_f.Material.FrontProperties.Diffuse.Color, wartoœæ_f );
+  gl_custom_scene_object_f.Material.FrontProperties.Emission.Color := GLS.VectorGeometry.VectorScale( gl_custom_scene_object_f.Material.FrontProperties.Emission.Color, wartoœæ_f );
   //---// Przyciemnia kolor trafionego obiektu.
 
 
@@ -26353,7 +26834,7 @@ var
     : real;
 
   definicja_treœæ : string;
-  zt_xml_document : TXMLDocument; //uses XMLDoc
+  zt_xml_document : Xml.XMLDoc.TXMLDocument;
   zt_gl_custom_scene_object,
   zt_pêtla_gl_custom_scene_object
     : TGLCustomSceneObject;
@@ -26456,7 +26937,7 @@ begin//Funkcja L¹d__Utwórz().
   Screen.Cursor := crHourGlass;
 
 
-  zt_xml_document := TXMLDocument.Create( Application );
+  zt_xml_document := Xml.XMLDoc.TXMLDocument.Create( Application );
 
   zt_xml_document.Options := zt_xml_document.Options + [ doNodeAutoIndent ]; // Domyœlnie ma: doNodeAutoCreate, doAttrNull, doAutoPrefix, doNamespaceDecl.
 
@@ -26617,7 +27098,7 @@ begin//Funkcja L¹d__Utwórz().
 
 
                           try
-                            ztr_1 := StrToFloat(  VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Attributes[ 'zasiêg_minimalny' ] )  );
+                            ztr_1 := String_To__Float(  VarToStr( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Attributes[ 'zasiêg_minimalny' ] )  );
                           except
                             ztr_1 := -1;
                           end;
@@ -26740,10 +27221,10 @@ begin//Funkcja L¹d__Utwórz().
                         begin
 
                           if zt_gl_custom_scene_object is TGLLines then
-                            TGLLines(zt_gl_custom_scene_object).LineColor.Color := GLColor.ColorManager.GetColor( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text )
+                            TGLLines(zt_gl_custom_scene_object).LineColor.Color := GLS.Color.ColorManager.GetColor( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text )
                           else//if zt_gl_custom_scene_object is TGLLines then
-                            //zt_gl_custom_scene_object.Material.FrontProperties.Emission.Color := GLColor.ColorManager.GetColor( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text ); // Robi wyciek pamiêci. // clrGreen clrYellowGreen clrBronze2 clrGray40
-                            Wygl¹d_Elementy__Kolor_Ustaw(  zt_gl_custom_scene_object.Material, GLColor.ColorManager.GetColor( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text )  ); // Robi wyciek pamiêci. // clrGreen clrYellowGreen clrBronze2 clrGray40
+                            //zt_gl_custom_scene_object.Material.FrontProperties.Emission.Color := GLS.Color.ColorManager.GetColor( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text ); // Robi wyciek pamiêci. // clrGreen clrYellowGreen clrBronze2 clrGray40
+                            Wygl¹d_Elementy__Kolor_Ustaw(  zt_gl_custom_scene_object.Material, GLS.Color.ColorManager.GetColor( zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].Text )  ); // Robi wyciek pamiêci. // clrGreen clrYellowGreen clrBronze2 clrGray40
 
                         end
                       else//if zt_xml_document.DocumentElement.ChildNodes[ i ].ChildNodes[ j ].LocalName = 'kolor_nazwa' then
@@ -28010,12 +28491,12 @@ var
 
     if kotwica_indeks_do_pomiaru_odleg³oœci_l > -1 then
       Result := Result +
-        ' ' + Trim(    FormatFloat(   '### ### ##0.00', statek_f.kotwica_t[ kotwica_indeks_do_pomiaru_odleg³oœci_l ].kotwica_trzon__dó³.DistanceTo(  GLVectorGeometry.VectorMake( statek_f.kotwica_t[ 0 ].kotwica_trzon__dó³.AbsolutePosition.X, statek_f.AbsolutePosition.Y, statek_f.kotwica_t[ kotwica_indeks_do_pomiaru_odleg³oœci_l ].kotwica_trzon__dó³.AbsolutePosition.Z )  )   )    );
+        ' ' + Trim(    FormatFloat(   '### ### ##0.00', statek_f.kotwica_t[ kotwica_indeks_do_pomiaru_odleg³oœci_l ].kotwica_trzon__dó³.DistanceTo(  GLS.VectorGeometry.VectorMake( statek_f.kotwica_t[ 0 ].kotwica_trzon__dó³.AbsolutePosition.X, statek_f.AbsolutePosition.Y, statek_f.kotwica_t[ kotwica_indeks_do_pomiaru_odleg³oœci_l ].kotwica_trzon__dó³.AbsolutePosition.Z )  )   )    );
 
   end;//---//Funkcja Kotwica_Napisy().
 
   //Funkcja Ró¿a_Wiatrów() w Napis_Odœwie¿().
-  function Ró¿a_Wiatrów( const kierunek_f : GLVectorGeometry.TVector ) : string;
+  function Ró¿a_Wiatrów( const kierunek_f : GLS.VectorTypes.TVector4f ) : string;
   var
     ztr_l : real;
   begin
@@ -28026,11 +28507,11 @@ var
     ztr_l :=
       System.Math.RadToDeg
         (
-          GLVectorGeometry.AngleBetweenVectors
+          GLS.VectorGeometry.AngleBetweenVectors
             (
-              GLVectorGeometry.VectorMake( kierunek_f.X, 0, kierunek_f.Z ),
-              GLVectorGeometry.VectorMake( 0, 0, -1 ),
-              GLVectorGeometry.VectorMake( 0, 0, 0 )
+              GLS.VectorGeometry.VectorMake( kierunek_f.X, 0, kierunek_f.Z ),
+              GLS.VectorGeometry.VectorMake( 0, 0, -1 ),
+              GLS.VectorGeometry.VectorMake( 0, 0, 0 )
             )
         );
 
@@ -29609,9 +30090,9 @@ begin//Funkcja Napis_Odœwie¿().
       // Oznacza kiedy nie ma skupienia na 'ekranie' gry.
       //if Gra_GLSceneViewer.Focused then
       if Gra_GLSceneViewer.skupienie_ustawione then
-        Informacje_G³ówne_GLHUDText.ModulateColor.Color :=  GLColor.clrWhite
+        Informacje_G³ówne_GLHUDText.ModulateColor.Color :=  GLS.Color.clrWhite
       else//if Gra_GLSceneViewer.skupienie_ustawione then
-        Informacje_G³ówne_GLHUDText.ModulateColor.Color := GLColor.clrGray85;
+        Informacje_G³ówne_GLHUDText.ModulateColor.Color := GLS.Color.clrGray85;
 
     end;
   //---//if not Fotograficzny_Tryb_CheckBox.Checked then
@@ -29724,11 +30205,8 @@ begin
   //     true - prze³¹cza zak³adkê.
   //
 
-  napis_f := StringReplace( napis_f, '.', ',', [ rfReplaceAll ] );
-  napis_f := Trim(  StringReplace( napis_f, ' ', '', [ rfReplaceAll ] )  );
-
   try
-    Result := StrToFloat( napis_f );
+    Result := String_To__Float( napis_f );
   except
     on E : Exception do
       begin
@@ -29748,7 +30226,7 @@ begin
 end;//---//Funkcja Odczytaj_Liczbê_Z_Napisu().
 
 //Funkcja Odczytaj_Liczbê_Z_Napisu_Xml().
-function TStatki_Form.Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
+function TStatki_Form.Odczytaj_Liczbê_Z_Napisu_Xml( const i_xml_node_f : Xml.XMLIntf.IXMLNode; const wygl¹d_liczba_definicja_f : TWygl¹d_Liczba_Definicja; const wartoœæ_minimalna_f : variant; const prze³¹cz_zak³adkê_f : boolean = true ) : real;
 begin
 
   //
@@ -30161,7 +30639,7 @@ end;//---//Funkcja Pozycja_Pocz¹tkowa_Parametry_Domyœlne_Ustaw().
 //Funkcja Punkt_Naprowadzaj().
 procedure TStatki_Form.Punkt_Naprowadzaj();
 var
-  zt_affine_vektor : GLVectorGeometry.TAffineVector;
+  zt_affine_vektor : GLS.VectorGeometry.TAffineVector;
 begin
 
   if   ( not Punkt_Naprowadzaj_CheckBox.Checked )
@@ -30169,7 +30647,7 @@ begin
     Exit;
 
 
-  zt_affine_vektor := GLVectorGeometry.AffineVectorMake( Punkt_Naprowadzaj__X_SpinEdit.Value, Punkt_Naprowadzaj__Y_SpinEdit.Value, Punkt_Naprowadzaj__Z_SpinEdit.Value );
+  zt_affine_vektor := GLS.VectorGeometry.AffineVectorMake( Punkt_Naprowadzaj__X_SpinEdit.Value, Punkt_Naprowadzaj__Y_SpinEdit.Value, Punkt_Naprowadzaj__Z_SpinEdit.Value );
 
   zt_affine_vektor := Gra_GLCamera.AbsoluteToLocal( zt_affine_vektor );
 
@@ -30191,9 +30669,9 @@ begin
   // Zmienia kolor elementu naprowadzaj¹cego wraz z narastaniem mg³y.
   //
 
-  Punkt_Naprowadzaj_GLArrowLine.Material.FrontProperties.Ambient.Red := ( GLColor.clrWhite.X * 0.5 + GLColor.clrWhite.X * dzieñ_jasnoœæ_g ) * ( 100 - mg³a_intensywnoœæ_g ) / 100;
-  Punkt_Naprowadzaj_GLArrowLine.Material.FrontProperties.Ambient.Green := GLColor.clrWhite.Y * 0.5 + GLColor.clrWhite.Y * dzieñ_jasnoœæ_g;
-  Punkt_Naprowadzaj_GLArrowLine.Material.FrontProperties.Ambient.Blue := GLColor.clrWhite.Z * 0.5 + GLColor.clrWhite.Z * dzieñ_jasnoœæ_g;
+  Punkt_Naprowadzaj_GLArrowLine.Material.FrontProperties.Ambient.Red := ( GLS.Color.clrWhite.X * 0.5 + GLS.Color.clrWhite.X * dzieñ_jasnoœæ_g ) * ( 100 - mg³a_intensywnoœæ_g ) / 100;
+  Punkt_Naprowadzaj_GLArrowLine.Material.FrontProperties.Ambient.Green := GLS.Color.clrWhite.Y * 0.5 + GLS.Color.clrWhite.Y * dzieñ_jasnoœæ_g;
+  Punkt_Naprowadzaj_GLArrowLine.Material.FrontProperties.Ambient.Blue := GLS.Color.clrWhite.Z * 0.5 + GLS.Color.clrWhite.Z * dzieñ_jasnoœæ_g;
 
   Punkt_Naprowadzaj_GLArrowLine.Material.FrontProperties.Diffuse.Color := Punkt_Naprowadzaj_GLArrowLine.Material.FrontProperties.Ambient.Color;
 
@@ -30291,15 +30769,15 @@ begin
 end;//---//Funkcja Punkt_Naprowadzaj__Na_Lotniskowiec().
 
 //Funkcja Punkty_¯ycia_WskaŸnik__Material_Options_Ustal().
-function TStatki_Form.Punkty_¯ycia_WskaŸnik__Material_Options_Ustal() : TMaterialOptions;
+function TStatki_Form.Punkty_¯ycia_WskaŸnik__Material_Options_Ustal() : GLS.Material.TGLMaterialOptions;
 begin
 
-  Result := [ GLMaterial.moNoLighting ]; // Po obróceniu wskaŸnika punktów ¿ycia bokiem do œwiat³a wskaŸnik robi siê ciemny.
+  Result := [ GLS.Material.TGLMaterialOption.moNoLighting ]; // Po obróceniu wskaŸnika punktów ¿ycia bokiem do œwiat³a wskaŸnik robi siê ciemny.
 
   case Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex of
       // nie podlega efektom sceny
       // nie podlega efektom sceny tylko ponad powierzchni¹ wody
-      0, 1 : Result := Result + [ GLMaterial.moIgnoreFog ];
+      0, 1 : Result := Result + [ GLS.Material.TGLMaterialOption.moIgnoreFog ];
       // podlega efektom sceny
     end;
   //---//case Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBox.ItemIndex of
@@ -30494,7 +30972,7 @@ begin
       Radar_Statek_GLDummyCube.AbsoluteDirection := zt_statek.AbsoluteDirection;
       Radar_Statek_GLDummyCube.Direction.Y := 0; // Aby okrêgi radaru nie znika³y pod t³em radaru gdy statek siê przechyla.
       //Radar_Statek_GLDummyCube.AbsolutePosition := zt_statek.AbsolutePosition;
-      Radar_Statek_GLDummyCube.AbsolutePosition := GLVectorGeometry.VectorMake( zt_statek.AbsolutePosition.X, 0, zt_statek.AbsolutePosition.Z ); // 0 aby czêœciowo zanurzone statki i samoloty w powietrzu nie znika³y pod t³em radaru.
+      Radar_Statek_GLDummyCube.AbsolutePosition := GLS.VectorGeometry.VectorMake( zt_statek.AbsolutePosition.X, 0, zt_statek.AbsolutePosition.Z ); // 0 aby czêœciowo zanurzone statki i samoloty w powietrzu nie znika³y pod t³em radaru.
 
       Radar_PN_Linia_GLLines.AbsolutePosition := Radar_Statek_GLDummyCube.AbsolutePosition;
       Radar_Wiatr_Kierunek_Linia_GLLines.AbsolutePosition := Radar_PN_Linia_GLLines.AbsolutePosition;
@@ -30528,7 +31006,7 @@ begin
 
           Radar_Zasiêg_GLDisk.Material.PolygonMode := pmLines;
           //Radio_Zasiêg_GLDisk.Material.PolygonMode := pmPoints; // S³abo widaæ kilka kropek na rogach.
-          Radio_Zasiêg_GLDisk.Material.FrontProperties.Emission.Color := GLColor.clrGray50;
+          Radio_Zasiêg_GLDisk.Material.FrontProperties.Emission.Color := GLS.Color.clrGray50;
 
         end;
       //---//if not zt_statek.Zanurzenie_Peryskopowe__Przekroczone() then
@@ -31289,14 +31767,14 @@ begin
 
                   if zt_statek <> nil then
                     if zt_statek.id_grupa = statki_t[ i ].id_grupa then
-                      zt_gl_frustrum.Material.FrontProperties.Diffuse.Color := GLColor.clrSpringGreen
+                      zt_gl_frustrum.Material.FrontProperties.Diffuse.Color := GLS.Color.clrSpringGreen
                     else//if zt_statek.id_grupa = statki_t[ i ].id_grupa then
-                      zt_gl_frustrum.Material.FrontProperties.Diffuse.Color := GLColor.clrOrangeRed;
+                      zt_gl_frustrum.Material.FrontProperties.Diffuse.Color := GLS.Color.clrOrangeRed;
 
 
                   // Dane z sonaru.
                   if statki_t[ i ].Zanurzenie_Peryskopowe__Przekroczone() then
-                    zt_gl_frustrum.Material.FrontProperties.Emission.Color := GLColor.clrGray50
+                    zt_gl_frustrum.Material.FrontProperties.Emission.Color := GLS.Color.clrGray50
                   else//if statki_t[ i ].Zanurzenie_Peryskopowe__Przekroczone() then
                     if statki_t[ i ].AbsolutePosition.Y > 5 then
                       begin
@@ -31312,7 +31790,7 @@ begin
 
                   // Zatopione.
                   if statki_t[ i ].punkty_¿ycia_aktualne <= 0 then
-                    zt_gl_frustrum.Material.FrontProperties.Diffuse.Color := GLVectorGeometry.VectorScale( zt_gl_frustrum.Material.FrontProperties.Diffuse.Color, 0.2 );
+                    zt_gl_frustrum.Material.FrontProperties.Diffuse.Color := GLS.VectorGeometry.VectorScale( zt_gl_frustrum.Material.FrontProperties.Diffuse.Color, 0.2 );
 
 
 
@@ -31350,7 +31828,7 @@ begin
                       //zt_gl_dummy_cube.EdgeColor := Sonar_Zasiêg_GLDisk.Material.FrontProperties.Diffuse;
                       //zt_gl_dummy_cube.EdgeColor.Alpha := 1;
                       //
-                      //zt_gl_dummy_cube.Material.MaterialOptions := [ GLMaterial.moIgnoreFog ]; // GLMaterial.moNoLighting //???
+                      //zt_gl_dummy_cube.Material.MaterialOptions := [ GLS.Material.TGLMaterialOption.moIgnoreFog ]; // GLS.Material.TGLMaterialOption.moNoLighting //???
                       //
                       //zt_gl_dummy_cube.Scale.X := statki_t[ i ].x_prymityw_odleg³oœæ;
                       //zt_gl_dummy_cube.Scale.Y := statki_t[ i ].y_prymityw_najwiêksze;
@@ -31361,7 +31839,8 @@ begin
                       //if zt_gl_dummy_cube.Position.Y > -zt_gl_dummy_cube.Scale.Y * 0.5 then
                       //  zt_gl_dummy_cube.Position.Y := -zt_gl_dummy_cube.Scale.Y * 0.5;
                       //
-                      //TGLBFireFX(zt_gl_dummy_cube.AddNewEffect( TGLBFireFX )).Manager := Efekt__Sonarowe_U³atwienie_GLFireFXManager;
+                      //if Efekty__Sonarowe_U³atwienie_CheckBox.Checked then // Trochê to bez sensu.
+                      //  TGLBFireFX(zt_gl_dummy_cube.AddNewEffect( TGLBFireFX )).Manager := Efekt__Sonarowe_U³atwienie_GLFireFXManager;
 
 
                       zt_gl_sphere := TGLSphere.Create( Self );
@@ -31371,19 +31850,15 @@ begin
                       zt_gl_sphere.AbsoluteDirection := statki_t[ i ].falowanie_gl_dummy_cube.AbsoluteDirection;
 
                       //zt_gl_sphere.Material.BlendingMode := bmModulate;
-                      zt_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
+                      zt_gl_sphere.Material.FrontProperties.Ambient.Color := GLS.Color.clrTransparent;
                       zt_gl_sphere.Material.FrontProperties.Diffuse := Sonar_Zasiêg_GLDisk.Material.FrontProperties.Diffuse;
 
                       zt_gl_sphere.Material.FrontProperties.Diffuse.Alpha := 0.1;
-                      zt_gl_sphere.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
-                      zt_gl_sphere.Material.MaterialOptions := [ GLMaterial.moIgnoreFog ]; // GLMaterial.moNoLighting //???
+                      zt_gl_sphere.Material.FrontProperties.Emission.Color := GLS.Color.clrTransparent;
+                      zt_gl_sphere.Material.MaterialOptions := [ GLS.Material.TGLMaterialOption.moIgnoreFog ]; // GLS.Material.TGLMaterialOption.moNoLighting //???
 
                       //zt_gl_sphere.Material.FrontProperties.Ambient := zt_gl_sphere.Material.FrontProperties.Diffuse;
                       //zt_gl_sphere.Material.FrontProperties.Emission := zt_gl_sphere.Material.FrontProperties.Diffuse;
-
-                      //zt_gl_sphere.Material.PolygonMode := pmPoints;
-                      zt_gl_sphere.Slices := 1; // Aby kula nie by³a widoczna a tylko efekt.
-                      zt_gl_sphere.Stacks := 1; // Aby kula nie by³a widoczna a tylko efekt.
 
                       zt_gl_sphere.Scale.X := statki_t[ i ].x_prymityw_odleg³oœæ;
                       zt_gl_sphere.Scale.Y := statki_t[ i ].y_prymityw_najwiêksze * 0.5;
@@ -31391,11 +31866,50 @@ begin
 
                       zt_gl_sphere.AbsolutePosition := statki_t[ i ].AbsolutePosition;
 
+
+                      if Efekty__Sonarowe_U³atwienie_CheckBox.Checked then
+                        begin
+
+                          //zt_gl_sphere.Material.PolygonMode := pmPoints;
+                          zt_gl_sphere.Slices := 1; // Aby kula nie by³a widoczna a tylko efekt.
+                          zt_gl_sphere.Stacks := 1; // Aby kula nie by³a widoczna a tylko efekt.
+
+                        end
+                      else//if Efekty__Sonarowe_U³atwienie_CheckBox.Checked then
+                        begin
+
+                          zt_gl_sphere.Material.PolygonMode := pmPoints;
+
+                          zt_gl_sphere.Scale.Scale( 2 );
+
+                          if Random( 2 ) = 1 then
+                            zt_gl_sphere.Material.FrontProperties.Emission.Color := GLS.Color.clrSummerSky
+                          else
+                            zt_gl_sphere.Material.FrontProperties.Emission.Color := GLS.Color.clrQuartz;
+
+
+                          zt_gl_sphere.Slices := 8 + Random( 9 );
+                          zt_gl_sphere.Stacks := 8 + Random( 9 );
+
+                        end;
+                      //---//if Efekty__Sonarowe_U³atwienie_CheckBox.Checked then
+
+
                       if   ( zt_gl_sphere.Position.Y > -zt_gl_sphere.Scale.Y * 0.5 )
                         or ( not zt_statek.Zanurzenie_Peryskopowe__Przekroczone() ) then
-                        zt_gl_sphere.Position.Y := -zt_gl_sphere.Scale.Y * 0.5;
+                        begin
 
-                      TGLBFireFX(zt_gl_sphere.AddNewEffect( TGLBFireFX )).Manager := Efekt__Sonarowe_U³atwienie_GLFireFXManager;
+                          zt_gl_sphere.Position.Y := -zt_gl_sphere.Scale.Y * 0.5;
+
+                          if Fale_CheckBox.Checked then
+                            zt_gl_sphere.Position.Y := zt_gl_sphere.Position.Y + Fala__Wysokoœæ_Na_Zboczu( zt_gl_sphere.AbsolutePosition );
+
+                        end;
+                      //---//if   ( zt_gl_sphere.Position.Y > -zt_gl_sphere.Scale.Y * 0.5 ) (...)
+
+
+                      if Efekty__Sonarowe_U³atwienie_CheckBox.Checked then
+                        TGLBFireFX(zt_gl_sphere.AddNewEffect( TGLBFireFX )).Manager := Efekt__Sonarowe_U³atwienie_GLFireFXManager;
 
                     end;
                   //---//if    ( Sonarowe_U³atwienie_CheckBox.Checked ) (...)
@@ -31408,7 +31922,7 @@ begin
                 begin
 
                   zt_radar_obiekt := Klasy_Dodatkowe.TRadar_Obiekt.Create( Self, Radar_Œlady_GLDummyCube, nil, Radar__Koryguj_Wielkoœæ_Obiektów() );
-                  zt_radar_obiekt.Material.FrontProperties.Diffuse.Color := GLColor.clrSilver;
+                  zt_radar_obiekt.Material.FrontProperties.Diffuse.Color := GLS.Color.clrSilver;
                   zt_radar_obiekt.AbsolutePosition := VectorMake( statki_t[ i ].AbsolutePosition.X, 0, statki_t[ i ].AbsolutePosition.Z );
                   zt_radar_obiekt.utworzenie_czas__ro := Czas_Teraz_W_Sekundach();
                   zt_radar_obiekt.MoveLast();
@@ -31438,9 +31952,9 @@ begin
       zt_gl_sphere.AbsolutePosition := VectorMake( Celowniczy_GLDummyCube.AbsolutePosition.X, Celowniczy_GLDummyCube.AbsolutePosition.Y, Celowniczy_GLDummyCube.AbsolutePosition.Z );
       //zt_gl_sphere.Radius := 5 * Radar__Koryguj_Wielkoœæ_Obiektów();
       zt_gl_sphere.Radius := Radar__Skala_SpinEdit.Value * 0.25;
-      zt_gl_sphere.Material.FrontProperties.Ambient.Color := GLColor.clrYellowGreen;
-      zt_gl_sphere.Material.FrontProperties.Diffuse.Color := GLColor.clrYellow;
-      zt_gl_sphere.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
+      zt_gl_sphere.Material.FrontProperties.Ambient.Color := GLS.Color.clrYellowGreen;
+      zt_gl_sphere.Material.FrontProperties.Diffuse.Color := GLS.Color.clrYellow;
+      zt_gl_sphere.Material.FrontProperties.Emission.Color := GLS.Color.clrTransparent;
 
     end;
   //---//if   ( zt_statek = nil ) (...)
@@ -31510,14 +32024,14 @@ begin
                   zt_gl_capsule.PitchAngle := Radar_Statek_GLFrustrum.PitchAngle;
                   zt_gl_capsule.RollAngle := Radar_Statek_GLFrustrum.RollAngle;
                   zt_gl_capsule.Radius := 5 * Radar__Koryguj_Wielkoœæ_Obiektów();
-                  zt_gl_capsule.Material.FrontProperties.Diffuse.Color := GLColor.clrPlum;
+                  zt_gl_capsule.Material.FrontProperties.Diffuse.Color := GLS.Color.clrPlum;
 
 
                   if œlad_rysuj then
                     begin
 
                       zt_radar_obiekt := Klasy_Dodatkowe.TRadar_Obiekt.Create( Self, Radar_Œlady_GLDummyCube, nil, Radar__Koryguj_Wielkoœæ_Obiektów() );
-                      zt_radar_obiekt.Material.FrontProperties.Diffuse.Color := GLColor.clrWhite;
+                      zt_radar_obiekt.Material.FrontProperties.Diffuse.Color := GLS.Color.clrWhite;
                       zt_radar_obiekt.utworzenie_czas__ro := Czas_Teraz_W_Sekundach();
                       zt_radar_obiekt.amunicja_rodzaj__ro := Typy_Wspolne.ar_Torpeda;
                       zt_radar_obiekt.MoveLast();
@@ -32011,7 +32525,7 @@ procedure TStatki_Form.SI_Decyduj();
     ztsi_1,
     ztsi_2
       : single;
-    zt_affine_vektor : GLVectorGeometry.TAffineVector;
+    zt_affine_vektor : GLS.VectorGeometry.TAffineVector;
   begin
 
     if   ( not SI__Strzela_CheckBox.Checked )
@@ -32088,7 +32602,7 @@ procedure TStatki_Form.SI_Decyduj();
     else//if not torpedy_wyrzutnia_f.si__cel__wyznaczony then
       begin
 
-        GLVectorGeometry.MakeVector( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, 0, 0, 0 );
+        GLS.VectorGeometry.MakeVector( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, 0, 0, 0 );
 
 
         for i_l := 0 to Length( statki_t ) - 1 do
@@ -32113,7 +32627,7 @@ procedure TStatki_Form.SI_Decyduj();
               else//if   ( statki_t[ i_l ].punkty_¿ycia_procent_zosta³o <= 0 ) (...)
                 begin
 
-                  GLVectorGeometry.MakeVector( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, statki_t[ i_l ].AbsolutePosition.X, statki_t[ i_l ].AbsolutePosition.Y, statki_t[ i_l ].AbsolutePosition.Z );
+                  GLS.VectorGeometry.MakeVector( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, statki_t[ i_l ].AbsolutePosition.X, statki_t[ i_l ].AbsolutePosition.Y, statki_t[ i_l ].AbsolutePosition.Z );
 
                   case torpedy_wyrzutnia_f.amunicja_rodzaj of
                       Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Pocisk :
@@ -32200,7 +32714,7 @@ procedure TStatki_Form.SI_Decyduj();
                           //ztsi_2 := ztsi_1 / amunicja_prêdkoœæ_zakresy_r_g.prêdkoœæ_torpeda; // Czas dotarcia amunicji do celu.
                           //
                           //ztsi_2 := ztsi_2 * statki_t[ i_l ].prêdkoœæ_aktualna * 0.5; // Odleg³oœæ jak¹ przep³ynie cel w wyliczonym czasie.
-                          //GLVectorGeometry.CombineVector( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, statki_t[ i_l ].Direction.AsAffineVector, ztsi_2 ); // Korekta o kierunek (ruchu) celu.
+                          //GLS.VectorGeometry.CombineVector( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, statki_t[ i_l ].Direction.AsAffineVector, ztsi_2 ); // Korekta o kierunek (ruchu) celu.
 
 
                           ztsi_1 := torpedy_wyrzutnia_f.cel_linia.DistanceTo( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor ); // Odleg³oœæ do celu.
@@ -32234,7 +32748,7 @@ procedure TStatki_Form.SI_Decyduj();
                   //---// Korekta losowa.
 
 
-                  GLVectorGeometry.CombineVector( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, statki_t[ i_l ].Direction.AsAffineVector, ztsi_1 ); // Korekta o kierunek (ruchu) celu.
+                  GLS.VectorGeometry.CombineVector( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, statki_t[ i_l ].Direction.AsAffineVector, ztsi_1 ); // Korekta o kierunek (ruchu) celu.
 
 
                   czy_by³a_zmiana_wspó³rzêdnych_celu_l := true;
@@ -32286,7 +32800,7 @@ procedure TStatki_Form.SI_Decyduj();
     tolerancja_margines__odleg³oœæ_od
       : single;
 
-    zt_affine_vektor : GLVectorGeometry.TAffineVector;
+    zt_affine_vektor : GLS.VectorGeometry.TAffineVector;
   begin
 
     if   ( not SI__Strzela_CheckBox.Checked )
@@ -32338,7 +32852,7 @@ procedure TStatki_Form.SI_Decyduj();
         // Sprawdza odleg³oœæ tylko w p³aszczyŸnie poziomej (wody).
 
         zt_affine_vektor.Y := 0;
-        cel_odleg³oœæ := GLVectorGeometry.VectorDistance(  GLVectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.cel_linia.AbsolutePosition.X, 0, torpedy_wyrzutnia_f.cel_linia.AbsolutePosition.Z ), zt_affine_vektor  );
+        cel_odleg³oœæ := GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.cel_linia.AbsolutePosition.X, 0, torpedy_wyrzutnia_f.cel_linia.AbsolutePosition.Z ), zt_affine_vektor  );
 
       end
     else//if torpedy_wyrzutnia_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe ] then
@@ -32393,8 +32907,8 @@ procedure TStatki_Form.SI_Decyduj();
     tolerancja_margines__odleg³oœæ_od := 0;
 
 
-    zt_affine_vektor := GLVectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.AbsolutePosition );
-    GLVectorGeometry.AddVector(  zt_affine_vektor, GLVectorGeometry.VectorNegate( torpedy_wyrzutnia_f.AbsoluteDirection )  );
+    zt_affine_vektor := GLS.VectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.AbsolutePosition );
+    GLS.VectorGeometry.AddVector(  zt_affine_vektor, GLS.VectorGeometry.VectorNegate( torpedy_wyrzutnia_f.AbsoluteDirection )  );
 
     if torpedy_wyrzutnia_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe ] then
       zt_affine_vektor.Y := 0; // Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
@@ -32403,14 +32917,14 @@ procedure TStatki_Form.SI_Decyduj();
     //  cel_k¹t :=
     //    System.Math.RadToDeg
     //      (
-    //        GLVectorGeometry.AngleBetweenVectors
+    //        GLS.VectorGeometry.AngleBetweenVectors
     //          (
     //            zt_affine_vektor, // Kierunek broni.
     //            //torpedy_wyrzutnia_f.cel_linia.LocalToAbsolute( torpedy_wyrzutnia_f.cel_linia.Nodes[ 1 ].AsAffineVector ), // Pozycja celu.
     //            //torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor, // Pozycja celu.
-    //            GLVectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor.X, 0, torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor.Z ), // Pozycja celu. Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
-    //            //GLVectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.cel_linia.AbsolutePosition ) // Pozycja broni.
-    //            GLVectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.cel_linia.AbsolutePosition.X, 0, torpedy_wyrzutnia_f.cel_linia.AbsolutePosition.Z ) // Pozycja broni. Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
+    //            GLS.VectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor.X, 0, torpedy_wyrzutnia_f.si__cel__wspó³rzêdne_bezwzglêdne_affine_vektor.Z ), // Pozycja celu. Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
+    //            //GLS.VectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.cel_linia.AbsolutePosition ) // Pozycja broni.
+    //            GLS.VectorGeometry.AffineVectorMake( torpedy_wyrzutnia_f.cel_linia.AbsolutePosition.X, 0, torpedy_wyrzutnia_f.cel_linia.AbsolutePosition.Z ) // Pozycja broni. Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
     //          )
     //      )
     //else//torpedy_wyrzutnia_f.czy_broñ_obracana
@@ -32999,12 +33513,12 @@ procedure TStatki_Form.SI_Decyduj();
                   statek_f.si__punkt_zadany__wspó³rzêdne := statki_t[ i_l ].AbsolutePosition;
                   statek_f.si__punkt_zadany__wspó³rzêdne.Y := statek_f.si__punkt_zadany__wspó³rzêdne.Y + ( samolot_w_powietrzu_wysokoœæ_od_c + statek_f.y_prymityw_najwiêksze ) * 3 * statek_f.samolot__l¹dowanie__podchodzenie_krok;
 
-                  GLVectorGeometry.AddVector
+                  GLS.VectorGeometry.AddVector
                     (
                       statek_f.si__punkt_zadany__wspó³rzêdne,
-                      GLVectorGeometry.VectorScale
+                      GLS.VectorGeometry.VectorScale
                         (
-                          GLVectorGeometry.VectorMake( statki_t[ i_l ].AbsoluteDirection.X, 0, statki_t[ i_l ].AbsoluteDirection.Z ),
+                          GLS.VectorGeometry.VectorMake( statki_t[ i_l ].AbsoluteDirection.X, 0, statki_t[ i_l ].AbsoluteDirection.Z ),
                           -( statek_f.prêdkoœæ_maksymalna + statki_t[ i_l ].z_prymityw_odleg³oœæ ) * statek_f.samolot__l¹dowanie__podchodzenie_krok * 2 // Ta sama odleg³oœæ l¹dowania.
                         )
                     );
@@ -33021,14 +33535,14 @@ procedure TStatki_Form.SI_Decyduj();
                   // Aby przed przyziemieniem obni¿y³ wysokoœæ celu.
                   //cel_odleg³oœæ__w_poziomie_l,  Y = 0 aby nie uwzglêdniaæ odleg³oœci w pionie.
                   // Musi byæ pozycja absolutna, gdy¿ samolot mo¿e byæ 'potomkiem' lotniskowca a nie sceny.
-                  //if GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ) < statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna * 0.2 then
+                  //if GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLS.VectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ) < statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna * 0.2 then
                   if   (
                              ( Gra_GLCadencer.TimeMultiplier <= samolot_w_powietrzu_wysokoœæ_od_c )
-                         and (   GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ) < statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna * 0.2   )
+                         and (   GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLS.VectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ) < statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna * 0.2   )
                        )
                     or ( // Musi wczeœniej zacz¹æ siê zni¿aæ, gdy¿ nie zd¹¿y obni¿y wysokoœci na czas.
                              ( Gra_GLCadencer.TimeMultiplier > samolot_w_powietrzu_wysokoœæ_od_c ) // Przy wiêkszej prêdkoœci gry zwiêksza tolerancjê porównañ wartoœci.
-                         and (   GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ) < statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna * 0.2 * Gra_GLCadencer.TimeMultiplier   )
+                         and (   GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLS.VectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ) < statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna * 0.2 * Gra_GLCadencer.TimeMultiplier   )
                        ) then
                     statek_f.si__punkt_zadany__wspó³rzêdne.Y := statki_t[ i_l ].lotniskowiec__³apacz_samolotów_dummy.AbsolutePosition.Y - statki_t[ i_l ].lotniskowiec__³apacz_samolotów_dummy.Scale.Y * 0.5;
 
@@ -33065,12 +33579,12 @@ procedure TStatki_Form.SI_Decyduj();
                     statek_f.si__punkt_zadany__wspó³rzêdne := statki_t[ i_l ].AbsolutePosition;
                     statek_f.si__punkt_zadany__wspó³rzêdne.Y := ( samolot_w_powietrzu_wysokoœæ_od_c + statek_f.y_prymityw_najwiêksze ) * ( Random( 10 ) + 5 );
 
-                    GLVectorGeometry.AddVector
+                    GLS.VectorGeometry.AddVector
                       (
                         statek_f.si__punkt_zadany__wspó³rzêdne,
-                        GLVectorGeometry.VectorScale
+                        GLS.VectorGeometry.VectorScale
                           (
-                            GLVectorGeometry.VectorMake( statki_t[ i_l ].AbsoluteDirection.X, 0, statki_t[ i_l ].AbsoluteDirection.Z ),
+                            GLS.VectorGeometry.VectorMake( statki_t[ i_l ].AbsoluteDirection.X, 0, statki_t[ i_l ].AbsoluteDirection.Z ),
                             -( statek_f.prêdkoœæ_maksymalna + statki_t[ i_l ].z_prymityw_odleg³oœæ ) * (  statek_f.samolot__l¹dowanie__podchodzenie_krok + 1 + Random( 3 )  ) * 2 // Ta sama odleg³oœæ l¹dowania.
                           )
                       );
@@ -33078,11 +33592,11 @@ procedure TStatki_Form.SI_Decyduj();
 
                     // Przesuwa punkt za lotniskowcem na boki.
                     statek_f.si__punkt_zadany__wspó³rzêdne :=
-                      GLVectorGeometry.MoveObjectAround
+                      GLS.VectorGeometry.MoveObjectAround
                         (
                           statek_f.si__punkt_zadany__wspó³rzêdne,
-                          GLVectorGeometry.VectorMake( 0, 1, 0 ),
-                          GLVectorGeometry.VectorMake( statki_t[ i_l ].AbsolutePosition.X, 0, statki_t[ i_l ].AbsolutePosition.Z ),
+                          GLS.VectorGeometry.VectorMake( 0, 1, 0 ),
+                          GLS.VectorGeometry.VectorMake( statki_t[ i_l ].AbsolutePosition.X, 0, statki_t[ i_l ].AbsolutePosition.Z ),
                           //statki_t[ i_l ].AbsolutePosition,
                           0,
                           -30 + Random( 61 )
@@ -33126,12 +33640,12 @@ procedure TStatki_Form.SI_Decyduj();
         //else//if Gra_GLCadencer.TimeMultiplier > 1 then
         //  i_l := 1;
         //
-        //GLVectorGeometry.AddVector
+        //GLS.VectorGeometry.AddVector
         //  (
         //    statek_f.si__punkt_zadany__wspó³rzêdne,
-        //    GLVectorGeometry.VectorScale
+        //    GLS.VectorGeometry.VectorScale
         //      (
-        //        GLVectorGeometry.VectorMake( statek_f.AbsoluteDirection.X, 0, statek_f.AbsoluteDirection.Z ),
+        //        GLS.VectorGeometry.VectorMake( statek_f.AbsoluteDirection.X, 0, statek_f.AbsoluteDirection.Z ),
         //        ( statek_f.prêdkoœæ_maksymalna + statek_f.z_prymityw_odleg³oœæ ) * ( 2 * statek_f.samolot__l¹dowanie__podchodzenie_krok + i_l )
         //      )
         //  );
@@ -33196,7 +33710,7 @@ procedure TStatki_Form.SI_Decyduj();
     id_grupa_l,
     promieñ_l
       : integer;
-    zt_vector : GLVectorGeometry.TVector;
+    zt_vector : GLS.VectorTypes.TVector4f;
   begin
 
     //
@@ -33225,12 +33739,12 @@ procedure TStatki_Form.SI_Decyduj();
         zt_vector := statek_f.AbsolutePosition;
 
         if statek_f.si__lotniskowiec__l¹dowanie__kurs_aktualny then
-          GLVectorGeometry.AddVector
+          GLS.VectorGeometry.AddVector
             (
               zt_vector,
-              GLVectorGeometry.VectorScale
+              GLS.VectorGeometry.VectorScale
                 (
-                  GLVectorGeometry.VectorMake( statek_f.AbsoluteDirection.X, 0, statek_f.AbsoluteDirection.Z ),
+                  GLS.VectorGeometry.VectorMake( statek_f.AbsoluteDirection.X, 0, statek_f.AbsoluteDirection.Z ),
                   10 * statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna
                 )
             )
@@ -33259,7 +33773,7 @@ procedure TStatki_Form.SI_Decyduj();
         promieñ_l := gra_pozycja_pocz¹tkowa_parametry_t[ id_grupa_l ].patrol__tylny_promieñ;
 
         zt_vector :=
-          GLVectorGeometry.VectorMake
+          GLS.VectorGeometry.VectorMake
             (
               gra_pozycja_pocz¹tkowa_parametry_t[ id_grupa_l ].patrol__tylny_x,
               0,
@@ -33273,7 +33787,7 @@ procedure TStatki_Form.SI_Decyduj();
         promieñ_l := gra_pozycja_pocz¹tkowa_parametry_t[ id_grupa_l ].patrol_promieñ;
 
         zt_vector :=
-          GLVectorGeometry.VectorMake
+          GLS.VectorGeometry.VectorMake
             (
               gra_pozycja_pocz¹tkowa_parametry_t[ id_grupa_l ].patrol_x,
               0,
@@ -33299,14 +33813,14 @@ procedure TStatki_Form.SI_Decyduj();
 
         // Patrol losowy.
         statek_f.si__punkt_zadany__wspó³rzêdne :=
-          GLVectorGeometry.VectorMake
+          GLS.VectorGeometry.VectorMake
             (
               -promieñ_l + Random( 2 * promieñ_l + 1 ),
               0,
               -promieñ_l + Random( 2 * promieñ_l + 1 )
             );
 
-        GLVectorGeometry.AddVector( statek_f.si__punkt_zadany__wspó³rzêdne, zt_vector );
+        GLS.VectorGeometry.AddVector( statek_f.si__punkt_zadany__wspó³rzêdne, zt_vector );
         //---// Patrol losowy.
 
 
@@ -33356,11 +33870,11 @@ procedure TStatki_Form.SI_Decyduj();
 
 
         statek_f.si__punkt_zadany__wspó³rzêdne :=
-          GLVectorGeometry.MoveObjectAround
+          GLS.VectorGeometry.MoveObjectAround
             (
               statek_f.si__punkt_zadany__wspó³rzêdne,
-              GLVectorGeometry.VectorMake( 0, 1, 0 ),
-              GLVectorGeometry.VectorMake( zt_vector.X, 0, zt_vector.Z ),
+              GLS.VectorGeometry.VectorMake( 0, 1, 0 ),
+              GLS.VectorGeometry.VectorMake( zt_vector.X, 0, zt_vector.Z ),
               0,
               statek_f.patrol_po_okrêgu__k¹t_aktualny
             );
@@ -33614,7 +34128,7 @@ procedure TStatki_Form.SI_Decyduj();
 
     //statek_f.si__punkt_zadany__wspó³rzêdne := Result.AbsolutePosition;
     statek_f.si__punkt_zadany__wspó³rzêdne :=
-      GLVectorGeometry.VectorMake
+      GLS.VectorGeometry.VectorMake
         (
           Result.AbsolutePosition.X,
           0,
@@ -33631,11 +34145,11 @@ procedure TStatki_Form.SI_Decyduj();
         cel_k¹t_l :=
           System.Math.RadToDeg
             (
-              GLVectorGeometry.AngleBetweenVectors
+              GLS.VectorGeometry.AngleBetweenVectors
                 (
-                  GLVectorGeometry.VectorMake( Result.AbsoluteDirection.X, 0, Result.AbsoluteDirection.Z ),
-                  GLVectorGeometry.VectorMake( statek_f.AbsoluteDirection.X, 0, statek_f.AbsoluteDirection.Z ),
-                  GLVectorGeometry.VectorMake( 0, 0, 0 )
+                  GLS.VectorGeometry.VectorMake( Result.AbsoluteDirection.X, 0, Result.AbsoluteDirection.Z ),
+                  GLS.VectorGeometry.VectorMake( statek_f.AbsoluteDirection.X, 0, statek_f.AbsoluteDirection.Z ),
+                  GLS.VectorGeometry.VectorMake( 0, 0, 0 )
                 )
             );
 
@@ -33739,12 +34253,12 @@ procedure TStatki_Form.SI_Decyduj();
               cel_przesuniêcie__w_poziomie_l := -cel_przesuniêcie__w_poziomie_l;
 
 
-            GLVectorGeometry.AddVector
+            GLS.VectorGeometry.AddVector
               (
                 statek_f.si__punkt_zadany__wspó³rzêdne,
-                GLVectorGeometry.VectorScale
+                GLS.VectorGeometry.VectorScale
                   (
-                    GLVectorGeometry.VectorMake( Result.AbsoluteDirection.X, 0, Result.AbsoluteDirection.Z ),
+                    GLS.VectorGeometry.VectorMake( Result.AbsoluteDirection.X, 0, Result.AbsoluteDirection.Z ),
                     cel_przesuniêcie__w_poziomie_l
                   )
               );
@@ -34160,7 +34674,7 @@ procedure TStatki_Form.SI_Decyduj();
                       // Przesuwa punkt, w którym jest torpeda o kierunek jej ruchu w poziomie.
 
                       statek_f_f.si__punkt_zadany__wspó³rzêdne :=
-                        GLVectorGeometry.VectorMake
+                        GLS.VectorGeometry.VectorMake
                           (
                             TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsolutePosition.X,
                             0,
@@ -34180,11 +34694,11 @@ procedure TStatki_Form.SI_Decyduj();
                       ztsi_2 := // K¹t miêdzy statkiem i torped¹. Wartoœæ jest zawsze dodatnia, bez znaczenia, jak i nie okreœla, w któr¹ stronê s¹ obrócone obiekty.
                         System.Math.RadToDeg
                           (
-                            GLVectorGeometry.AngleBetweenVectors
+                            GLS.VectorGeometry.AngleBetweenVectors
                               (
-                                GLVectorGeometry.VectorMake( TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.X, 0, TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.Z ),
-                                GLVectorGeometry.VectorMake( statek_f_f.AbsoluteDirection.X, 0, statek_f_f.AbsoluteDirection.Z ),
-                                GLVectorGeometry.VectorMake( 0, 0, 0 )
+                                GLS.VectorGeometry.VectorMake( TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.X, 0, TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.Z ),
+                                GLS.VectorGeometry.VectorMake( statek_f_f.AbsoluteDirection.X, 0, statek_f_f.AbsoluteDirection.Z ),
+                                GLS.VectorGeometry.VectorMake( 0, 0, 0 )
                               )
                           );
 
@@ -34198,10 +34712,10 @@ procedure TStatki_Form.SI_Decyduj();
                         begin
 
                           ztsi_2 :=
-                            GLVectorGeometry.VectorDotProduct
+                            GLS.VectorGeometry.VectorDotProduct
                               (
-                                GLVectorGeometry.VectorMake( TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.X, 0, TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.Z ),
-                                GLVectorGeometry.VectorMake( statek_f_f.AbsoluteDirection.X, 0, statek_f_f.AbsoluteDirection.Z )
+                                GLS.VectorGeometry.VectorMake( TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.X, 0, TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.Z ),
+                                GLS.VectorGeometry.VectorMake( statek_f_f.AbsoluteDirection.X, 0, statek_f_f.AbsoluteDirection.Z )
                               );
 
                           if ztsi_2 < 0 then
@@ -34217,12 +34731,12 @@ procedure TStatki_Form.SI_Decyduj();
                         ztsi_1 := -ztsi_1; // Skrêca w kierunku nadp³ywaj¹cej torpedy.
 
 
-                      GLVectorGeometry.AddVector
+                      GLS.VectorGeometry.AddVector
                         (
                           statek_f_f.si__punkt_zadany__wspó³rzêdne,
-                          GLVectorGeometry.VectorScale
+                          GLS.VectorGeometry.VectorScale
                           (
-                            GLVectorGeometry.VectorMake
+                            GLS.VectorGeometry.VectorMake
                               (
                                 TAmunicja(amunicja_wystrzelona_list[ i_l_l ]).AbsoluteDirection.X,
                                 0,
@@ -34880,7 +35394,7 @@ procedure TStatki_Form.SI_Decyduj();
                           (
                             statek_f.DistanceTo
                               (
-                                GLVectorGeometry.VectorMake
+                                GLS.VectorGeometry.VectorMake
                                   (
                                     gra_pozycja_pocz¹tkowa_parametry_t[ i_l ].patrol__tylny_x,
                                     0,
@@ -34894,7 +35408,7 @@ procedure TStatki_Form.SI_Decyduj();
                           (
                             statek_f.DistanceTo
                               (
-                                GLVectorGeometry.VectorMake
+                                GLS.VectorGeometry.VectorMake
                                   (
                                     gra_pozycja_pocz¹tkowa_parametry_t[ i_l ].patrol_x,
                                     0,
@@ -36318,7 +36832,7 @@ procedure TStatki_Form.SI_Decyduj();
 
     //cel_odleg³oœæ__w_poziomie_l := statek_f.DistanceTo( statek_f.si__punkt_zadany__wspó³rzêdne );
     // Musi byæ pozycja absolutna, gdy¿ samolot mo¿e byæ 'potomkiem' lotniskowca a nie sceny.
-    cel_odleg³oœæ__w_poziomie_l := GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ); // Y = 0 aby nie uwzglêdniaæ odleg³oœci w pionie.
+    cel_odleg³oœæ__w_poziomie_l := GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLS.VectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ); // Y = 0 aby nie uwzglêdniaæ odleg³oœci w pionie.
 
 
     if    ( statek_f.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_Walka__P³ywanie_Do_Punktu ] )
@@ -36348,7 +36862,7 @@ procedure TStatki_Form.SI_Decyduj();
 
 
         // Musi byæ pozycja absolutna, gdy¿ samolot mo¿e byæ 'potomkiem' lotniskowca a nie sceny.
-        cel_odleg³oœæ__w_poziomie_l := GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ); // Y = 0 aby nie uwzglêdniaæ odleg³oœci w pionie.
+        cel_odleg³oœæ__w_poziomie_l := GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.VectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ), GLS.VectorGeometry.VectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z )  ); // Y = 0 aby nie uwzglêdniaæ odleg³oœci w pionie.
 
       end;
     //---//if    ( statek_f.si_aktywnoœæ in [ sia_Patrol, sia_P³ywanie_Do_Punktu__Patrol, sia_Walka__P³ywanie_Do_Punktu ] ) (...)
@@ -36488,7 +37002,7 @@ procedure TStatki_Form.SI_Decyduj();
 
 
 
-        //ztsi_l := System.Math.Ceil( ztsi_l ); // Bo Ceil( -2.1 ) = -2.
+        //ztsi_l := System.Math.Ceil( ztsi_l ); // Bo System.Math.Ceil( -2.1 ) = -2.
 
         if statek_f.zanurzenie_pu³ap__aktualne > statek_f.si__samolot_zanurzenie_pu³ap__zadane then
           ztsi_l := -ztsi_l;
@@ -36549,11 +37063,11 @@ procedure TStatki_Form.SI_Decyduj();
       cel_k¹t_l :=
         System.Math.RadToDeg
           (
-            GLVectorGeometry.AngleBetweenVectors
+            GLS.VectorGeometry.AngleBetweenVectors
               (
-                GLVectorGeometry.AffineVectorMake( statek_f.AbsoluteDirection.X + statek_f.AbsolutePosition.X, 0, statek_f.AbsoluteDirection.Z + statek_f.AbsolutePosition.Z ), // Kierunek statku.
-                GLVectorGeometry.AffineVectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z ), // Pozycja celu. Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
-                GLVectorGeometry.AffineVectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ) // Pozycja statku. Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
+                GLS.VectorGeometry.AffineVectorMake( statek_f.AbsoluteDirection.X + statek_f.AbsolutePosition.X, 0, statek_f.AbsoluteDirection.Z + statek_f.AbsolutePosition.Z ), // Kierunek statku.
+                GLS.VectorGeometry.AffineVectorMake( statek_f.si__punkt_zadany__wspó³rzêdne.X, 0, statek_f.si__punkt_zadany__wspó³rzêdne.Z ), // Pozycja celu. Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
+                GLS.VectorGeometry.AffineVectorMake( statek_f.AbsolutePosition.X, 0, statek_f.AbsolutePosition.Z ) // Pozycja statku. Y = 0 aby nie uwzglêdniaæ k¹ta w pionie.
               )
           )
     else//if   ( not statek_f.czy_samolot ) (...)
@@ -36616,8 +37130,8 @@ procedure TStatki_Form.SI_Decyduj();
          // Je¿eli k¹t jest mniejszy od 90 stopni to szybkoœæ skrêtu wynosi tyle
          // procent jakim procentem 90 stopni jest k¹t miêdzy statkiem a celem.
 
-         //skrêt_zadany_procent_l := Floor( cel_k¹t_l * 90 * 0.01 );
-         skrêt_zadany_procent_l := Floor( cel_k¹t_l * 0.9 ); // Uproszczenie obliczeñ.
+         //skrêt_zadany_procent_l := System.Math.Floor( cel_k¹t_l * 90 * 0.01 );
+         skrêt_zadany_procent_l := System.Math.Floor( cel_k¹t_l * 0.9 ); // Uproszczenie obliczeñ.
 
         if cel_odleg³oœæ__w_poziomie_l <= statek_f.z_prymityw_odleg³oœæ * 3 then
           skrêt_zadany_procent_l := skrêt_zadany_procent_l * 3;
@@ -36629,7 +37143,7 @@ procedure TStatki_Form.SI_Decyduj();
     // W uk³adzie wspó³rzêdnych statku X dodatnie po lewej, X ujemne po prawej.
     // Skrêt w lewo k¹t ujemny, skrêt w prawo k¹t dodatni.
     if    ( skrêt_zadany_procent_l <> 0 )
-      and (   statek_f.AbsoluteToLocal(  GLVectorGeometry.AffineVectorMake( statek_f.si__punkt_zadany__wspó³rzêdne )  ).X >= 0   ) then
+      and (   statek_f.AbsoluteToLocal(  GLS.VectorGeometry.AffineVectorMake( statek_f.si__punkt_zadany__wspó³rzêdne )  ).X >= 0   ) then
       skrêt_zadany_procent_l := -skrêt_zadany_procent_l;
     {$endregion 'Skrêt.'}
 
@@ -36751,9 +37265,9 @@ procedure TStatki_Form.SI_Decyduj();
          // Je¿eli odleg³oœæ jest mniejsza od d³ugoœci statku pomno¿onej przez jego prêdkoœæ maksymaln¹ to prêdkoœæ wynosi 75%
          // razy taki procent jakim procentem d³ugoœci statku pomno¿onej przez jego prêdkoœæ maksymaln¹ jest aktualna odleg³oœæ do celu.
 
-        //prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l * 100 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  ) * 75 * 0.01   );
-        //prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  ) * 75   ); // Uproszczenie obliczeñ 1.
-        //prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l * 75 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // Uproszczenie obliczeñ 2.
+        //prêdkoœæ_zadana_procent_l := System.Math.Floor(   (  cel_odleg³oœæ__w_poziomie_l * 100 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  ) * 75 * 0.01   );
+        //prêdkoœæ_zadana_procent_l := System.Math.Floor(   (  cel_odleg³oœæ__w_poziomie_l / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  ) * 75   ); // Uproszczenie obliczeñ 1.
+        //prêdkoœæ_zadana_procent_l := System.Math.Floor(   (  cel_odleg³oœæ__w_poziomie_l * 75 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // Uproszczenie obliczeñ 2.
 
 
         if statek_f.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] then
@@ -36765,8 +37279,8 @@ procedure TStatki_Form.SI_Decyduj();
           and ( statek_f.si_aktywnoœæ = sia_Samolot__L¹dowanie ) then
           prêdkoœæ_zadana_procent_l := samolot_prêdkoœæ_lotu_procent_minimalny_c
         else//if    ( statek_f.czy_samolot ) (...)
-          //prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l * 75 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // To samo cel_odleg³oœæ__w_poziomie_l * 75.
-          prêdkoœæ_zadana_procent_l := Floor(   (  cel_odleg³oœæ__w_poziomie_l * ztsi_l / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // To samo cel_odleg³oœæ__w_poziomie_l * 75.
+          //prêdkoœæ_zadana_procent_l := System.Math.Floor(   (  cel_odleg³oœæ__w_poziomie_l * 75 / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // To samo cel_odleg³oœæ__w_poziomie_l * 75.
+          prêdkoœæ_zadana_procent_l := System.Math.Floor(   (  cel_odleg³oœæ__w_poziomie_l * ztsi_l / ( statek_f.z_prymityw_odleg³oœæ * statek_f.prêdkoœæ_maksymalna )  )   ); // To samo cel_odleg³oœæ__w_poziomie_l * 75.
 
 
         // Aby podczas walki, gdy zbli¿a siê do celu, za bardzo nie zwalnia³.
@@ -36828,7 +37342,7 @@ procedure TStatki_Form.SI_Decyduj();
             // Podczas l¹dowanie nie musi dojechaæ do wskazanego punktu.
 
             if statek_f.zanurzenie_pu³ap__aktualne > statek_f.si__samolot_zanurzenie_pu³ap__zadane then
-              statek_f.Zanurzenie_Zadane_Procent_Ustaw(  -Math.Ceil( samolot_prêdkoœæ_lotu_procent_minimalny_c )  )
+              statek_f.Zanurzenie_Zadane_Procent_Ustaw(  -System.Math.Ceil( samolot_prêdkoœæ_lotu_procent_minimalny_c )  )
             else//if statek_f.zanurzenie_pu³ap__aktualne > statek_f.si__samolot_zanurzenie_pu³ap__zadane then
               statek_f.Zanurzenie_Zadane_Procent_Ustaw( 0 );
 
@@ -37256,7 +37770,7 @@ begin//Funkcja SI_Decyduj().
                     or (
                              ( zt_statek.si_aktywnoœæ in [ sia_P³ywanie_Do_Punktu__Odnawianie_Zasobów ] )
                          // Musi byæ pozycja absolutna, gdy¿ samolot mo¿e byæ 'potomkiem' lotniskowca a nie sceny.
-                         and (   GLVectorGeometry.VectorDistance(  GLVectorGeometry.VectorMake( zt_statek.AbsolutePosition.X, 0, zt_statek.AbsolutePosition.Z ), GLVectorGeometry.VectorMake( zt_statek.si__punkt_zadany__wspó³rzêdne.X, 0, zt_statek.si__punkt_zadany__wspó³rzêdne.Z )  ) > zt_statek.z_prymityw_odleg³oœæ * zt_statek.prêdkoœæ_maksymalna   ) // Y = 0 aby nie uwzglêdniaæ odleg³oœci w pionie.
+                         and (   GLS.VectorGeometry.VectorDistance(  GLS.VectorGeometry.VectorMake( zt_statek.AbsolutePosition.X, 0, zt_statek.AbsolutePosition.Z ), GLS.VectorGeometry.VectorMake( zt_statek.si__punkt_zadany__wspó³rzêdne.X, 0, zt_statek.si__punkt_zadany__wspó³rzêdne.Z )  ) > zt_statek.z_prymityw_odleg³oœæ * zt_statek.prêdkoœæ_maksymalna   ) // Y = 0 aby nie uwzglêdniaæ odleg³oœci w pionie.
                        ) then
                     Statek__P³ywanie_Do_Punktu( zt_statek, true )
                   else//if zt_statek.si_aktywnoœæ in [ sia_Walka__Torpedy_Ucieczka ] then
@@ -37268,7 +37782,7 @@ begin//Funkcja SI_Decyduj().
             end;
           //---//if   ( zt_statek.si_decyduje ) (...)
 
-          zt_statek.celownicza_linia.Nodes[ 1 ].AsAffineVector := zt_statek.celownicza_linia.AbsoluteToLocal(  GLVectorGeometry.AffineVectorMake( zt_statek.si__punkt_zadany__wspó³rzêdne )  );
+          zt_statek.celownicza_linia.Nodes[ 1 ].AsAffineVector := zt_statek.celownicza_linia.AbsoluteToLocal(  GLS.VectorGeometry.AffineVectorMake( zt_statek.si__punkt_zadany__wspó³rzêdne )  );
 
         end;
       //---//if    ( zt_statek <> nil ) (...)
@@ -37286,7 +37800,8 @@ function TStatki_Form.SI__Polecenie__Zak³ócenia_Interpretuj( const pokój_rozmów_
   var
     i_l : integer;
     zts_l,
-    liczba_s
+    liczba_s,
+    separator_dziesiêtny_l
       : string;
   begin
 
@@ -37294,6 +37809,8 @@ function TStatki_Form.SI__Polecenie__Zak³ócenia_Interpretuj( const pokój_rozmów_
 
     liczba_s := '';
     zts_l := napis_f;
+
+    separator_dziesiêtny_l := Separator_Dziesiêtny__Ustal();
 
     for i_l := 1 to Length( zts_l ) do
       begin
@@ -37303,7 +37820,9 @@ function TStatki_Form.SI__Polecenie__Zak³ócenia_Interpretuj( const pokój_rozmów_
         if zts_l[ i_l ] = ';' then
           Break
         else//if zts_l[ i_l ] = ';' then
-          if   ( zts_l[ i_l ] = ',' )
+          if   ( zts_l[ i_l ] = separator_dziesiêtny_l )
+            or ( zts_l[ i_l ] = ',' )
+            or ( zts_l[ i_l ] = '.' )
             or ( zts_l[ i_l ] = '-' ) then
             liczba_s := liczba_s + zts_l[ i_l ]
           else//if   ( zts_l[ i_l ] = ',' ) (...)
@@ -37318,7 +37837,7 @@ function TStatki_Form.SI__Polecenie__Zak³ócenia_Interpretuj( const pokój_rozmów_
     //---//for i_l := 1 to Length( zts_l ) do
 
     try
-      liczba_f := StrToFloat( liczba_s );
+      liczba_f := String_To__Float( liczba_s );
       Result := true;
     except
       Result := false;
@@ -38764,12 +39283,12 @@ begin//Funkcja SI__Polecenie__Zak³ócenia_Interpretuj().
                               else//if statki_t[ zti ].prêdkoœæ_zadana_procent >= 0 then
                                 j := 1; // Przed statkiem.
 
-                              GLVectorGeometry.AddVector
+                              GLS.VectorGeometry.AddVector
                                 (
                                   statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne,
-                                  GLVectorGeometry.VectorScale
+                                  GLS.VectorGeometry.VectorScale
                                     (
-                                      GLVectorGeometry.VectorMake( statki_t[ zti ].AbsoluteDirection.X, 0, statki_t[ zti ].AbsoluteDirection.Z ),
+                                      GLS.VectorGeometry.VectorMake( statki_t[ zti ].AbsoluteDirection.X, 0, statki_t[ zti ].AbsoluteDirection.Z ),
                                       j * 3 * ( statki_t[ i ].z_prymityw_odleg³oœæ + statki_t[ zti ].z_prymityw_odleg³oœæ )
                                     )
                                 );
@@ -38811,7 +39330,6 @@ begin//Funkcja SI__Polecenie__Zak³ócenia_Interpretuj().
 
                           zts := si_polecenie_l;
                           zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-                          zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
 
                           if Liczba_Odczytaj( zts, statki_t[ i ].si_aktywnoœæ__polecenie__punkt_zadany__wspó³rzêdne.X ) then
                             begin
@@ -39205,6 +39723,21 @@ begin
 
 end;//---//Funkcja SI__Statek_Gracza__Sterowanie_Ustaw().
 
+//Funkcja SI__Syrena_Okrêtowa__Uruchom().
+procedure TStatki_Form.SI__Syrena_Okrêtowa__Uruchom( const statek_f : TStatek );
+begin
+
+  if   ( statek_f = nil )
+    or (  not Assigned( statek_f )  )
+    or ( not statek_f.si_decyduje )
+    or (  Random( 2 ) = 0  ) then
+    Exit;
+
+
+  DŸwiêki__Efekt__Utwórz_Jeden( der_Syrena_Okrêtowa, statek_f.AbsolutePosition );
+
+end;//---//SI__Syrena_Okrêtowa__Uruchom().
+
 //Funkcja SOS__Inicjuj().
 procedure TStatki_Form.SOS__Inicjuj( const statek_f : TStatek );
 begin
@@ -39283,7 +39816,7 @@ begin
 end;//---//Funkcja Statek_Gracza__Gracz_Tryb_Zwróæ().
 
 //Funkcja Statek_Klient_Cel_Ustaw().
-procedure TStatki_Form.Statek_Klient_Cel_Ustaw( const id_statek_f : integer; const cel_wspó³rzêdne_f : GLVectorGeometry.TAffineVector );
+procedure TStatki_Form.Statek_Klient_Cel_Ustaw( const id_statek_f : integer; const cel_wspó³rzêdne_f : GLS.VectorGeometry.TAffineVector );
 var
   i : integer;
   zt_statek : TStatek;
@@ -39489,7 +40022,7 @@ begin
         gracz_tryb_g := gracz_tryb_l;
         kamera_dla_prze³¹czania_statku_kopia__kamera_tryb_g := kamera_tryb_kopia_l;
 
-        statki_t[ i ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, id_gracz_l, id_statek_l, Statek_Odczytaj_Schemat( id_statek_schemat_l ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
+        statki_t[ i ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ(), id_gracz_l, id_statek_l, Statek_Odczytaj_Schemat( id_statek_schemat_l ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
         statki_t[ i ].id_grupa := id_grupa_l;
         statki_t[ i ].id_statek_schemat := id_statek_schemat_l;
         statki_t[ i ].gracz__nazwa.Text := gracz__nazwa_l;
@@ -40747,15 +41280,15 @@ begin
                   //  begin
                   //
                   //    for i := 0 to Length( zt_statek.artyleria_t ) - 1 do
-                  //      zt_statek.artyleria_t[ i ].celownik_linia.LineColor.Color := GLColor.clrYellow;
+                  //      zt_statek.artyleria_t[ i ].celownik_linia.LineColor.Color := GLS.Color.clrYellow;
                   //
                   //
                   //    for i := 0 to Length( zt_statek.dzia³a_t ) - 1 do
-                  //      zt_statek.dzia³a_t[ i ].celownik_linia.LineColor.Color := GLColor.clrYellow;
+                  //      zt_statek.dzia³a_t[ i ].celownik_linia.LineColor.Color := GLS.Color.clrYellow;
                   //
                   //
                   //    for i := 0 to Length( zt_statek.torpedy_wyrzutnie_t ) - 1 do
-                  //      zt_statek.torpedy_wyrzutnie_t[ i ].celownik_linia.LineColor.Color := GLColor.clrYellow;
+                  //      zt_statek.torpedy_wyrzutnie_t[ i ].celownik_linia.LineColor.Color := GLS.Color.clrYellow;
                   //
                   //  end;
                   ////---//if zt_statek.obracaj_dzia³a then
@@ -40971,11 +41504,11 @@ begin
                       ztr :=
                         System.Math.RadToDeg
                           (
-                            GLVectorGeometry.AngleBetweenVectors
+                            GLS.VectorGeometry.AngleBetweenVectors
                               (
-                                GLVectorGeometry.VectorMake( zt_statek.AbsoluteDirection.X, 0, zt_statek.AbsoluteDirection.Z ),
-                                GLVectorGeometry.VectorMake( -wiatr_vector_g.X, 0, -wiatr_vector_g.Z ),
-                                GLVectorGeometry.VectorMake( 0, 0, 0 )
+                                GLS.VectorGeometry.VectorMake( zt_statek.AbsoluteDirection.X, 0, zt_statek.AbsoluteDirection.Z ),
+                                GLS.VectorGeometry.VectorMake( -wiatr_vector_g.X, 0, -wiatr_vector_g.Z ),
+                                GLS.VectorGeometry.VectorMake( 0, 0, 0 )
                               )
                           );
 
@@ -40993,10 +41526,10 @@ begin
 
                               // Obrót - dziób wskazuje kierunek, w którym wieje wiatr.
                               //if
-                              //  GLVectorGeometry.VectorCrossProduct
+                              //  GLS.VectorGeometry.VectorCrossProduct
                               //    (
-                              //      GLVectorGeometry.VectorMake( zt_statek.AbsoluteDirection.X, 0, zt_statek.AbsoluteDirection.Z ),
-                              //      GLVectorGeometry.VectorMake( wiatr_vector_g.X, 0, wiatr_vector_g.Z )
+                              //      GLS.VectorGeometry.VectorMake( zt_statek.AbsoluteDirection.X, 0, zt_statek.AbsoluteDirection.Z ),
+                              //      GLS.VectorGeometry.VectorMake( wiatr_vector_g.X, 0, wiatr_vector_g.Z )
                               //    ).Y < 0 then // < 0 gdy dziób jest po prawej stronie wektora wiatru.
                               //  ztr := -ztr;
                               //---// Obrót - dziób wskazuje kierunek, w którym wieje wiatr.
@@ -41005,10 +41538,10 @@ begin
                               ztr := 180 - ztr;
 
                               if
-                                GLVectorGeometry.VectorCrossProduct
+                                GLS.VectorGeometry.VectorCrossProduct
                                   (
-                                    GLVectorGeometry.VectorMake( zt_statek.AbsoluteDirection.X, 0, zt_statek.AbsoluteDirection.Z ),
-                                    GLVectorGeometry.VectorMake( wiatr_vector_g.X, 0, wiatr_vector_g.Z )
+                                    GLS.VectorGeometry.VectorMake( zt_statek.AbsoluteDirection.X, 0, zt_statek.AbsoluteDirection.Z ),
+                                    GLS.VectorGeometry.VectorMake( wiatr_vector_g.X, 0, wiatr_vector_g.Z )
                                   ).Y >= 0 then // < 0 gdy dziób jest po prawej stronie wektora wiatru.
                                 ztr := -ztr;
                               //---// Obrót - dziób wskazuje kierunek, z którego wieje wiatr.
@@ -41058,7 +41591,7 @@ begin
                           zt_statek.Position.AddScaledVector
                             (
                               wiatr_vector_g.W * ztr * wiatr__wp³yw_na__statek__przesuwanie_g * delta_czasu_f,
-                              GLVectorGeometry.AffineVectorMake
+                              GLS.VectorGeometry.AffineVectorMake
                                 (
                                   -wiatr_vector_g.X,
                                   0,
@@ -41083,7 +41616,7 @@ begin
                           zt_statek.Position.AddScaledVector
                             (
                               wiatr_vector_g.Y * wiatr__wp³yw_na__statek__unoszenie_g * delta_czasu_f,
-                              GLVectorGeometry.AffineVectorMake
+                              GLS.VectorGeometry.AffineVectorMake
                                 (
                                   0,
                                   1, // Na kierunek wp³ynie znak wiatr_vector_g.Y.
@@ -41632,7 +42165,7 @@ begin
         and ( TŒlad_Torowy(œlad_torowy_list[ i ]).Scale.X >= TŒlad_Torowy(œlad_torowy_list[ i ]).œlad_torowy__szerokoœæ_pocz¹tkowa * 5 ) then
         begin
 
-          TŒlad_Torowy(œlad_torowy_list[ i ]).EdgeColor.Color := GLVectorGeometry.VectorScale( GLColor.clrSkyBlue, dzieñ_jasnoœæ_g );
+          TŒlad_Torowy(œlad_torowy_list[ i ]).EdgeColor.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrSkyBlue, dzieñ_jasnoœæ_g );
 
           TŒlad_Torowy(œlad_torowy_list[ i ]).zmieni³_kolor := true;
 
@@ -41699,7 +42232,7 @@ begin
       œlad_torowy_list.Add( zt_œlad_torowy );
 
       statek_f.œlad_torowy__czas_utworzenia_ostatniego_milisekundy_i := Czas_Teraz_W_Milisekundach();
-      MakeVector( statek_f.œlad_torowy__pozycja_ostatniego, zt_œlad_torowy.Position.AsVector );
+      GLS.VectorGeometry.MakeVector( statek_f.œlad_torowy__pozycja_ostatniego, zt_œlad_torowy.Position.AsVector );
 
     end;
   //---//if    ( (...)
@@ -42157,8 +42690,16 @@ begin
   t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____punkty_¿ycia_wskaŸnik__przeciwnik := 'Punkty ¿ycia wskaŸnik przeciwnik';
   t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____punkty_¿ycia_wskaŸnik__sojusznik := 'Punkty ¿ycia wskaŸnik sojusznik';
 
-  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar_widocznoœæ := 'Radar wyœwietlaj na ekranie';
-  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar_broñ_zasiêg_wyœwietlaj := 'Radar broñ zasiêg wyœwietlaj';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__broñ_zasiêg_wyœwietlaj := 'Radar broñ zasiêg wyœwietlaj';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__1_minus := 'Czu³oœæ radaru -1';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__10_minus := 'Czu³oœæ radaru -10';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__1_plus := 'Czu³oœæ radaru +1';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__10_plus := 'Czu³oœæ radaru +10';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__skala__1_minus := 'Skala radaru -1';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__skala__10_minus := 'Skala radaru -10';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__skala__1_plus := 'Skala radaru +1';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__skala__10_plus := 'Skala radaru +10';
+  t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__widocznoœæ := 'Radar wyœwietlaj na ekranie';
 
   t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____samolot_katapult¹_startuj := 'Samolot katapult¹ startuj';
   t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____samolot_statek_prze³¹cz := 'Samolot / statek prze³¹cz';
@@ -42371,6 +42912,8 @@ begin
   t³umaczenie_komunikaty_r.komunikat__potwierdzenie := 'Potwierdzenie';
   t³umaczenie_komunikaty_r.komunikat__pozycje_pocz¹tkowe_statków := 'Pozycje pocz¹tkowe statków';
   t³umaczenie_komunikaty_r.komunikat__pozycje_pocz¹tkowe_statków__wed³ug_mapy := 'wed³ug mapy';
+  t³umaczenie_komunikaty_r.komunikat__radar__czu³oœæ := 'Czu³oœæ radaru ';
+  t³umaczenie_komunikaty_r.komunikat__radar__skala := 'Skala radaru ';
   t³umaczenie_komunikaty_r.komunikat__samolot_zg³asza_l¹dowanie := 'Samolot zg³asza l¹dowanie.';
   t³umaczenie_komunikaty_r.komunikat__serwer_zakoñczy³_grê := 'Serwer zakoñczy³ grê.';
   t³umaczenie_komunikaty_r.komunikat__statystyki_gry := 'Statystyki gry';
@@ -42845,6 +43388,30 @@ begin
   DŸwiêk__T³umaczenia_Etykieta_Label.Caption := 'T³umaczenia';
   DŸwiêk__T³umaczenia_Etykieta_Label.Hint := 'T³umaczenia komunikatów.';
   DŸwiêk__T³umaczenia_ComboBox.Hint := 'Enter - zastosuj.';
+  Efekty_GroupBox.Caption := 'Efekty';
+  Efekty_GroupBox.Hint := 'Efekty graficzne.';
+  Efekty__Dym_CheckBox.Caption := 'Dym';
+  Efekty__Dym_CheckBox.Hint := '';
+  Efekty__Element_Uszkodzenie_CheckBox.Caption := 'Element uszkodzenie';
+  Efekty__Element_Uszkodzenie_CheckBox.Hint := '';
+  Efekty__Mg³a_CheckBox.Caption := 'Mg³a';
+  Efekty__Mg³a_CheckBox.Hint := '';
+  Efekty__Ogieñ_CheckBox.Caption := 'Ogieñ';
+  Efekty__Ogieñ_CheckBox.Hint := '';
+  Efekty__Smuga_CheckBox.Caption := 'Smuga';
+  Efekty__Smuga_CheckBox.Hint := '';
+  Efekty__Smuga_D³uga_CheckBox.Caption := 'Smuga d³uga';
+  Efekty__Smuga_D³uga_CheckBox.Hint := '';
+  Efekty__Sonarowe_U³atwienie_CheckBox.Caption := 'Sonarowe u³atwienie';
+  Efekty__Sonarowe_U³atwienie_CheckBox.Hint := '';
+  Efekty__SOS_Rozb³ysk_CheckBox.Caption := 'SOS rozb³ysk';
+  Efekty__SOS_Rozb³ysk_CheckBox.Hint := '';
+  Efekty__Trafienie_Rozb³ysk_CheckBox.Caption := 'Trafienie rozb³ysk';
+  Efekty__Trafienie_Rozb³ysk_CheckBox.Hint := '';
+  Efekty__Wpadniêcie_Do_Wody_CheckBox.Caption := 'Wpadniêcie do wody';
+  Efekty__Wpadniêcie_Do_Wody_CheckBox.Hint := '';
+  Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Caption := 'Wpadniêcie do wody 0';
+  Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Hint := '';
   Fale_CheckBox.Caption := 'Fale';
   Fale_CheckBox.Hint := 'Animacja falowania morza.';
   Fotograficzny_Tryb_CheckBox.Caption := 'Fotograficzny tryb';
@@ -43016,6 +43583,32 @@ begin
   Mysz_Czu³oœæ_Luneta_Etykieta_Label.Caption := 'Mysz czu³oœæ luneta';
   Mysz_Czu³oœæ_Luneta_Etykieta_Label.Hint := 'Czu³oœæ myszy (prêdkoœæ ruchu myszy) przy maksymalnym przybli¿eniu lunety.';
   Mysz_Czu³oœæ_Luneta_Label.Hint := 'Czu³oœæ myszy (prêdkoœæ ruchu myszy) przy maksymalnym przybli¿eniu lunety - wartoœæ ustawiona.';
+  Niebo_Rodzaj_RadioGroup.Caption := 'Niebo';
+  Niebo_Rodzaj_RadioGroup.Hint := '';
+
+    zti := Niebo_Rodzaj_RadioGroup.ItemIndex;
+    Niebo_Rodzaj_RadioGroup.Items.Clear();
+    Niebo_Rodzaj_RadioGroup.Items.Add( 'alternatywne' );
+    Niebo_Rodzaj_RadioGroup.Items.Add( 'brak' );
+    Niebo_Rodzaj_RadioGroup.Items.Add( 'standardowe' );
+
+    if    ( zti >= 0 )
+      and ( zti <= Niebo_Rodzaj_RadioGroup.Items.Count ) then
+      Niebo_Rodzaj_RadioGroup.ItemIndex := zti;
+
+  Radar__Niebo_Rodzaj_RadioGroup.Caption := 'Niebo - radar';
+  Radar__Niebo_Rodzaj_RadioGroup.Hint := '';
+
+    zti := Radar__Niebo_Rodzaj_RadioGroup.ItemIndex;
+    Radar__Niebo_Rodzaj_RadioGroup.Items.Clear();
+    Radar__Niebo_Rodzaj_RadioGroup.Items.Add( 'alternatywne' );
+    Radar__Niebo_Rodzaj_RadioGroup.Items.Add( 'brak' );
+    Radar__Niebo_Rodzaj_RadioGroup.Items.Add( 'standardowe' );
+
+    if    ( zti >= 0 )
+      and ( zti <= Radar__Niebo_Rodzaj_RadioGroup.Items.Count ) then
+      Radar__Niebo_Rodzaj_RadioGroup.ItemIndex := zti;
+
   Noc_Etykieta_Label.Caption := 'Noc';
   Noc_Etykieta_Label.Hint := 'Intensywnoœæ nocy.';
   Noc__Czas_Na__Ekranie_Wyœwietlaj_CheckBox.Caption := 'Czas na ekranie';
@@ -43560,9 +44153,9 @@ begin
         // Dodaje nazwy plików bez rozszerzenia.
 
         zts := search_rec.Name;
-        zts := ReverseString( zts ); //uses StrUtils.
+        zts := System.StrUtils.ReverseString( zts );
         Delete(  zts, 1, Pos( '.', zts )  );
-        zts := ReverseString( zts ); //uses StrUtils.
+        zts := System.StrUtils.ReverseString( zts );
 
         T³umaczenia_ComboBox.Items.Add( zts );
 
@@ -43988,7 +44581,7 @@ begin
   tekst_l.LoadFromFile( zts_1 );
 
   if tekst_l.Count > 0 then //???
-    rtti_type := TRTTIContext.Create.GetType(  TypeInfo( TT³umaczenie_Komunikaty_r )  );
+    rtti_type := TRTTIContext.Create.GetType(  System.TypeInfo( TT³umaczenie_Komunikaty_r )  );
 
 
   for i := 0 to tekst_l.Count - 1 do
@@ -44432,7 +45025,7 @@ begin
         T³umaczenie__Wczytaj();
 
 
-      rtti_type := TRTTIContext.Create.GetType(  TypeInfo( TT³umaczenie_Komunikaty_r )  );
+      rtti_type := TRTTIContext.Create.GetType(  System.TypeInfo( TT³umaczenie_Komunikaty_r )  );
 
       for i := 0 to Klawiatura_Konfiguracja_ScrollBox.ControlCount - 1 do // Tylko wizualne.
         for rtti_field in rtti_type.GetFields do
@@ -44467,82 +45060,122 @@ begin
       if Czas_Miêdzy_W_Milisekundach( TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_utworzenia_milisekundy_te, true ) >= TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_trwania_milisekundy_te then
         Trafienia_Efekt__Zwolnij_Jeden( TTrafienia_Efekt(trafienia_efekt_list[ i ]) )
       else//if Czas_Miêdzy_W_Milisekundach( TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_utworzenia_milisekundy_te, true ) >= TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_trwania_milisekundy_te then
-        if TTrafienia_Efekt(trafienia_efekt_list[ i ]).efekt_rodzaj = er_SOS then
-          begin
+        begin
 
-            //if TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition.Y < 200 then
-            //  TTrafienia_Efekt(trafienia_efekt_list[ i ]).Lift( 10 * delta_czasu_f )
-            //else//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition.Y < 100 then
-            //  TTrafienia_Efekt(trafienia_efekt_list[ i ]).Lift( 2 * delta_czasu_f );
+          if TTrafienia_Efekt(trafienia_efekt_list[ i ]).efekt_rodzaj = er_SOS then
+            begin
 
-
-            if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ > -0.5 then
-              TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ := TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ - 0.25 * delta_czasu_f; // Wytracanie prêdkoœci wznoszenia.
-
-            if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ < -0.5 then
-              TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ := -0.5;
-
-            TTrafienia_Efekt(trafienia_efekt_list[ i ]).Lift( TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ * delta_czasu_f );
+              //if TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition.Y < 200 then
+              //  TTrafienia_Efekt(trafienia_efekt_list[ i ]).Lift( 10 * delta_czasu_f )
+              //else//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition.Y < 100 then
+              //  TTrafienia_Efekt(trafienia_efekt_list[ i ]).Lift( 2 * delta_czasu_f );
 
 
-            if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ < 2 then
-              begin
+              if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ > -0.5 then
+                TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ := TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ - 0.25 * delta_czasu_f; // Wytracanie prêdkoœci wznoszenia.
 
-                while TTrafienia_Efekt(trafienia_efekt_list[ i ]).Behaviours.IndexOfClass( TGLBSoundEmitter ) > -1 do // -1 - brak, >= 0 zachowania.
-                  TTrafienia_Efekt(trafienia_efekt_list[ i ]).Behaviours.Delete( 0 ); // Dezaktywuje dŸwiêkowy efekt lotu.
+              if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ < -0.5 then
+                TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ := -0.5;
 
-
-                with GetOrCreateSourcePFX( TTrafienia_Efekt(trafienia_efekt_list[ i ]) ) do // uses GLParticleFX.
-                  begin
-
-                    // Gdy zaczyna opadaæ zaczyna œwieciæ ci¹g³ym wiêkszym œwiat³em.
-
-                    VelocityDispersion := 2; // Prêdkoœæ rozpadania siê i wznoszenia.
-
-                    if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ > 0 then
-                      Burst( Gra_GLCadencer.CurrentTime, 2 ) // Iloœæ wylatuj¹cych œwiate³ek. // 2
-                    else//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ > 0 then
-                      Burst(   Gra_GLCadencer.CurrentTime, System.Math.Ceil(  2 - ( 4 * TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ )  )   ); // Iloœæ wylatuj¹cych œwiate³ek.
-
-                  end;
-                //---//with GetOrCreateSourcePFX( zt_trafienia_efekt )
-
-              end;
-            //---//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ < 2 then
+              TTrafienia_Efekt(trafienia_efekt_list[ i ]).Lift( TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ * delta_czasu_f );
 
 
-            if    ( TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition.Y > 100 )
-              and (  Czas_Miêdzy_W_Sekundach( TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_rozb³ysku_ostatniego_sekundy_i ) >= 10  ) then
-              begin
+              if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ < 2 then
+                begin
 
-                // Rozb³yski co pewien odstêp czasu i po przekroczeniu pewnej wysokoœci.
-
-                Efekt__SOS_Rozb³ysk_GLPolygonPFXManager.ColorInner.RandomColor();
-                Efekt__SOS_Rozb³ysk_GLPolygonPFXManager.ColorOuter.RandomColor();
-
-                with GetOrCreateSourcePFX( TTrafienia_Efekt(trafienia_efekt_list[ i ]) ) do // uses GLParticleFX.
-                  begin
-
-                    VelocityDispersion := 20; // Prêdkoœæ rozpadania siê i wznoszenia.
-                    Burst( Gra_GLCadencer.CurrentTime, 4000 ); // Iloœæ wylatuj¹cych œwiate³ek.
-
-                    VelocityDispersion := 0; // Prêdkoœæ rozpadania siê i wznoszenia.
-                    RingExplosion( Gra_GLCadencer.CurrentTime, 1, 12, 7500 ); // uses GLParticleFX.
-
-                  end;
-                //---//with GetOrCreateSourcePFX( TTrafienia_Efekt(trafienia_efekt_list[ i ]) ) do
+                  while TTrafienia_Efekt(trafienia_efekt_list[ i ]).Behaviours.IndexOfClass( TGLBSoundEmitter ) > -1 do // -1 - brak, >= 0 zachowania.
+                    TTrafienia_Efekt(trafienia_efekt_list[ i ]).Behaviours.Delete( 0 ); // Dezaktywuje dŸwiêkowy efekt lotu.
 
 
-                DŸwiêki__Efekt__Utwórz_Jeden( der_SOS_Rozb³ysk, TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition );
+                  if Efekty__SOS_Rozb³ysk_CheckBox.Checked then
+                    with GLS.ParticleFX.GetOrCreateSourcePFX( TTrafienia_Efekt(trafienia_efekt_list[ i ]) ) do
+                      begin
+
+                        // Gdy zaczyna opadaæ zaczyna œwieciæ ci¹g³ym wiêkszym œwiat³em.
+
+                        VelocityDispersion := 2; // Prêdkoœæ rozpadania siê i wznoszenia.
+
+                        if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ > 0 then
+                          Burst( Gra_GLCadencer.CurrentTime, 2 ) // Iloœæ wylatuj¹cych œwiate³ek. // 2
+                        else//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ > 0 then
+                          Burst(   Gra_GLCadencer.CurrentTime, System.Math.Ceil(  2 - ( 4 * TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ )  )   ); // Iloœæ wylatuj¹cych œwiate³ek.
+
+                      end;
+                    //---//with GLS.ParticleFX.GetOrCreateSourcePFX( TTrafienia_Efekt(trafienia_efekt_list[ i ]) ) do
+
+                end;
+              //---//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wznoszenie_prêdkoœæ < 2 then
 
 
-                TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_rozb³ysku_ostatniego_sekundy_i := Czas_Teraz_W_Sekundach();
+              if    ( TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition.Y > 100 )
+                and (  Czas_Miêdzy_W_Sekundach( TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_rozb³ysku_ostatniego_sekundy_i ) >= 10  ) then
+                begin
 
-              end;
-            //---//if    ( TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition.Y > 100 ) (...)
+                  // Rozb³yski co pewien odstêp czasu i po przekroczeniu pewnej wysokoœci.
 
-          end;
-        //---//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).efekt_rodzaj = er_SOS then
+                  if Efekty__SOS_Rozb³ysk_CheckBox.Checked then
+                    begin
+
+                      Efekt__SOS_Rozb³ysk_GLPolygonPFXManager.ColorInner.RandomColor();
+                      Efekt__SOS_Rozb³ysk_GLPolygonPFXManager.ColorOuter.RandomColor();
+
+
+                      with GLS.ParticleFX.GetOrCreateSourcePFX( TTrafienia_Efekt(trafienia_efekt_list[ i ]) ) do
+                        begin
+
+                          VelocityDispersion := 20; // Prêdkoœæ rozpadania siê i wznoszenia.
+                          Burst( Gra_GLCadencer.CurrentTime, 4000 ); // Iloœæ wylatuj¹cych œwiate³ek.
+
+                          VelocityDispersion := 0; // Prêdkoœæ rozpadania siê i wznoszenia.
+                          RingExplosion( Gra_GLCadencer.CurrentTime, 1, 12, 7500 ); // uses GLS.ParticleFX.
+
+                        end;
+                      //---//with GLS.ParticleFX.GetOrCreateSourcePFX( TTrafienia_Efekt(trafienia_efekt_list[ i ]) ) do
+
+                    end;
+                  //---//if Efekty__SOS_Rozb³ysk_CheckBox.Checked then
+
+
+                  DŸwiêki__Efekt__Utwórz_Jeden( der_SOS_Rozb³ysk, TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition );
+
+
+                  if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object <> nil then
+                    begin
+
+                      if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object.Scale.X <> 0.1 then
+                        begin
+
+                          TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object.Scale.X := 0.1;
+                          TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object.Scale.Y := TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+                          TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object.Scale.Z := TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object.Scale.X;
+
+                          TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i := 100;
+
+                        end;
+                      //---//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object.Scale.X <> 0.1 then
+
+
+                      TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i := Czas_Teraz_W_Milisekundach();
+
+                    end;
+                  //---//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).wizualizacja_alternatywna__gl_custom_scene_object <> nil then
+
+
+                  TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_rozb³ysku_ostatniego_sekundy_i := Czas_Teraz_W_Sekundach();
+
+                end;
+              //---//if    ( TTrafienia_Efekt(trafienia_efekt_list[ i ]).AbsolutePosition.Y > 100 ) (...)
+
+            end;
+          //---//if TTrafienia_Efekt(trafienia_efekt_list[ i ]).efekt_rodzaj = er_SOS then
+
+
+          if    ( TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i <> 0 )
+            and (  Czas_Miêdzy_W_Milisekundach( TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_animowania_wizualizacji_alternatywnej_ostatniego_milisekundy_i, true ) >= TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_opóŸnienia_animowania_wizualizacji_alternatywnej_milisekundy_i  ) then
+            TTrafienia_Efekt(trafienia_efekt_list[ i ]).Wizualizacja_Alternatywna__Animuj();
+
+        end;
+      //---//if Czas_Miêdzy_W_Milisekundach( TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_utworzenia_milisekundy_te, true ) >= TTrafienia_Efekt(trafienia_efekt_list[ i ]).czas_trwania_milisekundy_te then
 
     end;
   //---//for i := trafienia_efekt_list.Count - 1 downto 0 do
@@ -44600,17 +45233,28 @@ begin
 
 
   {$region 'Podstawowe efekty.'}
-  zt_trafienia_efekt := TTrafienia_Efekt.Create( AOwner, x_f, y_f, z_f, efekt_rodzaj_f );
+  zt_trafienia_efekt := nil;
+
+  if   ( efekt_rodzaj_f = er_SOS )
+    //or ( efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ )
+    or ( efekt_rodzaj_f in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] )
+    or ( efekt_rodzaj_f = er_Trafienie_Woda ) then
+    zt_trafienia_efekt := TTrafienia_Efekt.Create( AOwner, x_f, y_f, z_f, efekt_rodzaj_f );
 
   // Dynamiczne dodanie efektu.
-  if efekt_rodzaj_f = er_SOS then
+  if    ( efekt_rodzaj_f = er_SOS )
+    and ( zt_trafienia_efekt <> nil ) then
     begin
 
       zt_trafienia_efekt.czas_trwania_milisekundy_te := 60000;
 
       // Gdy kamera jest wewn¹trz efektu bardzo zwalnia.
 
-      TGLSourcePFXEffect(zt_trafienia_efekt.AddNewEffect( TGLSourcePFXEffect )).Manager := Efekt__SOS_Rozb³ysk_GLPolygonPFXManager;
+      if Efekty__SOS_Rozb³ysk_CheckBox.Checked then
+        TGLSourcePFXEffect(zt_trafienia_efekt.AddNewEffect( TGLSourcePFXEffect )).Manager := Efekt__SOS_Rozb³ysk_GLPolygonPFXManager
+      else//if Efekty__SOS_Rozb³ysk_CheckBox.Checked then
+        zt_trafienia_efekt.Wizualizacja_Alternatywna__Utwórz( dzieñ_jasnoœæ_g );
+
       zt_trafienia_efekt.wznoszenie_prêdkoœæ := 10; // Prêdkoœæ wznoszenia.
 
       DŸwiêki__Komunikat__Utwórz_Jeden( dkr_SOS_Pikanie, 0 );
@@ -44618,18 +45262,20 @@ begin
       zt_trafienia_efekt__dŸwiêk_kontener := zt_trafienia_efekt;
 
     end
-  else//if efekt_rodzaj_f = er_SOS then
-  //if efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ then
+  else//if    ( efekt_rodzaj_f = er_SOS ) (...)
+  //if    ( efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ )
+  //  and ( zt_trafienia_efekt <> nil ) then
   //  begin
   //
-  //    //TGLBFireFX(zt_trafienia_efekt.AddNewEffect( TGLBFireFX )).Manager := Efekt__Wpadniêcie_Do_Wody_0_GLFireFXManager;
+  //    //if Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Checked then
+  //    //  TGLBFireFX(zt_trafienia_efekt.AddNewEffect( TGLBFireFX )).Manager := Efekt__Wpadniêcie_Do_Wody_0_GLFireFXManager;
+  //    //else//if Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Checked then
+  //    //  zt_trafienia_efekt.Wizualizacja_Alternatywna__Utwórz( dzieñ_jasnoœæ_g );
   //
   //  end
-  //else//if efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ then
-  if   ( efekt_rodzaj_f = er_Trafienie_L¹d__Obra¿enia )
-    or ( efekt_rodzaj_f = er_Trafienie_Statek )
-    or ( efekt_rodzaj_f = er_Trafienie_Statek_Zatopienie )
-    or ( efekt_rodzaj_f = er_Wystrza³ ) then
+  //else//if    ( efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ ) (...)
+  if    ( efekt_rodzaj_f in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] )
+    and ( zt_trafienia_efekt <> nil ) then
     begin
 
       if efekt_rodzaj_f <> er_Wystrza³ then
@@ -44688,41 +45334,56 @@ begin
       //---//if efekt_rodzaj_f = er_Wystrza³ then
 
 
-      TGLBFireFX(zt_trafienia_efekt.AddNewEffect( TGLBFireFX )).Manager := Efekt__Ogieñ_GLFireFXManager;
+      if Efekty__Ogieñ_CheckBox.Checked then
+        TGLBFireFX(zt_trafienia_efekt.AddNewEffect( TGLBFireFX )).Manager := Efekt__Ogieñ_GLFireFXManager
+      else//if Efekty__Ogieñ_CheckBox.Checked then
+        zt_trafienia_efekt.Wizualizacja_Alternatywna__Utwórz( dzieñ_jasnoœæ_g );
 
     end
-  else//if   ( efekt_rodzaj_f = er_Trafienie_L¹d_Obra¿enia ) (...)
-  if efekt_rodzaj_f = er_Trafienie_Woda then
+  else//if    ( efekt_rodzaj_f in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] ) (...)
+  if    ( efekt_rodzaj_f = er_Trafienie_Woda )
+    and ( zt_trafienia_efekt <> nil ) then
     begin
 
       zt_trafienia_efekt.czas_trwania_milisekundy_te := 1500;
 
       // Gdy kamera jest wewn¹trz efektu bardzo zwalnia.
 
-      TGLSourcePFXEffect(zt_trafienia_efekt.AddNewEffect( TGLSourcePFXEffect )).Manager := Efekt__Wpadniêcie_Do_Wody_GLPolygonPFXManager;
-
-      with GetOrCreateSourcePFX( zt_trafienia_efekt ) do // uses GLParticleFX.
+      if Efekty__Wpadniêcie_Do_Wody_CheckBox.Checked then
         begin
 
-          // Jedno œwiate³ko na œrodku jest zawsze.
+          TGLSourcePFXEffect(zt_trafienia_efekt.AddNewEffect( TGLSourcePFXEffect )).Manager := Efekt__Wpadniêcie_Do_Wody_GLPolygonPFXManager;
 
-          VelocityDispersion := 0.75; // Prêdkoœæ rozpadania siê i wznoszenia.
-          Burst( Gra_GLCadencer.CurrentTime, 100 ); // Iloœæ wylatuj¹cych œwiate³ek.
+          with GLS.ParticleFX.GetOrCreateSourcePFX( zt_trafienia_efekt ) do
+            begin
 
-          VelocityDispersion := 0.05; // Prêdkoœæ rozpadania siê i wznoszenia.
-          Burst( Gra_GLCadencer.CurrentTime, 1 ); // Iloœæ wylatuj¹cych œwiate³ek.
+              // Jedno œwiate³ko na œrodku jest zawsze.
 
-          VelocityDispersion := 0; // Prêdkoœæ rozpadania siê i wznoszenia.
-          RingExplosion( Gra_GLCadencer.CurrentTime, 1, 1.2, 75 ); // uses GLParticleFX.
-          //EffectScale := 0.0001; //??? nie dzia³a dobrze
+              VelocityDispersion := 0.75; // Prêdkoœæ rozpadania siê i wznoszenia.
+              Burst( Gra_GLCadencer.CurrentTime, 100 ); // Iloœæ wylatuj¹cych œwiate³ek.
 
-        end;
-      //---//with GetOrCreateSourcePFX( zt_trafienia_efekt ) do
+              VelocityDispersion := 0.05; // Prêdkoœæ rozpadania siê i wznoszenia.
+              Burst( Gra_GLCadencer.CurrentTime, 1 ); // Iloœæ wylatuj¹cych œwiate³ek.
 
-      //TGLBFireFX(zt_trafienia_efekt.AddNewEffect( TGLBFireFX )).Manager := Efekt__Wpadniêcie_Do_Wody_0_GLFireFXManager;
+              VelocityDispersion := 0; // Prêdkoœæ rozpadania siê i wznoszenia.
+              RingExplosion( Gra_GLCadencer.CurrentTime, 1, 1.2, 75 ); // uses GLS.ParticleFX.
+              //EffectScale := 0.0001; //??? nie dzia³a dobrze
+
+            end;
+          //---//with GLS.ParticleFX.GetOrCreateSourcePFX( zt_trafienia_efekt ) do
+
+        end
+      else//if Efekty__Wpadniêcie_Do_Wody_CheckBox.Checked then
+        zt_trafienia_efekt.Wizualizacja_Alternatywna__Utwórz( dzieñ_jasnoœæ_g );
+
+
+      //if Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Checked then
+      //  TGLBFireFX(zt_trafienia_efekt.AddNewEffect( TGLBFireFX )).Manager := Efekt__Wpadniêcie_Do_Wody_0_GLFireFXManager;
+      //else//if Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Checked then
+      //  zt_trafienia_efekt.Wizualizacja_Alternatywna__Utwórz( dzieñ_jasnoœæ_g );
 
     end;
-  //---//if efekt_rodzaj_f = er_Trafienie_Woda then
+  //---//if    ( efekt_rodzaj_f = er_Trafienie_Woda ) (...)
 
 
   if zt_trafienia_efekt <> nil then
@@ -44752,26 +45413,90 @@ begin
   {$region 'Dodatkowe efekty.'}
   zt_trafienia_efekt := nil;
 
-  if   ( efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ )
-    or ( efekt_rodzaj_f = er_Trafienie_L¹d__Obra¿enia )
-    or ( efekt_rodzaj_f = er_Trafienie_Statek_Zatopienie )
-    or ( efekt_rodzaj_f = er_Wystrza³ ) then
+  if efekt_rodzaj_f in [ er_Trafienie_L¹d__Bez_Obra¿eñ, er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] then
     begin
 
-      zt_trafienia_efekt := TTrafienia_Efekt.Create( AOwner, x_f, y_f, z_f, efekt_rodzaj_f );
+      zt_trafienia_efekt := TTrafienia_Efekt.Create( AOwner, x_f, y_f, z_f, efekt_rodzaj_f, true );
 
-      with GetOrCreateSourcePFX( zt_trafienia_efekt ) do // uses GLParticleFX.
+      if Efekty__Mg³a_CheckBox.Checked then
         begin
 
-          Manager := Efekt__Mg³a_GLPerlinPFXManager;
-          // Gdy kamera jest wewn¹trz efektu bardzo zwalnia.
+          with GLS.ParticleFX.GetOrCreateSourcePFX( zt_trafienia_efekt ) do
+            begin
+
+              Manager := Efekt__Mg³a_GLPerlinPFXManager;
+              // Gdy kamera jest wewn¹trz efektu bardzo zwalnia.
+
+              // Zmienia rozmiar efektu.
+              if efekt_rodzaj_f = er_Trafienie_Statek_Zatopienie then
+                begin
+
+                  zt_trafienia_efekt.czas_trwania_milisekundy_te := Random( 5000 ) + 5000;
+                  EffectScale := 3;
+
+                end
+              else//if efekt_rodzaj_f = er_Trafienie_Statek_Zatopienie then
+              if amunicja_f <> nil then
+                begin
+
+                  case amunicja_f.amunicja_rodzaj of
+                      Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Bomba_G³êbinowa :
+                        begin
+
+                          EffectScale := 1 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l;
+
+                        end;
+                      //---//Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Bomba_G³êbinowa :
+
+                      Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe :
+                        begin
+
+                          EffectScale := 0.05 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l;
+
+                        end;
+                      //---//Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe :
+
+                      Typy_Wspolne.ar_Torpeda :
+                        begin
+
+                          EffectScale := 0.1 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l;
+
+                        end;
+                      //---//Typy_Wspolne.ar_Torpeda :
+                    end;
+                  //---//case amunicja_f.amunicja_rodzaj of
+
+                end
+              else//if amunicja_f <> nil then
+                EffectScale := 0.2; // Kolizja statku ze statkiem.
+
+
+              if efekt_rodzaj_f = er_Wystrza³ then
+                begin
+
+                  zt_trafienia_efekt.czas_trwania_milisekundy_te := Random( 1000 ) + 1000;
+                  EffectScale := EffectScale * 0.5;
+
+                  if    ( amunicja_f <> nil )
+                    and ( amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe, Typy_Wspolne.ar_Torpeda ] ) then
+                    EffectScale := EffectScale * 0.5;
+
+                end;
+              //---//if efekt_rodzaj_f = er_Wystrza³ then
+
+            end;
+          //---//with GLS.ParticleFX.GetOrCreateSourcePFX( zt_trafienia_efekt ) do
+
+        end
+      else//if Efekty__Mg³a_CheckBox.Checked then
+        begin
 
           // Zmienia rozmiar efektu.
           if efekt_rodzaj_f = er_Trafienie_Statek_Zatopienie then
             begin
 
               zt_trafienia_efekt.czas_trwania_milisekundy_te := Random( 5000 ) + 5000;
-              EffectScale := 3;
+              zt_trafienia_efekt.Scale.Scale( 3 );
 
             end
           else//if efekt_rodzaj_f = er_Trafienie_Statek_Zatopienie then
@@ -44782,7 +45507,7 @@ begin
                   Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Bomba_G³êbinowa :
                     begin
 
-                      EffectScale := 1 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l;
+                      zt_trafienia_efekt.Scale.Scale( 1 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l );
 
                     end;
                   //---//Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Bomba_G³êbinowa :
@@ -44790,7 +45515,7 @@ begin
                   Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe :
                     begin
 
-                      EffectScale := 0.05 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l;
+                      zt_trafienia_efekt.Scale.Scale( 0.05 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l );
 
                     end;
                   //---//Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe :
@@ -44798,7 +45523,7 @@ begin
                   Typy_Wspolne.ar_Torpeda :
                     begin
 
-                      EffectScale := 0.1 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l;
+                      zt_trafienia_efekt.Scale.Scale( 0.1 * skala__amunicja_l * obra¿enia_zadawane_wspó³czynnik_zmodyfikowany_l );
 
                     end;
                   //---//Typy_Wspolne.ar_Torpeda :
@@ -44807,35 +45532,39 @@ begin
 
             end
           else//if amunicja_f <> nil then
-            EffectScale := 0.2; // Kolizja statku ze statkiem.
+            zt_trafienia_efekt.Scale.Scale( 0.2 ); // Kolizja statku ze statkiem.
 
 
           if efekt_rodzaj_f = er_Wystrza³ then
             begin
 
               zt_trafienia_efekt.czas_trwania_milisekundy_te := Random( 1000 ) + 1000;
-              EffectScale := EffectScale * 0.5;
+              zt_trafienia_efekt.Scale.Scale( 0.5 );
 
               if    ( amunicja_f <> nil )
                 and ( amunicja_f.amunicja_rodzaj in [ Typy_Wspolne.ar_Bomba_G³êbinowa, Typy_Wspolne.ar_Je¿e_G³êbinowe, Typy_Wspolne.ar_Torpeda ] ) then
-                EffectScale := EffectScale * 0.5;
+                zt_trafienia_efekt.Scale.Scale( 0.5 );
 
             end;
           //---//if efekt_rodzaj_f = er_Wystrza³ then
 
+
+          zt_trafienia_efekt.Wizualizacja_Alternatywna__Utwórz( dzieñ_jasnoœæ_g );
+
         end;
-      //---//with GetOrCreateSourcePFX( zt_trafienia_efekt ) do
+      //---//if Efekty__Mg³a_CheckBox.Checked then
 
     end
-  else//if   ( efekt_rodzaj_f = er_Trafienie_L¹d__Bez_Obra¿eñ ) (...)
-  if efekt_rodzaj_f = er_Trafienie_Statek then
+  else//if efekt_rodzaj_f in [ er_Trafienie_L¹d__Bez_Obra¿eñ, er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek_Zatopienie, er_Wystrza³ ] then
+  if    ( efekt_rodzaj_f = er_Trafienie_Statek )
+    and ( Efekty__Dym_CheckBox.Checked ) then
     begin
 
       zt_trafienia_efekt := TTrafienia_Efekt.Create( AOwner, x_f, y_f, z_f, efekt_rodzaj_f );
 
       zt_trafienia_efekt.czas_trwania_milisekundy_te := Random( 20000 ) + 5000;
 
-      with GetOrCreateSourcePFX( zt_trafienia_efekt ) do // uses GLParticleFX.
+      with GLS.ParticleFX.GetOrCreateSourcePFX( zt_trafienia_efekt ) do
         begin
 
           Manager := Efekt__Dym_GLPerlinPFXManager;
@@ -44875,58 +45604,60 @@ begin
           //---//if amunicja_f <> nil then
 
         end;
-      //---//with GetOrCreateSourcePFX( zt_trafienia_efekt ) do
-
-    end
-  else//if efekt_rodzaj_f = er_Trafienie_Statek then
-  if efekt_rodzaj_f = er_Trafienie_Woda then
-    begin
-
-      // Ustawia ten efekt, gdy¿ podstawowego nie widaæ wyraŸnie.
-
-      //zt_trafienia_efekt := TTrafienia_Efekt.Create( AOwner, x_f, y_f, z_f, efekt_rodzaj_f );
-      //
-      //zt_trafienia_efekt.czas_trwania_milisekundy_te := 1500;
-      //
-      //// Zmienia rozmiar rozprysku wody.
-      //if amunicja_f <> nil then
-      //  begin
-      //
-      //    case amunicja_f.amunicja_rodzaj of
-      //        Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Bomba_G³êbinowa :
-      //          begin
-      //
-      //            zt_trafienia_efekt.Scale.Scale( 5 );
-      //
-      //          end;
-      //        //---//Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Bomba_G³êbinowa :
-      //
-      //        Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe :
-      //          begin
-      //
-      //            //zt_trafienia_efekt.Scale.Scale( 1 );
-      //
-      //          end;
-      //        //---//Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe :
-      //
-      //        Typy_Wspolne.ar_Torpeda :
-      //          begin
-      //
-      //            zt_trafienia_efekt.Scale.Scale( 2 );
-      //
-      //          end;
-      //        //---//Typy_Wspolne.ar_Torpeda :
-      //      end;
-      //    //---//case amunicja_f.amunicja_rodzaj of
-      //
-      //  end;
-      ////---//if amunicja_f <> nil then
-      //
-      //
-      //TGLBFireFX(zt_trafienia_efekt.AddNewEffect( TGLBFireFX )).Manager := Efekt__Wpadniêcie_Do_Wody_0_GLFireFXManager;
+      //---//with GLS.ParticleFX.GetOrCreateSourcePFX( zt_trafienia_efekt ) do
 
     end;
-  //---//if efekt_rodzaj_f = er_Trafienie_Woda then
+  //---//if    ( efekt_rodzaj_f = er_Trafienie_Statek ) (...)
+  //else//if    ( efekt_rodzaj_f = er_Trafienie_Statek ) (...)
+  //if    ( efekt_rodzaj_f = er_Trafienie_Woda )
+  //  and ( Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Checked ) then
+  //  begin
+  //
+  //    // Ustawia ten efekt, gdy¿ podstawowego nie widaæ wyraŸnie.
+  //
+  //    zt_trafienia_efekt := TTrafienia_Efekt.Create( AOwner, x_f, y_f, z_f, efekt_rodzaj_f );
+  //
+  //    zt_trafienia_efekt.czas_trwania_milisekundy_te := 1500;
+  //
+  //    // Zmienia rozmiar rozprysku wody.
+  //    if amunicja_f <> nil then
+  //      begin
+  //
+  //        case amunicja_f.amunicja_rodzaj of
+  //            Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Bomba_G³êbinowa :
+  //              begin
+  //
+  //                zt_trafienia_efekt.Scale.Scale( 5 );
+  //
+  //              end;
+  //            //---//Typy_Wspolne.ar_Artyleria, Typy_Wspolne.ar_Bomba_G³êbinowa :
+  //
+  //            Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe :
+  //              begin
+  //
+  //                //zt_trafienia_efekt.Scale.Scale( 1 );
+  //
+  //              end;
+  //            //---//Typy_Wspolne.ar_Pocisk, Typy_Wspolne.ar_Je¿e_G³êbinowe :
+  //
+  //            Typy_Wspolne.ar_Torpeda :
+  //              begin
+  //
+  //                zt_trafienia_efekt.Scale.Scale( 2 );
+  //
+  //              end;
+  //            //---//Typy_Wspolne.ar_Torpeda :
+  //          end;
+  //        //---//case amunicja_f.amunicja_rodzaj of
+  //
+  //      end;
+  //    //---//if amunicja_f <> nil then
+  //
+  //
+  //    TGLBFireFX(zt_trafienia_efekt.AddNewEffect( TGLBFireFX )).Manager := Efekt__Wpadniêcie_Do_Wody_0_GLFireFXManager;
+  //
+  //  end;
+  ////---//if    ( efekt_rodzaj_f = er_Trafienie_Woda) (...)
 
 
   if zt_trafienia_efekt <> nil then
@@ -44946,7 +45677,8 @@ begin
 
 
   {$region 'Efekt wybuchu rozprzestrzeniaj¹cego siê.'}
-  if efekt_rodzaj_f in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek ] then
+  if    ( efekt_rodzaj_f in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek ] )
+    and ( Efekty__Trafienie_Rozb³ysk_CheckBox.Checked ) then
     begin
 
       // Kolor ¿ó³ty wygl¹da jak zielony i skalowanie niezbyt dobrze wchodzi (zw³aszcza RingExplosion()).
@@ -44968,7 +45700,7 @@ begin
       //---//if zt_trafienia_efekt <> nil then
 
 
-      with GetOrCreateSourcePFX( zt_trafienia_efekt ) do // uses GLParticleFX.
+      with GLS.ParticleFX.GetOrCreateSourcePFX( zt_trafienia_efekt ) do
         begin
 
           EffectScale := 0.5 * skala__amunicja_l;
@@ -44977,13 +45709,13 @@ begin
 
 
           VelocityDispersion := 1; // Prêdkoœæ rozpadania siê i wznoszenia.
-          RingExplosion(  Gra_GLCadencer.CurrentTime, 1, 12, Round( 750 * skala__amunicja_l )  ); // uses GLParticleFX.
+          RingExplosion(  Gra_GLCadencer.CurrentTime, 1, 12, Round( 750 * skala__amunicja_l )  ); // uses GLS.ParticleFX.
 
         end;
-      //---//with GetOrCreateSourcePFX( zt_trafienia_efekt ) do
+      //---//with GLS.ParticleFX.GetOrCreateSourcePFX( zt_trafienia_efekt ) do
 
     end;
-  //---//if efekt_rodzaj_f in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek ] then
+  //---//if    ( efekt_rodzaj_f in [ er_Trafienie_L¹d__Obra¿enia, er_Trafienie_Statek ] ) (...)
   {$endregion 'Efekt wybuchu rozprzestrzeniaj¹cego siê.'}
 
 
@@ -45181,7 +45913,7 @@ var
   zti : integer;
   ztr : real;
   zts : string;
-  plik_ini : TIniFile; // uses IniFiles.
+  plik_ini : System.IniFiles.TIniFile;
 begin
 
   //
@@ -45198,7 +45930,7 @@ begin
 
   zts := ExtractFilePath( Application.ExeName ) + 'Statki.ini';
 
-  plik_ini := TIniFile.Create( zts );
+  plik_ini := System.IniFiles.TIniFile.Create( zts );
 
 
   {$region 'BabyMetal_Statek.'}
@@ -45689,6 +46421,138 @@ begin
     Delta_Czasu_Wyœwietlaj_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
 
 
+  zts := Boolean_W__Tak_Nie( Efekty__Dym_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__dym' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__dym', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__dym', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Dym_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Element_Uszkodzenie_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__element_uszkodzenie' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__element_uszkodzenie', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__element_uszkodzenie', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Element_Uszkodzenie_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Mg³a_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__mg³a' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__mg³a', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__mg³a', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Mg³a_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Ogieñ_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__ogieñ' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__ogieñ', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__ogieñ', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Ogieñ_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Smuga_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__smuga' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__smuga', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__smuga', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Smuga_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Smuga_D³uga_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__smuga_d³uga' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__smuga_d³uga', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__smuga_d³uga', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Smuga_D³uga_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Sonarowe_U³atwienie_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__sonarowe_u³atwienie' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__sonarowe_u³atwienie', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__sonarowe_u³atwienie', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Sonarowe_U³atwienie_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__SOS_Rozb³ysk_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__sos_rozb³ysk' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__sos_rozb³ysk', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__sos_rozb³ysk', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__SOS_Rozb³ysk_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Trafienie_Rozb³ysk_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__trafienie_rozb³ysk' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__trafienie_rozb³ysk', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__trafienie_rozb³ysk', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Trafienie_Rozb³ysk_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Wpadniêcie_Do_Wody_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__wpadniêcie_do_wody' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__wpadniêcie_do_wody', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__wpadniêcie_do_wody', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Wpadniêcie_Do_Wody_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zts := Boolean_W__Tak_Nie( Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Checked );
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'efekty__wpadniêcie_do_wody_0' )  ) then
+    plik_ini.WriteString( 'POZOSTA£E', 'efekty__wpadniêcie_do_wody_0', zts )
+  else
+    zts := plik_ini.ReadString( 'POZOSTA£E', 'efekty__wpadniêcie_do_wody_0', zts ); // Je¿eli nie znajdzie to podstawia wartoœæ zts.
+
+  if not zapisuj_ustawienia_f then
+    Efekty__Wpadniêcie_Do_Wody_0_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
   zts := Boolean_W__Tak_Nie( Gwiazdy_Migotanie_CheckBox.Checked );
 
   if   (  zapisuj_ustawienia_f )
@@ -45723,6 +46587,21 @@ begin
 
   if not zapisuj_ustawienia_f then
     Klatek_Na_Sekundê_Wyœwietlaj_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zti := Niebo_Rodzaj_RadioGroup.ItemIndex;
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'niebo_rodzaj' )  ) then
+    plik_ini.WriteInteger( 'POZOSTA£E', 'niebo_rodzaj', zti )
+  else
+    zti := plik_ini.ReadInteger( 'POZOSTA£E', 'niebo_rodzaj', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  if    ( not zapisuj_ustawienia_f )
+    and ( Niebo_Rodzaj_RadioGroup.Items.Count > 0 )
+    and ( zti >= 0 )
+    and ( zti <= Niebo_Rodzaj_RadioGroup.Items.Count - 1 ) then
+    Niebo_Rodzaj_RadioGroup.ItemIndex := zti;
 
 
   zts := Boolean_W__Tak_Nie( Projektowy_Tryb_CheckBox.Checked );
@@ -45857,6 +46736,21 @@ begin
 
   if not zapisuj_ustawienia_f then
     Punkt_Naprowadzaj__Strza³ka_CheckBox.Checked := zts = Boolean_W__Tak_Nie( true );
+
+
+  zti := Radar__Niebo_Rodzaj_RadioGroup.ItemIndex;
+
+  if   (  zapisuj_ustawienia_f )
+    or (  not plik_ini.ValueExists( 'POZOSTA£E', 'radar__niebo_rodzaj' )  ) then
+    plik_ini.WriteInteger( 'POZOSTA£E', 'radar__niebo_rodzaj', zti )
+  else
+    zti := plik_ini.ReadInteger( 'POZOSTA£E', 'radar__niebo_rodzaj', zti ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
+
+  if    ( not zapisuj_ustawienia_f )
+    and ( Radar__Niebo_Rodzaj_RadioGroup.Items.Count > 0 )
+    and ( zti >= 0 )
+    and ( zti <= Radar__Niebo_Rodzaj_RadioGroup.Items.Count - 1 ) then
+    Radar__Niebo_Rodzaj_RadioGroup.ItemIndex := zti;
 
 
   zts := Boolean_W__Tak_Nie( SI__Patrol_Blisko_Zostaje_CheckBox.Checked );
@@ -46585,7 +47479,13 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'amunicja__zanurzenie_g³êbokoœæ_zadana', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Text := FloatToStr( ztr );
+    begin
+
+      Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
+      Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Text := StringReplace( Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Text, ' ', '', [ rfReplaceAll ] ); // Mo¿e byæ wartoœæ ujemna - usunie spacjê miêdzy minusem a liczb¹.
+
+    end;
+  //---//if not zapisuj_ustawienia_f then
 
 
   ztr := Odczytaj_Liczbê_Z_Napisu( Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Text, 0 );
@@ -46597,7 +47497,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'amunicja__zanurzenie_g³êbokoœæ_zadana_skok_o', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Text := FloatToStr( ztr );
+    Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   zts := Boolean_W__Tak_Nie( Celowanie__Bronie_Osobno_CheckBox.Checked );
@@ -46693,7 +47593,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__r', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Celownik_Ekranowy__Kolor__R_Edit.Text := FloatToStr( ztr );
+    Celownik_Ekranowy__Kolor__R_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Kolor__G_Edit.Text, 0.0 );
@@ -46705,7 +47605,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__g', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Celownik_Ekranowy__Kolor__G_Edit.Text := FloatToStr( ztr );
+    Celownik_Ekranowy__Kolor__G_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Kolor__B_Edit.Text, 0.0 );
@@ -46717,7 +47617,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__b', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Celownik_Ekranowy__Kolor__B_Edit.Text := FloatToStr( ztr );
+    Celownik_Ekranowy__Kolor__B_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Kolor__A_Edit.Text, 0.0 );
@@ -46729,7 +47629,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__kolor__a', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Celownik_Ekranowy__Kolor__A_Edit.Text := FloatToStr( ztr );
+    Celownik_Ekranowy__Kolor__A_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Szerokoœæ_Edit.Text, 0.01 );
@@ -46741,7 +47641,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__szerokoœæ', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Celownik_Ekranowy__Szerokoœæ_Edit.Text := FloatToStr( ztr );
+    Celownik_Ekranowy__Szerokoœæ_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Wysokoœæ_Edit.Text, 0.01 );
@@ -46753,7 +47653,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__wysokoœæ', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Celownik_Ekranowy__Wysokoœæ_Edit.Text := FloatToStr( ztr );
+    Celownik_Ekranowy__Wysokoœæ_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   ztr := Odczytaj_Liczbê_Z_Napisu( Celownik_Ekranowy__Gruboœæ_Edit.Text, 0.01 );
@@ -46765,7 +47665,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'celownik_ekranowy__gruboœæ', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Celownik_Ekranowy__Gruboœæ_Edit.Text := FloatToStr( ztr );
+    Celownik_Ekranowy__Gruboœæ_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   zts := Boolean_W__Tak_Nie( Celownik_Widocznoœæ_CheckBox.Checked );
@@ -46944,7 +47844,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'kamera_szybkoœæ_ruchu', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Kamera_Szybkoœæ_Ruchu_Edit.Text := FloatToStr( ztr );
+    Kamera_Szybkoœæ_Ruchu_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   zts := Boolean_W__Tak_Nie( L¹dowanie_U³atwione_CheckBox.Checked );
@@ -47032,7 +47932,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'mysz_czu³oœæ', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Mysz_Czu³oœæ_Edit.Text := FloatToStr( ztr );
+    Mysz_Czu³oœæ_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   ztr := Odczytaj_Liczbê_Z_Napisu( Mysz_Czu³oœæ_Luneta_Edit.Text, 0.1 );
@@ -47044,7 +47944,7 @@ begin
     ztr := plik_ini.ReadFloat( 'USTAWIENIA', 'mysz_czu³oœæ_luneta', ztr ); // Je¿eli nie znajdzie to podstawia wartoœæ zti.
 
   if not zapisuj_ustawienia_f then
-    Mysz_Czu³oœæ_Luneta_Edit.Text := FloatToStr( ztr );
+    Mysz_Czu³oœæ_Luneta_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', ztr )  );
 
 
   zti := Noc_SpinEdit.Value;
@@ -47664,6 +48564,7 @@ begin
         L¹d_ComboBoxChange( nil );
 
       Morze_Wzburzenie_SpinEditChange( nil ); // Je¿eli zmieni siê wartoœæ fale__wysokoœæ_bazowa_g ale nie zmieni siê wartoœæ wzburzenia morza.
+      Niebo_Rodzaj_RadioGroupClick( nil );
       Punkty_¯ycia_WskaŸnik__Efekty_Tryb_ComboBoxChange( nil );
       SI__Schemat_Opis_Memo.Text := 'Opis schematu si.';
       SI__Schemat_ComboBoxChange( nil );
@@ -47759,11 +48660,11 @@ begin
 end;//---//Funkcja Ustawienia_T³umaczenia().
 
 //Funkcja Vector__Do__Wieloosobowe__Wektor_4().
-function TStatki_Form.Vector__Do__Wieloosobowe__Wektor_4( const vector_f : GLVectorGeometry.TVector ) : TWieloosobowe__Wektor_4;
+function TStatki_Form.Vector__Do__Wieloosobowe__Wektor_4( const vector_f : GLS.VectorTypes.TVector4f ) : TWieloosobowe__Wektor_4;
 begin
 
   //
-  // Funkcja podstawia wartoœci z typu GLVectorGeometry.TVector do typu TWieloosobowe__Wektor_4.
+  // Funkcja podstawia wartoœci z typu GLS.VectorTypes.TVector4d do typu TWieloosobowe__Wektor_4.
   //
   // Zwraca TWieloosobowe__Wektor_4.
   //
@@ -47793,7 +48694,7 @@ var
   zts : string;
   search_rec : TSearchRec;
   zt_string_list : TStringList;
-  zt_xml_document : TXMLDocument; //uses XMLDoc
+  zt_xml_document : Xml.XMLDoc.TXMLDocument;
 
   zt_combo_box : TComboBox;
 begin
@@ -47869,7 +48770,7 @@ begin
 
 
   zt_string_list := TStringList.Create();
-  zt_xml_document := TXMLDocument.Create( Application );
+  zt_xml_document := Xml.XMLDoc.TXMLDocument.Create( Application );
   zt_xml_document.Options := zt_xml_document.Options + [ doNodeAutoIndent ]; // Domyœlnie ma: doNodeAutoCreate, doAttrNull, doAutoPrefix, doNamespaceDecl.
 
   j := -99;
@@ -48144,7 +49045,7 @@ end;//---//Funkcja xNx__Wiatr__Wartoœæ_Do_Napisu().
 //Funkcja Wiatr__Wylicz().
 procedure TStatki_Form.Wiatr__Wylicz( const do_klientów_wysy³aj_f : boolean = true );
 var
-  zt_vector : GLVectorGeometry.TVector;
+  zt_vector : GLS.VectorTypes.TVector4f;
   wieloosobowe__efekt_r_l : TObiekty_Wieloosobowe__Efekt_r;
 begin
 
@@ -48166,13 +49067,13 @@ begin
 
 
       wiatr_vector_g :=
-        GLVectorGeometry.VectorMake
+        GLS.VectorGeometry.VectorMake
           (
               RandomRange( -100, 101 )
             , RandomRange( -100, 101 )
             , RandomRange( -100, 101 )
           );
-      GLVectorGeometry.NormalizeVector( wiatr_vector_g );
+      GLS.VectorGeometry.NormalizeVector( wiatr_vector_g );
 
 
       case Wiatr__Zmiana_Tryb_RadioGroup.ItemIndex of
@@ -48333,7 +49234,7 @@ procedure TStatki_Form.Wieloosobowe_Amunicja_Parametry_Ustaw();
         if amunicja_f.torpeda_efekt_na_wodzie_gl_dummy_cube.Parent = nil then
           begin
 
-            Amunicja_Wystrzelona_Efekt_Utwórz( amunicja_f, true, true );
+            Amunicja_Wystrzelona_Efekt_Utwórz( amunicja_f, true, dzieñ_jasnoœæ_g, true );
             amunicja_f.torpeda_efekt_na_wodzie_gl_dummy_cube.Parent := Gra_Obiekty_GLDummyCube;
 
           end
@@ -48460,7 +49361,7 @@ begin//Funkcja Wieloosobowe_Amunicja_Parametry_Ustaw().
             //---//if wieloosobowe_amunicja_efekt_g = nil then
 
 
-            Amunicja_Wystrzelona_Efekt_Utwórz( zt_amunicja, false, true );
+            Amunicja_Wystrzelona_Efekt_Utwórz( zt_amunicja, false, dzieñ_jasnoœæ_g, true );
 
             wieloosobowe_amunicja_wystrzelona_list.Add( zt_amunicja );
 
@@ -48558,7 +49459,7 @@ begin
     begin
 
       wieloosobowe__statek_klawisze_obs³uga_r.id_statek_kl__owo := -9999;
-      wieloosobowe__statek_klawisze_obs³uga_r.cel_wspó³rzêdne__owo := GLVectorGeometry.AffineVectorMake( 0, 0, 0 );
+      wieloosobowe__statek_klawisze_obs³uga_r.cel_wspó³rzêdne__owo := GLS.VectorGeometry.AffineVectorMake( 0, 0, 0 );
 
     end;
   //---//if zt_statek <> nil then
@@ -49082,7 +49983,7 @@ procedure TStatki_Form.Wieloosobowe_Statki__Parametry_Ustaw();
       // Funkcja tworzy jeden statek dla klienta gry wieloosobowej.
       //
 
-      statki_t[ indeks_statku_f_f ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, nil, Efekt__Element_Uszkodzenie_GLThorFXManager, wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_gracz__owo, wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_st__owo, Statek_Odczytaj_Schemat( wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_schemat__owo ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
+      statki_t[ indeks_statku_f_f ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, nil, Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ(), wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_gracz__owo, wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_st__owo, Statek_Odczytaj_Schemat( wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_schemat__owo ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
       statki_t[ indeks_statku_f_f ].id_gracz := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_gracz__owo;
       statki_t[ indeks_statku_f_f ].id_grupa := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_grupa__owo;
       statki_t[ indeks_statku_f_f ].id_statek_schemat := wieloosobowe__statki_t[ indeks_wieloosobowe__statki_f_f ].id_statek_schemat__owo;
@@ -50076,7 +50977,7 @@ begin
 end;//---//Funkcja Wieloosobowe__Log_Wypisz().
 
 //Funkcja Wieloosobowe__Odczytaj().
-function TStatki_Form.Wieloosobowe__Odczytaj( const io_handler_f : TIdIOHandler; const komenda_udp_f : string; const id_context_f : TIdContext; const id_socket_handle_f : TIdSocketHandle ) : string; // uses IdIOHandler.
+function TStatki_Form.Wieloosobowe__Odczytaj( const io_handler_f : IdIOHandler.TIdIOHandler; const komenda_udp_f : string; const id_context_f : TIdContext; const id_socket_handle_f : TIdSocketHandle ) : string;
 
   //Funkcja Strumieñ_Napis_Odczytaj() w Wieloosobowe__Odczytaj().
   function Strumieñ_Napis_Odczytaj( strumieñ_pamiêci_f : TMemoryStream ) : string;
@@ -50572,7 +51473,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
                   // Tylko klient odczytuje komunikat o parametrach wiatru.
 
-                  strumieñ_pamiêci_l.Read(  wiatr_vector_g, SizeOf( GLVectorGeometry.TVector )  );
+                  strumieñ_pamiêci_l.Read(  wiatr_vector_g, SizeOf( GLS.VectorTypes.TVector4d )  );
 
                   Wiatr__Si³a_SpinEditChange( nil );
                   Wiatr__Wylicz();
@@ -50585,7 +51486,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   //  begin
                   //
                   //    try
-                  //      wiatr_vector_g.X := StrToFloat(  Copy( zts, 1, i - 1 )  );
+                  //      wiatr_vector_g.X := String_To__Float(  Copy( zts, 1, i - 1 )  );
                   //    except
                   //      Log_Wypisz( t³umaczenie_komunikaty_r.xNx__komunikat__nieprawid³owa_wartoœæ_wspó³czynnika_wiatru + ' X: ' + zts + '.', false );
                   //    end;
@@ -50600,7 +51501,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   //      begin
                   //
                   //        try
-                  //          wiatr_vector_g.Y := StrToFloat(  Copy( zts, 1, i - 1 )  );
+                  //          wiatr_vector_g.Y := String_To__Float(  Copy( zts, 1, i - 1 )  );
                   //        except
                   //          Log_Wypisz( t³umaczenie_komunikaty_r.xNx__komunikat__nieprawid³owa_wartoœæ_wspó³czynnika_wiatru + ' Y: ' + zts + '.', false );
                   //        end;
@@ -50615,7 +51516,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   //          begin
                   //
                   //            try
-                  //              wiatr_vector_g.Z := StrToFloat(  Copy( zts, 1, i - 1 )  );
+                  //              wiatr_vector_g.Z := String_To__Float(  Copy( zts, 1, i - 1 )  );
                   //            except
                   //              Log_Wypisz( t³umaczenie_komunikaty_r.xNx__komunikat__nieprawid³owa_wartoœæ_wspó³czynnika_wiatru + ' Z: ' + zts + '.', false );
                   //            end;
@@ -50630,7 +51531,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   //              begin
                   //
                   //                try
-                  //                  wiatr_vector_g.W := StrToFloat(  Copy( zts, 1, i - 1 )  );
+                  //                  wiatr_vector_g.W := String_To__Float(  Copy( zts, 1, i - 1 )  );
                   //                except
                   //                  Log_Wypisz( t³umaczenie_komunikaty_r.xNx__komunikat__nieprawid³owa_wartoœæ_wspó³czynnika_wiatru + ' W: ' + zts + '.', false );
                   //                end;
@@ -51243,7 +52144,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   strumieñ_pamiêci_l.Read(  wieloosobowe__efekt_r_l.id_statek_ef__owo, SizeOf( integer )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__efekt_r_l.czas_trwania__owo, SizeOf( Int64 )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__efekt_r_l.dŸwiêk_efekt_rodzaj_owo, SizeOf( TDŸwiêk_Efekt_Rodzaj )  );
-                  strumieñ_pamiêci_l.Read(  wieloosobowe__efekt_r_l.pozycja_ef__owo, SizeOf( GLVectorGeometry.TVector )  );
+                  strumieñ_pamiêci_l.Read(  wieloosobowe__efekt_r_l.pozycja_ef__owo, SizeOf( GLS.VectorTypes.TVector4d )  );
 
                   Wieloosobowe__DŸwiêk_Efekt_Utwórz( wieloosobowe__efekt_r_l );
 
@@ -51390,7 +52291,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                     begin
 
                       try
-                        ztdu := StrToFloat(  Copy( zts, 1, i - 1 )  );
+                        ztdu := String_To__Float(  Copy( zts, 1, i - 1 )  );
                         j := 0;
                       except
                         j := 1;
@@ -51725,7 +52626,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
                   //strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].gracz__nazwa__owo, SizeOf( TWieloosobowe_String )  );
 
-                  strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].cel_wspó³rzêdne_st__owo, SizeOf( GLVectorGeometry.TAffineVector )  );
+                  strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].cel_wspó³rzêdne_st__owo, SizeOf( GLS.VectorGeometry.TAffineVector )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].kierunek_st__owo, SizeOf( TWieloosobowe__Wektor_4 )  );
                   strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].pozycja_st__owo, SizeOf( TWieloosobowe__Wektor_4 )  );
 
@@ -51747,7 +52648,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
                   SetLength( wieloosobowe__statki_t[ i ].kotwica__wspó³rzêdne_t__owo, wieloosobowe__statki_t[ i ].kotwica_t__d³ugoœæ_tabeli__owo );
 
                   for j := 0 to Length( wieloosobowe__statki_t[ i ].kotwica__wspó³rzêdne_t__owo ) - 1 do
-                    strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].kotwica__wspó³rzêdne_t__owo[ j ], SizeOf( GLVectorGeometry.TAffineVector )  );
+                    strumieñ_pamiêci_l.Read(  wieloosobowe__statki_t[ i ].kotwica__wspó³rzêdne_t__owo[ j ], SizeOf( GLS.VectorGeometry.TAffineVector )  );
 
 
                   SetLength( wieloosobowe__statki_t[ i ].ster__uszkodzone_czas_i_t__owo, wieloosobowe__statki_t[ i ].ster_t__d³ugoœæ_tabeli__owo );
@@ -52555,7 +53456,7 @@ begin//Funkcja Wieloosobowe__Odczytaj().
 
                                   if i > 1 then
                                     try
-                                      ztdu := StrToFloat(  Copy( zts, 1, i - 1 )  ); // Znacznik czasu.
+                                      ztdu := String_To__Float(  Copy( zts, 1, i - 1 )  ); // Znacznik czasu.
                                     except
                                     end;
                                     //---//try
@@ -52904,7 +53805,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
           // Tylko serwer wysy³a informacjê o parametrach wiatru.
 
           //strumieñ_pamiêci_l.Write(  wieloosobowe__efekt_r_f.pozycja_ef__owo, SizeOf( wieloosobowe__efekt_r_f.pozycja_ef__owo )  );
-          strumieñ_pamiêci_l.Write(  wieloosobowe__efekt_r_f.pozycja_ef__owo, SizeOf( GLVectorGeometry.TVector )  );
+          strumieñ_pamiêci_l.Write(  wieloosobowe__efekt_r_f.pozycja_ef__owo, SizeOf( GLS.VectorTypes.TVector4d )  );
 
         end;
       //---//if czy_serwer_g then
@@ -53186,7 +54087,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
           strumieñ_pamiêci_l.Write(  wieloosobowe__efekt_r_f.id_statek_ef__owo, SizeOf( integer )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__efekt_r_f.czas_trwania__owo, SizeOf( Int64 )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__efekt_r_f.dŸwiêk_efekt_rodzaj_owo, SizeOf( TDŸwiêk_Efekt_Rodzaj )  );
-          strumieñ_pamiêci_l.Write(  wieloosobowe__efekt_r_f.pozycja_ef__owo, SizeOf( GLVectorGeometry.TVector )  );
+          strumieñ_pamiêci_l.Write(  wieloosobowe__efekt_r_f.pozycja_ef__owo, SizeOf( GLS.VectorTypes.TVector4d )  );
 
         end;
       //---//if czy_serwer_g then
@@ -53443,7 +54344,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
 
           //strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].gracz__nazwa__owo, SizeOf( TWieloosobowe_String )  );
 
-          strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].cel_wspó³rzêdne_st__owo, SizeOf( GLVectorGeometry.TAffineVector )  );
+          strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].cel_wspó³rzêdne_st__owo, SizeOf( GLS.VectorGeometry.TAffineVector )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].kierunek_st__owo, SizeOf( TWieloosobowe__Wektor_4 )  );
           strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].pozycja_st__owo, SizeOf( TWieloosobowe__Wektor_4 )  );
 
@@ -53457,7 +54358,7 @@ begin//Funkcja Wieloosobowe__Strumieñ_Wyœlij().
             strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].kotwica__uszkodzone_czas_i_t__owo[ j ], SizeOf( Int64 )  );
 
           for j := 0 to Length( wieloosobowe__statki_t[ i ].kotwica__wspó³rzêdne_t__owo ) - 1 do
-            strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].kotwica__wspó³rzêdne_t__owo[ j ], SizeOf( GLVectorGeometry.TAffineVector )  );
+            strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].kotwica__wspó³rzêdne_t__owo[ j ], SizeOf( GLS.VectorGeometry.TAffineVector )  );
 
           for j := 0 to Length( wieloosobowe__statki_t[ i ].ster__uszkodzone_czas_i_t__owo ) - 1 do
             strumieñ_pamiêci_l.Write(  wieloosobowe__statki_t[ i ].ster__uszkodzone_czas_i_t__owo[ j ], SizeOf( Int64 )  );
@@ -54313,13 +55214,13 @@ begin
 end;//---//Funkcja xNx__Wieloosobowe__Trafienia_Efekt_Utwórz().
 
 //Funkcja Wieloosobowe__Wektor_4__Do__Vector().
-function TStatki_Form.Wieloosobowe__Wektor_4__Do__Vector( const wieloosobowe__wektor_4_f : TWieloosobowe__Wektor_4 ) : GLVectorGeometry.TVector;
+function TStatki_Form.Wieloosobowe__Wektor_4__Do__Vector( const wieloosobowe__wektor_4_f : TWieloosobowe__Wektor_4 ) : GLS.VectorTypes.TVector4f;
 begin
 
   //
-  // Funkcja podstawia wartoœci z typu TWieloosobowe__Wektor_4 do typu GLVectorGeometry.TVector.
+  // Funkcja podstawia wartoœci z typu TWieloosobowe__Wektor_4 do typu GLS.VectorTypes.TVector4d.
   //
-  // Zwraca GLVectorGeometry.TVector.
+  // Zwraca GLS.VectorTypes.TVector4d.
   //
 
   Result.X := wieloosobowe__wektor_4_f.X;
@@ -54402,7 +55303,7 @@ begin
 
   if DŸwiêki_L¹dów_GLSoundLibrary.Samples.GetByName( dŸwiêk_nazwa_f ) = nil then
     try
-      DŸwiêki_L¹dów_GLSoundLibrary.Samples.AddFile // uses GLFileWAV.
+      DŸwiêki_L¹dów_GLSoundLibrary.Samples.AddFile // uses GLS.FileWAV.
         (
           zts,
           dŸwiêk_nazwa_f
@@ -54504,7 +55405,7 @@ begin
 end;//---//Funkcja Wygl¹d_Elementy__DŸwiêk_Wczytaj().
 
 //Funkcja Wygl¹d_Elementy__Kolor_Losowy_Wylicz().
-function TStatki_Form.Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_od_f, kolor_do_f : real ) : GLVectorGeometry.TVector;
+function TStatki_Form.Wygl¹d_Elementy__Kolor_Losowy_Wylicz( kolor_od_f, kolor_do_f : real ) : GLS.VectorTypes.TVector4f;
 var
   ztr : real;
 begin
@@ -54536,7 +55437,7 @@ begin
   if kolor_od_f > 0 then
     kolor_do_f := kolor_do_f - kolor_od_f;
 
-  GLVectorGeometry.SetVector
+  GLS.VectorGeometry.SetVector
     (
       Result,
       Random(  Round( kolor_do_f * 10 + 1 )  ) * 0.1 + kolor_od_f, // + 1 bo Random() losuje z przedzia³u otwartego prawostronnie.
@@ -54551,12 +55452,12 @@ end;//---//Funkcja Wygl¹d_Elementy__Kolor_Losowy_Wylicz().
 procedure TStatki_Form.Wygl¹d_Elementy__Kolor_Noc_Zmieñ( const gl_material_f : TGLMaterial; const dzieñ_jasnoœæ_f : real );
 begin
 
-  gl_material_f.FrontProperties.Emission.Color := GLVectorGeometry.VectorScale( gl_material_f.FrontProperties.Ambient.Color, dzieñ_jasnoœæ_f );
+  gl_material_f.FrontProperties.Emission.Color := GLS.VectorGeometry.VectorScale( gl_material_f.FrontProperties.Ambient.Color, dzieñ_jasnoœæ_f );
 
 end;//---//Funkcja Wygl¹d_Elementy__Kolor_Noc_Zmieñ().
 
 //Funkcja Wygl¹d_Elementy__Kolor_Ustaw().
-procedure TStatki_Form.Wygl¹d_Elementy__Kolor_Ustaw( const gl_material_f : TGLMaterial; const vector_f : GLVectorGeometry.TVector );
+procedure TStatki_Form.Wygl¹d_Elementy__Kolor_Ustaw( const gl_material_f : TGLMaterial; const vector_f : GLS.VectorTypes.TVector4f );
 begin
 
   gl_material_f.FrontProperties.Ambient.Color := vector_f;
@@ -54568,7 +55469,7 @@ end;//---//Funkcja Wygl¹d_Elementy__Kolor_Ustaw().
 //Funkcja Wygl¹d_Elementy__Kolor_Ustaw_Losowy().
 procedure TStatki_Form.Wygl¹d_Elementy__Kolor_Ustaw_Losowy( const gl_material_f : TGLMaterial; kolor_od_f : real = -1; kolor_do_f : real = -1 );
 var
-  kolor_vector : GLVectorGeometry.TVector;
+  kolor_vector : GLS.VectorTypes.TVector4f;
 begin
 
   //
@@ -54755,13 +55656,13 @@ begin
         if TŒlad_Torowy(œlad_torowy_list[ i ]).zmieni³_kolor then
           begin
 
-            TŒlad_Torowy(œlad_torowy_list[ i ]).EdgeColor.Color := GLVectorGeometry.VectorScale( GLColor.clrSkyBlue, dzieñ_jasnoœæ_g );
+            TŒlad_Torowy(œlad_torowy_list[ i ]).EdgeColor.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrSkyBlue, dzieñ_jasnoœæ_g );
 
           end
         else//if TŒlad_Torowy(œlad_torowy_list[ i ]).zmieni³_kolor then
           begin
 
-            TŒlad_Torowy(œlad_torowy_list[ i ]).EdgeColor.Color := GLVectorGeometry.VectorScale( GLColor.clrLightBlue, dzieñ_jasnoœæ_g );
+            TŒlad_Torowy(œlad_torowy_list[ i ]).EdgeColor.Color := GLS.VectorGeometry.VectorScale( GLS.Color.clrLightBlue, dzieñ_jasnoœæ_g );
 
           end;
         //---//if TŒlad_Torowy(œlad_torowy_list[ i ]).zmieni³_kolor then
@@ -54790,7 +55691,7 @@ begin
               and (  not Wyglad_Elementy.Œwiat³o_Dodatkowe( TGLCustomSceneObject(Self.l¹d_list[ i ]) )  ) then
               Wygl¹d_Elementy__Kolor_Noc_Zmieñ( TGLCustomSceneObject(l¹d_list[ i ]).Material, dzieñ_jasnoœæ_g )
             else//if    (  not Wyglad_Elementy.Œwiat³o( TGLCustomSceneObject(Self.l¹d_list[ i ]) )  ) (...)
-              if not GLVectorGeometry.VectorEquals( TGLCustomSceneObject(l¹d_list[ i ]).Material.FrontProperties.Emission.Color, TGLCustomSceneObject(l¹d_list[ i ]).Material.FrontProperties.Ambient.Color ) then //???
+              if not GLS.VectorGeometry.VectorEquals( TGLCustomSceneObject(l¹d_list[ i ]).Material.FrontProperties.Emission.Color, TGLCustomSceneObject(l¹d_list[ i ]).Material.FrontProperties.Ambient.Color ) then //???
                 Wygl¹d_Elementy__Kolor_Noc_Zmieñ( TGLCustomSceneObject(l¹d_list[ i ]).Material, 1 ); // Aby rozjaœniæ œwiat³a gdy zosta³y przyciemnione noc¹.
 
             // Nie wiem czy trzeba bêdzie zmieniaæ jasnoœæ tekstur. //???
@@ -54872,7 +55773,7 @@ end;//---//Funkcja Wygl¹d_Elementy__Noc_Zmieñ().
 function TStatki_Form.xNx__Wygl¹d_Elementy__Tekstura_Wczytaj( gl_custom_scene_object_f : TGLCustomSceneObject; tekstura_œcie¿ka_f : string ) : boolean;
 var
   bit_map : TBitmap;
-  obrazek_png : TPngImage; //Potrzebuje w uses pngimage.
+  obrazek_png : pngimage.TPngImage;
 begin
 
   // Czasami nie wczytuje tekstury i wyœwietla siê tekstura domyœlna z napisem 'texture error'.
@@ -54894,7 +55795,7 @@ begin
 
   bit_map := TBitmap.Create();
 
-  obrazek_png := TPngImage.Create();
+  obrazek_png := pngimage.TPngImage.Create();
   obrazek_png.LoadFromFile( tekstura_œcie¿ka_f );
   bit_map.Assign( obrazek_png );
   obrazek_png.Free();
@@ -54922,7 +55823,7 @@ end;//---//xNx__Funkcja Wygl¹d_Elementy__Tekstura_Wczytaj().
 function TStatki_Form.Wygl¹d_Elementy__Tekstura_Wczytaj_2( gl_custom_scene_object_f : TGLCustomSceneObject; tekstura_œcie¿ka_f : string; const materia³_nazwa_f : string = '' ) :  boolean;
 var
   tekstura_nazwa_l : string;
-  zt_gltexture : TGLTexture; // uses GLTexture.
+  zt_gltexture : GLS.Texture.TGLTexture;
   //zt_gl_lib_material : TGLLibMaterial;
 begin
 
@@ -55084,9 +55985,9 @@ begin
       if not ( Result is Wyglad_Elementy.TSt_GLDummyCube ) then
         begin
 
-          Result.Material.FrontProperties.Ambient.Color := GLColor.clrTransparent;
-          Result.Material.FrontProperties.Diffuse.Color := GLColor.clrTransparent;
-          Result.Material.FrontProperties.Emission.Color := GLColor.clrTransparent;
+          Result.Material.FrontProperties.Ambient.Color := GLS.Color.clrTransparent;
+          Result.Material.FrontProperties.Diffuse.Color := GLS.Color.clrTransparent;
+          Result.Material.FrontProperties.Emission.Color := GLS.Color.clrTransparent;
 
         end;
       //---//if not ( Result is TGLDummyCube ) then
@@ -55205,9 +56106,79 @@ end;//---//Funkcja Komunikacja_Rekord_Testowy_Obs³uga().
 
 //FormShow().
 procedure TStatki_Form.FormShow( Sender: TObject );
-var
-  zt_gl_sky_dome_star : TGLSkyDomeStar;
-begin
+
+  //Funkcja Gwiazdy_Nawigacyjne_Dodaj() w FormShow().
+  procedure Gwiazdy_Nawigacyjne_Dodaj( gl_sky_dome_f : GLS.SkyDome.TGLSkyDome );
+  var
+    zt_gl_sky_dome_star : GLS.SkyDome.TGLSkyDomeStar;
+  begin
+
+    if gl_sky_dome_f = nil then
+      Exit;
+
+
+    {$region 'Gwiazdy nawigacyjne.'}
+    // Iloœæ gwiazd nawigacyjnych.
+    // PN dól.
+    zt_gl_sky_dome_star := gl_sky_dome_f.Stars.Add();
+    zt_gl_sky_dome_star.Dec := 45; // Góra dó³ ( 0 - 180 ), ujemnych, pod horyzontem nie widaæ.
+    zt_gl_sky_dome_star.Magnitude := -0.75; // Wielkoœæ -5 (najwiêksza chyba).
+    zt_gl_sky_dome_star.RA := 90; // Prawo. Obrót (lewo prawo) 90 przód -90 ty³ (gdy przód z, lewo x).
+    zt_gl_sky_dome_star.Color := clSkyBlue;
+    //---// PN dó³.
+
+    // PN góra.
+    zt_gl_sky_dome_star := gl_sky_dome_f.Stars.Add();
+    zt_gl_sky_dome_star.Dec := 65;
+    zt_gl_sky_dome_star.Magnitude := -0.5;
+    zt_gl_sky_dome_star.RA := 90;
+    zt_gl_sky_dome_star.Color := clWhite;
+    //---// PN góra.
+
+    // Z.
+    zt_gl_sky_dome_star := gl_sky_dome_f.Stars.Add();
+    zt_gl_sky_dome_star.Dec := 30;
+    zt_gl_sky_dome_star.Magnitude := -1.25;
+    zt_gl_sky_dome_star.RA := 180;
+    zt_gl_sky_dome_star.Color := clMaroon;
+    //---// Z.
+
+    // W.
+    zt_gl_sky_dome_star := gl_sky_dome_f.Stars.Add();
+    zt_gl_sky_dome_star.Dec := 2;
+    zt_gl_sky_dome_star.Magnitude := 0.0005;
+    zt_gl_sky_dome_star.RA := 0;
+    zt_gl_sky_dome_star.Color := clYellow;
+    //---// W.
+
+    // Góra œrodek.
+    zt_gl_sky_dome_star := gl_sky_dome_f.Stars.Add();
+    zt_gl_sky_dome_star.Dec := 90;
+    zt_gl_sky_dome_star.Magnitude := -0.575;
+    zt_gl_sky_dome_star.RA := 90;
+    zt_gl_sky_dome_star.Color := clBlue;
+    //---// Góra œrodek.
+
+    // PD œrodek.
+    zt_gl_sky_dome_star := gl_sky_dome_f.Stars.Add();
+    zt_gl_sky_dome_star.Dec := 0;
+    zt_gl_sky_dome_star.Magnitude := -0.3;
+    zt_gl_sky_dome_star.RA := -90;
+    zt_gl_sky_dome_star.Color := clGreen;
+    //---// PD œrodek.
+
+    // PD skos.
+    zt_gl_sky_dome_star := gl_sky_dome_f.Stars.Add();
+    zt_gl_sky_dome_star.Dec := 1;
+    zt_gl_sky_dome_star.Magnitude := -0.1;
+    zt_gl_sky_dome_star.RA := -91;
+    zt_gl_sky_dome_star.Color := clMoneyGreen;
+    //---// PD skos.
+    {$endregion 'Gwiazdy nawigacyjne.'}
+
+  end;//---//Funkcja Gwiazdy_Nawigacyjne_Dodaj() w FormShow().
+
+begin//FormShow().
 
   // Wywo³anie w obrêbie dzia³ania tego zdarzenia Application.MessageBox, ShowMessage, Komunikat_Wyœwietl wyœwietla b³¹d 'Argument out of range' ale nie przerywa wykonywania reszty kodu.
 
@@ -55359,7 +56330,7 @@ begin
   kotwica_zakresy_r_g.prêdkoœæ__podnoszenia := 1;
   kotwica_zakresy_r_g.prêdkoœæ__opadania := kotwica_zakresy_r_g.prêdkoœæ__podnoszenia * 4;
 
-  wiatr_vector_g := GLVectorGeometry.VectorMake( 0, 0, 0, 0 );
+  wiatr_vector_g := GLS.VectorGeometry.VectorMake( 0, 0, 0, 0 );
 
   statek_create_funkcje_g.statek__komunikat_b³êdu_pomiñ := Statek__Komunikat_B³êdu_Pomiñ_CheckBox.Checked;
 
@@ -55539,64 +56510,19 @@ begin
   dŸwiêki_komunikaty_string_list := TStringList.Create();
   pokój_rozmów_ostatnia_wiadomoœci_wys³ane_treœæ_string_list := TStringList.Create();
 
-  {$region 'Gwiazdy nawigacyjne.'}
-  // Iloœæ gwiazd nawigacyjnych.
-  // PN dól.
-  zt_gl_sky_dome_star := Gra_GLSkyDome.Stars.Add();
-  zt_gl_sky_dome_star.Dec := 45; // Góra dó³ ( 0 - 180 ), ujemnych, pod horyzontem nie widaæ.
-  zt_gl_sky_dome_star.Magnitude := -0.75; // Wielkoœæ -5 (najwiêksza chyba).
-  zt_gl_sky_dome_star.RA := 90; // Prawo. Obrót (lewo prawo) 90 przód -90 ty³ (gdy przód z, lewo x).
-  zt_gl_sky_dome_star.Color := clSkyBlue;
-  //---// PN dó³.
 
-  // PN góra.
-  zt_gl_sky_dome_star := Gra_GLSkyDome.Stars.Add();
-  zt_gl_sky_dome_star.Dec := 65;
-  zt_gl_sky_dome_star.Magnitude := -0.5;
-  zt_gl_sky_dome_star.RA := 90;
-  zt_gl_sky_dome_star.Color := clWhite;
-  //---// PN góra.
+  Gra_GLEarthSkyDome.HazeColor := Gra_GLSkyDome.Bands.Items[ 0 ].StartColor;
+  Gra_GLEarthSkyDome.SkyColor := Gra_GLSkyDome.Bands.Items[ 0 ].StopColor;
 
-  // Z.
-  zt_gl_sky_dome_star := Gra_GLSkyDome.Stars.Add();
-  zt_gl_sky_dome_star.Dec := 30;
-  zt_gl_sky_dome_star.Magnitude := -1.25;
-  zt_gl_sky_dome_star.RA := 180;
-  zt_gl_sky_dome_star.Color := clMaroon;
-  //---// Z.
+  Radar_GLEarthSkyDome.DeepColor := Radar_T³o_GLPlane.Material.FrontProperties.Diffuse;
+  Radar_GLEarthSkyDome.HazeColor := Radar_T³o_GLPlane.Material.FrontProperties.Diffuse;
+  Radar_GLEarthSkyDome.SkyColor := Radar_T³o_GLPlane.Material.FrontProperties.Diffuse;
 
-  // W.
-  zt_gl_sky_dome_star := Gra_GLSkyDome.Stars.Add();
-  zt_gl_sky_dome_star.Dec := 2;
-  zt_gl_sky_dome_star.Magnitude := 0.0005;
-  zt_gl_sky_dome_star.RA := 0;
-  zt_gl_sky_dome_star.Color := clYellow;
-  //---// W.
+  Radar_GLSceneViewer.Buffer.BackgroundColor := Radar_T³o_GLPlane.Material.FrontProperties.Diffuse.AsWinColor; // $00345A14
 
-  // Góra œrodek.
-  zt_gl_sky_dome_star := Gra_GLSkyDome.Stars.Add();
-  zt_gl_sky_dome_star.Dec := 90;
-  zt_gl_sky_dome_star.Magnitude := -0.575;
-  zt_gl_sky_dome_star.RA := 90;
-  zt_gl_sky_dome_star.Color := clBlue;
-  //---// Góra œrodek.
 
-  // PD œrodek.
-  zt_gl_sky_dome_star := Gra_GLSkyDome.Stars.Add();
-  zt_gl_sky_dome_star.Dec := 0;
-  zt_gl_sky_dome_star.Magnitude := -0.3;
-  zt_gl_sky_dome_star.RA := -90;
-  zt_gl_sky_dome_star.Color := clGreen;
-  //---// PD œrodek.
-
-  // PD skos.
-  zt_gl_sky_dome_star := Gra_GLSkyDome.Stars.Add();
-  zt_gl_sky_dome_star.Dec := 1;
-  zt_gl_sky_dome_star.Magnitude := -0.1;
-  zt_gl_sky_dome_star.RA := -91;
-  zt_gl_sky_dome_star.Color := clMoneyGreen;
-  //---// PD skos.
-  {$endregion 'Gwiazdy nawigacyjne.'}
+  Gwiazdy_Nawigacyjne_Dodaj( Gra_GLSkyDome );
+  Gwiazdy_Nawigacyjne_Dodaj( Gra_GLEarthSkyDome );
 
   pokój_rozmów__szerokoœæ_kopia_g := Pokój_Rozmów_GroupBox.Width;
 
@@ -56229,7 +57155,7 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
         : real;
       zt_vector_1,
       zt_vector_2
-        : GLVectorGeometry.TVector;
+        : GLS.VectorTypes.TVector4f;
     begin//Funkcja Kolizja_Statek_Statek_Przelicz() w Oznacz_Kolizjê() w Gra_GLCollisionManagerCollision().
 
       //
@@ -56259,12 +57185,12 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
 
       {$region 'Wylicza k¹t miêdzy statkami i wspó³czynnik k¹ta.'}
       if statek_1_f.prêdkoœæ_aktualna < 0 then
-        zt_vector_1 := GLVectorGeometry.VectorNegate( statek_1_f.AbsoluteDirection )
+        zt_vector_1 := GLS.VectorGeometry.VectorNegate( statek_1_f.AbsoluteDirection )
       else//if statek_1_f.prêdkoœæ_aktualna < 0 then
         zt_vector_1 := statek_1_f.AbsoluteDirection;
 
       if statek_2_f.prêdkoœæ_aktualna < 0 then
-        zt_vector_2 := GLVectorGeometry.VectorNegate( statek_2_f.AbsoluteDirection )
+        zt_vector_2 := GLS.VectorGeometry.VectorNegate( statek_2_f.AbsoluteDirection )
       else//if statek_1_f.prêdkoœæ_aktualna < 0 then
         zt_vector_2 := statek_2_f.AbsoluteDirection;
 
@@ -56272,11 +57198,11 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
       k¹t_miêdzy_statkami_l := //180 - // Je¿eli chce siê sprawdziæ drug¹ czêœæ k¹ta.
         System.Math.RadToDeg
           (
-            GLVectorGeometry.AngleBetweenVectors
+            GLS.VectorGeometry.AngleBetweenVectors
               (
                 zt_vector_1,
                 zt_vector_2,
-                GLVectorGeometry.VectorMake( 0, 0, 0 )
+                GLS.VectorGeometry.VectorMake( 0, 0, 0 )
               )
           );
 
@@ -56430,7 +57356,9 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                   gra_statystyki_r_t[ zti_l ].zatopienia__gs := gra_statystyki_r_t[ zti_l ].zatopienia__gs + 1;
 
                   if statek_1_f.id_grupa = statek_2_f.id_grupa then
-                    gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs + 1;
+                    gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs + 1
+                  else//if statek_1_f.id_grupa = statek_2_f.id_grupa then
+                    SI__Syrena_Okrêtowa__Uruchom( statek_1_f );
 
                 end;
               //---//if    ( punkty_¿ycia_kopia_l_l > 0 ) (...)
@@ -56527,7 +57455,9 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                   gra_statystyki_r_t[ zti_l ].zatopienia__gs := gra_statystyki_r_t[ zti_l ].zatopienia__gs + 1;
 
                   if statek_1_f.id_grupa = statek_2_f.id_grupa then
-                    gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs + 1;
+                    gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti_l ].zatopienia_sojuszników__gs + 1
+                  else//if statek_1_f.id_grupa = statek_2_f.id_grupa then
+                    SI__Syrena_Okrêtowa__Uruchom( statek_2_f );
 
                 end;
               //---//if    ( punkty_¿ycia_kopia_l_l > 0 ) (...)
@@ -56603,9 +57533,9 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
 
           // Je¿eli statki najd¹ na siebie to mo¿e wyst¹piæ efekt ci¹gniêcia (statek, który próbuje siê wycofaæ z kolizji zamiast siê oddalaæ naci¹ga na siebie drugi statek).
 
-          zt_vector_1 := GLVectorGeometry.VectorNormalize
+          zt_vector_1 := GLS.VectorGeometry.VectorNormalize
             (
-              GLVectorGeometry.VectorMake
+              GLS.VectorGeometry.VectorMake
                 (   // Cel                 Obiekt celuj¹cy
                     statek_2_f.AbsolutePosition.X - statek_1_f.AbsolutePosition.X
                   , statek_2_f.AbsolutePosition.Y - statek_1_f.AbsolutePosition.Y
@@ -57026,7 +57956,11 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
 
                             if    ( TAmunicja(object_1_f.Owner).statek__am <> nil )
                               and ( TAmunicja(object_1_f.Owner).statek__am.id_grupa = zt_statek.id_grupa ) then
-                              gra_statystyki_r_t[ zti ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti ].zatopienia_sojuszników__gs + 1;
+                              gra_statystyki_r_t[ zti ].zatopienia_sojuszników__gs := gra_statystyki_r_t[ zti ].zatopienia_sojuszników__gs + 1
+                            else//if    ( TAmunicja(object_1_f.Owner).statek__am <> nil ) (...)
+                              if    ( TAmunicja(object_1_f.Owner).statek__am <> nil )
+                                and ( TAmunicja(object_1_f.Owner).statek__am.id_grupa <> zt_statek.id_grupa ) then
+                                SI__Syrena_Okrêtowa__Uruchom( TAmunicja(object_1_f.Owner).statek__am );
 
                           end;
                         //---//if zti >= 0 then
@@ -57702,11 +58636,11 @@ procedure TStatki_Form.Gra_GLCollisionManagerCollision( Sender: TObject; object1
                             ztr := // Wartoœæ jest zawsze dodatnia, bez znaczenia, jak i nie okreœla, w któr¹ stronê s¹ obrócone obiekty.
                               System.Math.RadToDeg
                                 (
-                                  GLVectorGeometry.AngleBetweenVectors
+                                  GLS.VectorGeometry.AngleBetweenVectors
                                     (
-                                      GLVectorGeometry.VectorMake( zt_statek.AbsoluteDirection.X, 0, zt_statek.AbsoluteDirection.Z ),
-                                      GLVectorGeometry.VectorMake( zt_statek_2.AbsoluteDirection.X, 0, zt_statek_2.AbsoluteDirection.Z ),
-                                      GLVectorGeometry.VectorMake( 0, 0, 0 )
+                                      GLS.VectorGeometry.VectorMake( zt_statek.AbsoluteDirection.X, 0, zt_statek.AbsoluteDirection.Z ),
+                                      GLS.VectorGeometry.VectorMake( zt_statek_2.AbsoluteDirection.X, 0, zt_statek_2.AbsoluteDirection.Z ),
+                                      GLS.VectorGeometry.VectorMake( 0, 0, 0 )
                                     )
                                 );
 
@@ -58207,37 +59141,31 @@ end;//---//Serwer_Klient_Od³¹czenie_TimerTimer().
 //Amunicja__Zanurzenie_G³êbokoœæ_Zadana_EditChange().
 procedure TStatki_Form.Amunicja__Zanurzenie_G³êbokoœæ_Zadana_EditChange( Sender: TObject );
 var
-  zts : string;
+  ztb : boolean;
 begin
 
   // Podstawowy SpinEdit pozwala tylko na liczby ca³kowite a nie chcê dodawaæ komponentów, których mo¿e nie byæ w podstawowych wersjach IDE.
+
+  ztb := false;
+
 
   if    ( Sender <> nil )
     and ( TComponent(Sender).Name = Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Name ) then
     begin
 
-      zts := Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Text;
-      zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-      zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
       try
-        Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Label.Caption := Trim(   FormatFloat(  '### ### ##0.000000', StrToFloat( zts )  )   );
+        Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Label.Caption := Trim(   FormatFloat(  '### ### ##0.000000', String_To__Float( Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Text )  )   );
       except
       end;
       //---//try
-
 
     end
   else//if    ( Sender <> nil ) (...)
     begin
 
-      zts := Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Text;
-      zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-      zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
       try
-        Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Label.Caption := Trim(   FormatFloat(  '### ### ##0.000000', StrToFloat( zts )  )   );
-        zts := 'Statek_Parametry_Ustaw';
+        Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Label.Caption := Trim(   FormatFloat(  '### ### ##0.000000', String_To__Float( Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Text )  )   );
+        ztb := true;
       except
       end;
       //---//try
@@ -58249,7 +59177,7 @@ begin
   Informacja_Dodatkowa_Dodaj( t³umaczenie_komunikaty_r.komunikat__torpeda_g³êbokoœæ_zadana + ': ' + Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Label.Caption + '.', informacja_dodatkowa__wyœwietlanie_czas_sekundy__krótki_c );
 
 
-  if zts = 'Statek_Parametry_Ustaw' then
+  if ztb then
     Statek_Parametry_Ustaw( Sender );
 
 end;//---//Amunicja__Zanurzenie_G³êbokoœæ_Zadana_EditChange().
@@ -58279,39 +59207,25 @@ end;//---//Celownik_Widocznoœæ_CheckBoxClick().
 
 //Celownik_Wielkoœæ_EditChange().
 procedure TStatki_Form.Celownik_Wielkoœæ_EditChange( Sender: TObject );
-var
-  zts : string;
 begin
 
   // Podstawowy SpinEdit pozwala tylko na liczby ca³kowite a nie chcê dodawaæ komponentów, których mo¿e nie byæ w podstawowych wersjach IDE.
 
-  zts := Celownik_Ekranowy__Szerokoœæ_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    //Celowniczy_GLDummyCube.CubeSize := Abs(  StrToFloat( zts )  );
-    Celownik_Ekranowy__Dó³_GLHUDSprite.Width := Abs(  StrToFloat( zts )  );
+    //Celowniczy_GLDummyCube.CubeSize := Abs(  String_To__Float( zts )  );
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Width := Abs(  String_To__Float( Celownik_Ekranowy__Szerokoœæ_Edit.Text )  );
   except
   end;
   //---//try
 
-  zts := Celownik_Ekranowy__Wysokoœæ_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    Celownik_Ekranowy__Lewo_GLHUDSprite.Height := Abs(  StrToFloat( zts )  );
+    Celownik_Ekranowy__Lewo_GLHUDSprite.Height := Abs(  String_To__Float( Celownik_Ekranowy__Wysokoœæ_Edit.Text )  );
   except
   end;
   //---//try
 
-  zts := Celownik_Ekranowy__Gruboœæ_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    Celownik_Ekranowy__Dó³_GLHUDSprite.Height := Abs(  StrToFloat( zts )  );
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Height := Abs(  String_To__Float( Celownik_Ekranowy__Gruboœæ_Edit.Text )  );
   except
   end;
   //---//try
@@ -58326,42 +59240,26 @@ begin
 
 
 
-  zts := Celownik_Ekranowy__Kolor__R_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Red := Abs(  StrToFloat( zts )  );
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Red := Abs(  String_To__Float( Celownik_Ekranowy__Kolor__R_Edit.Text )  );
   except
   end;
   //---//try
 
-  zts := Celownik_Ekranowy__Kolor__G_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Green := Abs(  StrToFloat( zts )  );
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Green := Abs(  String_To__Float( Celownik_Ekranowy__Kolor__G_Edit.Text )  );
   except
   end;
   //---//try
 
-  zts := Celownik_Ekranowy__Kolor__B_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Blue := Abs(  StrToFloat( zts )  );
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Blue := Abs(  String_To__Float( Celownik_Ekranowy__Kolor__B_Edit.Text )  );
   except
   end;
   //---//try
 
-  zts := Celownik_Ekranowy__Kolor__A_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Alpha := Abs(  StrToFloat( zts )  );
+    Celownik_Ekranowy__Dó³_GLHUDSprite.Material.FrontProperties.Diffuse.Alpha := Abs(  String_To__Float( Celownik_Ekranowy__Kolor__A_Edit.Text )  );
   except
   end;
   //---//try
@@ -58684,7 +59582,7 @@ var
   ztr,
   pole_wartoœæ
     : real;
-  zts : string;
+  separator_dziesiêtny_l : string;
 begin
 
   // Zwiêksza lub zmniejsza wartoœæ liczbow¹ w polu tekstowym.
@@ -58703,24 +59601,23 @@ begin
     Exit;
 
 
-  zts := TEdit(Sender).Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    pole_wartoœæ := StrToFloat( zts );
+    pole_wartoœæ := String_To__Float( TEdit(Sender).Text );
   except
     Exit;
   end;
   //---//try
 
 
-  kursor_pozycja := TEdit(Sender).SelStart; // Indeksowane od 0, zts od 1.
+  kursor_pozycja := TEdit(Sender).SelStart; // Indeksowane od 0, string od 1.
 
 
-  if Pos( ',', zts ) < kursor_pozycja + 1 then
+  separator_dziesiêtny_l := Separator_Dziesiêtny__Ustal();
+
+  if   ( Pos( separator_dziesiêtny_l, TEdit(Sender).Text ) > 0 )
+   and (  Pos( separator_dziesiêtny_l, TEdit(Sender).Text ) < kursor_pozycja + 1  ) then
     ztr := 0.1
-  else//if Pos( ',', zts ) < TEdit(Sender).SelStart then
+  else//if   ( Pos( separator_dziesiêtny_l, TEdit(Sender).Text ) > 0 ) (...)
     ztr := 1;
 
 
@@ -58728,13 +59625,9 @@ begin
     and ( TComponent(Sender).Name = Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Name ) then
     begin
 
-      zts := Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Text;
-      zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-      zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
       try
-        if StrToFloat( zts ) > 0 then
-          ztr := StrToFloat( zts );
+        if String_To__Float( Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Text ) > 0 then
+          ztr := String_To__Float( Amunicja__Zanurzenie_G³êbokoœæ_Zadana__Skok_O_Edit.Text );
       except
       end;
       //---//try
@@ -58752,9 +59645,10 @@ begin
   pole_wartoœæ := pole_wartoœæ + ztr;
 
 
-  zts := FloatToStr( pole_wartoœæ );
-  zts := StringReplace( zts, ',', '.', [ rfReplaceAll ] );
-  TEdit(Sender).Text := zts;
+  TEdit(Sender).Text := FloatToStr( pole_wartoœæ );
+
+  if Pos( separator_dziesiêtny_l, TEdit(Sender).Text ) <= 0 then
+    TEdit(Sender).Text := TEdit(Sender).Text + separator_dziesiêtny_l + '0';
 
 
   TEdit(Sender).SelStart := kursor_pozycja;
@@ -58834,7 +59728,7 @@ begin
 end;//---//Fale_GLTerrainRendererGetTerrainBounds().
 
 //Fale_GLTerrainRendererHeightDataPostRender().
-procedure TStatki_Form.Fale_GLTerrainRendererHeightDataPostRender( var rci: TGLRenderContextInfo; var HeightDatas: TList );
+procedure TStatki_Form.Fale_GLTerrainRendererHeightDataPostRender( var rci: GLS.RenderContextInfo.TGLRenderContextInfo; var HeightDatas: TList );
 const
   cWaterOpaqueDepth = 2000;
 
@@ -58880,16 +59774,16 @@ var
       begin
 
         alpha := (  fale__woda_poziom_g - hd.SmallIntHeight( rx_f, ry_f )  ) * ( 1 / cWaterOpaqueDepth );
-        alpha := GLVectorGeometry.ClampValue( alpha, 0.5, 1 ); //uses GLVectorGeometry.
+        alpha := GLS.VectorGeometry.ClampValue( alpha, 0.5, 1 );
 
       end;
     //---//if hd.DataState = hdsNone then
 
     System.Math.SinCos(  WaterPhase( px, py ), sa, ca  ); //uses System.Math.
     colorRatio := 1 - alpha * 0.1;
-    Winapi.OpenGL.glColor4f( r * colorRatio, g * colorRatio, b, alpha ); //uses Winapi.OpenGL.
-    Winapi.OpenGL.glTexCoord2f( px * 0.01 + 0.002 * sa, py * 0.01 + 0.0022 * ca - t * 0.002 ); //uses Winapi.OpenGL.
-    Winapi.OpenGL.glVertex3f( px, py, fale__woda_poziom_g + fale__fala_wysokoœæ_g * sa ); //uses Winapi.OpenGL.
+    Winapi.OpenGL.glColor4f( r * colorRatio, g * colorRatio, b, alpha );
+    Winapi.OpenGL.glTexCoord2f( px * 0.01 + 0.002 * sa, py * 0.01 + 0.0022 * ca - t * 0.002 );
+    Winapi.OpenGL.glVertex3f( px, py, fale__woda_poziom_g + fale__fala_wysokoœæ_g * sa );
 
   end;//---//Funkcja IssuePoint() w Fale_GLTerrainRendererHeightDataPostRender().
 
@@ -58913,6 +59807,7 @@ begin//Fale_GLTerrainRendererHeightDataPostRender().
     begin
 
       if Gra_GLCamera.AbsolutePosition.Y < 0 then
+        //rci.GLStates.InvertFrontFace();
         rci.GLStates.InvertGLFrontFace();
 
       rci.GLStates.Disable( stLighting );
@@ -58959,6 +59854,7 @@ begin//Fale_GLTerrainRendererHeightDataPostRender().
 
 
       if Gra_GLCamera.AbsolutePosition.Y < 0 then
+        //rci.GLStates.InvertFrontFace();
         rci.GLStates.InvertGLFrontFace();
 
     end
@@ -59935,18 +60831,12 @@ end;//---//Informacje_Dodatkowe_GLAsyncTimerTimer().
 
 //Kamera_Szybkoœæ_Ruchu_EditChange().
 procedure TStatki_Form.Kamera_Szybkoœæ_Ruchu_EditChange( Sender: TObject );
-var
-  zts : string;
 begin
 
   // Podstawowy SpinEdit pozwala tylko na liczby ca³kowite a nie chcê dodawaæ komponentów, których mo¿e nie byæ w podstawowych wersjach IDE.
 
-  zts := Kamera_Szybkoœæ_Ruchu_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    kamera_szybkoœæ_ruchu_g := StrToFloat( zts );
+    kamera_szybkoœæ_ruchu_g := String_To__Float( Kamera_Szybkoœæ_Ruchu_Edit.Text );
   except
   end;
   //---//try
@@ -59956,7 +60846,7 @@ begin
     begin
 
       kamera_szybkoœæ_ruchu_g := 0.1;
-      Kamera_Szybkoœæ_Ruchu_Edit.Text := FloatToStr( kamera_szybkoœæ_ruchu_g );
+      Kamera_Szybkoœæ_Ruchu_Edit.Text := Trim(  FormatFloat( '### ### ##0.00#######', kamera_szybkoœæ_ruchu_g )  );
 
     end;
   //---//if kamera_szybkoœæ_ruchu_g < 0 then
@@ -60019,7 +60909,7 @@ procedure TStatki_Form.Klawiatura_Konfiguracja__Domyœlna_ButtonClick( Sender: TO
     polecenie__nazwa_l := '';
     polecenie__opis_l := '';
 
-    rtti_type := TRTTIContext.Create.GetType(  TypeInfo( TT³umaczenie_Komunikaty_r )  );
+    rtti_type := TRTTIContext.Create.GetType(  System.TypeInfo( TT³umaczenie_Komunikaty_r )  );
 
     for rtti_field in rtti_type.GetFields do
       if rtti_field.GetValue( @t³umaczenie_komunikaty_r ).ToString = polecenie__t³umaczenie_f then
@@ -60174,8 +61064,16 @@ begin//Klawiatura_Konfiguracja__Domyœlna_ButtonClick().
   Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__punkty_¿ycia_wskaŸnik__przeciwnik, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____punkty_¿ycia_wskaŸnik__przeciwnik ); // .
   Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__punkty_¿ycia_wskaŸnik__sojusznik, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____punkty_¿ycia_wskaŸnik__sojusznik ); // .
 
-  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar_widocznoœæ, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar_widocznoœæ ); // .
-  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar_broñ_zasiêg_wyœwietlaj, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar_broñ_zasiêg_wyœwietlaj ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__broñ_zasiêg_wyœwietlaj, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__broñ_zasiêg_wyœwietlaj ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__czu³oœæ__10_plus, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__10_plus ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__czu³oœæ__1_plus, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__1_plus ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__czu³oœæ__1_minus, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__1_minus ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__czu³oœæ__10_minus, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__czu³oœæ__10_minus ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__skala__10_plus, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__skala__10_plus ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__skala__1_plus, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__skala__1_plus ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__skala__1_minus, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__skala__1_minus ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__skala__10_minus, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__skala__10_minus ); // .
+  Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__radar__widocznoœæ, 0, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____radar__widocznoœæ ); // .
 
   Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__samolot_katapult¹_startuj, 75, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____samolot_katapult¹_startuj ); // K.
   Klawisz_Plus_Alt_Ctrl_Shift_Zeruj( klawisz__samolot_statek_prze³¹cz, VK_BACK, zti, t³umaczenie_komunikaty_r.klawiatura_konfiguracja__polecenie_nazwa____samolot_statek_prze³¹cz ); // Backspace.
@@ -61294,18 +62192,12 @@ end;//---//Morze_Wzburzenie_SpinEditChange().
 
 //Mysz_Czu³oœæ_EditChange().
 procedure TStatki_Form.Mysz_Czu³oœæ_EditChange( Sender: TObject );
-var
-  zts : string;
 begin
 
   // Podstawowy SpinEdit pozwala tylko na liczby ca³kowite a nie chcê dodawaæ komponentów, których mo¿e nie byæ w podstawowych wersjach IDE.
 
-  zts := Mysz_Czu³oœæ_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    Gra_GLUserInterface.MouseSpeed := StrToFloat( zts );
+    Gra_GLUserInterface.MouseSpeed := String_To__Float( Mysz_Czu³oœæ_Edit.Text );
   except
   end;
   //---//try
@@ -61313,12 +62205,8 @@ begin
   mysz_czu³oœæ_g := Gra_GLUserInterface.MouseSpeed;
 
 
-  zts := Mysz_Czu³oœæ_Luneta_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    mysz_czu³oœæ_luneta_g := StrToFloat( zts );
+    mysz_czu³oœæ_luneta_g := String_To__Float( Mysz_Czu³oœæ_Luneta_Edit.Text );
   except
   end;
   //---//try
@@ -61328,13 +62216,54 @@ begin
 
 end;//---//Mysz_Czu³oœæ_EditChange().
 
+//Niebo_Rodzaj_RadioGroupClick().
+procedure TStatki_Form.Niebo_Rodzaj_RadioGroupClick( Sender: TObject );
+begin
+
+  Gra_GLSkyDome.Visible := Niebo_Rodzaj_RadioGroup.ItemIndex = 2; // standardowe
+  Gra_GLEarthSkyDome.Visible := Niebo_Rodzaj_RadioGroup.ItemIndex = 0; // alternatywne
+
+  Radar_GLSkyDome.Visible := Radar__Niebo_Rodzaj_RadioGroup.ItemIndex = 2; // standardowe
+  Radar_GLEarthSkyDome.Visible := Radar__Niebo_Rodzaj_RadioGroup.ItemIndex = 0; // alternatywne
+
+
+  Noc_SpinEditChange( Sender );
+
+end;//---//Niebo_Rodzaj_RadioGroupClick().
+
 //Noc_SpinEditChange().
 procedure TStatki_Form.Noc_SpinEditChange( Sender: TObject );
+
+  //Funkcja Gwiazdy_Iloœæ_Zmieñ() w Noc_SpinEditChange().
+  procedure Gwiazdy_Iloœæ_Zmieñ( const gwiazdy_iloœæ_f : real; gl_sky_dome_f : GLS.SkyDome.TGLSkyDome );
+  var
+    gwiazdy_iloœæ_wspó³czynnik_l_l : real;
+  begin
+
+    if gl_sky_dome_f = nil then
+      Exit;
+
+
+    gwiazdy_iloœæ_wspó³czynnik_l_l := 0.2; // Wspó³czynnik iloœci gwiazd.
+
+    if gl_sky_dome_f.Stars.Count < gwiazdy_iloœæ_wspó³czynnik_l_l * gwiazdy_iloœæ_f then
+      gl_sky_dome_f.Stars.AddRandomStars(  Round( gwiazdy_iloœæ_wspó³czynnik_l_l * gwiazdy_iloœæ_f - gl_sky_dome_f.Stars.Count ), clWhite  ) // Iloœæ, kolor.
+    else//if gl_sky_dome_f.Stars.Count < gwiazdy_iloœæ_wspó³czynnik_l_l * gwiazdy_iloœæ_f then
+      while gl_sky_dome_f.Stars.Count > gwiazdy_iloœæ_wspó³czynnik_l_l * gwiazdy_iloœæ_f + 7 do // Iloœæ gwiazd nawigacyjnych.
+        gl_sky_dome_f.Stars.Delete( gl_sky_dome_f.Stars.Count - 1 );
+
+  end;//---//Funkcja Gwiazdy_Iloœæ_Zmieñ() w Noc_SpinEditChange().
+
 var
   ztr_1,
-  ztr_2
+  ztr_2,
+  ztr_3
     : real;
-begin
+
+  ztt_1,
+  ztt_2
+    : TTime;
+begin//Noc_SpinEditChange().
 
   // Jest przeskalowane ze 100% na 1000% aby p³ynniej zmieniaæ wartoœci i nie u¿ywaæ komponentów z wartoœci¹ typu float.
 
@@ -61362,6 +62291,162 @@ begin
     ':' +
     Trim(  FormatFloat( '00', ztr_2 )  );
 
+
+  if Gra_GLEarthSkyDome.Visible then
+    begin
+
+      {$region 'Koryguje ruch s³oñca z Gra_GLEarthSkyDome aby pokrywa³ siê z ruchem s³oñca S³oñce_GLSphere.'}
+      if   (
+                 ( ztr_1 >= 18 )
+             and (
+                      ( ztr_1 < 22 )
+                   or (      // 22:40
+                            ( ztr_1 = 22 )
+                        and ( ztr_2 <= 40 )
+                      )
+                 )
+           )
+        or (
+                 ( ztr_1 < 6 )
+             and ( ztr_1 >= 1 )
+           ) then
+        begin
+
+          // Wyd³u¿a dzieñ (jasnoœæ) spowalniaj¹c zachód s³oñca i przyœpieszaj¹c wschód s³oñca (zachód i wschód s³oñca trwaj¹ d³u¿ej).
+
+          ztt_1 := EncodeTime(  System.Math.Floor( ztr_1 ), System.Math.Floor( ztr_2 ), 0, 0  );
+
+
+          if    ( ztr_1 >= 18 )
+            and ( ztr_1 <= 24 ) then
+            begin
+
+              ztr_1 := 21; // 21:33
+              ztr_2 := 33;
+
+              ztr_3 := 0.25; // Wartoœæ wyznaczona doœwiadczalnie.
+
+              ztt_1 := System.DateUtils.IncMinute( ztt_1, 22 );
+              ztt_1 := System.DateUtils.IncHour( ztt_1, 3 );
+
+            end
+          else//if    ( ztr_1 >= 18 ) (...)
+            begin
+
+              ztr_1 := 4; // 04:00
+              ztr_2 := 0;
+
+              ztr_3 := 0.3; // Wartoœæ wyznaczona doœwiadczalnie.
+
+              ztt_1 := System.DateUtils.IncMinute( ztt_1, 0 );
+              ztt_1 := System.DateUtils.IncHour( ztt_1, 5 );
+
+            end;
+          //---//if    ( ztr_1 >= 18 ) (...)
+
+
+          ztt_2 := EncodeTime(  System.Math.Floor( ztr_1 ), System.Math.Floor( ztr_2 ), 0, 0  );
+
+
+          ztr_1 := System.DateUtils.MinutesBetween( ztt_1, ztt_2 );
+
+          ztr_1 := ztr_1 * ztr_3;
+
+
+          ztt_2 := System.DateUtils.IncMinute( ztt_2, System.Math.Floor( ztr_1 )  );
+
+
+          ztr_1 := System.DateUtils.HourOf( ztt_2 );
+          ztr_2 := System.DateUtils.MinuteOf( ztt_2 );
+
+        end
+      else
+      if    ( ztr_1 >= 5 )
+        and ( ztr_1 < 19 ) then
+        begin
+
+          // S³oñce z Gra_GLEarthSkyDome porusza siê wolniej (wed³ug godzin) ni¿ s³oñce S³oñce_GLSphere i tutaj nadgania opóŸnienie..
+
+
+          ztt_1 := EncodeTime(  System.Math.Floor( ztr_1 ), System.Math.Floor( ztr_2 ), 0, 0  );
+
+          ztt_1 := System.DateUtils.IncHour( ztt_1, -5 );
+
+
+          // Od 5 do 19 jest 14 godzin i w tym zasie opóŸnienie s³óñca Gra_GLEarthSkyDome wzglêdem s³oñca S³oñce_GLSphere wynosi 4 godziny.
+          // 29 = 100 * 4 / 14
+          // Procent do nadrabiania w ci¹gu godziny = 29% czyli 0.29.
+
+          //ztt_1 := ztt_1 + ztt_1 * 0.29; // rano -0.1, po³udnie 0.24, wieczór 0.29
+
+
+          // Od 5 do 12 (w 7 godzin) korekta przesuniêcia powinna siê zmieniæ z -0.01 do 0.24 = 0.25.
+          // 0.25 / 7 = 0.036.
+
+          // Od 12 do 23 (w 11 godzin) korekta przesuniêcia powinna siê zmieniæ z 0.25 do 0.29 = 0.04.
+          // 0.04 / 11 = 0.0036.
+
+          //if ztr_1 <= 12 then
+          //  ztr_3 := ( ztr_1 - 5 ) * 0.036 - 0.01
+          //else//if ztr_1 <= 12 then
+          //  ztr_3 := ( ztr_1 - 5 ) * 0.0036 + 0.24 - 0.01;
+
+
+          // Minuty zamieniane na procent z godziny
+          // 1.67 = 100 * 100 * 60
+          // 0.0167 = 1.67 / 100 -> podstawienie jako czêœæ u³amkowa do liczby.
+
+          if ztr_1 <= 12 then
+            ztr_3 := (  ( ztr_1 - 5 ) + ( ztr_2 * 0.0167 )  ) * 0.036 - 0.01
+          else//if ztr_1 <= 12 then
+            //ztr_3 := (  ( ztr_1 - 5 ) + ( ztr_2 * 0.0167 )  ) * 0.0036 + 0.24 - 0.01;
+            ztr_3 := (  ( ztr_1 - 5 ) + ( ztr_2 * 0.0167 )  ) * 0.0036 + 0.23;  // Uproszczenie obliczeñ.
+
+
+          ztt_1 := ztt_1 + ztt_1 * ztr_3;
+
+          ztt_1 := System.DateUtils.IncHour( ztt_1, 5 );
+
+
+          ztr_1 := System.DateUtils.HourOf( ztt_1 );
+          ztr_2 := System.DateUtils.MinuteOf( ztt_1 );
+
+        end;
+      //---//if    ( ztr_1 >= 5 ) (...)
+      //else//if    ( ztr_1 >= 5 ) (...)
+        // Ruch s³oñca z Gra_GLEarthSkyDome i s³oñca S³oñce_GLSphere s¹ takie same (wed³ug czasu).
+      {$endregion 'Koryguje ruch s³oñca z Gra_GLEarthSkyDome aby pokrywa³ siê z ruchem s³oñca S³oñce_GLSphere.'}
+
+      Gra_GLEarthSkyDome.SetSunAtTime( ztr_1, ztr_2 );
+
+
+      {$region 'Modyfikuje poœwiatê wokó³ s³oñca.'}
+      if Noc_SpinEdit.Value < 1000 then
+        ztr_1 := 80
+      else//if Noc_SpinEdit.Value < 1000 then
+      if Noc_SpinEdit.Value > 6000 then
+        ztr_1 := 15 + ( Noc_SpinEdit.Value - 6000 ) * 0.0455 // 0.0455 = / 22 // Wartoœæ wyznaczona doœwiadczalnie.
+      else//if Noc_SpinEdit.Value > 6000 then
+      if    ( Noc_SpinEdit.Value >= 1000 )
+        and ( Noc_SpinEdit.Value < 3000 ) then
+        ztr_1 := 80 - ( Noc_SpinEdit.Value - 1000 ) * 0.0455 // 0.0455 = / 22 // Wartoœæ wyznaczona doœwiadczalnie.
+      else//if    ( Noc_SpinEdit.Value >= 1000 ) (...)
+        ztr_1 := 15;
+
+
+      if ztr_1 > 110 then
+        ztr_1 := 110
+      else//if ztr_1 > 110 then
+      if ztr_1 < 15 then
+        ztr_1 := 15;
+      {$endregion 'Modyfikuje poœwiatê wokó³ s³oñca.'}
+
+      Gra_GLEarthSkyDome.Turbidity := ztr_1;
+
+    end;
+  //---//if Gra_GLEarthSkyDome.Visible then
+
+
   ztr_1 := ( 100 - Noc_SpinEdit.Value ) * 0.0001;
   S³oñce_GLDummyCube.RollAngle := 360 * ztr_1;
 
@@ -61379,13 +62464,8 @@ begin
   //---// Przeskalowanie zakresu k¹ta s³oñca 62.5 - 100 - 37.5 na 0 - 100 - 0%.
 
 
-  ztr_2 := 0.2; // Wspó³czynnik iloœci gwiazd.
-
-  if Gra_GLSkyDome.Stars.Count < ztr_2 * ztr_1 then
-    Gra_GLSkyDome.Stars.AddRandomStars(  Round( ztr_2 * ztr_1 - Gra_GLSkyDome.Stars.Count ), clWhite  ) // Iloœæ, kolor.
-  else//if Gra_GLSkyDome.Stars.Count < ztr_2 * ztr_1 then
-    while Gra_GLSkyDome.Stars.Count > ztr_2 * ztr_1 + 7 do // Iloœæ gwiazd nawigacyjnych.
-      Gra_GLSkyDome.Stars.Delete( Gra_GLSkyDome.Stars.Count - 1 );
+  Gwiazdy_Iloœæ_Zmieñ( ztr_1, Gra_GLSkyDome );
+  Gwiazdy_Iloœæ_Zmieñ( ztr_1, Gra_GLEarthSkyDome );
 
 
   ztr_1 := ( 10000 - ztr_1 ) * 0.0001; // Miêdzy œwitem a zmierzchem ma wartoœæ 1 a poza maleje do 0 o pó³nocy
@@ -61395,31 +62475,41 @@ begin
   Gra_GLLightSource.Diffuse.SetColor( ztr_1, ztr_1, ztr_1, 1 );
   Gra_GLSceneViewer.Buffer.FogEnvironment.FogColor.SetColor( ztr_1, ztr_1, ztr_1, Gra_GLSceneViewer.Buffer.FogEnvironment.FogColor.Alpha ); // Zmienia tylko kolor mg³y bez przezroczystoœci.
 
-  Gra_GLSkyDome.Bands.Items[ 0 ].StartColor.Red := GLColor.clrDarkTurquoise.X * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 0 ].StartColor.Green := GLColor.clrDarkTurquoise.Y * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 0 ].StartColor.Blue := GLColor.clrDarkTurquoise.Z * ztr_1;
+  if Gra_GLSkyDome.Visible then
+    begin
 
-  Gra_GLSkyDome.Bands.Items[ 0 ].StopColor.Red := GLColor.clrNewMidnightBlue.X * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 0 ].StopColor.Green := GLColor.clrNewMidnightBlue.Y * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 0 ].StopColor.Blue := GLColor.clrNewMidnightBlue.Z * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 0 ].StartColor.Red := GLS.Color.clrDarkTurquoise.X * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 0 ].StartColor.Green := GLS.Color.clrDarkTurquoise.Y * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 0 ].StartColor.Blue := GLS.Color.clrDarkTurquoise.Z * ztr_1;
 
-  Gra_GLSkyDome.Bands.Items[ 1 ].StartColor.Red := GLColor.clrNewMidnightBlue.X * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 1 ].StartColor.Green := GLColor.clrNewMidnightBlue.Y * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 1 ].StartColor.Blue := GLColor.clrNewMidnightBlue.Z * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 0 ].StopColor.Red := GLS.Color.clrNewMidnightBlue.X * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 0 ].StopColor.Green := GLS.Color.clrNewMidnightBlue.Y * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 0 ].StopColor.Blue := GLS.Color.clrNewMidnightBlue.Z * ztr_1;
 
-  Gra_GLSkyDome.Bands.Items[ 1 ].StopColor.Red := GLColor.clrNavy.X * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 1 ].StopColor.Green := GLColor.clrNavy.Y * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 1 ].StopColor.Blue := GLColor.clrNavy.Z * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 1 ].StartColor.Red := GLS.Color.clrNewMidnightBlue.X * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 1 ].StartColor.Green := GLS.Color.clrNewMidnightBlue.Y * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 1 ].StartColor.Blue := GLS.Color.clrNewMidnightBlue.Z * ztr_1;
 
-  Gra_GLSkyDome.Bands.Items[ 2 ].StartColor.Red := GLColor.clrWhite.X * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 2 ].StartColor.Green := GLColor.clrWhite.Y * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 2 ].StartColor.Blue := GLColor.clrWhite.Z * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 1 ].StopColor.Red := GLS.Color.clrNavy.X * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 1 ].StopColor.Green := GLS.Color.clrNavy.Y * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 1 ].StopColor.Blue := GLS.Color.clrNavy.Z * ztr_1;
 
-  Gra_GLSkyDome.Bands.Items[ 2 ].StopColor.Red := GLColor.clrDarkTurquoise.X * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 2 ].StopColor.Green := GLColor.clrDarkTurquoise.Y * ztr_1;
-  Gra_GLSkyDome.Bands.Items[ 2 ].StopColor.Blue := GLColor.clrDarkTurquoise.Z * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 2 ].StartColor.Red := GLS.Color.clrWhite.X * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 2 ].StartColor.Green := GLS.Color.clrWhite.Y * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 2 ].StartColor.Blue := GLS.Color.clrWhite.Z * ztr_1;
 
-  Gra_GLSceneViewer.Buffer.BackgroundColor := RGB(  Round( 255 * ztr_1 ), Round( 255 * ztr_1 ), Round( 255 * ztr_1 )  );
+      Gra_GLSkyDome.Bands.Items[ 2 ].StopColor.Red := GLS.Color.clrDarkTurquoise.X * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 2 ].StopColor.Green := GLS.Color.clrDarkTurquoise.Y * ztr_1;
+      Gra_GLSkyDome.Bands.Items[ 2 ].StopColor.Blue := GLS.Color.clrDarkTurquoise.Z * ztr_1;
+
+    end;
+  //---//if Gra_GLSkyDome.Visible then
+
+
+  if    ( not Gra_GLSkyDome.Visible )
+    and ( not Gra_GLEarthSkyDome.Visible )then
+    //Gra_GLSceneViewer.Buffer.BackgroundColor := RGB(  Round( 255 * ztr_1 ), Round( 255 * ztr_1 ), Round( 255 * ztr_1 )  );
+    Gra_GLSceneViewer.Buffer.BackgroundColor := RGB(  0, 0, Round( 128 * ztr_1 )  ); // Vcl.Graphics.clNavy
 
 
   // Przeskalowanie zakresu k¹ta s³oñca 25 - 50 - 75 na 0 - 100 - 0%.
@@ -61468,6 +62558,8 @@ begin
       s³oñce_ksiê¿yc_odcieñ_pora_przeliczone_g := 1;
       S³oñce_GLSphere.TagFloat := Random( 5 ) * 0.1;
 
+      Gra_GLEarthSkyDome.SunZenithColor.SetColor(  0.85 + Random( 16 ) * 0.01, 0.85 + Random( 16 ) * 0.01, 0.85 + Random( 16 ) * 0.01  );
+
     end
   else//if    ( Noc_SpinEdit.Value > 6250 ) (...)
   if    ( Noc_SpinEdit.Value < 3750 )
@@ -61481,13 +62573,22 @@ begin
       s³oñce_ksiê¿yc_odcieñ_pora_przeliczone_g := 2;
       S³oñce_GLSphere.TagFloat := Random( 5 ) * 0.1;
 
+      Gra_GLEarthSkyDome.SunZenithColor.SetColor(  0.85 + Random( 16 ) * 0.01, 0.85 + Random( 16 ) * 0.01, 0.85 + Random( 16 ) * 0.01  );
+
     end;
   //---//if    ( Noc_SpinEdit.Value < 3750 ) (...)
 
 
   if   ( ztr_2 = 1 )
     or ( ztr_2 = 2 ) then
-    S³oñce_GLSphere.Material.FrontProperties.Emission.SetColor( 1, ztr_1, S³oñce_GLSphere.TagFloat );
+    begin
+
+      S³oñce_GLSphere.Material.FrontProperties.Emission.SetColor( 1, ztr_1, S³oñce_GLSphere.TagFloat );
+
+      Gra_GLEarthSkyDome.SunDawnColor.Color := S³oñce_GLSphere.Material.FrontProperties.Emission.Color;
+
+    end;
+  //---//if   ( ztr_2 = 1 ) (...)
 
   if ztr_2 = 1 then
     Ksiê¿yc_GLSphere.Material.FrontProperties.Emission.SetColor( 0.5, 0.5, Ksiê¿yc_GLSphere.TagFloat );
@@ -63169,9 +64270,9 @@ var
   zts,
   plik_nazwa
     : string;
-  zt_xml_document : TXMLDocument; //uses XMLDoc
+  zt_xml_document : Xml.XMLDoc.TXMLDocument;
   wêze³_xml_1
-    : IXMLNode; //uses XMLIntf
+    : Xml.XMLIntf.IXMLNode;
 begin
 
   plik_nazwa := SI__Schemat_ComboBox.Text;
@@ -63222,7 +64323,7 @@ begin
     Exit;
 
 
-  zt_xml_document := TXMLDocument.Create( Application ); // Musi byæ Self albo Application.
+  zt_xml_document := Xml.XMLDoc.TXMLDocument.Create( Application ); // Musi byæ Self albo Application.
 
   zt_xml_document.Options := zt_xml_document.Options + [ doNodeAutoIndent ]; // Domyœlnie ma: doNodeAutoCreate, doAttrNull, doAutoPrefix, doNamespaceDecl. // uses Xml.XMLIntf.
 
@@ -63348,7 +64449,7 @@ var
   statki_pozycja_pocz¹tkowa_nazwa
     : string;
   si_t : array of array of string;
-  zt_xml_document : TXMLDocument; //uses XMLDoc
+  zt_xml_document : Xml.XMLDoc.TXMLDocument;
 begin
 
   if   (  Trim( SI__Schemat_ComboBox.Text ) = ''  )
@@ -63380,7 +64481,7 @@ begin
   SetLength( si_t, 0 );
 
 
-  zt_xml_document := TXMLDocument.Create( Application );
+  zt_xml_document := Xml.XMLDoc.TXMLDocument.Create( Application );
 
   zt_xml_document.Options := zt_xml_document.Options + [ doNodeAutoIndent ]; // Domyœlnie ma: doNodeAutoCreate, doAttrNull, doAutoPrefix, doNamespaceDecl.
 
@@ -63681,7 +64782,7 @@ var
   i,
   j
     : integer;
-  zt_xml_document : TXMLDocument; //uses XMLDoc
+  zt_xml_document : Xml.XMLDoc.TXMLDocument;
 begin
 
   Pozycja_Pocz¹tkowa_Parametry_Domyœlne_Ustaw( statki_pozycja_pocz¹tkowa_parametry_t[ 1 ], false );
@@ -63742,7 +64843,7 @@ begin
     Exit;
 
 
-  zt_xml_document := TXMLDocument.Create( Application );
+  zt_xml_document := Xml.XMLDoc.TXMLDocument.Create( Application );
 
   zt_xml_document.Options := zt_xml_document.Options + [ doNodeAutoIndent ]; // Domyœlnie ma: doNodeAutoCreate, doAttrNull, doAutoPrefix, doNamespaceDecl.
 
@@ -63959,7 +65060,7 @@ var
   zti
     : integer;
   zts : string;
-  zt_vector : GLVectorGeometry.TVector; // uses GLVectorGeometry.
+  zt_vector : GLS.VectorTypes.TVector4f;
 begin
 
   // Prezentowanie statków z przesuniêciem w górê (Y > 0), w³¹czon¹ grawitacj¹ i bez pauzy sprawia, ¿e od razu wpadaj¹ pod wodê.
@@ -63976,7 +65077,7 @@ begin
 
         zti := Length( statki_t );
         SetLength( statki_t, zti + 1 );
-        statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, zti + 1, zti, Statek_Odczytaj_Schemat( i ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
+        statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ(), zti + 1, zti, Statek_Odczytaj_Schemat( i ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
         statki_t[ zti ].id_grupa := 1; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³ i ustawi³ statek.
         statki_t[ zti ].id_statek_schemat := i;
         statki_t[ zti ].obracaj_dzia³a := false;
@@ -64015,7 +65116,7 @@ begin
                 zti := Length( statki_t );
                 SetLength( statki_t, zti + 1 );
 
-                statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, zti, zti, zts, prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
+                statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ(), zti, zti, zts, prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
                 statki_t[ zti ].id_grupa := 1; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek.
                 statki_t[ zti ].id_statek_schemat := Statek__Samolot_Odczytaj_Schemat_Indeks( Statek__Samolot_ComboBox.Items[ Statek__Samolot_ComboBox.ItemIndex ] ); // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek.
                 statki_t[ zti ].gracz__nazwa.Text := '^ ' + Statek__Samolot_ComboBox.Items[ Statek__Samolot_ComboBox.ItemIndex ] + ' (' + Statek_ComboBox.Items[ i ] + ') ^';
@@ -64216,7 +65317,6 @@ var
     : boolean;
   i : integer;
   amunicja_zanurzenie_g³êbokoœæ_zadana_kopia : real;
-  zts : string;
   zt_statek : TStatek;
   si__statek_gracza__strzela_kopia : TSi__Statek_Gracza__Strzela;
 begin
@@ -64242,12 +65342,8 @@ begin
     Exit;
 
 
-  zts := Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Text;
-  zts := StringReplace( zts, ' ', '', [ rfReplaceAll ] );
-  zts := StringReplace( zts, '.', ',', [ rfReplaceAll ] );
-
   try
-    amunicja_zanurzenie_g³êbokoœæ_zadana_kopia := StrToFloat( zts );
+    amunicja_zanurzenie_g³êbokoœæ_zadana_kopia := String_To__Float( Amunicja__Zanurzenie_G³êbokoœæ_Zadana_Edit.Text );
   except
     amunicja_zanurzenie_g³êbokoœæ_zadana_kopia := -0.3;
   end;
@@ -64494,7 +65590,7 @@ begin
   zti := Length( statki_t );
   SetLength( statki_t, zti + 1 );
 
-  statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, 0, 0, Statek_Odczytaj_Schemat( Statek_ComboBox.ItemIndex ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
+  statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ(), 0, 0, Statek_Odczytaj_Schemat( Statek_ComboBox.ItemIndex ), prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
   statki_t[ zti ].id_grupa := Gracz_Grupa_SpinEdit.Value; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek. Aby u klienta w³asny pasek punktów ¿ycia nie by³ czerwony.
   statki_t[ zti ].id_statek_schemat := Statek_ComboBox.ItemIndex; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek.
   statki_t[ zti ].Wygl¹d_Elementy__Noc_Zmieñ( dzieñ_jasnoœæ_g, Œwiat³a_Miganie__Funkcjonalnoœæ_Aktywna_CheckBox.Checked, Wygl¹d_Elementy__Kolor_Noc_Zmieñ );
@@ -64518,7 +65614,7 @@ begin
           zti := Length( statki_t );
           SetLength( statki_t, zti + 1 );
 
-          statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_GLThorFXManager, 0, 100, zts, prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
+          statki_t[ zti ] := TStatek.Create(  Gra_Obiekty_GLDummyCube, Gra_GLCollisionManager, Efekt__Element_Uszkodzenie_Menad¿er__Zwróæ(), 0, 100, zts, prymitywy_lista_t, Punkty_¯ycia_WskaŸnik__Material_Options_Ustal(), statek_create_funkcje_g, t³umaczenie_komunikaty_r  );
           statki_t[ zti ].id_grupa := Gracz_Grupa_SpinEdit.Value; // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek. Aby u klienta w³asny pasek punktów ¿ycia nie by³ czerwony.
           statki_t[ zti ].id_statek_schemat := Statek__Samolot_Odczytaj_Schemat_Indeks( Statek__Samolot_ComboBox.Items[ Statek__Samolot_ComboBox.ItemIndex ] ); // Aby po odnowieniu statku (je¿eli nie trwa gra) poprawnie wczyta³o i ustawi³o statek.
           statki_t[ zti ].gracz__nazwa.Text := '^ ' + statki_t[ zti ].gracz__nazwa.Text + ' ^';
@@ -64691,7 +65787,7 @@ begin
   if not Wiatr_CheckBox.Checked then
     begin
 
-      wiatr_vector_g := GLVectorGeometry.VectorMake( 0, 0, 0, 0 );
+      wiatr_vector_g := GLS.VectorGeometry.VectorMake( 0, 0, 0, 0 );
 
       Radar_Wiatr_Kierunek_Linia_GLLines.Nodes[ 1 ].Z := 0;
 
