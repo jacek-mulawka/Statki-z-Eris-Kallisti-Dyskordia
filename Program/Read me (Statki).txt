@@ -1,5 +1,6 @@
 Statki z Eris Kallisti Dyskordia
-wersja 2023.05.24.
+wydanie 2.0.0.0
+wersja 2024.01.31.
 
 MIT License
 
